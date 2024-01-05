@@ -1,22 +1,39 @@
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    ll n,m;
-    cin >> n >> m;
-    vector<ll> coin(n);
-    for(auto &x:coin)cin >> x;
-    vector<ll> DP(m + 1);
-    for(int i = 1;i < m+1;i++) DP[i] = 1e9;
-    sort(coin.begin(),coin.end());
-    reverse(coin.begin(),coin.end());
-    for(int i = 0;i <= m;i++){
-        for(auto x:coin){
-            if(i+x<=m){
-                DP[i+x] = min(DP[i+x],DP[i] + 1);
+// combine
+// arrange: nested loop exchange
+ll dp[2][1000001];
+void solve(){
+    int n, x; cin >> n >> x;
+    vector<int> coin(n + 1);
+    for(int i = 1; i <= n; i++){
+        cin >> coin[i];
+    }
+    dp[0][0] = 1;
+    for(int i = 1; i <= n; i++){
+        for(int j = 0; j <= x; j++){
+            dp[i & 1][j] = dp[!(i & 1)][j];
+            if(j >= coin[i]){
+                (dp[i & 1][j] += dp[i & 1][j - coin[i]]) %= mod;
             }
         }
     }
-    if(DP[m]==1e9)cout << "-1\n";
-    else cout << DP[m] << '\n';
-    return 0;
+    cout << dp[n & 1][x];
+}
+// Minimize coins nums
+void solve(){
+    int n, x; cin >> n >> x;
+    vector<int> coin(n);
+    for(int i = 0; i < n; i++){
+        cin >> coin[i];
+    }
+    ll dp[x+1]; // init(dp, 0);
+    dp[0] = 0;
+    for(int i = 1; i <= x; i++){
+        dp[i] = llinf;
+        for(auto &j : coin){
+            if(j <= i){
+                dp[i] = min(dp[i], dp[i - j] + 1);
+            }
+        }
+    }
+    cout << (dp[x] == llinf ? -1 : dp[x]);
 }
