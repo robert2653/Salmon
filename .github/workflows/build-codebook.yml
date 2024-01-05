@@ -22,8 +22,8 @@ jobs:
           unzip ubuntu-font.zip
       - name: Install Chinese Fonts
         run: |
-          sudo apt-get update
-          sudo apt-get install -y fonts-noto-cjk
+          wget https://noto-website.storage.googleapis.com/pkgs/Noto-hinted.zip -O Noto-font.zip
+          unzip Noto-font.zip
       - name: List installed fonts
         run: fc-list
       - name: Build
@@ -34,6 +34,7 @@ jobs:
           work_in_root_file_dir: true
           extra_fonts: |
             ./ubuntu-font-family-0.83/*.ttf
+            ./Noto-font/*.ttf
       - name: Push codebook.pdf
         run: |
           cp source/codebook/codebook.pdf pdf/codebook.pdf
