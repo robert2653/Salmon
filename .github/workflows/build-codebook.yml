@@ -23,6 +23,8 @@ jobs:
       - name: Install Chinese Fonts
         run: |
           wget https://github.com/googlefonts/noto-cjk/raw/main/Sans/Variable/TTF/Mono/NotoSansMonoCJKtc-VF.ttf
+          fc-cache -fv
+          fc-list
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
@@ -31,7 +33,7 @@ jobs:
           work_in_root_file_dir: true
           extra_fonts: |
             ./ubuntu-font-family-0.83/*.ttf
-            ./NotoSansMonoCJKtc-VF.ttf
+            ./*.ttf
       - name: Push codebook.pdf
         run: |
           cp source/codebook/codebook.pdf pdf/codebook.pdf
