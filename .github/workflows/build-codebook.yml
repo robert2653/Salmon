@@ -23,8 +23,7 @@ jobs:
       - name: Install Chinese Fonts
         run: |
           wget https://github.com/googlefonts/noto-cjk/raw/main/Sans/Variable/TTF/Mono/NotoSansMonoCJKtc-VF.ttf
-          pwd
-          ls
+          fc-query ./NotoSansMonoCJKtc-VF.ttf
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
