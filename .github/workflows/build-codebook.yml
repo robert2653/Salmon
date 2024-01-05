@@ -24,7 +24,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y fonts-noto-cjk
-
+      - name: List installed fonts
+        run: fc-list
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
