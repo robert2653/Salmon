@@ -20,12 +20,6 @@ jobs:
         run: |
           wget https://assets.ubuntu.com/v1/0cef8205-ubuntu-font-family-0.83.zip -O ubuntu-font.zip
           unzip ubuntu-font.zip
-      - name: Install Chinese Fonts
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y fonts-noto-cjk
-          fc-cache -fv
-          fc-list | grep "Noto Sans CJK"
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
