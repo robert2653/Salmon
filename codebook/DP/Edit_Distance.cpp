@@ -1,8 +1,9 @@
-ll dp[maxn][maxn];
+#include <bits/stdc++.h>
+using namespace std;
+int dp[1005][1005];
 void solve(){
-    init(dp, 0);
     string s1, s2; cin >> s1 >> s2;
-    int size1 = s1.sz, size2 = s2.sz;
+    int size1 = s1.size(), size2 = s2.size();
     s1 = "0" + s1, s2 = "0" + s2;
     for(int i = 1; i <= size2; i++) dp[0][i] = i;  // s2 = {}, s1 = ...;
     for(int i = 1; i <= size1; i++) dp[i][0] = i;  // s1 = {}, s2 = ...;

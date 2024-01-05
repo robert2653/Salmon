@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+using namespace std;
 // Bit_Mask_DP, Travel Exactly Once
 int dp[(1 << 20) - 1][20];
 vector<int> rev_adj[20];

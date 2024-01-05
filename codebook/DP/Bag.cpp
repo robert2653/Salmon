@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+using namespace std;
 int dp[1005][100005];
 vector<int> Page(1005, 0);
 vector<int> Price(1005, 0);
@@ -12,7 +14,6 @@ int main(){
         int tmp; cin >> tmp;
         Page[i] = tmp;
     }
-    memset(dp, 0, sizeof(dp));
     for(int i = 1; i <= n; i++){
         for(int j = 1; j <= bud; j++){
             if(j >= Price[i]){

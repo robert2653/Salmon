@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+using namespace std;
 // Rec Sequence LIS
 void solve(){
     int n; cin >> n;
@@ -14,7 +16,7 @@ void solve(){
             dp[i] = ++L;
         }
         else {
-            auto it = lower_bound(all(mono), v[i]);
+            auto it = lower_bound(mono.begin(), mono.end(), v[i]);
             *it = v[i];
             dp[i] = it - mono.begin() + 1;
         }
@@ -27,7 +29,7 @@ void solve(){
             L--;
         }
     }
-    reverse(all(ans));
+    reverse(ans.begin(), ans.end());
     for(auto i : ans){
         cout << i << " ";
     }

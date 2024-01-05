@@ -1,6 +1,9 @@
+#include <bits/stdc++.h>
+using namespace std;
 // combine
 // arrange: nested loop exchange
-ll dp[2][1000001];
+int dp[2][1000001];
+const int mod = 1e9 + 7;
 void solve(){
     int n, x; cin >> n >> x;
     vector<int> coin(n + 1);
@@ -25,15 +28,15 @@ void solve(){
     for(int i = 0; i < n; i++){
         cin >> coin[i];
     }
-    ll dp[x+1]; // init(dp, 0);
+    int dp[x+1]; // init(dp, 0);
     dp[0] = 0;
     for(int i = 1; i <= x; i++){
-        dp[i] = llinf;
+        dp[i] = 2e18;
         for(auto &j : coin){
             if(j <= i){
                 dp[i] = min(dp[i], dp[i - j] + 1);
             }
         }
     }
-    cout << (dp[x] == llinf ? -1 : dp[x]);
+    cout << (dp[x] == 2e18 ? -1 : dp[x]);
 }

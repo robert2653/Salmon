@@ -1,8 +1,10 @@
-ll dp[5005][5005];
+#include <bits/stdc++.h>
+using namespace std;
+int dp[5005][5005];
 void solve(){
     int n; cin >> n;
-    ll pref = 0;
-    vector<ll> v(n+1);
+    int pref = 0;
+    vector<int> v(n+1);
     for(int i = 1; i <= n; i++){
         cin >> v[i];
         pref += v[i];
