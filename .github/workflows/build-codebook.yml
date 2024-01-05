@@ -24,6 +24,7 @@ jobs:
         run: |
           wget https://github.com/googlefonts/noto-cjk/raw/main/Sans/Variable/TTF/Mono/NotoSansMonoCJKtc-VF.ttf
           pwd
+          ls
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
