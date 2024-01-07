@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+using namespace std;
 // a^(m-1) ≡ 1 (mod m)
 // a^(m-2) ≡ 1/a (mod m)
 // EXP2: cout << fast_exp(x, fast_exp(y, p, MOD - 1), MOD)
