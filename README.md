@@ -1,5 +1,4 @@
 ## This is Salmon's codebook
----
 - [ ] Trie
 - [ ] Z Algorithm
 - [ ] AC自動機
