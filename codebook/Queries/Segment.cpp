@@ -68,14 +68,13 @@ Node operator+(const Node &a, const Node &b) {
     // tree[now].middle_max = max(max(tree[now].middle_max, tree[now].prefix), tree[now].suffix);
 }
 // ------------------------------------------------------------------------------
+
 // pizza_queries
-// Left(s < t): dis_l = (pizza[s] - s) + t;
-// Right(t < s): dis_r = (pizza[s] + s) - t;
+// 左邊的店(s < t): dis_l = (pizza[s] - s) + t;
+// 右邊的店(t < s): dis_r = (pizza[s] + s) - t;
+// 實作: 建左查詢線段樹跟右查詢線段樹，用最小值pull
+// 答案是 min(left_query(1, s) + t, right_query(s, end) + t);
 
 // List Removals
-// Use seg_tree to maintain how many nums have been selected in the range
-// Use binary_Search to find "mod" nums have been selected before ans
-// if ans - mod == pos, nums[ans] is the answer, and we modify tree[pos]
-
-// polynomial queries
-// Lazy_seg, set under and distance
+// 維護區間內有幾個數字被選過
+// 用二分搜找右區間最小位，使得 ans - query == 1~ans 被選過的數量
