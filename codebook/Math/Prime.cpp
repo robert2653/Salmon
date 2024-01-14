@@ -7,33 +7,26 @@ using namespace std;
 // FacNums = (x+1)(y+1)(z+1)...
 // FacSum = (a^0+a^1...+a^x)(b^0+...+b^y)
 // FacMul = N(x+1)(y+1)(z+1)/2
-int Is_Prime[1000005][2];
 int main(){
-    for(int i = 1; i <= 1000000; i++) Is_Prime[i][0] = 1;
-    Is_Prime[1][0] = 0;
+    vector<int> is_prime(2e6 + 1, 1);
+    // 1 代表是質數，非 1 不是
     for(int i = 2; i <= 1000; i++){
-        if(Is_Prime[i][0]){
+        if(is_prime[i] == 1){
             for(int j = i + i; j <= 1000000; j += i){
-                Is_Prime[j][0] = 0;
-                Is_Prime[j][1] = i;
+                is_prime[j] = i;
             }
         }
     }
     int ans = 1;
     int q; cin >> q;
-    if(q == 1) {
-        cout << 1 << endl;
-        return;
-    }
     map<int, int> mp;
-    while(!Is_Prime[q][0]){
-        mp[Is_Prime[q][1]]++;
-        q /= Is_Prime[q][1];
+    while(is_prime[q] != 1){
+        mp[is_prime[q]]++;
+        q /= is_prime[q];
     }
-    mp[q]++;
-
+    if(q != 1) mp[q]++;
     for(auto [a, b] : mp){
         ans *= b + 1;
     }
-    cout << ans << endl;
+    cout << ans << "\n";
 }
