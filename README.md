@@ -1,5 +1,5 @@
 ## This is Salmon's codebook
-- [ ] Trie
+- [x] Trie
 - [ ] Z Algorithm
 - [ ] AC自動機
 - [ ] 輕重練剖分
