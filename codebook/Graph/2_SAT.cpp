@@ -25,7 +25,7 @@ void rev_dfs(int now){
         }
     }
 }
-void solve(){
+int main(){
     int n, m;
     cin >> m >> n;
     for(int i = 1; i <= m; i++){

@@ -2,38 +2,32 @@
 using namespace std;
 // After each day, print the number of components
 // and the size of the largest component
-const int maxn = 2e5 + 5;
-int ans, mx_sz = 1;
-int boss[maxn];
-int set_sz[maxn];
-int find_boss(int x){
-    if(boss[x] == x) return x;
-    return boss[x] = find_boss(boss[x]);
-}
-void dsu(int x, int y){
-    int boss_x = find_boss(x);
-    int boss_y = find_boss(y);
-    if(boss_x != boss_y){
-        ans--;
-        if(set_sz[boss_x] < set_sz[boss_y]){
-            swap(boss_x, boss_y);
+struct DSU {
+    vector<int> boss, siz;
+    DSU (int n){
+        boss.resize(n + 1);
+        iota(boss.begin(), boss.end(), 0);
+        siz.assign(n + 1, 1);
+    }
+    int find_boss(int x){
+        if(boss[x] == x) return x;
+        return boss[x] = find_boss(boss[x]);
+    }
+    bool same(int x, int y) {
+        return find_boss(x) == find_boss(y);
+    }
+    bool merge(int x, int y){
+        x = find_boss(x);
+        y = find_boss(y);
+        if (x == y) {
+            return false;
         }
-        boss[boss_y] = boss_x;
-        set_sz[boss_x] += set_sz[boss_y];
-        mx_sz = max(mx_sz, set_sz[boss_x]);
+        if(siz[x] < siz[y]) swap(x, y);
+        siz[x] += siz[y];
+        boss[y] = x;
+        return true;
     }
-    cout << ans << " " << mx_sz << endl;
-}
-void solve(){
-    int n, q; cin >> n >> q;
-    ans = n;
-    for(int i = 1; i <= n; i++){
-        boss[i] = i;
-        set_sz[i] = 1;
+    int size(int x){
+        return siz[find_boss(x)];
     }
-    for(int i = 1; i <= q; i++){
-        int x, y;
-        cin >> x >> y;
-        dsu(x, y);
-    }
-}
+};

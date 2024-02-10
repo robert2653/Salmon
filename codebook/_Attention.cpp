@@ -23,9 +23,13 @@ using pbds_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_stati
 template<typename T>
 using pbds_multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
 struct cmp {    // 在有 template 的資結使用
-    bool operator()(const int &a, const int &b){
+    bool operator()(const int &a, const int &b) const {
         return a < b;
-    } // sort, bound 不用 struct
+    }
+    // sort, bound 不用 struct
+    // priority queue 小到大是 > , set 是 <
+    // set 不能 = , multiset 要 = 
+    // 每個元素都要比到，不然會不見
 };
 struct edge {
     int from; int to;
