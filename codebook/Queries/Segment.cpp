@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-template <class Node, class Lazy>
+template <class Node>
 struct Seg {
     int n;
     vector<Node> tree;
-    template <typename T>
-    Seg (vector<T> init_){
+    Seg (vector<Node> init_){
         n = init_.size() - 1;
         tree.resize(4 * n);
         function <void(int, int, int)> build = [&](int now, int l, int r) {
@@ -23,9 +22,7 @@ struct Seg {
     Node query(int l, int r, int ql, int qr, int now){
         int m = (l + r) >> 1;
         if(qr < l || ql > r){
-// ------------------------out of range, return what-------------------------------
-            return {0};
-// --------------------------------------------------------------------------------
+            return Node();
         }
         if(ql <= l && r <= qr){
             return tree[now];
@@ -57,9 +54,14 @@ struct Seg {
 // ------------------------define structure and info plus------------------------
 struct Node {
     int sum;
+    Node () {
+        sum = 0;
+    }
 };
-Node operator+(const Node &a, const Node &b) {
-    return {{a.sum + b.sum}};
+Node operator + (const Node &a, const Node &b) {
+    Node c;
+    c.sum = a.sum + b.sum;
+    return c;
     // use lc、rc to undate now
     // tree[now].sum = tree[lc].sum + tree[rc].sum;
     // tree[now].prefix = max(tree[lc].sum+tree[rc].prefix, tree[lc].prefix);

@@ -7,6 +7,13 @@ struct BIT {
         this->n = n;
         bit.resize(n + 1, 0);
     }
+    BIT(vector<int> &init) {
+        this->n = init.size();
+        bit.resize(n + 1, 0);
+        for (int i = 0; i < n; i++) {
+            modify(i + 1, init[i]);
+        }
+    }
     void modify(int i, int val) {
         for (; i <= n; i += i & -i) {
             bit[i] += val;
@@ -16,6 +23,9 @@ struct BIT {
 	    int ans = 0;
 	    for (; r; r -= r & -r) ans += bit[r];
 	    return ans;
+    }
+    int query(int l, int r) {
+        return query(r) - query(l - 1);
     }
 };
 struct TwoDimensionBIT {
