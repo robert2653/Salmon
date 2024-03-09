@@ -6,7 +6,7 @@ struct LazySeg {
     vector<Node> tree;
     vector<Lazy> lazy;
     template <typename T>
-    LazySeg (vector<T> init_){
+    LazySeg (vector<T> init_){  // 必須是 1-based
         n = init_.size() - 1;
         tree.resize(4 * n);
         lazy.resize(4 * n);

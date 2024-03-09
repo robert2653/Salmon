@@ -7,7 +7,7 @@ struct BIT {
         this->n = n;
         bit.resize(n + 1, 0);
     }
-    BIT(vector<int> &init) {
+    BIT(vector<int> &init) {    // 必須是 0-based
         this->n = init.size();
         bit.resize(n + 1, 0);
         for (int i = 0; i < n; i++) {
@@ -19,7 +19,7 @@ struct BIT {
             bit[i] += val;
         }
     }
-    int query(int r) {
+    int query(int r) {  // 查詢時是 1-based
 	    int ans = 0;
 	    for (; r; r -= r & -r) ans += bit[r];
 	    return ans;
