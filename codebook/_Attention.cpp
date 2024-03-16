@@ -22,6 +22,7 @@ template<typename T>
 using pbds_set = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template<typename T>
 using pbds_multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
 struct cmp {    // 在有 template 的資結使用
     bool operator()(const int &a, const int &b) const {
         return a < b;
@@ -30,27 +31,24 @@ struct cmp {    // 在有 template 的資結使用
     // priority queue 小到大是 > , set 是 <
     // set 不能 = , multiset 要 = 
     // 每個元素都要比到，不然會不見
+    // pbds_multiset 的 upper_bound 跟 lower_bound 功能相反, 如果要 find, 插入 inf 後使用 upper_bound
+    // 內建 multiset 可以跟 set 一樣正常使用, 自定義比較結構就比照以上
 };
-struct edge {
-    int from; int to;
-    int weight;
-};
-struct node {
-    int sum;
-};
+
 const int llinf = 4e18;
 const int inf = 2e9;
 const int mod = 1e9 + 7;
 const int maxn = 2e5 + 5;
-void solve(){
+
+void solve() {
 
 }
-signed main(){
+signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(nullptr);
     int t = 1;
     cin >> t;
-    while(t--){
+    while (t--) {
         solve();
     }
 }

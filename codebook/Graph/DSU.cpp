@@ -1,10 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-// After each day, print the number of components
-// and the size of the largest component
 struct DSU {
     vector<int> boss, siz;
-    DSU (int n){
+    DSU (int n){    // 1 based
         boss.resize(n + 1);
         iota(boss.begin(), boss.end(), 0);
         siz.assign(n + 1, 1);

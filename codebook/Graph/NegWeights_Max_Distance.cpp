@@ -1,16 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
+// CSES High Score
 const int maxn = 2505;
-typedef struct {
-    int u, v, w;
-} edge;
-int m, n;
-vector<edge> graph;
+vector<array<int, 3>> graph;    // u, v, w
 vector<pair<int, int>> adj[maxn];
 vector<int> rev_adj[maxn];
 int dis[maxn];
-bool vis[maxn] = {0};
-bool nvis[maxn] = {0};
+bool vis[maxn];
+bool nvis[maxn];
 void dfs(int par, int now){
     if (vis[now] == 1) return;
     vis[now] = 1;
@@ -30,7 +27,7 @@ void rev_dfs(int par, int now){
     }
 }
 void solve(){
-    cin >> n >> m;
+    int n, m; cin >> n >> m;
     for(int i = 1; i <= m; i++){
         int u, v, w;
         cin >> u >> v >> w;
@@ -51,7 +48,7 @@ void solve(){
     rev_dfs(0, n);
     for (auto [u, v, w] : graph){
         if (dis[u] + w > dis[v] && nvis[u] && nvis[v] && vis[u] && vis[v]){
-            cout << -1;
+            cout << -1; // 無限多的分數
             return;
         }
     }

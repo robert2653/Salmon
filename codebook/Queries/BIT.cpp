@@ -1,17 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct BIT {
+struct BIT {    // BIT 都是 1-based 的查詢
     int n;
     vector<int> bit;
-    BIT(int n) {
+    BIT(int n) {    // 有幾個數
         this->n = n;
         bit.resize(n + 1, 0);
     }
-    BIT(vector<int> &init) {    // 必須是 0-based
-        this->n = init.size();
+    BIT(vector<int> &init) {    // 必須是 1-based
+        this->n = init.size() - 1;
         bit.resize(n + 1, 0);
-        for (int i = 0; i < n; i++) {
-            modify(i + 1, init[i]);
+        for (int i = 1; i <= n; i++) {
+            modify(i, init[i]);
         }
     }
     void modify(int i, int val) {
@@ -19,7 +19,7 @@ struct BIT {
             bit[i] += val;
         }
     }
-    int query(int r) {  // 查詢時是 1-based
+    int query(int r) {
 	    int ans = 0;
 	    for (; r; r -= r & -r) ans += bit[r];
 	    return ans;

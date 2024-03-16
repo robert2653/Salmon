@@ -3,16 +3,6 @@ using namespace std;
 int main() {
     int n;
     vector<vector<int>> adj(n + 1, vector<int>());
-
-    // dfs_tree
-    auto dfs_tree = [&](auto self, int now, int par) -> void {
-        for (auto &nxt : adj[now]) {
-            if (nxt == par) continue;
-            self(self, nxt, now);
-        }
-    };
-    dfs_tree(dfs_tree, 1, -1);
-
     // dfs_graph
     vector<bool> vis(n + 1, 0);
     auto dfs = [&](auto self, int u) -> void {
@@ -24,7 +14,6 @@ int main() {
         }
     };
     dfs(dfs, 1);
-
     // bfs
     vector<int> deep(n + 1, 1e9);
     queue<int> q;
