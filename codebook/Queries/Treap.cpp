@@ -3,16 +3,16 @@ using namespace std;
 struct Treap {
     Treap *l, *r;
     int pri, subsize; char val; bool rev_valid;
-    Treap(int val){
+    Treap(int val) {
         this->val = val;
         pri = rand();
         l = r = nullptr;
         subsize = 1; rev_valid = 0;
     }
-    void pull(){    // update subsize or other information
+    void pull() {    // update subsize or other information
         subsize = 1;
-        for(auto i : {l, r}){
-            if(i) subsize += i->subsize;
+        for(auto i : {l, r}) {
+            if (i) subsize += i->subsize;
         }
     }
 };
@@ -21,19 +21,19 @@ int size(Treap *treap) {
     return treap->subsize;
 }
 // lazy
-void push(Treap *t){
-    if(!t) return;
-    if(t->rev_valid){
+void push(Treap *t) {
+    if (!t) return;
+    if (t->rev_valid) {
         swap(t->l, t->r);
-        if(t->l) t->l->rev_valid ^= 1;
-        if(t->r) t->r->rev_valid ^= 1;
+        if (t->l) t->l->rev_valid ^= 1;
+        if (t->r) t->r->rev_valid ^= 1;
     }
     t->rev_valid = false;
 }
-Treap *merge(Treap *a, Treap *b){
-    if(!a || !b) return a ? a : b;
+Treap *merge(Treap *a, Treap *b) {
+    if (!a || !b) return a ? a : b;
     // push(a); push(b);    // lazy
-    if(a->pri > b->pri){
+    if (a->pri > b->pri) {
         a->r = merge(a->r, b);  // a->r = new, inorder, make sense
         a->pull();
         return a;
@@ -61,22 +61,22 @@ pair<Treap*, Treap*> split(Treap *root, int k) {    // find 1~k
 		return {a, root};
 	}
 }
-void Print(Treap *t){
-    if(t){
+void Print(Treap *t) {
+    if (t) {
         // push(t);    // lazy
         Print(t->l);
         cout << t->val;
         Print(t->r);
     }
 }
-void substring_rev(){
+void substring_rev() {
     int n, m; cin >> n >> m;
     Treap *root = nullptr;
     string str; cin >> str;
-    for(auto c : str){
+    for(auto c : str) {
         root = merge(root, new Treap(c));
     }
-    for(int i = 1; i <= m; i++){
+    for(int i = 1; i <= m; i++) {
         int x, y; cin >> x >> y;
         auto [a, b] = split(root, x-1); // a: 1~x-1, b: x~n
         auto [c, d] = split(b, y-x+1);  // Use b to split

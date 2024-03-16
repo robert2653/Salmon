@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 vector<array<int, 3>> graph;    // u, v, w
-int main(){
+int main() {
     int src = 0;
     int n, m;    cin >> n >> m;
     vector<int> par(n + 1), dis(n + 1, 1e9);
@@ -14,7 +14,7 @@ int main(){
     for (int i = 0; i <= n; i++) {
         src = 0;
         for (auto [u, v, w] : graph) {
-            if(dis[v] > dis[u] + w){
+            if (dis[v] > dis[u] + w) {
                 dis[v] = dis[u] + w;
                 par[v] = u;
                 src = v;
@@ -31,7 +31,7 @@ int main(){
         }
         ans.push_back(src);
         reverse(ans.begin(), ans.end());
-        for (auto i : ans){
+        for (auto i : ans) {
             cout << i << " ";
         }
     }

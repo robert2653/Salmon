@@ -30,7 +30,7 @@ struct KMP {
         return match;
     }
 };
-int main(){
+int main() {
     string s = "xxtxxtxtx";
     string sub = "tx";
     KMP kmp(sub);

@@ -6,9 +6,9 @@ int main() {
     // dfs_graph
     vector<bool> vis(n + 1, 0);
     auto dfs = [&](auto self, int u) -> void {
-        if(vis[u]) return;
+        if (vis[u]) return;
         vis[u] = true;
-        for(auto v: adj[u]){
+        for (auto v: adj[u]) {
             if(vis[v]) continue;
             self(self, v);
         }
@@ -21,9 +21,9 @@ int main() {
         vis[u] = true;
         deep[u] = 0;
         q.push(u);
-        while(!q.empty()){
+        while (!q.empty()) {
             int now = q.front(); q.pop();
-            for(auto nxt : adj[now]){
+            for (auto nxt : adj[now]) {
                 if(vis[nxt]) continue;
                 vis[nxt] = true;
                 deep[nxt] = deep[now] + 1;

@@ -1,23 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
-int dp[5005][5005];
 void solve(){
     int n; cin >> n;
+    vector<vector<int>> dp(n + 1, vector<int>(n + 1));
     int pref = 0;
-    vector<int> v(n+1);
-    for(int i = 1; i <= n; i++){
+    vector<int> v(n + 1);
+    for (int i = 1; i <= n; i++) {
         cin >> v[i];
         pref += v[i];
     }
     // dp[i][j] = max_diff(i to j);
-    for(int i = n; i > 0; i--){
-        for(int j = 1; j <= n; j++){
-            if(i > j) continue;
-            else if(i == j){
+    for (int i = n; i > 0; i--) { 
+        for (int j = 1; j <= n; j++) {
+            if (i > j) continue;
+            else if (i == j) {
                 dp[i][j] = v[i];
             }
             else {
-                dp[i][j] = max(v[i] - dp[i+1][j], v[j] - dp[i][j-1]);   // i+1, j-1, care dp's order
+                dp[i][j] = max(v[i] - dp[i + 1][j], v[j] - dp[i][j - 1]);   // i+1, j-1, care dp's order
             }
         }
     }

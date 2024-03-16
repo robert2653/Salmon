@@ -32,8 +32,8 @@ struct Trie {
     }
     bool is_in_trie(string &s) {
         trie_node *cur = root;
-        for(int i = 0; i < s.size(); i++) {
-            if(cur->children[s[i] - 'a'] == nullptr) return false;
+        for (int i = 0; i < s.size(); i++) {
+            if (cur->children[s[i] - 'a'] == nullptr) return false;
             cur = cur->children[s[i] - 'a'];
         }
         return true;
@@ -41,16 +41,16 @@ struct Trie {
     int search_i_start(string &s, int i, vector<int> &dp) {
         trie_node *cur = root;
         int sz = s.size(), ans = 0;
-        for(int j = i; j < sz; j++) {
-            if(cur->children[s[j] - 'a'] == nullptr) return ans;
+        for (int j = i; j < sz; j++) {
+            if (cur->children[s[j] - 'a'] == nullptr) return ans;
             cur = cur->children[s[j] - 'a'];
-            if(cur->is_word) 
+            if (cur->is_word) 
                 (ans += dp[j + 1]) %= mod;
         }
         return ans;
     }
 };
-void solve(){
+void solve() {
     // 找到 sub 集合裡，可以重複用，組成 s 的組數
     Trie trie;
     string s; cin >> s;
@@ -59,22 +59,22 @@ void solve(){
     // 找到有結尾為 stop 的 dp[i] += dp[j + 1]
     int n; cin >> n;
     vector<int> dp(sz + 1, 0);
-    for(int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++) {
         string sub; cin >> sub;
         trie.insert(sub);
     }
     dp[sz] = 1;
-    for(int i = sz - 1; i >= 0; i--){
+    for (int i = sz - 1; i >= 0; i--) {
         dp[i] = trie.search_i_start(s, i, dp);
     }
     cout << dp[0] << endl;
 }
-signed main(){
+signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(nullptr);
     int t = 1;
     // cin >> t;
-    while(t--){
+    while (t--) {
         solve();
     }
 }

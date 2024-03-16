@@ -6,15 +6,15 @@ int n, m;
 const int maxn = 1e5 + 5;
 vector<set<int>> adj;
 vector<int> in;
-void dfs(int now, vector<int> &road){
-    while(!adj[now].empty()){
+void dfs(int now, vector<int> &road) {
+    while (!adj[now].empty()) {
         int nxt = *adj[now].begin();
         adj[now].erase(nxt);
         dfs(nxt, road);
     }
     road.push_back(now);
 }
-void solve(){
+void solve() {
     cin >> n >> m;
     in.assign(n + 1, 0);
     adj.assign(n + 1, set<int>());
@@ -33,7 +33,7 @@ void solve(){
     }
     vector<int> road;
     dfs(1, road);
-    if(road.size() != m + 1){
+    if (road.size() != m + 1) {
         cout << "IMPOSSIBLE";
         return;
     }

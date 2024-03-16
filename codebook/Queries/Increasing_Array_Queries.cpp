@@ -13,20 +13,20 @@ int query(int a, int b) {
 	for (a--; a; a -= a&-a) ans -= BIT[a];
 	return ans;
 }
-void solve(){
+void solve() {
     cin >> n >> q;
-    for(int i = 1; i <= n; i++){
+    for (int i = 1; i <= n; i++) {
         cin >> nums[i];
         prefix[i] = prefix[i-1] + nums[i];
     }
     nums[n + 1] = 1e9;
     prefix[n + 1] = 2e18;
-    for(int i = 1; i <= q; i++){
+    for (int i = 1; i <= q; i++) {
         int a, b; cin >> a >> b;
         queries[a].push_back({b, i});
     }
     deque<int> mono; mono.push_front(n+1);
-    for(int i = n; i > 0; i--){ // question from start at n to start at 1
+    for (int i = n; i > 0; i--) { // question from start at n to start at 1
         while (nums[i] >= nums[mono.front()]) {
 		    update(mono.front(), -contrib[mono.front()]);   // mono.front's contrib become 0
 		    mono.pop_front();
@@ -42,7 +42,7 @@ void solve(){
                           - (prefix[j.first] - prefix[mono[pos]]);
 		}
 	}
-    for(int i = 1; i <= q; i++){
+    for (int i = 1; i <= q; i++) {
         cout << ans[i] << endl;
     }
 }

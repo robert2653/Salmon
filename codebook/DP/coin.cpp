@@ -9,12 +9,12 @@ void coin_combination_II(){
     // dp[i][j] 為考慮前 i 個硬幣，組合為 i 的組數
     vector<vector<int>> dp(2, vector<int>(x + 1, 0));
     dp[0][0] = 1;
-    for(int i = 1; i <= n; i++) cin >> coin[i];
-    for(int i = 1; i <= n; i++){
-        for(int j = 0; j <= x; j++){
+    for (int i = 1; i <= n; i++) cin >> coin[i];
+    for (int i = 1; i <= n; i++){
+        for (int j = 0; j <= x; j++) {
             // 壓到 2 * n
             dp[i & 1][j] = dp[!(i & 1)][j];
-            if(j >= coin[i]){
+            if (j >= coin[i]) {
                 (dp[i & 1][j] += dp[i & 1][j - coin[i]]) %= mod;
             }
         }
@@ -25,10 +25,10 @@ void minimize_coins_nums(){
     // 有 n 種錢幣，求組合為 x 的最小硬幣數
     int n, x; cin >> n >> x;
     vector<int> coin(n);
-    for(int i = 0; i < n; i++) cin >> coin[i];
+    for (int i = 0; i < n; i++) cin >> coin[i];
     // dp[i] 是組合為 i 的最小硬幣數
     vector<int> dp(x + 1, 0);
-    for(int i = 1; i <= x; i++){
+    for (int i = 1; i <= x; i++) {
         dp[i] = 2e9;
         for(auto &j : coin){
             if(j <= i){

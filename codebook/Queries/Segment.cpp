@@ -4,7 +4,7 @@ template <class Node>
 struct Seg {
     int n;
     vector<Node> tree;
-    Seg (vector<Node> init_){
+    Seg (vector<Node> init_) {
         n = init_.size() - 1;
         tree.resize(4 * n);
         function <void(int, int, int)> build = [&](int now, int l, int r) {
@@ -19,29 +19,29 @@ struct Seg {
         };
         build(1, 1, n);
     }
-    Node query(int l, int r, int ql, int qr, int now){
+    Node query(int l, int r, int ql, int qr, int now) {
         int m = (l + r) >> 1;
-        if(qr < l || ql > r){
+        if (qr < l || ql > r) {
             return Node();
         }
-        if(ql <= l && r <= qr){
+        if (ql <= l && r <= qr) {
             return tree[now];
         }
 	    return query(l, m, ql, qr, now << 1) + query(m + 1, r, ql, qr, (now << 1) + 1);
     }
     Node query(int l, int r) { return query(1, n, l, r, 1); }
-    void pull(int now){
+    void pull(int now) {
         tree[now] = tree[now << 1] + tree[(now << 1) + 1];
     }
-    void modify(int l, int r, int idx, int now, int add){
-        if(l == r){
+    void modify(int l, int r, int idx, int now, int add) {
+        if (l == r) {
 // ------------------------------how to modify ?-----------------------------------
             tree[now].sum = add;
 // --------------------------------------------------------------------------------
             return;
         }
         int m = (l + r) >> 1;
-        if(idx <= m){
+        if (idx <= m) {
             modify(l, m, idx, now << 1, add);
         }
         else {

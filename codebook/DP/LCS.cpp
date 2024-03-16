@@ -9,9 +9,9 @@ int main(){
     int L = 0;
     vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
     
-    for(int i = 1; i <= m; i++){
-        for(int j = 1; j <= n; j++){
-            if(s1[i] == s2[j]){
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (s1[i] == s2[j]) {
                 dp[i][j] = dp[i-1][j-1] + 1;
             }
             else {
@@ -23,21 +23,21 @@ int main(){
     cout << length << "\n";
     vector<char> s(length);
     // along to dp to trace back
-    while(m >= 1 && n >= 1){
-        if(s1[m] == s2[n]){
+    while (m >= 1 && n >= 1) {
+        if (s1[m] == s2[n]) {
             s[length - 1] = s1[m];
             m--;
             n--;
             length--;
         }
         else {
-            if(dp[m-1][n] > dp[m][n-1]){
+            if (dp[m - 1][n] > dp[m][n - 1]){
                 m--;
             }
             else n--;
         }
     }
-    for(auto c : s){
+    for (auto c : s) {
         cout << c;
     }
 }

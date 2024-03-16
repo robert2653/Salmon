@@ -2,7 +2,7 @@
 using namespace std;
 #define int long long
 const int inf = 1e18;
-int main(){
+int main() {
     int n, m, q; cin >> n >> m >> q;
     vector<vector<int>> graph(n + 1, vector<int>(n + 1, inf));
     vector<vector<int>> dis(n + 1, vector<int>(n + 1));
