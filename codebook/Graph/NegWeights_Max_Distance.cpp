@@ -1,56 +1,42 @@
 #include <bits/stdc++.h>
+#define int long long
 using namespace std;
 // CSES High Score
 const int maxn = 2505;
-vector<array<int, 3>> graph;    // u, v, w
-vector<pair<int, int>> adj[maxn];
-vector<int> rev_adj[maxn];
-int dis[maxn];
-bool vis[maxn];
-bool nvis[maxn];
-void dfs(int par, int now) {
-    if (vis[now] == 1) return;
-    vis[now] = 1;
-    for (auto [i, w] : adj[now]) { 
-        if (i != par) {
-            dfs(now, i);
-        }
-    }
+
+void dfs(int u, vector<int> &vis, vector<vector<int>> &adj) {
+	if (vis[u]) return;
+	vis[u] = 1;
+	for (int v : adj[u]) {
+		dfs(v, vis, adj);
+	}
 }
-void rev_dfs(int par, int now) {
-    if (nvis[now] == 1) return;
-    nvis[now] = 1;
-    for (auto i : rev_adj[now]) {
-        if (i != par) {
-            rev_dfs(now, i);
-        }
-    }
+void bellman_ford(int n, int s, vector<int> &vis, vector<int> &dis, vector<array<int, 3>> edge, vector<vector<int>> &adj) {
+	fill(dis.begin(), dis.end(), -1e18);
+	dis[s] = 0;
+	for (int i = 1; i <= n; i++) {
+		for (auto [u, v, w] : edge) {
+			if (dis[u] != -1e18 && dis[v] < dis[u] + w) {
+				dis[v] = dis[u] + w;
+				if (i == n) {
+					dfs(v, vis, adj);
+				}
+			}
+		}
+	}
 }
-void solve() {
+signed main() {
     int n, m; cin >> n >> m;
-    for (int i = 1; i <= m; i++) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        graph.push_back({u, v, w});
-        adj[u].push_back({v, w});
-        rev_adj[v].push_back(u);
-    }
-    for (int i = 1; i <= n; i++) dis[i] = -1e9;
-    dis[1] = 0;
-    for (int i = 1; i <= n; i++) {
-        for (auto [u, v, w] : graph) {
-            if (dis[u] + w > dis[v]) {
-                dis[v] = dis[u] + w;
-            }
-        }
-    }
-    dfs(0, 1);
-    rev_dfs(0, n);
-    for (auto [u, v, w] : graph) {
-        if (dis[u] + w > dis[v] && nvis[u] && nvis[v] && vis[u] && vis[v]) {
-            cout << -1; // 無限多的分數
-            return;
-        }
-    }
-    cout << dis[n];
+    vector<array<int, 3>> edge;
+    vector<vector<int>> adj(n + 1);
+    vector<int> dis(n + 1), vis(n + 1);
+	while (m--) {
+		int u, v, w;
+		cin >> u >> v >> w;
+		edge.push_back({u, v, w});
+		adj[u].push_back(v);
+	}
+	bellman_ford(n, 1, vis, dis, edge, adj);
+	if (vis[n]) cout << -1;
+	else cout << dis[n];
 }

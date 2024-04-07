@@ -9,12 +9,10 @@ int main(){
     vector<int> Price(n + 1, 0); 
     
     for(int i = 1; i <= n; i++){
-        int tmp; cin >> tmp;
-        Price[i] = tmp;
+        cin >> Price[i];
     }
     for(int i = 1; i <= n; i++){
-        int tmp; cin >> tmp;
-        Page[i] = tmp;
+        cin >> Page[i];
     }
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= bud; j++) {

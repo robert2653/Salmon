@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "*.embeddedhtml": "html",
-        "random": "cpp",
-        "deque": "cpp",
-        "string": "cpp",
-        "vector": "cpp"
-    }
-}
