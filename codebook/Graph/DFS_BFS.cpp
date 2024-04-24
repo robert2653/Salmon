@@ -9,7 +9,6 @@ int main() {
         if (vis[u]) return;
         vis[u] = true;
         for (auto v: adj[u]) {
-            if(vis[v]) continue;
             self(self, v);
         }
     };
@@ -24,7 +23,7 @@ int main() {
         while (!q.empty()) {
             int now = q.front(); q.pop();
             for (auto nxt : adj[now]) {
-                if(vis[nxt]) continue;
+                if (vis[nxt]) continue;
                 vis[nxt] = true;
                 deep[nxt] = deep[now] + 1;
                 q.push(nxt);

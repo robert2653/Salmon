@@ -16,7 +16,7 @@ void dijkstra() {
     pq.push({0, 1, 0});
     while (!pq.empty()) {
         auto [dist, u, us] = pq.top(); pq.pop();
-        if (dis[u][us] < dist) continue; // is out of time, pass
+        if (dis[u][us] < dist) continue;
         if (us) {
             for (auto [v, w] : adj[u]) {
                 if (dis[u][1] + w < dis[v][1]) {

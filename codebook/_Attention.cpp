@@ -1,14 +1,10 @@
-// Construct VScode
-// 1. instaint vscode & msys2, check desktop path of vscode
-// 2. open mingw64, not ucrt64, "pacman -S --needed base-devel mingw-w64-x86_64-toolchain"
-// 3. add C:\\msys64\\mingw64\\bin to environment path
-// 4. (re)open vscode, instaint C/C++, run, choose g++
-// 5. open settings -> compiler -> add compilerPath "C:\\msys64\\mingw64\\bin\\g++.exe"
+// 如何安裝 vscode
+// 1. 下載 vscode & msys2
+// 2. 在跳出的 terminal 中 / 或打開 ucrt64，打上 "pacman -S --needed base-devel mingw-w64-x86_64-toolchain"
+// 3. 環境變數加上 C:\\msys64\\ucrt64\\bin
+// 4. 重開 vscode, 載 C/C++, 運行, 編譯器選擇 g++
+// 5. 打開 settings -> compiler -> add compilerPath -> 在 "" 裡打上 C:\\msys64\\ucrt64\\bin\\g++.exe
 
-// Make Codebook
-// notebook-generator ./ --author "Salmon" --initials Salmon --columns 3 --output "CodeBook.pdf" --size 8
-
-// Init
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -43,6 +39,7 @@ const int maxn = 2e5 + 5;
 void solve() {
 
 }
+
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(nullptr);
