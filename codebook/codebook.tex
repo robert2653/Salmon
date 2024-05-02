@@ -154,7 +154,7 @@ stringstyle=\itshape\color{Green4},
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\contentsname}{Contents} 
-\renewcommand{\inputcode}[2]{
+\newcommand{\inputcode}[2]{
     \subsection[#1]{#1 \footnotesize{[\texttt{\captureshell{cpp #2 -dD -P -fpreprocessed | tr -d '[:space:]' | md5sum | cut -c-6}}]}}
     \lstinputlisting{#2}
 }
