@@ -23,7 +23,6 @@ jobs:
       - name: Install Chinese Fonts
         run: |
           wget https://github.com/googlefonts/noto-cjk/raw/main/Sans/Variable/TTF/Mono/NotoSansMonoCJKtc-VF.ttf
-          fc-query ./NotoSansMonoCJKtc-VF.ttf
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
@@ -40,5 +39,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Auto build, $(date +'%Y-%m-%d_%H:%M:%S')"
+          git commit -m "Auto build, $(TZ='Asia/Shanghai' date +'%Y-%m-%d_%H:%M:%S')"
           git push
