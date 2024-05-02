@@ -20,18 +20,16 @@ jobs:
         run: |
           wget https://assets.ubuntu.com/v1/0cef8205-ubuntu-font-family-0.83.zip -O ubuntu-font.zip
           unzip ubuntu-font.zip
-      - name: Install Chinese Fonts
-        run: |
-          wget https://github.com/googlefonts/noto-cjk/raw/main/Sans/Variable/TTF/Mono/NotoSansMonoCJKtc-VF.ttf
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
           root_file: source/codebook/codebook.tex
           latexmk_use_xelatex: true
+          latexmk_shell_escape: true
           work_in_root_file_dir: true
+          extra_system_packages: "gcc g++"
           extra_fonts: |
             ./ubuntu-font-family-0.83/*.ttf
-            ./*.ttf
       - name: Push codebook.pdf
         run: |
           cp source/codebook/codebook.pdf pdf/codebook.pdf
@@ -39,5 +37,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Auto build, $(TZ='Asia/Shanghai' date +'%Y-%m-%d_%H:%M:%S')"
+          git commit -m "Auto build, $(date +'%Y-%m-%d_%H:%M:%S')"
           git push
