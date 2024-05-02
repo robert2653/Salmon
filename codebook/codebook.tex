@@ -18,6 +18,7 @@
 \usepackage{amsmath}
 \usepackage[CheckSingle, CJKmath]{xeCJK}
 \usepackage{savetrees}
+\usepackage{xeCJK}   %中文字
 \usepackage{array}
 \usepackage{xparse}
 % \usepackage{CJKulem}
@@ -149,11 +150,11 @@ stringstyle=\itshape\color{Green4},
 \pagestyle{fancy}
 \fancyfoot{}
 %\fancyfoot[R]{\includegraphics[width=20pt]{ironwood.jpg}}
-\fancyhead[L]{National Taiwan University 8BQube}
+\fancyhead[L]{National  Chung  Cheng  University  Salmon}
 \fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\contentsname}{Contents} 
-\newcommand{\inputcode}[2]{
+\renewcommand{\inputcode}[2]{
     \subsection[#1]{#1 \footnotesize{[\texttt{\captureshell{cpp #2 -dD -P -fpreprocessed | tr -d '[:space:]' | md5sum | cut -c-6}}]}}
     \lstinputlisting{#2}
 }
