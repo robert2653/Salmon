@@ -1,34 +1,34 @@
 \begin{itemize}
 \item 數論分塊可以快速計算一些含有除法向下取整的和式，就是像 $\sum_{i = 1} ^ {n} f(i) g(\left\lfloor\dfrac ni\right\rfloor)$ 的和式。當可以在 $O(1)$ 內計算 $f(r) - f(l)$ 或已經預處理出f的前綴和時，數論分塊就可以在 $O(\sqrt n)$ 的時間內計算上述和式的值。
-% \item 迪利克雷捲積 $h(x) = \sum_{d \mid x} f(d) g(\frac{x}{d})$
-% \item 積性函數
-%     \begin{itemize}
-%         \item 莫比烏斯函數
-%         \begin{enumerate}
-%             \item 
-%             $$ \begin{aligned}
-%                 \sum_{d \mid n} \mu (d)
-%                 &=
-%                 \begin{cases}
-%                     1 & \text{for} n = 1\\
-%                     0 & \text{for} n \neq 0
-%                 \end{cases}
-%             \end{aligned} $$
+\item 迪利克雷捲積 $h(x) = \sum_{d \mid x} f(d) g(\frac{x}{d})$
+\item 積性函數
+    \begin{itemize}
+        \item 莫比烏斯函數
+        \begin{enumerate}
+            \item 
+            $$ \begin{aligned}
+                \sum_{d \mid n} \mu (d)
+                &=
+                \begin{cases}
+                    1 & \text{for} n = 1\\
+                    0 & \text{for} n \neq 0
+                \end{cases}
+            \end{aligned} $$
 
-%             \item $\mu$ 是常數函數 $1$ 的反元素\\
-%             $=> \mu \ast 1 = \epsilon, \epsilon (n) \text{只在} n = 1 \text{時為 1，其餘情況皆為 0}$
-%         \end{enumerate}
+            \item $\mu$ 是常數函數 $1$ 的反元素\\
+            $=> \mu \ast 1 = \epsilon, \epsilon (n) \text{只在} n = 1 \text{時為 1，其餘情況皆為 0}$
+        \end{enumerate}
 
-%         \item $\phi$ 歐拉函數: $x$ 以下與 $x$ 互質的數量
-%         $$ \begin{aligned}
-%             \phi \ast 1
-%             &= \sum_{d \mid n} \phi(\dfrac {n}{d}) \text{質因數分解}\\
-%             &= \sum_{i = 0} ^ {c} \phi(p ^ i)\\
-%             &= 1 + p^0(p-1) + p^1(p-1) + ... + p^{c-1}(p-1)\\
-%             &= p^c\\
-%             &= id
-%         \end{aligned} $$
-%     \end{\itemize}
+        \item $\phi$ 歐拉函數: $x$ 以下與 $x$ 互質的數量
+        $$ \begin{aligned}
+            \phi \ast 1
+            &= \sum_{d \mid n} \phi(\dfrac {n}{d}) \text{質因數分解}\\
+            &= \sum_{i = 0} ^ {c} \phi(p ^ i)\\
+            &= 1 + p^0(p-1) + p^1(p-1) + ... + p^{c-1}(p-1)\\
+            &= p^c\\
+            &= id
+        \end{aligned} $$
+    \end{\itemize}
 
 \item 莫比烏斯反演公式
 \begin{itemize}
