@@ -20,6 +20,9 @@ jobs:
         run: |
           wget https://assets.ubuntu.com/v1/0cef8205-ubuntu-font-family-0.83.zip -O ubuntu-font.zip
           unzip ubuntu-font.zip
+      - name: Install Chinese Fonts
+        run: |
+          wget https://github.com/googlefonts/noto-cjk/raw/main/Sans/Variable/TTF/Mono/NotoSansMonoCJKtc-VF.ttf
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
