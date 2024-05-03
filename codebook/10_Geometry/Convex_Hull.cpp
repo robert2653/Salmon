@@ -1,5 +1,5 @@
 vector<pii> P, L, U;
-ll cross(pii o, pii a, pii b){ // OA OB >0 counterclock
+ll cross(pii o, pii a, pii b){ // OA OB > 0 counterclock
     return (a.first - o.first) * (b.second - o.second) - (a.second-o.second) * (b.first-o.first);
 }
 ll Andrew_monotone_chain(ll n){
