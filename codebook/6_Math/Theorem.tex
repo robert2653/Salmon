@@ -5,7 +5,7 @@
     \begin{itemize}
         \item 莫比烏斯函數
             \begin{enumerate}
-                \item 
+                \item 定義
                 $$ \begin{aligned}
                     \sum_{d \mid n} \mu (d)
                     &=
@@ -15,8 +15,7 @@
                     \end{cases}
                 \end{aligned} $$
 
-                \item
-                $\mu$ 是常數函數 $1$ 的反元素\\
+                \item $\mu$ 是常數函數 $1$ 的反元素\\
                 $\Rightarrow \mu \ast 1 = \epsilon$，$\epsilon (n) \text{只在} n = 1 \text{時為 1，其餘情況皆為 0。}$
             \end{enumerate}
 
@@ -39,7 +38,7 @@
 
 \item 例子
 $$ \begin{aligned}
-    \sum_{i = a}^{b} \sum_{j = c}^{d} [gcd(i, j) = k]\\
+    &\sum_{i = a}^{b} \sum_{j = c}^{d} [gcd(i, j) = k]\\
     &\Rightarrow \sum_{i = 1}^{x} \sum_{j = 1}^{y} [gcd(i, j) = k]\\
     &= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \epsilon(gcd(i, j))\\
     &= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \sum_{d \mid gcd(i, j)} \mu(d)\\
