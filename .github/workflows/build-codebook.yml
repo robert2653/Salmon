@@ -23,6 +23,7 @@ jobs:
       - name: Install Chinese Fonts
         run: |
           wget https://github.com/notofonts/noto-cjk/raw/main/Sans/Variable/TTF/NotoSansCJKtc-VF.ttf -O NotoSansCJKtc-VF.ttf
+          sudo apt-get install texlive-full
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
