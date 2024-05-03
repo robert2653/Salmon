@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-// a^(m-1) ≡ 1 (mod m)
-// a^(m-2) ≡ 1/a (mod m)
+// a^(m-1) {\triple_equal} 1 (mod m)
+// a^(m-2) {\triple_equal} 1/a (mod m)
 // EXP2: cout << fast_exp(x, fast_exp(y, p, MOD - 1), MOD)
 // Filter + DP; DP save min factor，recur，factor decomposition
 // FacNums = (x+1)(y+1)(z+1)...
