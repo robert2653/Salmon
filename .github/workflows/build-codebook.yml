@@ -22,7 +22,7 @@ jobs:
           unzip ubuntu-font.zip
       - name: Install Chinese Fonts
         run: |
-          wget https://github.com/googlefonts/noto-cjk/raw/main/Sans/Variable/OTF/Mono/NotoSansMonoCJKtc-VF.otf
+          wget https://github.com/googlefonts/noto-cjk/raw/main/Sans/Variable/TTF/Mono/NotoSansMonoCJKtc-VF.ttf
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
@@ -33,7 +33,7 @@ jobs:
           extra_system_packages: "gcc g++"
           extra_fonts: |
             ./ubuntu-font-family-0.83/*.ttf
-            ./*.otf
+            ./*.ttf
       - name: Push codebook.pdf
         run: |
           cp source/codebook/codebook.pdf pdf/codebook.pdf
