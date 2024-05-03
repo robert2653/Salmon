@@ -7,7 +7,7 @@
         \begin{enumerate}
             \item 
             $$ \begin{aligned}
-                \sum_{d | n} \mu (d)
+                \sum_{d \| n} \mu (d)
                 &=
                 \begin{cases}
                     1 & \text{for} n = 1\\
@@ -22,7 +22,7 @@
         \item $\phi$ 歐拉函數: $x$ 以下與 $x$ 互質的數量
         $$ \begin{aligned}
             \phi \ast 1
-            &= \sum_{d | n} \phi(\dfrac {n}{d}) \text{質因數分解}\\
+            &= \sum_{d \| n} \phi(\dfrac {n}{d}) \text{質因數分解}\\
             &= \sum_{i = 0} ^ {c} \phi(p ^ i)\\
             &= 1 + p^0(p-1) + p^1(p-1) + ... + p^{c-1}(p-1)\\
             &= p^c\\
