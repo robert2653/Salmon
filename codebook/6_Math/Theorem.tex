@@ -17,9 +17,22 @@
 
             \item $\mu$ 是常數函數 $1$ 的反元素\\
             $=> \mu \ast 1 = \epsilon, \epsilon (n) \text{只在} n = 1 \text{時為 1，其餘情況皆為 0}$
-
-
         \end{enumerate}
+
+        \item $\phi$ 歐拉函數: $x$ 以下與 $x$ 互質的數量
+        $$ \begin{aligned}
+            \phi \ast 1
+            &= \sum_{d | n} \phi(\dfrac {n}{d}) \text{質因數分解}\\
+            &= \sum_{i = 0} ^ {c} \phi(p ^ i)\\
+            &= 1 + p^0(p-1) + p^1(p-1) + ... + p^{c-1}(p-1)\\
+            &= p^c\\
+            &= id
+        \end{aligned} $$
     \end{\itemize}
+\item 莫比烏斯反演公式
+\begin{itemize}
+    \item $f(n)=\sum_{d\mid n}g(d)\Leftrightarrow g(n)=\sum_{d\mid n}\mu(d)f(\frac{n}{d})$
+    \item $f(n)=\sum_{n\mid d}g(d)\Leftrightarrow g(n)=\sum_{n\mid d}\mu(\frac{d}{n})f(d)$
+\end{itemize}
 
 \end{itemize}
