@@ -1,3 +1,21 @@
 \begin{itemize}
-\item 數論分塊可以快速計算一些含有除法向下取整的和式（即形如 $\sum_{i=1}^{n} f(i) g(\left\lfloor\dfrac ni\right\rfloor)$ 的和式）。當可以在 $O(1)$ 內計算 $f(r)-f(l)$ 或已經預處理出f的前綴和時，數論分塊就可以在 $O(\sqrt n)$ 的時間內計算上述和式的值。
+\item 數論分塊可以快速計算一些含有除法向下取整的和式（即形如 $\sum_{i = 1} ^ {n} f(i) g(\left\lfloor\dfrac ni\right\rfloor)$ 的和式）。當可以在 $O(1)$ 內計算 $f(r) - f(l)$ 或已經預處理出f的前綴和時，數論分塊就可以在 $O(\sqrt n)$ 的時間內計算上述和式的值。
+\item 迪利克雷捲積 $h(x) = \sum_{d | x} f(d) g(\frac{x}{d})$
+\item 積性函數
+    \begin{itemize}
+        \item 莫比烏斯函數
+        \begin{enumerate}
+            \item 
+            $$ \begin{aligned}
+                \sum_{d | n} \mu (d)
+                &=
+                \begin{cases}
+                    1 & \text{for} n = 1
+                    0 & \text{for} n \neq 0
+                \end{cases}
+            \end{aligned} $$
+
+        \end{enumerate}
+    \end{\itemize}
+
 \end{itemize}
