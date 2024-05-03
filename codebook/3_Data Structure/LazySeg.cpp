@@ -117,4 +117,3 @@ Node operator+(const Node &a, const Node &b) {
 
 // polynomial queries
 // 設置梯形的底跟加了幾次，apply_tag時底為l的合，d為加給次，所以sum += (底*2 + 次*區間) * 區間 / 2;
-
