@@ -21,3 +21,15 @@ void init() {
         mobius_pref[i] = mobius_pref[i - 1] + (wei[i] % 2 == 0 ? 1 : -1);
     }
 }
+void solve() {
+    int a, b, c, d, k; cin >> a >> b >> c >> d >> k;
+    auto cal = [&](int x, int y) -> int {
+        int res = 0;
+        for (int l = 1, r; l <= min(x, y); l = r + 1) {
+            r = min(x / (x / l), y / (y / l));
+            res += (mobius_pref[r] - mobius_pref[l - 1]) * (x / l) * (y / l);  // 代推出来的式子
+        }
+        return res;
+    };
+    cout << cal(b / k, d / k) - cal((a - 1) / k, d / k) - cal(b / k, (c - 1) / k) + cal((a - 1) / k, (c - 1) / k) << "\n";
+}

@@ -29,11 +29,20 @@
             &= id
         \end{aligned} $$
     \end{\itemize}
-    
+
 \item 莫比烏斯反演公式
 \begin{itemize}
     \item $f(n)=\sum_{d\mid n}g(d)\Leftrightarrow g(n)=\sum_{d\mid n}\mu(d)f(\frac{n}{d})$
     \item $f(n)=\sum_{n\mid d}g(d)\Leftrightarrow g(n)=\sum_{n\mid d}\mu(\frac{d}{n})f(d)$
 \end{itemize}
 
+\item 例子
+$$ \begin{aligned}
+    \sum_{i = a}^{b} \sum_{j = c}^{d} [gcd(i, j) = k]
+    &=> \sum_{i = 1}^{x} \sum_{j = 1}^{y} [gcd(i, j) = k]\\
+    &= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \epsilon(gcd(i, j))\\
+    &= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \sum_{d \mid gcd(i, j)} \mu(d)\\
+    &= \sum_{d = 1}^{\infinity} \mu(d) \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} [d \mid i] \sum {j = 1}{\left\lfloor\dfrac {y}{k} \right\rfloor} [d \mid j] \text{d 可整除 i 時為 1}\\
+    &= \sum_{d = 1}^{min(\left\lfloor\dfrac {x}{k} \right\rfloor, \left\lfloor\dfrac {y}{k} \right\rfloor) \mu(d) \left\lfloor\dfrac {x}{kd} \right\rfloor \left\lfloor\dfrac {y}{kd} \right\rfloor}
+\end{aligned} $$
 \end{itemize}
