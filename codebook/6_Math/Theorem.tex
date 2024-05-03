@@ -17,7 +17,7 @@
 
                 \item
                 $\mu$ 是常數函數 $1$ 的反元素\\
-                $=> \mu \ast 1 = \epsilon, \epsilon (n) \text{只在} n = 1 \text{時為 1，其餘情況皆為 0}$
+                $\Rightarrow \mu \ast 1 = \epsilon$，$\epsilon (n) \text{只在} n = 1 \text{時為 1，其餘情況皆為 0}$
             \end{enumerate}
 
         \item $\phi$ 歐拉函數: $x$ 以下與 $x$ 互質的數量
@@ -40,7 +40,7 @@
 \item 例子
 $$ \begin{aligned}
     \sum_{i = a}^{b} \sum_{j = c}^{d} [gcd(i, j) = k]
-    &=> \sum_{i = 1}^{x} \sum_{j = 1}^{y} [gcd(i, j) = k]\\
+    &\Rightarrow \sum_{i = 1}^{x} \sum_{j = 1}^{y} [gcd(i, j) = k]\\
     &= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \epsilon(gcd(i, j))\\
     &= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \sum_{d \mid gcd(i, j)} \mu(d)\\
     &= \sum_{d = 1}^{\infinity} \mu(d) \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} [d \mid i] \sum {j = 1}{\left\lfloor\dfrac {y}{k} \right\rfloor} [d \mid j] \text{d 可整除 i 時為 1}\\
