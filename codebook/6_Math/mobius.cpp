@@ -27,7 +27,7 @@ void solve() {
         int res = 0;
         for (int l = 1, r; l <= min(x, y); l = r + 1) {
             r = min(x / (x / l), y / (y / l));
-            res += (mobius_pref[r] - mobius_pref[l - 1]) * (x / l) * (y / l);  // 代推出来的式子
+            res += (mobius_pref[r] - mobius_pref[l - 1]) * (x / l) * (y / l);  // 代推出來的式子
         }
         return res;
     };
