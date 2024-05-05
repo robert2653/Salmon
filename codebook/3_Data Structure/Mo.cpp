@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 struct query {
     int l, r, id;
 } typedef query;

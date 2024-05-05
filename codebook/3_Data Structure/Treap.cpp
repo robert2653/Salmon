@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 struct Treap {
     Treap *l, *r;
     int pri, subsize; char val; bool rev_valid;

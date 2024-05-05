@@ -1,8 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define pii pair<int, int>
-int n, m;
-int ans = 0;
+int n, m, ans = 0;
 const int maxn = 2e5 + 5;
 vector<pair<int, int>> adj[maxn];
 bool Prim() {

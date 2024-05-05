@@ -1,14 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define all(x) (x).begin(), (x).end()
-#define endl "\n"
-#define int long long
-typedef pair<int, int> pii;
-const int llinf = 4e18;
-const int inf = 2e9;
-const int mod = 1e9 + 7;
-const int maxn = 2e5 + 5;
-
 struct Trie {
     struct trie_node {
         bool is_word;
@@ -50,7 +39,7 @@ struct Trie {
         return ans;
     }
 };
-void solve() {
+int main() {
     // 找到 sub 集合裡，可以重複用，組成 s 的組數
     Trie trie;
     string s; cin >> s;
@@ -68,13 +57,4 @@ void solve() {
         dp[i] = trie.search_i_start(s, i, dp);
     }
     cout << dp[0] << endl;
-}
-signed main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(nullptr);
-    int t = 1;
-    // cin >> t;
-    while (t--) {
-        solve();
-    }
 }

@@ -1,7 +1,5 @@
-#include <bits/stdc++.h> // weighted tree centroid
-using namespace std;
+// weighted tree centroid
 const int maxn = 1e5+5;
-using ll = long long;
 vector<pair<int, int>> tree[maxn];
 ll dp[maxn];
 ll ans = 0;

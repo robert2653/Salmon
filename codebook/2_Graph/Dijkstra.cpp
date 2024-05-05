@@ -1,10 +1,7 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define pii pair<int, int>
 // Flight Discount
-void dijkstra() {
+int main() {
     int n, m; cin >> n >> m;
-    vector<vector<pii>> adj(n + 1, vector<pii>(n + 1));
+    vector<vector<pair<int, int>>> adj(n + 1, vector<pair<int, int>>(n + 1));
     vector<vector<int>> dis(n + 1, vector<int>(2, 2e9));    // 0 for not used
     for (int i = 1; i <= m; i++) {
         int u, v, w;

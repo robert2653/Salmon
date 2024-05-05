@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 // 只能用在 DAG，用拓樸按順序鬆弛
 // 如果 1 不能到達 n，n 也有可能被鬆弛，所以要看的是 dis[n] < 0，不能只看有沒有 = -1e9
 void print_ans(int n, vector<int> &par) {

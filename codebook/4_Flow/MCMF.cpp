@@ -14,8 +14,8 @@ void add_edge(int u, int v, int w, int cost){
     p[v].push_back(now_edge);
     now_edge++;
 }
-ll Bellman_Ford(){
-    vector<ll> dis(n+1, inf); dis[1] = 0;
+int Bellman_Ford(){
+    vector<int> dis(n+1, inf); dis[1] = 0;
     vector<int> par(m);
     vector<int> flow_rec(n + 1, 0); flow_rec[1] = 1e9;
     for(int i = 1; i < n; i++){
@@ -47,7 +47,7 @@ ll Bellman_Ford(){
 }
 void solve(){
     cin >> n >> m >> parcel;
-    ll ans = 0;
+    int ans = 0;
     for(int i = 1; i <= m; i++){
         int u, v, w, cost; cin >> u >> v >> w >> cost;
         add_edge(u, v, w, cost);

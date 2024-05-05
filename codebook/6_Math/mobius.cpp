@@ -1,8 +1,5 @@
-#include <bits/stdc++.h>
-using namespace std;
-const int maxn = 5e4 + 5;
+const int maxn = 2e5;
 int mobius_pref[maxn];
-
 void init() {
     mobius_pref[1] = 1;
     vector<int> wei(maxn);  // wei = 0 代表是質數，-1 代表可被平方數整除

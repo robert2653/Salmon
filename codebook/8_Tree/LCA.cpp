@@ -1,5 +1,3 @@
-#include <bits/stdc++.h> // LCA from 1
-using namespace std;
 int main() {
     int n, q; cin >> n >> q;
     vector<vector<int>> tree(n + 1);

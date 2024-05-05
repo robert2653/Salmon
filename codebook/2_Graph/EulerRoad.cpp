@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 // 無向圖、尤拉環: 檢查每個點的出度為偶數
 // 有向圖、尤拉路: 可以看成 1 走到 n，所以檢查所有點的出度等於入度
 int n, m;

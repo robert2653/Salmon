@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define int long long
 // 找到所有 SCC 然後結合原圖重建一個 DAG，然後拓樸 DP
 void dfs(int u, vector<int> &vis, vector<int> &kosaraju, vector<vector<int>> &adj) {
     if (!vis[u]) {

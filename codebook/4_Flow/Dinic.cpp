@@ -1,13 +1,12 @@
-#include <bits/stdc++.h>
-using namespace std;
-bool vis[505];
-int lev[505], n, m, ans;
+vector<bool> vis;
+vector<int> lev;
+int n, m, ans;
 struct edge {
     int to, w, rev_ind;
 };
 vector<edge> adj[505];
 bool label_level() { // Tag the depth, if can't reach end => return false
-    memset(lev, -1, sizeof(lev));
+    lev.assign(505, -1);
     lev[1] = 0;
     queue<int> q;   q.push(1);
     while (!q.empty()) {
@@ -39,7 +38,7 @@ int dfs(int u, int flow) {
 void dinic(){
     while (label_level()) {
         while (1) {
-            init(vis, 0);
+            vis.assign(505, 0);
             int tmp = dfs(1, inf);
             if(tmp == 0) break;
             ans += tmp;

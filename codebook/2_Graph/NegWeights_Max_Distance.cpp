@@ -1,9 +1,4 @@
-#include <bits/stdc++.h>
-#define int long long
-using namespace std;
 // CSES High Score
-const int maxn = 2505;
-
 void dfs(int u, vector<int> &vis, vector<vector<int>> &adj) {
 	if (vis[u]) return;
 	vis[u] = 1;

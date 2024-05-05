@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 struct nCr {
     int mod;
     nCr(int mod) : mod(mod) {};

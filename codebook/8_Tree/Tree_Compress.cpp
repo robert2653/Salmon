@@ -1,8 +1,5 @@
 // 父節點加值 = 所有子節點區間加值，求單點，使用 bit，做前綴差分
 // CSES 1138_Path Queries
-#include <bits/stdc++.h>
-#define int long long
-using namespace std;
 struct BIT {    // BIT 都是 1-based 的查詢
     int n;
     vector<int> bit;

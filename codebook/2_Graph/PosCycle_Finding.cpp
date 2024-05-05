@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 const int maxn = 1e5+5;
 vector<int> graph[maxn];
 int color[maxn], parent[maxn];

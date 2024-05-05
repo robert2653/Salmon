@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 // +(-) u or +(-) v
 const int maxn = 1e5 + 5;
 vector<int> adj[2 * maxn], rev_adj[2 * maxn];

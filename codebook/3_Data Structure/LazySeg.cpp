@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 template <class Node, class Lazy>
 struct LazySeg {
     int n;

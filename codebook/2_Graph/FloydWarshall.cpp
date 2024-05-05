@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define int long long
 const int inf = 1e18;
 int main() {
     int n, m, q; cin >> n >> m >> q;

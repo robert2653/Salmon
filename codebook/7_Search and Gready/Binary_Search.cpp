@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 int main() {
     int l = 1, r = 10;
     // 1 to tar, find tar

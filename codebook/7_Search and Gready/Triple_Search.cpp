@@ -1,6 +1,4 @@
 // 找極值問題，遞增遞減
-#include <bits/stdc++.h>
-using namespace std;
 void solve() {
     int l = 0, r = 10, ans = 0; // ans 紀錄答案
     while (l <= r) {

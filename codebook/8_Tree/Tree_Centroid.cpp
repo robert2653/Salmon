@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 const int maxn = 2e5+5;
 vector<int> tree[maxn];
 int cen = 0, n;

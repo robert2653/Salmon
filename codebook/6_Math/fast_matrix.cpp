@@ -1,9 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define int long long
-
 const int mod = 1e9 + 7;
-
 struct Mat {
     int n;
     vector<vector<int>> matrix;
@@ -64,17 +59,7 @@ signed main() {
     }
     cout << ans << "\n";
 }
-// 初始矩陣
-// f4 f3 f2
-// f3 f2 f1
-// f2 f1 f0
-
-// 轉移式
-// 1 1 0
-// 1 0 1
-// 1 0 0
-
-// =>
-// f5 f4 f3
-// f4 f3 f2
-// f3 f2 f1
+// 初始矩陣   轉移式
+// f4 f3 f2   1 1 0    f5 f4 f3
+// f3 f2 f1   1 0 1 => f4 f3 f2
+// f2 f1 f0   1 0 0    f3 f2 f1

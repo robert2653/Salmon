@@ -1,6 +1,4 @@
 // Better than Binary Search
-#include <bits/stdc++.h>
-using namespace std;
 int main() {
     int n, m; cin >> n >> m;
     multiset<int> tik;

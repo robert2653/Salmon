@@ -1,6 +1,4 @@
 // 用 Bellman Ford 找負環
-#include <bits/stdc++.h>
-using namespace std;
 vector<array<int, 3>> graph;    // u, v, w
 int main() {
     int src = 0;

@@ -1,6 +1,4 @@
 // 找到對於每個位置的迴文半徑
-#include <bits/stdc++.h>
-using namespace std;
 vector<int> manacher(string s) {
     string t = "#";
     for (auto c : s) {
