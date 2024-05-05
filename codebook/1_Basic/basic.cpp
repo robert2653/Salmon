@@ -13,11 +13,6 @@
 #define endl "\n"
 #define int long long
 using namespace std;
-using namespace __gnu_pbds;
-template<typename T>
-using pbds_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-template<typename T>
-using pbds_multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 struct cmp {    // 在有 template 的資結使用
     bool operator()(const int &a, const int &b) const {
