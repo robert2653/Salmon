@@ -1,6 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-int main(){
+int main() {
     int m, n; cin >> m >> n;
     string s1, s2;
     cin >> s1 >> s2;
@@ -19,19 +17,15 @@ int main(){
     }
     int length = dp[m][n];
     cout << length << "\n";
-    string s('a', length);
+    string s(length, 'c');
     // along to dp to trace back
     while (m >= 1 && n >= 1) {
         if (s1[m - 1] == s2[n - 1]) {
             s[length - 1] = s1[m - 1];
-            m--;
-            n--;
-            length--;
+            m--, n--, length--;
         }
         else {
-            if (dp[m - 1][n] > dp[m][n - 1]){
-                m--;
-            }
+            if (dp[m - 1][n] > dp[m][n - 1]) m--;
             else n--;
         }
     }

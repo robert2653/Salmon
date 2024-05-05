@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 // 考慮前 i 個，預算有 j 塊錢的最多 page
 int main(){
     int n, bud;

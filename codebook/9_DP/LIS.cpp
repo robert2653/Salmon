@@ -1,7 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-// Rec Sequence LIS
-void solve(){
+int main() {
     int n; cin >> n;
     vector<int> v(n);
     for (int i = 0; i < n; i++) {
@@ -22,7 +19,7 @@ void solve(){
         }
     }
     vector<int> ans;
-    cout << L << endl;
+    cout << L << "\n";
     for (int i = n - 1; i >= 0; i--) {
         if (dp[i] == L) {
             ans.push_back(v[i]);

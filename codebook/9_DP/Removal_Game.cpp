@@ -1,6 +1,6 @@
-#include <bits/stdc++.h>
-using namespace std;
-void solve(){
+// 兩個人比賽，每個人輪流取一個數字且只能是頭尾
+// 問兩人都選得好，第一個人可取得的最大分數
+int main() {
     int n; cin >> n;
     vector<vector<int>> dp(n + 1, vector<int>(n + 1));
     int pref = 0;
@@ -9,15 +9,15 @@ void solve(){
         cin >> v[i];
         pref += v[i];
     }
-    // dp[i][j] = max_diff(i to j);
+    // dp[i][j] 是 i 到 j 區間選完，的最大分數差
     for (int i = n; i > 0; i--) { 
-        for (int j = 1; j <= n; j++) {
-            if (i > j) continue;
-            else if (i == j) {
+        for (int j = i; j <= n; j++) {
+            if (i == j) {
                 dp[i][j] = v[i];
             }
             else {
-                dp[i][j] = max(v[i] - dp[i + 1][j], v[j] - dp[i][j - 1]);   // i+1, j-1, care dp's order
+                // 選左差距大，還是選右差距大
+                dp[i][j] = max(v[i] - dp[i + 1][j], v[j] - dp[i][j - 1]);
             }
         }
     }

@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-const int mod = 1e9 + 7;
 void coin_combination_II(){
     // 有 n 種錢幣，求組合為 x 的組數，順序不可顛倒
     // 可顛倒的話只要一維，先 x 迴圈，再 coin[i] 去加

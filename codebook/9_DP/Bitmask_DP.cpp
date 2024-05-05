@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-const int mod = 1e9 + 7;
 void travel_exactly_once(){
     // [走過的路][終點]
     vector<vector<int>> dp(1 << 20, vector<int> (20, 0));
