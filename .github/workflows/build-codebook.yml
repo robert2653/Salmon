@@ -22,7 +22,7 @@ jobs:
           unzip ubuntu-font.zip
       - name: Install Chinese Fonts
         run: |
-          wget https://github.com/notofonts/noto-cjk/raw/main/Sans/Variable/OTC/NotoSansMonoCJK-VF.ttf.ttc
+          wget https://github.com/notofonts/noto-cjk/raw/main/Serif/OTC/NotoSerifCJK-Medium.ttc
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
