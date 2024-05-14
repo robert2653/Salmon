@@ -1,6 +1,7 @@
 vector<vector<int>> g;
 vector<int> id(n + 1, -1), dfn(n + 1, -1), low(n + 1, -1);
 vector<int> stk;
+int now = 0, cnt = 0;
 function<void(int)> tarjan = [&](int u) {
     stk.push_back(u);
     dfn[u] = low[u] = now++;
