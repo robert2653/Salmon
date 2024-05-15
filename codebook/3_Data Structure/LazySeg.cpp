@@ -23,9 +23,9 @@ struct LazySeg {
     Node query(int l, int r, int ql, int qr, int now) {
         int m = (l + r) >> 1;
         if (qr < l || ql > r) {
-// -----------------------out of range, return what--------------------------------
+// ---out of range, return what---
             return Node();
-// --------------------------------------------------------------------------------
+// -------------------------------
         }
         push(now, l, r);
         if (ql <= l && r <= qr) {
@@ -43,9 +43,9 @@ struct LazySeg {
             return;
         }
         if (ql <= l && r <= qr) {
-// ------------------------------how to modify ?-----------------------------------
+// ---how to modify ?---
             lazy[now].add += add;
-// --------------------------------------------------------------------------------
+// ---------------------
             return;
         }
         push(now, l, r);
@@ -62,10 +62,10 @@ struct LazySeg {
             return;
         }
         if (ql <= l && r <= qr) {
-// ------------------------------how to modify ?-----------------------------------
+// ---how to modify ?---
             lazy[now].set_val = val;
             lazy[now].add = 0;
-// --------------------------------------------------------------------------------
+// ---------------------
             return;
         }
         push(now, l, r);
@@ -78,7 +78,7 @@ struct LazySeg {
     void modify_set(int l, int r, int val) { modify_set(1, n, l, r, 1, val); }
     void push(int now, int l, int r) {
         apply(now, l, r);
-// -----------------------how to push down ?---------------------------------------
+// ---how to push down ?---
         if (l != r) {
             if (lazy[now].set_val) {
                 lazy[now << 1].set_val = lazy[now].set_val;
@@ -91,7 +91,7 @@ struct LazySeg {
                 lazy[(now << 1) + 1].add += lazy[now].add;
             }
         }
-// --------------------------------------------------------------------------------
+// ------------------------
         lazy[now] = Lazy();
     }
     void apply(int now, int l, int r) {
@@ -101,7 +101,7 @@ struct LazySeg {
         tree[now].sum += (r - l + 1) * lazy[now].add;
     }
 };
-// ------------------------define structure and info plus------------------------
+// ---define structure and info plus---
 struct Node {
     int sum;
 };
@@ -111,7 +111,6 @@ struct Lazy {
 Node operator+(const Node &a, const Node &b) {
     return {{a.sum + b.sum}};
 }
-// ------------------------------------------------------------------------------
-
+// ------------------------------------
 // polynomial queries
 // 設置梯形的底跟加了幾次，apply_tag時底為l的合，d為加給次，所以sum += (底*2 + 次*區間) * 區間 / 2;
