@@ -1,6 +1,4 @@
 struct nCr {
-    int mod;
-    nCr(int mod) : mod(mod) {};
     int inverse(int num) {
         if (num == 1) return 1;
         return (mod - ((mod / num) * inverse(mod % num)) % mod) % mod;
