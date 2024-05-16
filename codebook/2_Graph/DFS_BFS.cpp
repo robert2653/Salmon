@@ -12,19 +12,19 @@ int main() {
     };
     dfs(dfs, 1);
     // bfs
-    vector<int> deep(n + 1, 1e9);
+    vector<int> depth(n + 1, 1e9);
     queue<int> q;
     auto bfs = [&](auto self, int u) -> void {
         vis[u] = true;
-        deep[u] = 0;
+        depth[u] = 0;
         q.push(u);
         while (!q.empty()) {
-            int now = q.front(); q.pop();
-            for (auto nxt : adj[now]) {
-                if (vis[nxt]) continue;
-                vis[nxt] = true;
-                deep[nxt] = deep[now] + 1;
-                q.push(nxt);
+            int u = q.front(); q.pop();
+            for (auto v : adj[u]) {
+                if (vis[v]) continue;
+                vis[v] = true;
+                depth[v] = depth[u] + 1;
+                q.push(v);
             }
         }
     };

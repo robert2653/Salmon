@@ -15,7 +15,7 @@ struct nCr {
         return ans;
     }
     vector<int> fac;
-    void BuildLucas(int n) {
+    void buildFac(int n) {
         fac.resize(n + 1);
         fac[0] = 1;
         for(int i = 1; i <= n; i++) {

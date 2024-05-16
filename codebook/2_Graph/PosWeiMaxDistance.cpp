@@ -1,5 +1,5 @@
+// CSES Longest Flight Route
 // 只能用在 DAG，用拓樸按順序鬆弛
-// 如果 1 不能到達 n，n 也有可能被鬆弛，所以要看的是 dis[n] < 0，不能只看有沒有 = -1e9
 void print_ans(int n, vector<int> &par) {
     deque<int> ans;
     int now = n;
@@ -8,19 +8,16 @@ void print_ans(int n, vector<int> &par) {
         now = par[now];
     }
     ans.push_front(1);
-    cout << ans.size() << endl;
+    cout << ans.size() << "\n";
     for(auto i : ans) {
         cout << i << " ";
     }
 }
-void solve() {
-    int n, m;
-    cin >> n >> m;
+int main() {
+    int n, m; cin >> n >> m;
+    vector<vector<int>> graph(n + 1);
     vector<int> dis(n + 1, -1e9); dis[1] = 0;
-    vector<vector<int>> graph(n + 1, vector<int>());
-    vector<bool> vis(n + 1, 0);
-    vector<int> par(n + 1);
-    vector<int> in(n + 1, 0);
+    vector<int> par(n + 1), in(n + 1);
     queue<int> q;
     for (int i = 1; i <= m; i++) {
         int u, v; cin >> u >> v;
@@ -28,21 +25,22 @@ void solve() {
         in[v]++;
     }
     for (int i = 1; i <= n; i++) {
-        if(in[i] == 0) q.push(i);
+        if (in[i] == 0) q.push(i);
     }
     while (!q.empty()) {
         int u = q.front(); q.pop();
-        for (auto nxt : graph[u]) {
-            if (dis[nxt] < dis[u] + 1) {  // 鬆弛
-                dis[nxt] = dis[u] + 1;
-                par[nxt] = u;
+        for (auto v : graph[u]) {
+            if (dis[v] < dis[u] + 1) {  // 鬆弛
+                dis[v] = dis[u] + 1;
+                par[v] = u;
             }
-            in[nxt]--;
-            if (in[nxt] == 0) q.push(nxt);
+            in[v]--;
+            if (in[v] == 0) q.push(v);
         }
-        vis[u] = 1;
     }
-    if (dis[n] < 0) {
+    if (dis[n] == -1e9) {
+        // 如果 1 不能到達 n，n 也有可能被鬆弛
+        // 所以要看的是 dis[n] < 0
         cout << "IMPOSSIBLE";
     }
     else print_ans(n, par);
