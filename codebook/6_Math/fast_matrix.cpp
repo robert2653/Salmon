@@ -1,4 +1,3 @@
-const int mod = 1e9 + 7;
 struct Mat {
     int n;
     vector<vector<int>> matrix;
@@ -20,7 +19,7 @@ struct Mat {
         }
         return res;
     }
-    void mul(Mat b) {
+    Mat operator * (Mat b) {
         Mat ans(n);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -29,19 +28,22 @@ struct Mat {
                 }
             }
         }
-        matrix = ans.matrix;
+        return ans;
     }
-    void pow(int p) {
+    Mat operator *= (Mat b) { *this = *this * b; return *this; }
+    Mat operator ^ (int p) {
         Mat x = *this;
-        *this = unit(n);
+        Mat ans = unit(n);
         while (p > 0) {
             if (p & 1) {
-                mul(x);
+                ans *= x;
             }
-            x.mul(x);
+            x *= x;
             p >>= 1;
         }
+        return ans;
     }
+    Mat operator ^= (int p) { *this = *this ^ p; return *this; }
 };
 signed main() {
     int n, ans; cin >> n;
@@ -50,12 +52,12 @@ signed main() {
         ans = v[n];
     }
     else {
-        Mat mat({{4, 2, 1}, {2, 1, 1}, {1, 1, 0}});
-        Mat x(3);
-        x.matrix = {{1, 1, 0}, {1, 0, 1}, {1, 0, 0}};
-        x.pow(n - 4);
-        mat.mul(x);
-        ans = mat.matrix[0][0];
+        Mat init({{4, 2, 1}, {2, 1, 1}, {1, 1, 0}});
+        Mat T(3);
+        T.matrix = {{1, 1, 0}, {1, 0, 1}, {1, 0, 0}};
+        T ^= n - 4;
+        init *= T;
+        ans = init.matrix[0][0];
     }
     cout << ans << "\n";
 }

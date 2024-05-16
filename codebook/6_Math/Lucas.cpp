@@ -6,6 +6,7 @@ struct nCr {
         return (mod - ((mod / num) * inverse(mod % num)) % mod) % mod;
     }
     int fast_exp(int x, int p) {
+        x %= mod;
         int ans = 1;
         while (p > 0) {
             if (p & 1) ans = (ans * x) % mod;
