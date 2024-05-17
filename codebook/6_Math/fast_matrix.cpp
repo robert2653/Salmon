@@ -32,13 +32,13 @@ struct Mat {
     }
     Mat operator *= (Mat b) { *this = *this * b; return *this; }
     Mat operator ^ (int p) {
-        Mat x = *this;
-        Mat ans = unit(n);
+        if (p == 0) return unit(n);
+        Mat ans = *this; p--;
         while (p > 0) {
             if (p & 1) {
-                ans *= x;
+                ans *= *this;
             }
-            x *= x;
+            *this *= *this;
             p >>= 1;
         }
         return ans;
