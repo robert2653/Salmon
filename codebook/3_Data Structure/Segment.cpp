@@ -52,9 +52,6 @@ struct Seg {
 // ---define structure and info plus---
 struct Node {
     int sum;
-    Node () {
-        sum = 0;
-    }
 };
 Node operator + (const Node &a, const Node &b) {
     Node c;

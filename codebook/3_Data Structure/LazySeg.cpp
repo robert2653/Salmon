@@ -23,9 +23,7 @@ struct LazySeg {
     Node query(int l, int r, int ql, int qr, int now) {
         int m = (l + r) >> 1;
         if (qr < l || ql > r) {
-// ---out of range, return what---
             return Node();
-// -------------------------------
         }
         push(now, l, r);
         if (ql <= l && r <= qr) {
@@ -108,8 +106,11 @@ struct Node {
 struct Lazy {
     int set_val; int add;
 };
-Node operator+(const Node &a, const Node &b) {
-    return {{a.sum + b.sum}};
+Node operator + (const Node &a, const Node &b) {
+    Node c;
+    c.sum = a.sum + b.sum;
+    return c;
+    // use lc、rc to undate now
 }
 // ------------------------------------
 // polynomial queries
