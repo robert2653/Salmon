@@ -74,7 +74,7 @@ void substring_rev() {
     for(auto c : str) {
         root = merge(root, new Treap(c));
     }
-    for(int i = 1; i <= m; i++) {
+    for (int i = 1; i <= m; i++) {
         int x, y; cin >> x >> y;
         auto [a, b] = split(root, x-1); // a: 1~x-1, b: x~n
         auto [c, d] = split(b, y-x+1);  // Use b to split

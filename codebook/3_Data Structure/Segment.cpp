@@ -5,7 +5,7 @@ struct Seg {
     Seg (vector<Node> init_) {
         n = init_.size() - 1;
         tree.resize(4 * n);
-        function <void(int, int, int)> build = [&](int now, int l, int r) {
+        auto build = [&](int now, int l, int r) {
             if (l == r) {
                 tree[now] = init_[l];
                 return;
@@ -17,39 +17,26 @@ struct Seg {
         };
         build(1, 1, n);
     }
+    void pull(int now) { tree[now] = tree[now << 1] + tree[(now << 1) + 1]; }
     Node query(int l, int r, int ql, int qr, int now) {
         int m = (l + r) >> 1;
-        if (qr < l || ql > r) {
-            return Node();
-        }
-        if (ql <= l && r <= qr) {
-            return tree[now];
-        }
+        if (qr < l || ql > r) return Node();
+        if (ql <= l && r <= qr) return tree[now];
 	    return query(l, m, ql, qr, now << 1) + query(m + 1, r, ql, qr, (now << 1) + 1);
     }
     Node query(int l, int r) { return query(1, n, l, r, 1); }
-    void pull(int now) {
-        tree[now] = tree[now << 1] + tree[(now << 1) + 1];
-    }
     void modify(int l, int r, int idx, int now, int add) {
         if (l == r) {
-// ---how to modify ?---
-            tree[now].sum = add;
-// ---------------------
+// how to modify
             return;
         }
         int m = (l + r) >> 1;
-        if (idx <= m) {
-            modify(l, m, idx, now << 1, add);
-        }
-        else {
-            modify(m + 1, r, idx, (now << 1) + 1, add);
-        }
+        if (idx <= m) modify(l, m, idx, now << 1, add);
+        else modify(m + 1, r, idx, (now << 1) + 1, add);
         pull(now);
     }
     void modify(int idx, int add) { modify(1, n, idx, 1, add); }
 };
-// ---define structure and info plus---
 struct Node {
     int sum;
 };
@@ -57,9 +44,7 @@ Node operator + (const Node &a, const Node &b) {
     Node c;
     c.sum = a.sum + b.sum;
     return c;
-    // use lc、rc to undate now
 }
-
 // ---pizza_queries---
 // 左邊的店(s < t): dis_l = (pizza[s] - s) + t;
 // 右邊的店(t < s): dis_r = (pizza[s] + s) - t;
