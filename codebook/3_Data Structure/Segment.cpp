@@ -1,49 +1,83 @@
-template <class Node>
-struct Seg {
+template <class Info>
+struct Seg {    // 左開右閉寫法
     int n;
-    vector<Node> tree;
-    Seg (vector<Node> init_) {
-        n = init_.size() - 1;
-        tree.resize(4 * n);
-        auto build = [&](int now, int l, int r) {
-            if (l == r) {
-                tree[now] = init_[l];
+    vector<Info> info;
+    vector<Tag> tag;
+    template<class T>
+    Seg(int n) { init(n); }
+    template <class T>
+    Seg(vector<T> init_) { init(init_); }
+    void init(int n) { init(vector(n, Info())); }
+    template <class T>
+    void init (vector<T> init_) {
+        n = init_.size();
+        info.assign(4 << __lg(n), Info());
+        tag.assign(4 << __lg(n), Tag());
+        function <void(int, int, int)> build = [&](int p, int l, int r) {
+            if (r - l == 1) {
+                info[p] = init_[l];
                 return;
             }
             int m = (l + r) / 2;
-            build(now << 1, l, m);
-            build((now << 1) + 1, m + 1, r);
-            pull(now);
+            build(p * 2, l, m);
+            build(p * 2 + 1, m, r);
+            pull(p);
         };
-        build(1, 1, n);
+        build(1, 0, n);
     }
-    void pull(int now) { tree[now] = tree[now << 1] + tree[(now << 1) + 1]; }
-    Node query(int l, int r, int ql, int qr, int now) {
-        int m = (l + r) >> 1;
-        if (qr < l || ql > r) return Node();
-        if (ql <= l && r <= qr) return tree[now];
-	    return query(l, m, ql, qr, now << 1) + query(m + 1, r, ql, qr, (now << 1) + 1);
-    }
-    Node query(int l, int r) { return query(1, n, l, r, 1); }
-    void modify(int l, int r, int idx, int now, int add) {
-        if (l == r) {
-// how to modify
+    void pull(int p) { info[p] = info[p * 2] + info[p * 2 + 1]; }
+    void modify(int p, int l, int r, int x, const Info &v) {
+        if (r - l == 1) {
+            info[p] = v;
             return;
         }
-        int m = (l + r) >> 1;
-        if (idx <= m) modify(l, m, idx, now << 1, add);
-        else modify(m + 1, r, idx, (now << 1) + 1, add);
-        pull(now);
+        int m = (l + r) / 2;
+        if (x < m) {
+            modify(2 * p, l, m, x, v);
+        } else {
+            modify(2 * p + 1, m, r, x, v);
+        }
+        pull(p);
     }
-    void modify(int idx, int add) { modify(1, n, idx, 1, add); }
+    void modify(int p, const Info &i) {
+        modify(1, 0, n, p, i);
+    }
+    Info query(int p, int l, int r, int ql, int qr) {
+        if (qr <= l || ql >= r) return Info();
+        if (ql <= l && r <= qr) return info[p];
+        int m = (l + r) / 2;
+	    return query(p * 2, l, m, ql, qr) + query(p * 2 + 1, m, r, ql, qr);
+    }
+    Info query(int ql, int qr) { return query(1, 0, n, ql, qr); }
+    template<class F>   // 尋找區間內，第一個符合條件的
+    int findFirst(int p, int l, int r, int x, int y, F &&pred) {
+        if (l >= y || r <= x) {
+            return -1;
+        }
+        if (l >= x && r <= y && !pred(info[p])) {
+            return -1;
+        }
+        if (r - l == 1) {
+            return l;
+        }
+        int m = (l + r) / 2;
+        int res = findFirst(2 * p, l, m, x, y, pred);
+        if (res == -1) {
+            res = findFirst(2 * p + 1, m, r, x, y, pred);
+        }
+        return res;
+    }
+    template<class F>   // 若要找 last，先右子樹遞迴即可
+    int findFirst(int l, int r, F &&pred) {
+        return findFirst(1, 0, n, l, r, pred);
+    }
 };
-struct Node {
+// ---define structure and info plus---
+struct Info {
     int sum;
 };
-Node operator + (const Node &a, const Node &b) {
-    Node c;
-    c.sum = a.sum + b.sum;
-    return c;
+Info operator + (const Info &a, const Info &b) {
+    return { a.sum + b.sum };
 }
 // ---pizza_queries---
 // 左邊的店(s < t): dis_l = (pizza[s] - s) + t;
