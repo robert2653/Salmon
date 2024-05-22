@@ -5,11 +5,11 @@ struct BIT {    // BIT 都是 1-based 的查詢
         this->n = n;
         bit.resize(n + 1, 0);
     }
-    BIT(vector<int> &init) {    // 必須是 1-based
-        this->n = init.size() - 1;
+    BIT(vector<int> &init) {    // 必須是 0-based
+        this->n = init.size();
         bit.resize(n + 1, 0);
         for (int i = 1; i <= n; i++) {
-            modify(i, init[i]);
+            modify(i, init[i - 1]);
         }
     }
     void modify(int i, int val) {
