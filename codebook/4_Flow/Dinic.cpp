@@ -1,72 +1,54 @@
-vector<bool> vis;
-vector<int> lev;
-int n, m, ans;
+// template dinic max flow
 struct edge {
-    int to, w, rev_ind;
+    int v, w, rev_id;
 };
+int n, m, ans = 0;
 vector<edge> adj[505];
-bool label_level() { // Tag the depth, if can't reach end => return false
-    lev.assign(505, -1);
-    lev[1] = 0;
+vector<int> lev(505), vis(505);
+bool label_level(){ // 標記深度，如果到不了終點 return false
+    fill(all(lev), -1); lev[1] = 0;
     queue<int> q;   q.push(1);
     while (!q.empty()) {
         int u = q.front(); q.pop();
         for (auto i : adj[u]) {
-            if (i.w > 0 && lev[i.to] == -1) {
-                q.push(i.to);
-                lev[i.to] = lev[u] + 1;
+            if (i.w > 0 && lev[i.v] == -1) {
+                q.push(i.v);
+                lev[i.v] = lev[u] + 1;
             }
         }
     }
     return (lev[n] == -1 ? false : true);
 }
-int dfs(int u, int flow) {
-    if(u == n) return flow;
+int dfs(int u, int flow){
+    if (u == n) return flow;
     for (auto &i : adj[u]) {
-        if (lev[i.to] == lev[u] + 1 && !vis[i.to] && i.w > 0) {
-            vis[i.to] = true;
-            int ret = dfs(i.to, min(flow, i.w));
+        if (lev[i.v] == lev[u] + 1 && !vis[i.v] && i.w > 0) {
+            vis[i.v] = true;
+            int ret = dfs(i.v, min(flow, i.w));
             if (ret > 0) {
                 i.w -= ret;
-                adj[i.to][i.rev_ind].w += ret;
+                adj[i.v][i.rev_id].w += ret;
                 return ret;
             }
         }
     }
-    return 0;   // if can't reach end => return 0
+    return 0;   // 到不了終點就會 return 0
 }
-void dinic(){
+void add_edge(int u, int v, int w) { // 無向圖的話兩邊都是 w
+    adj[u].push_back({v, w, (int)adj[v].size()});
+    adj[v].push_back({u, 0, (int)adj[u].size() - 1});
+}
+void dinic() {
     while (label_level()) {
-        while (1) {
-            vis.assign(505, 0);
+        while (true) {
+            fill(all(vis), 0);
             int tmp = dfs(1, inf);
-            if(tmp == 0) break;
+            if (tmp == 0) break;
             ans += tmp;
         }
     }
+    cout << ans;
 }
-void build() {
-    for(int i = 1; i <= m; i++) {
-        int u, v, w; cin >> u >> v >> w;
-        adj[u].push_back({v, w, (int)adj[v].sz});   // inverse flow's index
-        adj[v].push_back({u, 0, (int)adj[u].sz - 1}); // have pushed one, need to -1
-    }
-}
-// Police Chase, need to open adj to Augment && ori to determine what pb give
-// Dinic、dfs2, then use reach as u, if the edge pb has given && w == 0 && v is not in reach, is the ans
-void dfs2(int now, unordered_set<int> &reach) {
-    if(!vis[now]){
-        vis[now] = 1;
-        reach.insert(now);
-        for(auto i : adj[now]){
-            if(i.w > 0){
-                dfs2(i.to, reach);
-            }
-        }
-    }
-}
-// two two pair // School Dance
-// Dinic, then w == 0's edge, which pb has given is the ans
 
 // Distinct Route
 // edge set valid var, if we need to argument pos road, the reverse edge set true valid；
