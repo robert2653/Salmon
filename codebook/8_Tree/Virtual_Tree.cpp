@@ -59,6 +59,6 @@ void solve(int n, int q) {
         };
         dfs(dfs, key[0]); // key[0] 一定是 root
         cout << dp[key[0]] << "\n";
-        iskey[1] = dp[key[0]] = 0;
+        iskey[key[0]] = dp[key[0]] = 0;
     }
 }
