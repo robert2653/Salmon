@@ -3,3 +3,4 @@
 - [ ] 複習 Convex hull
 - [ ] slope trick
 - [ ] 複習 flow
+- [x] Virtual Tree
