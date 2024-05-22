@@ -1,38 +1,39 @@
-// Ceiled MinCostMaxFlow，if not, use dinic
-typedef struct {
+// 郵差要送 k 個包裹到 n 地，每個邊有最大量跟，Cost per parcel
+// 求 1 到 n 的最小成本
+struct edge {
     int from, to, w, cost;
-} edge;
+};
 int n, m, parcel;
-vector<edge> adj;   // set num to each edge
-vector<int> p[505]; // p[u] has edge's num
+vector<edge> adj;   // 幫每個 edge 編號
+vector<int> p[505]; // u 存 edge 編號
 int now_edge = 0;
 void add_edge(int u, int v, int w, int cost){
     adj.push_back({u, v, w, cost});
     p[u].push_back(now_edge);
     now_edge++;
-    adj.push_back({v, u, 0, -cost});    // argumenting path use -
+    adj.push_back({v, u, 0, -cost});
     p[v].push_back(now_edge);
     now_edge++;
 }
 int Bellman_Ford(){
-    vector<int> dis(n+1, inf); dis[1] = 0;
+    vector<int> dis(n + 1, inf); dis[1] = 0;
     vector<int> par(m);
     vector<int> flow_rec(n + 1, 0); flow_rec[1] = 1e9;
-    for(int i = 1; i < n; i++){
+    for (int i = 1; i < n; i++) {
         bool flag = 1;
-        int size = adj.sz;
-        for(int i = 0; i < size; i++){
+        int size = adj.size();
+        for (int i = 0; i < size; i++) {
             auto &[from, to, w, cost] = adj[i];
-            if(w > 0 && dis[to] > dis[from] + cost){
+            if (w > 0 && dis[to] > dis[from] + cost){
                 flag = 0;
                 dis[to] = dis[from] + cost;
-                par[to] = i;   // record num
+                par[to] = i;   // 紀錄編號
                 flow_rec[to] = min(flow_rec[from], w);
             }
         }
-        if(flag) break;
+        if (flag) break;
     }
-    if(dis[n] == 1e9) return 0;
+    if (dis[n] == 1e9) return 0;
     int mn_flow = flow_rec[n];
     int v = n;
     while(v != 1){
@@ -45,16 +46,16 @@ int Bellman_Ford(){
     parcel -= mn_flow;
     return mn_flow * dis[n];
 }
-void solve(){
+int main(){
     cin >> n >> m >> parcel;
     int ans = 0;
-    for(int i = 1; i <= m; i++){
+    for (int i = 1; i < m; i++) {
         int u, v, w, cost; cin >> u >> v >> w >> cost;
         add_edge(u, v, w, cost);
     }
-    while(parcel > 0){
+    while (parcel > 0){
         int tmp = Bellman_Ford();
-        if(tmp == 0) break;
+        if (tmp == 0) break;
         ans += tmp;
     }
     cout << (parcel > 0 ? -1 : ans);

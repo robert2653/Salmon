@@ -10,10 +10,10 @@ bool label_level(){ // 標記深度，如果到不了終點 return false
     queue<int> q;   q.push(1);
     while (!q.empty()) {
         int u = q.front(); q.pop();
-        for (auto i : adj[u]) {
-            if (i.w > 0 && lev[i.v] == -1) {
-                q.push(i.v);
-                lev[i.v] = lev[u] + 1;
+        for (auto &[v, w, rev_id] : adj[u]) {
+            if (w > 0 && lev[v] == -1) {
+                q.push(v);
+                lev[v] = lev[u] + 1;
             }
         }
     }
@@ -21,13 +21,13 @@ bool label_level(){ // 標記深度，如果到不了終點 return false
 }
 int dfs(int u, int flow){
     if (u == n) return flow;
-    for (auto &i : adj[u]) {
-        if (lev[i.v] == lev[u] + 1 && !vis[i.v] && i.w > 0) {
-            vis[i.v] = true;
-            int ret = dfs(i.v, min(flow, i.w));
+    for (auto &[v, w, rev_id] : adj[u]) {
+        if (lev[v] == lev[u] + 1 && !vis[v] && w > 0) {
+            vis[v] = true;
+            int ret = dfs(v, min(flow, w));
             if (ret > 0) {
-                i.w -= ret;
-                adj[i.v][i.rev_id].w += ret;
+                w -= ret;
+                adj[v][rev_id].w += ret;
                 return ret;
             }
         }
@@ -51,17 +51,37 @@ void dinic() {
 }
 
 // Distinct Route
-// edge set valid var, if we need to argument pos road, the reverse edge set true valid；
-// if we need argument the argumented edge，both set false. Last, from v dfs ans times
+// 給你一張有向圖，求從走 1 到 n 的最多方法數，並且邊不重複
+// dfs 要改成
+int dfs(int u, int flow){
+    if (u == n) return flow;
+    for (auto &[v, w, rev_id, arg_valid] : adj[u]){
+        if (lev[v] == lev[u] + 1 && !vis[v] && w > 0) {
+            vis[v] = true;
+            int ret = dfs(v, min(flow, w));
+            if (ret > 0) {
+                w -= ret;
+                adj[v][rev_id].w += ret;
+                if (arg_valid) {    // 走的是 arg 路，Reset
+                    arg_valid = 0;
+                    adj[v][rev_id].arg_valid = 0;
+                }
+                else adj[v][rev_id].arg_valid = 1;    // 走正常路
+                return ret;
+            }
+        }
+    }
+    return 0;   // 到不了終點就會 return 0
+}
 bool get_road(int now, vector<int> &ans, vector<bool> &vis) {
-    if(now == 1) return true;
-    for(auto &v : adj[now]){
-        if(v.arg_valid && !vis[v.to]) {
-            ans.push_back(v.to);
-            vis[v.to] = true;
-            bool flag = get_road(v.to, ans, vis);
-            if(flag){
-                v.arg_valid = false;
+    if (now == 1) return true;
+    for (auto &[v, w, rev_id, arg_valid] : adj[now]) {
+        if (arg_valid && !vis[v]){
+            ans.push_back(v);
+            vis[v] = true;
+            bool flag = get_road(v, ans, vis);
+            if (flag) {
+                arg_valid = false;
                 return true;
             }
             ans.pop_back();
