@@ -21,7 +21,7 @@ void reset(int u, vector<vector<int>> &vt) {
 void solve(int n, int q) {
     vector g(n + 1, vector<pair<int, int>>());
     vector vt(n + 1, vector<int>()); // dfs 完清除，否則會退化
-    vector<int> dp(n + 1), iskey(n + 1);
+    vector<ll> dp(n + 1), iskey(n + 1);
     for (int i = 0; i < n - 1; i++) {
         int u, v, w; cin >> u >> v >> w;
         g[u].push_back({v, w});

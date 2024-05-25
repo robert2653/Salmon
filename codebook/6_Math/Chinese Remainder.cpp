@@ -1,27 +1,27 @@
-int exgcd(int a, int b, int &x, int &y) {
+ll exgcd(ll a, ll b, ll &x, ll &y) {
     if (!b) {
         x = 1, y = 0;
         return a;
     }
 
-    int g = exgcd(b, a % b, y, x);
+    ll g = exgcd(b, a % b, y, x);
     y -= a / b * x;
     return g;
 }
-int inv(int x, int m){
-    int a, b;
+ll inv(ll x, ll m){
+    ll a, b;
     exgcd(x, m, a, b);
     a %= m;
     if (a < 0) a += m;
     return a;
 }
 // remain, mod
-int CRT(vector<pair<int,int>> &a){
-    int prod = 1;
+ll CRT(vector<pair<ll, ll>> &a){
+    ll prod = 1;
     for (auto x : a) {
         prod *= x.second;
     }
-    int res = 0;
+    ll res = 0;
     for (auto x : a) {
         auto t = prod / x.second;
         res += x.first * t % prod * inv(t, x.second) % prod;

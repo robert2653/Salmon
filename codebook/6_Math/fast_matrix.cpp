@@ -1,6 +1,6 @@
 struct Mat {
     int n;
-    vector<vector<int>> matrix;
+    vector<vector<ll>> matrix;
     Mat(int n) {
         this->n = n;
         matrix.resize(n);
@@ -8,7 +8,7 @@ struct Mat {
             matrix[i].resize(n);
         }
     }
-    Mat(vector<vector<int>> matrix) {
+    Mat(vector<vector<ll>> matrix) {
         this->n = matrix.size();
         this->matrix = matrix;
     }
@@ -31,7 +31,7 @@ struct Mat {
         return ans;
     }
     Mat operator *= (Mat b) { *this = *this * b; return *this; }
-    Mat operator ^ (int p) {
+    Mat operator ^ (ll p) {
         if (p == 0) return unit(n);
         Mat ans = *this; p--;
         while (p > 0) {
@@ -43,10 +43,10 @@ struct Mat {
         }
         return ans;
     }
-    Mat operator ^= (int p) { *this = *this ^ p; return *this; }
+    Mat operator ^= (ll p) { *this = *this ^ p; return *this; }
 };
 signed main() {
-    int n, ans; cin >> n;
+    int n; cin >> n; ll ans;
     if (n <= 4) {
         vector<int> v = {0, 1, 1, 2, 4};
         ans = v[n];

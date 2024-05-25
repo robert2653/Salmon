@@ -15,9 +15,9 @@ int main() {
             }
         }
     }
-    int ans = 1;
-    int q; cin >> q;
-    map<int, int> mp;
+    ll ans = 1;
+    ll q; cin >> q;
+    map<ll, ll> mp;
     while (is_prime[q] != 1) {
         mp[is_prime[q]]++;
         q /= is_prime[q];

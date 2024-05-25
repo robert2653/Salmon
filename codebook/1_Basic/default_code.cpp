@@ -1,14 +1,9 @@
 #include <bits/stdc++.h>
 #define all(x) (x).begin(), (x).end()
-#define pii pair<int, int> 
-#define endl "\n"
-#define int long long
+#define pii pair<int, int>
 using namespace std;
-
-const int llinf = 4e18;
-const int inf = 2e9;
+using ll = long long;
 const int mod = 1e9 + 7;
-const int maxn = 2e5 + 5;
 
 void solve() {
 
