@@ -1,15 +1,18 @@
 struct Mat {
-    int n;
+    int m, n;
     vector<vector<ll>> matrix;
-    Mat(int n) {
-        this->n = n;
-        matrix.resize(n);
-        for (int i = 0; i < n; i++) {
+    void init(int m, int n) {
+        this->m = m; this->n = n;
+        matrix.resize(m);
+        for (int i = 0; i < m; i++) {
             matrix[i].resize(n);
         }
     }
+    Mat(int m, int n) { init(m, n); }
+    Mat(int n) { init(n, n); }
     Mat(vector<vector<ll>> matrix) {
-        this->n = matrix.size();
+        this->m = matrix.size();
+        this->n = matrix[0].size();
         this->matrix = matrix;
     }
     Mat unit(int n) {   // 單位矩陣
@@ -20,8 +23,9 @@ struct Mat {
         return res;
     }
     Mat operator * (Mat b) {
-        Mat ans(n);
-        for (int i = 0; i < n; i++) {
+        int m = matrix.size(), n = b.matrix[1].size(), k = matrix[0].size();
+        Mat ans(m, n);
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 for (int k = 0; k < n; k++) {
                     (ans.matrix[i][j] += (matrix[i][k] * b.matrix[k][j] % mod)) %= mod;
