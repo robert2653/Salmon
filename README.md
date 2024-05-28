@@ -1,6 +1,11 @@
 ## This is Salmon's codebook
 - [ ] 輕重練剖分
+- [ ] Link Cut Tree
 - [ ] 複習 Convex hull
 - [ ] slope trick
-- [ ] 複習 flow
-- [x] Virtual Tree
+- [ ] 線段樹
+    - [ ] 動態開點
+    - [ ] 分裂合併
+    - [ ] 可持久化線段樹
+- [ ] Z function
+- [ ] AC 自動機
