@@ -19,7 +19,7 @@ struct TwoSat {
                 if (dfn[v] == -1) {
                     tarjan(v);
                     low[u] = min(low[u], low[v]);
-                } else if (id[v] == -1) {
+                } else if (id[v] == -1) { // in stk
                     low[u] = min(low[u], dfn[v]);
                 }
             }

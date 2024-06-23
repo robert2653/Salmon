@@ -1,18 +1,18 @@
 int n, m, ans = 0;
 const int maxn = 2e5 + 5;
-vector<pair<int, int>> adj[maxn];
+vector adj(maxn, vector<pair<int, int>>());
 bool Prim() {
     int node_sz = 0;
     priority_queue<pii, vector<pii>, greater<pii>> pq;
-    pq.push({0, 1});
-    bool vis[maxn] = {false};
+    pq.push({0, 1}); // w, vertex
+    vector<bool> vis(maxn);
     while (!pq.empty()) {
         auto [cost, u] = pq.top(); pq.pop();
         if (vis[u]) continue;
         vis[u] = true;
         ans += cost;
         node_sz++;
-        for(auto [v, cost] : adj[u]) {
+        for (auto [v, cost] : adj[u]) {
             if (!vis[v])
                 pq.push({cost, v});
         }
