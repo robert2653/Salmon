@@ -22,4 +22,6 @@ vector<int> manacher(string s) {
     // # a # b # a #
     // 1 2 1 4 1 2 1
     // index 為奇數代表中心點在字元上(即回文字串長度是奇數)
+    // # a # b # b # a #
+    // 1 2 1 2 5 2 1 2 1
 }
