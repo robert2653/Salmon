@@ -1,9 +1,9 @@
 struct DSU {
     vector<int> boss, siz;
-    DSU(int n) {    // 1 based
-        boss.resize(n + 1);
+    DSU(int n) {    // 0 based
+        boss.resize(n);
         iota(boss.begin(), boss.end(), 0);
-        siz.assign(n + 1, 1);
+        siz.assign(n, 1);
     }
     int find_boss(int x) {
         if(boss[x] == x) return x;

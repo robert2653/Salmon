@@ -9,7 +9,7 @@ void solve() {
 
 }
 
-signed main() {
+int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(nullptr);
     int t = 1;

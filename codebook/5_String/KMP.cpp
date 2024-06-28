@@ -7,15 +7,15 @@ struct KMP {
         buildFailFunction();
     }
     void buildFailFunction() {
-        for(int i = 1; i < sub.size(); i++) {
+        for (int i = 1; i < sub.size(); i++) {
             int now = failure[i - 1];
-            while(now != -1 && sub[now + 1] != sub[i]) now = failure[now];
+            while (now != -1 && sub[now + 1] != sub[i]) now = failure[now];
             if (sub[now + 1] == sub[i]) failure[i] = now + 1;
         }
     }
     vector<int> KMPmatching(string &s) {
         vector<int> match;
-        for(int i = 0, now = -1; i < s.size(); i++) {
+        for (int i = 0, now = -1; i < s.size(); i++) {
             // now is the compare sucessed length -1
             while (s[i] != sub[now + 1] && now != -1) now = failure[now];
             // f stores if comparison fail, move to where
