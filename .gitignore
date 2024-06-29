@@ -2,6 +2,7 @@
 .vscode
 test.cpp
 test.exe
+.cph
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
