@@ -6,7 +6,7 @@ struct DSU {
         siz.assign(n, 1);
     }
     int find_boss(int x) {
-        if(boss[x] == x) return x;
+        if (boss[x] == x) return x;
         return boss[x] = find_boss(boss[x]);
     }
     bool same(int x, int y) {

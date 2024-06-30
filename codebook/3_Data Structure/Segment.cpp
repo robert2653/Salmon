@@ -2,17 +2,20 @@ template <class Info>
 struct Seg {    // 左開右閉寫法
     int n;
     vector<Info> info;
-    vector<Tag> tag;
-    template<class T>
-    Seg(int n) { init(n); }
+    Seg(int n_, Info v_ = Info()) {
+        init(n_, v_);
+    }
     template <class T>
-    Seg(vector<T> init_) { init(init_); }
-    void init(int n) { init(vector(n, Info())); }
+    Seg(vector<T> init_) {
+        init(init_);
+    }
+    void init(int n_, Info v_ = Info()) {
+        init(vector(n_, v_));
+    }
     template <class T>
-    void init (vector<T> init_) {
+    void init(vector<T> init_) {
         n = init_.size();
         info.assign(4 << __lg(n), Info());
-        tag.assign(4 << __lg(n), Tag());
         function <void(int, int, int)> build = [&](int p, int l, int r) {
             if (r - l == 1) {
                 info[p] = init_[l];

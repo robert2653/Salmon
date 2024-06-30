@@ -3,11 +3,16 @@ struct LazySeg {    // 左開右閉寫法
     int n;
     vector<Info> info;
     vector<Tag> tag;
-    template<class T>
-    LazySeg(int n) { init(n); }
+    LazySeg(int n_, Info v_ = Info()) {
+        init(n_, v_);
+    }
     template <class T>
-    LazySeg(vector<T> init_) { init(init_); }
-    void init(int n) { init(vector(n, Info())); }
+    LazySeg(vector<T> init_) {
+        init(init_);
+    }
+    void init(int n_, Info v_ = Info()) {
+        init(vector(n_, v_));
+    }
     template <class T>
     void init (vector<T> init_) {
         n = init_.size();

@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 using i64 = long long;
-constexpr i64 MOD = 1000000007;
 template<class T>
 constexpr T power(T a, i64 b) {
     T res = 1;
@@ -26,6 +25,18 @@ struct MInt {
     i64 x;
     constexpr MInt() : x{} {}
     constexpr MInt(i64 x) : x{norm(x % MOD)} {}
+
+    static int Mod;
+    constexpr static int getMod() {
+        if (P > 0) {
+            return P;
+        } else {
+            return Mod;
+        }
+    }
+    constexpr static void setMod(int Mod_) {
+        Mod = Mod_;
+    }
     constexpr i64 norm(i64 x) const {
         if (x < 0) {
             x += MOD;
@@ -102,7 +113,11 @@ struct MInt {
     }
 };
 
-using Z = MInt<MOD>;
+template<>
+int MInt<0>::Mod = 998244353;
+ 
+constexpr int P = 998244353;
+using Z = MInt<P>;
  
 struct Comb {
     i64 n;
