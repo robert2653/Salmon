@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 using i64 = long long;
 template<class T>
 constexpr T power(T a, i64 b) {
@@ -11,6 +9,7 @@ constexpr T power(T a, i64 b) {
     }
     return res;
 }
+ 
 constexpr i64 mul(i64 a, i64 b, i64 p) {
     i64 res = a * b - i64(1.L * a * b / p) * p;
     res %= p;
@@ -19,30 +18,29 @@ constexpr i64 mul(i64 a, i64 b, i64 p) {
     }
     return res;
 }
-
 template<i64 P>
-struct MInt {
+struct MLong {
     i64 x;
-    constexpr MInt() : x{} {}
-    constexpr MInt(i64 x) : x{norm(x % MOD)} {}
-
-    static int Mod;
-    constexpr static int getMod() {
+    constexpr MLong() : x{} {}
+    constexpr MLong(i64 x) : x{norm(x % getMod())} {}
+    
+    static i64 Mod;
+    constexpr static i64 getMod() {
         if (P > 0) {
             return P;
         } else {
             return Mod;
         }
     }
-    constexpr static void setMod(int Mod_) {
+    constexpr static void setMod(i64 Mod_) {
         Mod = Mod_;
     }
     constexpr i64 norm(i64 x) const {
         if (x < 0) {
-            x += MOD;
+            x += getMod();
         }
-        if (x >= MOD) {
-            x -= MOD;
+        if (x >= getMod()) {
+            x -= getMod();
         }
         return x;
     }
@@ -52,73 +50,74 @@ struct MInt {
     explicit constexpr operator i64() const {
         return x;
     }
-    constexpr MInt operator-() const {
-        MInt res;
-        res.x = norm(MOD - x);
+    constexpr MLong operator-() const {
+        MLong res;
+        res.x = norm(getMod() - x);
         return res;
     }
-    constexpr MInt inv() const {
+    constexpr MLong inv() const {
         assert(x != 0);
-        return power(*this, MOD - 2);
+        return power(*this, getMod() - 2);
     }
-    constexpr MInt &operator*=(MInt rhs) & {
-        x = mul(x, rhs.x, MOD);
+    constexpr MLong &operator*=(MLong rhs) & {
+        x = mul(x, rhs.x, getMod());
         return *this;
     }
-    constexpr MInt &operator+=(MInt rhs) & {
+    constexpr MLong &operator+=(MLong rhs) & {
         x = norm(x + rhs.x);
         return *this;
     }
-    constexpr MInt &operator-=(MInt rhs) & {
+    constexpr MLong &operator-=(MLong rhs) & {
         x = norm(x - rhs.x);
         return *this;
     }
-    constexpr MInt &operator/=(MInt rhs) & {
+    constexpr MLong &operator/=(MLong rhs) & {
         return *this *= rhs.inv();
     }
-    friend constexpr MInt operator*(MInt lhs, MInt rhs) {
-        MInt res = lhs;
+    friend constexpr MLong operator*(MLong lhs, MLong rhs) {
+        MLong res = lhs;
         res *= rhs;
         return res;
     }
-    friend constexpr MInt operator+(MInt lhs, MInt rhs) {
-        MInt res = lhs;
+    friend constexpr MLong operator+(MLong lhs, MLong rhs) {
+        MLong res = lhs;
         res += rhs;
         return res;
     }
-    friend constexpr MInt operator-(MInt lhs, MInt rhs) {
-        MInt res = lhs;
+    friend constexpr MLong operator-(MLong lhs, MLong rhs) {
+        MLong res = lhs;
         res -= rhs;
         return res;
     }
-    friend constexpr MInt operator/(MInt lhs, MInt rhs) {
-        MInt res = lhs;
+    friend constexpr MLong operator/(MLong lhs, MLong rhs) {
+        MLong res = lhs;
         res /= rhs;
         return res;
     }
-    friend constexpr istream &operator>>(istream &is, MInt &a) {
+    friend constexpr istream &operator>>(istream &is, MLong &a) {
         i64 v;
         is >> v;
-        a = MInt(v);
+        a = MLong(v);
         return is;
     }
-    friend constexpr ostream &operator<<(ostream &os, const MInt &a) {
+    friend constexpr ostream &operator<<(ostream &os, const MLong &a) {
         return os << a.val();
     }
-    friend constexpr bool operator==(MInt lhs, MInt rhs) {
+    friend constexpr bool operator==(MLong lhs, MLong rhs) {
         return lhs.val() == rhs.val();
     }
-    friend constexpr bool operator!=(MInt lhs, MInt rhs) {
+    friend constexpr bool operator!=(MLong lhs, MLong rhs) {
         return lhs.val() != rhs.val();
     }
 };
-
+ 
 template<>
-int MInt<0>::Mod = 998244353;
+i64 MLong<0LL>::Mod = i64(1E18) + 9;
  
-constexpr int P = 998244353;
-using Z = MInt<P>;
- 
+constexpr i64 P = 998244353;
+using Z = MLong<P>;
+// using Z = MLong<0LL>; // change Mod
+
 struct Comb {
     i64 n;
     vector<Z> _fac;
@@ -128,7 +127,7 @@ struct Comb {
     Comb(i64 n) : Comb() { init(n); }
     
     void init(i64 m) {
-        m = min(m, MOD - 1);
+        m = min(m, Z::getMod() - 1);
         if (m <= n) return;
         _fac.resize(m + 1);
         _invfac.resize(m + 1);
@@ -161,6 +160,6 @@ struct Comb {
         return fac(n) * invfac(m) * invfac(n - m);
     }
     Z Lucas(Z m, Z n) {
-        return n == 0 ? Z(1) : Lucas(m.val() / MOD, n.val() / MOD) * binom(m.val(), n.val());
+        return n == 0 ? Z(1) : Lucas(m.val() / Z::getMod(), n.val() / Z::getMod()) * binom(m.val(), n.val());
     }
-} comb;
+} comb; // 注意宣告, 若要換模數需重新宣告
