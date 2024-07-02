@@ -2,6 +2,7 @@ struct EBCC { // CF/contest/1986/pF
     int n, cur, cnt;
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
+    vector<pair<int, int>> bridges; // 關鍵邊
     EBCC(int n) {
         init(n);
     }
@@ -12,6 +13,7 @@ struct EBCC { // CF/contest/1986/pF
         low.resize(n);
         bel.assign(n, -1);
         stk.clear();
+        bridges.clear();
         cur = cnt = 0;
     }
     void addEdge(int u, int v) {
@@ -26,6 +28,9 @@ struct EBCC { // CF/contest/1986/pF
             if (dfn[y] == -1) {
                 dfs(y, x);
                 low[x] = min(low[x], low[y]);
+                if (low[y] > dfn[x]) {
+                    bridges.emplace_back(x, y);
+                }
             } else if (bel[y] == -1) {
                 low[x] = min(low[x], dfn[y]);
             }
