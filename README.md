@@ -1,5 +1,5 @@
 ## This is Salmon's codebook
-- [ ] 輕重練剖分
+- [x] 輕重練剖分
 - [ ] Link Cut Tree
 - [ ] 複習 Convex hull
 - [ ] slope trick
