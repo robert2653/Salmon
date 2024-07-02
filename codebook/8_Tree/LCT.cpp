@@ -64,12 +64,6 @@ bool isroot(Node *t) {
 int pos(Node *t) { // 回傳 1 代表是右子節點
     return t->p->ch[1] == t;
 }
-void pushAll(Node *t) {
-    if (!isroot(t)) {
-        pushAll(t->p);
-    }
-    t->push_tag();
-}
 void rotate(Node *t) {
     Node *q = t->p;
     int x = !pos(t);
@@ -87,28 +81,21 @@ void rotate(Node *t) {
 }
 void splay(Node *t) { // 單點修改前必須呼叫
     // 把 t 旋轉到目前 splay 的根
-    pushAll(t);
     while (!isroot(t)) {
-        Node* p = t->p;
-        if (!isroot(p)) {
-            if (pos(t) == pos(p)) {
-                rotate(p);
-            } else {
-                rotate(t);
-            }
-        }
+        Node *p = t->p;
+        p->push_tag();
+        t->push_tag();
         rotate(t);
     }
+    t->push_tag();
     t->pull_info();
 }
-void access(Node *t) {  // 初始化都先 access
+void access(Node *t) {
     // 把從根到 t 的所有點都放在一條實鏈裡，使根
     // 到 t 成為一條實路徑，並且在同一棵 splay 裡
     for (Node *i = t, *q = nullptr; i; q = i, i = i->p) {
         splay(i);
         i->ch[1] = q;
-        i->push_tag();
-        i->pull_info();
     }
     splay(t);
 }
@@ -150,6 +137,11 @@ void split(Node *x, Node *y) { // 以 y 做根, 區間修改用, apply 在 y 上
     access(y);
     splay(y);
 }
+bool isconnected(Node *x, Node *y) { // 查詢有沒有連通
+	makeRoot(x);
+    access(y);
+    return findRoot(x) == findRoot(y);
+}
 
 int main() {
     int n; cin >> n;
@@ -158,7 +150,6 @@ int main() {
     for (int i = 0; i < n; i++) {
         nodes[i] = new Node();
         nodes[i]->info.val = nodes[i]->info.sum = 1LL;
-        access(nodes[i]);
     }
     for (int i = 0; i < n - 1; i++) {
         int u, v; cin >> u >> v;

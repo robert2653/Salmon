@@ -1,5 +1,5 @@
 template <class Info, class Tag>
-struct LazySeg {    // 左開右閉寫法
+struct LazySeg {    // 左閉右開寫法
     int n;
     vector<Info> info;
     vector<Tag> tag;
