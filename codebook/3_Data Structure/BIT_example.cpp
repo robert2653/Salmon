@@ -10,6 +10,9 @@ struct BIT {    // BIT 都是 1-based 的查詢
     BIT(vector<T> init_) { // 必須是 0-based
         init(init_);
     }
+    void init(int n_ = 0) {
+        init(vector<T>(n_));
+    }
     void init(vector<T> init_) { // 必須是 0-based
         n = init_.size();
         bit.assign(n + 1, T());
@@ -40,6 +43,9 @@ struct TwoDimensionBIT {
     }
     TwoDimensionBIT(vector<vector<T>> init_) { // 必須是 0-based
         init(init_);
+    }
+    void init(int x = 0, int y = 0) {
+        init(vector<vector<T>>(x + 1, vector<T>(y + 1)));
     }
     void init(vector<vector<T>> init_) { // 必須是 0-based
         nx = init_.size();
