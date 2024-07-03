@@ -1,17 +1,17 @@
 template<class T>
 struct BIT {    // 全部以 0 based 使用
-    int n;
+    int n; // 個數
     vector<T> bit;
-    BIT(int n = 0) {    // 有幾個數
+    BIT(int n = 0) {
         init(vector<T>(n));
     }
-    BIT(vector<T> init_) { // 必須是 0-based
+    BIT(vector<T> init_) {
         init(init_);
     }
     void init(int n_ = 0) {
         init(vector<T>(n_));
     }
-    void init(vector<T> init_) { // 必須是 0-based
+    void init(vector<T> init_) {
         n = init_.size();
         bit.assign(n + 1, T());
         for (int i = 0; i < n; i++) {
@@ -33,19 +33,19 @@ struct BIT {    // 全部以 0 based 使用
     }
 };
 template <class T>
-struct TwoDimensionBIT {
-    int nx, ny;
+struct TwoDimensionBIT { // 全部以 0 based 使用
+    int nx, ny; // row, col 個數
     vector<vector<T>> bit;
     TwoDimensionBIT(int x = 0, int y = 0) {
         init(vector<vector<T>>(x + 1, vector<T>(y + 1)));
     }
-    TwoDimensionBIT(vector<vector<T>> init_) { // 必須是 0-based
+    TwoDimensionBIT(vector<vector<T>> init_) {
         init(init_);
     }
     void init(int x = 0, int y = 0) {
         init(vector<vector<T>>(x + 1, vector<T>(y + 1)));
     }
-    void init(vector<vector<T>> init_) { // 必須是 0-based
+    void init(vector<vector<T>> init_) {
         nx = init_.size();
         ny = init_[0].size();
         bit.assign(nx + 1, vector<T>(ny + 1, T()));
