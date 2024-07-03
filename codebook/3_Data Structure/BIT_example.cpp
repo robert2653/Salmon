@@ -72,3 +72,22 @@ struct TwoDimensionBIT {
         return query(rx, ry) - query(lx - 1, ry) - query(rx, ly - 1) + query(lx - 1, ly - 1);
     }
 };
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> g(n, vector<int>(m));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> g[i][j];
+        }
+    }
+    TwoDimensionBIT<int> bit;
+    bit.init(g);
+    int q; cin >> q;
+    for (int i = 0; i < q; i++) {
+        int lx, ly, rx, ry;
+        cin >> lx >> ly >> rx >> ry;
+        cout << bit.query(lx, ly, rx, ry) << "\n";
+    }
+    return 0;
+}
