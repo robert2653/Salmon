@@ -2,6 +2,7 @@ template <class Info>
 struct Seg {    // 左開右閉寫法
     int n;
     vector<Info> info;
+    Seg() : n(0) {}
     Seg(int n_, Info v_ = Info()) {
         init(n_, v_);
     }

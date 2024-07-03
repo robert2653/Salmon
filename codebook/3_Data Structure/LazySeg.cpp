@@ -3,6 +3,7 @@ struct LazySeg {    // 左閉右開寫法
     int n;
     vector<Info> info;
     vector<Tag> tag;
+    LazySeg() : n(0) {}
     LazySeg(int n_, Info v_ = Info()) {
         init(n_, v_);
     }

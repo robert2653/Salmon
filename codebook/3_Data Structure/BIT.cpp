@@ -1,52 +1,59 @@
+template<class T>
 struct BIT {    // BIT 都是 1-based 的查詢
     int n;
-    vector<int> bit;
-    BIT(int n) {    // 有幾個數
+    vector<T> bit;
+    BIT(int n = 0) {    // 有幾個數
         this->n = n;
-        bit.resize(n + 1, 0);
+        bit.resize(n + 1);
     }
-    BIT(vector<int> &init) {    // 必須是 0-based
+    BIT(vector<T> &init) {    // 必須是 0-based
         this->n = init.size();
-        bit.resize(n + 1, 0);
+        bit.resize(n + 1);
         for (int i = 1; i <= n; i++) {
             modify(i, init[i - 1]);
         }
     }
-    void modify(int i, int val) {
+    void modify(int i, T val) {
         for (; i <= n; i += i & -i) {
             bit[i] += val;
         }
     }
-    int query(int r) {
-	    int ans = 0;
+    T query(int r) {
+	    T ans = 0;
 	    for (; r; r -= r & -r) ans += bit[r];
 	    return ans;
     }
-    int query(int l, int r) {
+    T query(int l, int r) {
         return query(r) - query(l - 1);
     }
 };
+template <class T>
 struct TwoDimensionBIT {
     int nx, ny;
-    vector<vector<int>> bit;
+    vector<vector<T>> bit;
+    TwoDimensionBIT() : nx(0), ny(0) {}
     TwoDimensionBIT(int x, int y) {
         nx = x; ny = y;
-        bit.resize(x + 1, vector<int>(y + 1, 0));
+        bit.resize(x + 1, vector<T>(y + 1));
     }
-    void modify(int x, int y, int mod) {
+    void modify(int x, int y, T mod) {
         for (; x <= nx; x += x & -x) {
             for (int tmp = y; tmp <= ny; tmp += tmp & -tmp) {
                 bit[x][tmp] += mod;
             }
         }
     }
-    int query(int r1, int r2) {
-        int ans = 0;
-        for (; r1; r1 -= r1 & -r1) {
-            for (int tmp = r2; tmp; tmp -= tmp & -tmp) {
-                ans += bit[r1][tmp];
+    T query(int rx, int ry) {
+        T ans = 0;
+        for (; rx; rx -= rx & -rx) {
+            for (int tmp = ry; tmp; tmp -= tmp & -tmp) {
+                ans += bit[rx][tmp];
             }
         }
         return ans;
+    }
+    T query(int lx, int ly, int rx, int ry) {
+        T ans = 0;
+        return query(rx, ry) - query(lx - 1, ry) - query(rx, ly - 1) + query(lx - 1, ly - 1);
     }
 };

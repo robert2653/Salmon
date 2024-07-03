@@ -1,30 +1,23 @@
-const int maxn = 2e5+5;
-vector<int> tree[maxn];
-int cen = 0, n;
-int dfs(int par, int now) {
-    bool flag = 1;
-    int size = 0;
-    for (auto nxt : tree[now]) {
-        if (par != nxt) {
-            int subsize = dfs(now, nxt);
-            if (subsize > n / 2) flag = false;
-            size += subsize;
+int get_centroid(vector<vector<int>> &adj, vector<int> &vis, vector<int> &siz, int u, int pre) {
+    auto get_sz = [&](auto &&self, int u, int pre) -> void {
+        siz[u] = 1;
+        for (int v : adj[u]) {
+            if (v == pre) continue;
+            if (vis[v]) continue;
+            self(self, v, u);
+            siz[u] += siz[v];
         }
-    }
-    if (n - 1 - size > n / 2) flag = false;
-    if (flag) cen = now;
-    return size + 1;
-}
-int main() {
-    cin >> n;
-    for (int i = 1; i < n; i++) {
-        int u, v; cin >> u >> v;
-        tree[u].push_back(v);
-        tree[v].push_back(u);
-    }
-    for (int i = 1; i <= n; i++) {
-        for (auto nxt : tree[i])
-            dfs(i, nxt);
-        if (cen) break;
-    }
+    };
+    auto get_cen = [&](auto &&self, int tot_sz, int u, int pre) -> int {
+        for (auto v : adj[u]) {
+            if (v == pre) continue;
+            if (vis[v]) continue;
+            if (siz[v] * 2 > tot_sz){
+                return self(self, tot_sz, v, u);
+            }
+        }
+        return u;
+    };
+    get_sz(get_sz, u, pre);
+    return get_cen(get_cen, siz[u], u, pre);
 }
