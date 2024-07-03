@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
 template<class T>
 struct BIT {    // BIT 都是 1-based 的查詢
     int n;
