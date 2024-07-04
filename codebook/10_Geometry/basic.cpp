@@ -53,10 +53,10 @@ struct Point {
     friend bool operator==(const Point &a, const Point &b) {
         return a.x == b.x && a.y == b.y;
     }
-    friend std::istream &operator>>(std::istream &is, Point &p) {
+    friend istream &operator>>(istream &is, Point &p) {
         return is >> p.x >> p.y;
     }
-    friend std::ostream &operator<<(std::ostream &os, const Point &p) {
+    friend ostream &operator<<(ostream &os, const Point &p) {
         return os << "(" << p.x << ", " << p.y << ")";
     }
 };
@@ -85,7 +85,7 @@ T square(const Point<T> &p) {
  
 template<class T>
 double length(const Point<T> &p) {
-    return std::sqrt(square(p));
+    return sqrt(square(p));
 }
  
 template<class T>
@@ -110,7 +110,7 @@ double distance(const Point<T> &a, const Point<T> &b) {
  
 template<class T>
 double distancePL(const Point<T> &p, const Line<T> &l) {
-    return std::abs(cross(l.a - l.b, l.a - p)) / length(l);
+    return abs(cross(l.a - l.b, l.a - p)) / length(l);
 }
  
 template<class T>
@@ -146,12 +146,12 @@ Point<T> lineIntersection(const Line<T> &l1, const Line<T> &l2) {
  
 template<class T>
 bool pointOnSegment(const Point<T> &p, const Line<T> &l) {
-    return cross(p - l.a, l.b - l.a) == 0 && std::min(l.a.x, l.b.x) <= p.x && p.x <= std::max(l.a.x, l.b.x)
-        && std::min(l.a.y, l.b.y) <= p.y && p.y <= std::max(l.a.y, l.b.y);
+    return cross(p - l.a, l.b - l.a) == 0 && min(l.a.x, l.b.x) <= p.x && p.x <= max(l.a.x, l.b.x)
+        && min(l.a.y, l.b.y) <= p.y && p.y <= max(l.a.y, l.b.y);
 }
  
 template<class T>
-bool pointInPolygon(const Point<T> &a, const std::vector<Point<T>> &p) {
+bool pointInPolygon(const Point<T> &a, const vector<Point<T>> &p) {
     int n = p.size();
     for (int i = 0; i < n; i++) {
         if (pointOnSegment(a, Line(p[i], p[(i + 1) % n]))) {
@@ -179,35 +179,35 @@ bool pointInPolygon(const Point<T> &a, const std::vector<Point<T>> &p) {
 // 2 : overlap
 // 3 : intersect at endpoint
 template<class T>
-std::tuple<int, Point<T>, Point<T>> segmentIntersection(const Line<T> &l1, const Line<T> &l2) {
-    if (std::max(l1.a.x, l1.b.x) < std::min(l2.a.x, l2.b.x)) {
+tuple<int, Point<T>, Point<T>> segmentIntersection(const Line<T> &l1, const Line<T> &l2) {
+    if (max(l1.a.x, l1.b.x) < min(l2.a.x, l2.b.x)) {
         return {0, Point<T>(), Point<T>()};
     }
-    if (std::min(l1.a.x, l1.b.x) > std::max(l2.a.x, l2.b.x)) {
+    if (min(l1.a.x, l1.b.x) > max(l2.a.x, l2.b.x)) {
         return {0, Point<T>(), Point<T>()};
     }
-    if (std::max(l1.a.y, l1.b.y) < std::min(l2.a.y, l2.b.y)) {
+    if (max(l1.a.y, l1.b.y) < min(l2.a.y, l2.b.y)) {
         return {0, Point<T>(), Point<T>()};
     }
-    if (std::min(l1.a.y, l1.b.y) > std::max(l2.a.y, l2.b.y)) {
+    if (min(l1.a.y, l1.b.y) > max(l2.a.y, l2.b.y)) {
         return {0, Point<T>(), Point<T>()};
     }
     if (cross(l1.b - l1.a, l2.b - l2.a) == 0) {
         if (cross(l1.b - l1.a, l2.a - l1.a) != 0) {
             return {0, Point<T>(), Point<T>()};
         } else {
-            auto maxx1 = std::max(l1.a.x, l1.b.x);
-            auto minx1 = std::min(l1.a.x, l1.b.x);
-            auto maxy1 = std::max(l1.a.y, l1.b.y);
-            auto miny1 = std::min(l1.a.y, l1.b.y);
-            auto maxx2 = std::max(l2.a.x, l2.b.x);
-            auto minx2 = std::min(l2.a.x, l2.b.x);
-            auto maxy2 = std::max(l2.a.y, l2.b.y);
-            auto miny2 = std::min(l2.a.y, l2.b.y);
-            Point<T> p1(std::max(minx1, minx2), std::max(miny1, miny2));
-            Point<T> p2(std::min(maxx1, maxx2), std::min(maxy1, maxy2));
+            auto maxx1 = max(l1.a.x, l1.b.x);
+            auto minx1 = min(l1.a.x, l1.b.x);
+            auto maxy1 = max(l1.a.y, l1.b.y);
+            auto miny1 = min(l1.a.y, l1.b.y);
+            auto maxx2 = max(l2.a.x, l2.b.x);
+            auto minx2 = min(l2.a.x, l2.b.x);
+            auto maxy2 = max(l2.a.y, l2.b.y);
+            auto miny2 = min(l2.a.y, l2.b.y);
+            Point<T> p1(max(minx1, minx2), max(miny1, miny2));
+            Point<T> p2(min(maxx1, maxx2), min(maxy1, maxy2));
             if (!pointOnSegment(p1, l1)) {
-                std::swap(p1.y, p2.y);
+                swap(p1.y, p2.y);
             }
             if (p1 == p2) {
                 return {3, p1, p2};
@@ -235,14 +235,14 @@ std::tuple<int, Point<T>, Point<T>> segmentIntersection(const Line<T> &l1, const
  
 template<class T>
 double distanceSS(const Line<T> &l1, const Line<T> &l2) {
-    if (std::get<0>(segmentIntersection(l1, l2)) != 0) {
+    if (get<0>(segmentIntersection(l1, l2)) != 0) {
         return 0.0;
     }
-    return std::min({distancePS(l1.a, l2), distancePS(l1.b, l2), distancePS(l2.a, l1), distancePS(l2.b, l1)});
+    return min({distancePS(l1.a, l2), distancePS(l1.b, l2), distancePS(l2.a, l1), distancePS(l2.b, l1)});
 }
  
 template<class T>
-bool segmentInPolygon(const Line<T> &l, const std::vector<Point<T>> &p) {
+bool segmentInPolygon(const Line<T> &l, const vector<Point<T>> &p) {
     int n = p.size();
     if (!pointInPolygon(l.a, p)) {
         return false;
@@ -319,8 +319,8 @@ bool segmentInPolygon(const Line<T> &l, const std::vector<Point<T>> &p) {
 }
  
 template<class T>
-std::vector<Point<T>> hp(std::vector<Line<T>> lines) {
-    std::sort(lines.begin(), lines.end(), [&](auto l1, auto l2) {
+vector<Point<T>> hp(vector<Line<T>> lines) {
+    sort(lines.begin(), lines.end(), [&](auto l1, auto l2) {
         auto d1 = l1.b - l1.a;
         auto d2 = l2.b - l2.a;
         
@@ -331,8 +331,8 @@ std::vector<Point<T>> hp(std::vector<Line<T>> lines) {
         return cross(d1, d2) > 0;
     });
     
-    std::deque<Line<T>> ls;
-    std::deque<Point<T>> ps;
+    deque<Line<T>> ls;
+    deque<Point<T>> ps;
     for (auto l : lines) {
         if (ls.empty()) {
             ls.push_back(l);
@@ -374,7 +374,7 @@ std::vector<Point<T>> hp(std::vector<Line<T>> lines) {
     }
     ps.push_back(lineIntersection(ls[0], ls.back()));
     
-    return std::vector(ps.begin(), ps.end());
+    return vector(ps.begin(), ps.end());
 }
- 
+
 using P = Point<i64>;
