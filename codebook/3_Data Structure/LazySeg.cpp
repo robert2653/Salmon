@@ -133,6 +133,3 @@ struct Info {
 Info operator + (const Info &a, const Info &b) {
     return { a.sum + b.sum };
 }
-// polynomial queries
-// 設置梯形的底跟加了幾次，apply_tag 時底為 l 的合，d 為加給次
-// 所以 sum += (底 * 2 + 次 * 區間) * 區間 / 2;
