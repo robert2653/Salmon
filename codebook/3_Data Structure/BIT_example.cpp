@@ -1,99 +1,90 @@
 #include <bits/stdc++.h>
 using namespace std;
-template<class T>
-struct BIT {    // 全部以 0 based 使用
+template <typename T>
+struct Fenwick { // 全部以 0 based 使用
     int n;
-    vector<T> bit;
-    BIT(int n = 0) {    // 有幾個數
-        init(vector<T>(n));
+    vector<T> a;
+    Fenwick(int n_ = 0) {
+        init(n_);
     }
-    BIT(vector<T> init_) { // 必須是 0-based
-        init(init_);
+    void init(int n_) {
+        n = n_;
+        a.assign(n, T{});
     }
-    void init(int n_ = 0) {
-        init(vector<T>(n_));
-    }
-    void init(vector<T> init_) { // 必須是 0-based
-        n = init_.size();
-        bit.assign(n + 1, T());
-        for (int i = 0; i < n; i++) {
-            modify(i, init_[i]);
+    void add(int x, const T &v) {
+        for (int i = x + 1; i <= n; i += i & -i) {
+            a[i - 1] = a[i - 1] + v;
         }
     }
-    void modify(int i, T val) {
-        for (i++; i <= n; i += i & -i) {
-            bit[i] += val;
+    T sum(int x) { // 左閉右開查詢
+        T ans{};
+        for (int i = x; i > 0; i -= i & -i) {
+            ans = ans + a[i - 1];
         }
+        return ans;
     }
-    T query(int r) {
-	    T ans = 0;
-	    for (r++; r; r -= r & -r) ans += bit[r];
-	    return ans;
+    T rangeSum(int l, int r) { // 左閉右開查詢
+        return sum(r) - sum(l);
     }
-    T query(int l, int r) {
-        return query(r) - query(l - 1);
+    int select(const T &k) { // 找到最小的 x, 使得 sum(x) > k
+        int x = 0;
+        T cur{};
+        for (int i = 1 << __lg(n); i; i /= 2) {
+            if (x + i <= n && cur + a[x + i - 1] <= k) {
+                x += i;
+                cur = cur + a[x - 1];
+            }
+        }
+        return x;
     }
 };
 template <class T>
-struct TwoDimensionBIT {
-    int nx, ny;
-    vector<vector<T>> bit;
-    TwoDimensionBIT(int x = 0, int y = 0) {
-        init(vector<vector<T>>(x + 1, vector<T>(y + 1)));
+struct TwoDFenwick {  // 全部以 0 based 使用
+    int nx, ny;  // row, col 個數
+    vector<vector<T>> a;
+    TwoDFenwick(int nx_ = 0, int ny_ = 0) {
+        init(nx_, ny_);
     }
-    TwoDimensionBIT(vector<vector<T>> init_) { // 必須是 0-based
-        init(init_);
+    void init(int nx_, int ny_) {
+        nx = nx_; ny = ny_;
+        a.assign(nx, vector<T>(ny, T{}));
     }
-    void init(int x = 0, int y = 0) {
-        init(vector<vector<T>>(x + 1, vector<T>(y + 1)));
-    }
-    void init(vector<vector<T>> init_) { // 必須是 0-based
-        nx = init_.size();
-        ny = init_[0].size();
-        bit.assign(nx + 1, vector<T>(ny + 1, T()));
-        for (int i = 0; i < nx; i++) {
-            for (int j = 0; j < ny; j++) {
-                modify(i, j, init_[i][j]);
+    void add(int x, int y, const T &v) {
+        for (int i = x + 1; i <= nx; i += i & -i) {
+            for (int j = y + 1; j <= ny; j += j & -j) {
+                a[i - 1][j - 1] = a[i - 1][j - 1] + v;
             }
         }
     }
-    void modify(int x, int y, T mod) {
-        for (x++; x <= nx; x += x & -x) {
-            for (int tmp = y + 1; tmp <= ny; tmp += tmp & -tmp) {
-                bit[x][tmp] += mod;
-            }
-        }
-    }
-    T query(int rx, int ry) {
-        T ans = 0;
-        for (rx++; rx; rx -= rx & -rx) {
-            for (int tmp = ry + 1; tmp; tmp -= tmp & -tmp) {
-                ans += bit[rx][tmp];
+    T sum(int x, int y) { // 左閉右開查詢
+        T ans{};
+        for (int i = x; i > 0; i -= i & -i) {
+            for (int j = y; j > 0; j -= j & -j) {
+                ans = ans + a[i - 1][j - 1];
             }
         }
         return ans;
     }
-    T query(int lx, int ly, int rx, int ry) {
-        T ans = 0;
-        return query(rx, ry) - query(lx - 1, ry) - query(rx, ly - 1) + query(lx - 1, ly - 1);
+    T rangeSum(int lx, int ly, int rx, int ry) { // 左閉右開查詢
+        return sum(rx, ry) - sum(lx, ry) - sum(rx, ly) + sum(lx, ly);
     }
 };
 int main() {
     int n, m;
     cin >> n >> m;
-    vector<vector<int>> g(n, vector<int>(m));
+    TwoDFenwick<int> a(n, m);
+    int q; cin >> q;
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> g[i][j];
+        for (int j = 0; j < m; j++) {
+            int x;
+            cin >> x;
+            a.add(i, j, x);
         }
     }
-    TwoDimensionBIT<int> bit;
-    bit.init(g);
-    int q; cin >> q;
     for (int i = 0; i < q; i++) {
         int lx, ly, rx, ry;
         cin >> lx >> ly >> rx >> ry;
-        cout << bit.query(lx, ly, rx, ry) << "\n";
+        cout << a.rangeSum(lx, ly, rx + 1, ry + 1) << "\n";
     }
     return 0;
 }

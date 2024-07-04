@@ -50,7 +50,7 @@ struct LazySeg {    // 左閉右開寫法
             return;
         }
         int m = (l + r) / 2;
-        push(p);
+        push(p, l, r);
         if (x < m) {
             modify(2 * p, l, m, x, v);
         } else {
