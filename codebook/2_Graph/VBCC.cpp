@@ -22,7 +22,6 @@ struct VBCC {
     void dfs(int x) {
         int children = 0;
         dfn[x] = low[x] = cur++;
-        
         for (int v : adj[x]) {
             if (dfn[v] == -1) {
                 children++;

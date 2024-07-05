@@ -45,11 +45,14 @@ struct EBCC { // CF/contest/1986/pF
             cnt++;
         }
     }
-    vector<int> work() {
-        dfs(0, -1);
+    vector<int> work() { // not connected
+        for (int i = 0; i < n; i++) {
+            if (dfn[i] == -1) {
+                dfs(i, -1);
+            }
+        }
         return bel;
     }
-    
     struct Graph {
         int n;
         vector<pair<int, int>> edges;
