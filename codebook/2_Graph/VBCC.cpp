@@ -3,11 +3,11 @@ struct VBCC {
     vector<vector<int>> adj;
     vector<int> dfn, low, parent;
     vector<bool> is_cut;
-    VBCC(int n) {
-        init(n);
+    VBCC(int n_ = 0) {
+        init(n_);
     }
-    void init(int n) {
-        this->n = n;
+    void init(int n_) {
+        n = n_;
         adj.assign(n, {});
         dfn.assign(n, -1);
         low.resize(n);

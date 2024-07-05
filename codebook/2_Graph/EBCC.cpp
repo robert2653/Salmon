@@ -3,11 +3,11 @@ struct EBCC { // CF/contest/1986/pF
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
     vector<pair<int, int>> bridges; // 關鍵邊
-    EBCC(int n) {
-        init(n);
+    EBCC(int n_) {
+        init(n_);
     }
-    void init(int n) {
-        this->n = n;
+    void init(int n_) {
+        n = n_;
         adj.assign(n, {});
         dfn.assign(n, -1);
         low.resize(n);

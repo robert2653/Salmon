@@ -2,11 +2,11 @@ struct SCC {
     int n, cur, cnt;
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
-    SCC(int n) {
-        init(n);
+    SCC(int n_ = 0) {
+        init(n_);
     }
-    void init(int n) {
-        this->n = n;
+    void init(int n_) {
+        n = n_;
         adj.assign(n, {});
         dfn.assign(n, -1);
         low.resize(n);
