@@ -49,7 +49,7 @@ struct Dinic {
         for (int &cur = ptr[u]; cur < (int)adj[u].size(); cur++) {
             Edge &e = edges[adj[u][cur]];
             if (dis[u] + 1 != dis[e.to]) continue;
-            if (e.cap - e.flow < 1) continue;
+            if (e.cap == e.flow) continue;
             T mn = dfs(e.to, min(flow, e.cap - e.flow));
             if (mn > 0) {
                 e.flow += mn;
@@ -64,7 +64,9 @@ struct Dinic {
         T flow = 0;
         while (bfs()) {
             fill(ptr.begin(), ptr.end(), 0);
-            while (T res = dfs(s, INF_FlOW)) {
+            while (true) {
+                T res = dfs(s, INF_FlOW);
+                if (res == 0) break;
                 flow += res;
             }
         }
