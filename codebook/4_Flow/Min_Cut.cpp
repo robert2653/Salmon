@@ -1,5 +1,6 @@
 // CSES Police Chase
-void solve(){int n, m; cin >> n >> m;
+int main(){
+    int n, m; cin >> n >> m;
     Dinic<int> g(n);
     for (int i = 0; i < m; i++) {
         int u, v, cap = 1;
