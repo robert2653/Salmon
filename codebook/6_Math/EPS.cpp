@@ -1,6 +1,6 @@
 struct EDouble {
     double x;
-    constexpr static double Epi = 1e-9;
+    constexpr static double Eps = 1e-10;
     constexpr EDouble() : x{} {}
     constexpr EDouble(double v) : x{v} {}
     constexpr double val() const {
@@ -25,7 +25,7 @@ struct EDouble {
         return *this;
     }
     constexpr EDouble &operator/=(const EDouble &rhs) & {
-        assert(fabs(rhs.x) > Epi);
+        assert(fabs(rhs.x) > Eps);
         x /= rhs.x;
         return *this;
     }
@@ -46,13 +46,13 @@ struct EDouble {
         return lhs;
     }
     friend constexpr bool operator<(const EDouble &lhs, const EDouble &rhs) {
-        return lhs.x - rhs.x < Epi;
+        return lhs.x - rhs.x < Eps;
     }
     friend constexpr bool operator>(const EDouble &lhs, const EDouble &rhs) {
-        return lhs.x - rhs.x > Epi;
+        return lhs.x - rhs.x > Eps;
     }
     friend constexpr bool operator==(const EDouble &lhs, const EDouble &rhs) {
-        return fabs(lhs.x - rhs.x) < Epi;
+        return fabs(lhs.x - rhs.x) < Eps;
     }
     friend constexpr bool operator<=(const EDouble &lhs, const EDouble &rhs) {
         return lhs < rhs || lhs == rhs;
@@ -69,8 +69,8 @@ struct EDouble {
         return is;
     }
     friend ostream &operator<<(ostream &os, const EDouble &a) {
-        return os << a.val();
-    }
+        return os << fixed << setprecision(7) << a.val() + (a.val() > 0 ? Eps : a.val() < 0 ? -Eps : 0);
+    } // Eps should < precision
 };
  
 namespace std {
@@ -85,5 +85,5 @@ namespace std {
         }
     };
 }
- 
+
 using E = EDouble;
