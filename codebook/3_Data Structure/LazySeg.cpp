@@ -109,7 +109,7 @@ struct LazySeg {    // 左閉右開寫法
     }
 };
 // ---define structure and info plus---
-struct Tag {
+struct Tag { // 有些不用 Tag 例如 sweepLine
     int set_val; int add;
     void apply(const Tag& v) {
         if (v.set_val) {
@@ -129,7 +129,11 @@ struct Info {
         }
         sum += (r - l) * v.add;
     }
+    // Info& operator=(const Info &rhs) {
+    //     // 部分 assignment 使用
+    //     return *this;
+    // }
 };
-Info operator + (const Info &a, const Info &b) {
+Info operator+(const Info &a, const Info &b) {
     return { a.sum + b.sum };
 }
