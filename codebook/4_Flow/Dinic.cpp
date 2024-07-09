@@ -9,14 +9,13 @@ struct Dinic {
     vector<vector<int>> adj; // 此點對應的 edges 編號
     vector<Edge> edges; // 幫每個 edge 編號
     vector<int> dis, ptr;
-    Dinic() { init(); }
-    Dinic(int n_) { init(n_); }
+    Dinic(int n_ = 0) { init(n_); }
     void init(int n_ = 0) {
         n = n_;
         m = 0;
-        adj.resize(n);
         dis.resize(n);
         ptr.resize(n);
+        adj.assign(n, vector<int>{});
         edges.clear();
     }
     void add_edge(int u, int v, T cap) {

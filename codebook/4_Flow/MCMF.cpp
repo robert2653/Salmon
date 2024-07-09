@@ -1,6 +1,6 @@
 template<class Tf, class Tc>
 struct MCMF {
-    int n, cur;
+    int n, m;
     Tf INF_FlOW = numeric_limits<Tf>::max() / 2;
     Tc INF_COST = numeric_limits<Tc>::max() / 2;
     struct Edge {
@@ -14,21 +14,20 @@ struct MCMF {
     vector<int> par; // 路徑恢復
     vector<bool> vis;
 
-    MCMF() { init(); }
-    MCMF(int n_) { init(n_); }
+    MCMF(int n_ = 0) { init(n_); }
     void init(int n_ = 0) {
         n = n_;
-        cur = 0;
-        adj.resize(n);
+        m = 0;
         edges.clear();
         pot.assign(n, 0);
+        adj.assign(n, vector<int>{});
     }
 
     void add_edge(int u, int v, Tf cap, Tc cost){
         edges.push_back({u, v, 0, cap, cost});
-        adj[u].push_back(cur++);
         edges.push_back({v, u, 0, 0, -cost});
-        adj[v].push_back(cur++);
+        adj[u].push_back(m++);
+        adj[v].push_back(m++);
     }
 
     bool spfa(int s, int t) {
@@ -61,8 +60,8 @@ struct MCMF {
     // 限定 flow, 最小化 cost
     pair<Tf, Tc> work_flow(int s, int t, Tf need = -1) {
         if (need == -1) need = INF_FlOW;
-        Tf flow = 0;
-        Tc cost = 0;
+        Tf flow{};
+        Tc cost{};
         while (spfa(s, t)) {
             for (int i = 0; i < n; i++) {
                 if (dis[i] != INF_COST) pot[i] += dis[i];
@@ -92,8 +91,8 @@ struct MCMF {
     // 限定 cost, 最大化 flow
     pair<Tf, Tc> work_budget(int s, int t, Tc budget = -1) {
         if (budget == -1) budget = INF_COST;
-        Tf flow = 0;
-        Tc cost = 0;
+        Tf flow{};
+        Tc cost{};
         while (spfa(s, t)) {
             for (int i = 0; i < n; i++) {
                 if (dis[i] != INF_COST) pot[i] += dis[i];
