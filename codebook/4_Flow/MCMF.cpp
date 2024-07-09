@@ -1,7 +1,7 @@
 template<class Tf, class Tc>
 struct MCMF {
     int n, m;
-    Tf INF_FlOW = numeric_limits<Tf>::max() / 2;
+    Tf INF_FLOW = numeric_limits<Tf>::max() / 2;
     Tc INF_COST = numeric_limits<Tc>::max() / 2;
     struct Edge {
         int from, to;
@@ -59,14 +59,14 @@ struct MCMF {
     }
     // 限定 flow, 最小化 cost
     pair<Tf, Tc> work_flow(int s, int t, Tf need = -1) {
-        if (need == -1) need = INF_FlOW;
+        if (need == -1) need = INF_FLOW;
         Tf flow{};
         Tc cost{};
         while (spfa(s, t)) {
             for (int i = 0; i < n; i++) {
                 if (dis[i] != INF_COST) pot[i] += dis[i];
             }
-            Tf f = INF_FlOW;
+            Tf f = INF_FLOW;
             int cur = t;
             while (cur != s) {
                 Edge &e = edges[par[cur]];
@@ -97,7 +97,7 @@ struct MCMF {
             for (int i = 0; i < n; i++) {
                 if (dis[i] != INF_COST) pot[i] += dis[i];
             }
-            Tf f = INF_FlOW;
+            Tf f = INF_FLOW;
             int cur = t;
             while (cur != s) {
                 Edge &e = edges[par[cur]];
