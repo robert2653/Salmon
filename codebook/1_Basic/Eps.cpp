@@ -1,6 +1,6 @@
 struct EDouble {
     double x;
-    constexpr static double Eps = 1e-10;
+    constexpr static double Eps = 1e-9;
     constexpr EDouble() : x{} {}
     constexpr EDouble(double v) : x{v} {}
     constexpr double val() const {
@@ -46,7 +46,7 @@ struct EDouble {
         return lhs;
     }
     friend constexpr bool operator<(const EDouble &lhs, const EDouble &rhs) {
-        return lhs.x - rhs.x < Eps;
+        return lhs.x - rhs.x < -Eps;
     }
     friend constexpr bool operator>(const EDouble &lhs, const EDouble &rhs) {
         return lhs.x - rhs.x > Eps;
@@ -72,7 +72,6 @@ struct EDouble {
         return os << fixed << setprecision(7) << a.val() + (a.val() > 0 ? Eps : a.val() < 0 ? -Eps : 0);
     } // Eps should < precision
 };
- 
 namespace std {
     template<>
     class numeric_limits<EDouble> {
@@ -85,5 +84,4 @@ namespace std {
         }
     };
 }
-
 using E = EDouble;
