@@ -1,56 +1,46 @@
-struct Bipartite_Matching { // 1-based
-    int n, m; vector<vector<int>> adj;
-    vector<int> match, vis;
-    Bipartite_Matching(int n, int m, vector<vector<int>> &adj) {
-        this->n = n;
-        this->m = m;
-        this->adj = adj;
-        match.assign(n + m + 1, -1);
-        vis.assign(n + m + 1, 0);
+struct Hangarian { // 0-based
+    int n, m; // 最小路徑覆蓋，二分匹配
+    vector<vector<int>> adj;
+    vector<int> used, vis;
+    vector<pair<int, int>> match;
+    Hangarian(int n_ = 0, int m_ = 0) {
+        init(n_, m_);
     }
-    pair<int, vector<pair<int, int>>> matching() {
-        int cnt = 0; vector<pair<int, int>> ans;
+    void init(int n_ = 0, int m_ = 0) {
+        n = n_; m = m_;
+        adj.assign(n + m, vector<int>());
+        used.assign(n + m, -1);
+        vis.assign(n + m, 0);
+    }
+    void addEdge(int u, int v) {
+        adj[u].push_back(n + v);
+        adj[n + v].push_back(u);
+    }
+    vector<pair<int, int>> work() {
+        match.clear();
+        used.assign(n + m, -1);
+        vis.assign(n + m, 0);
         auto dfs = [&](auto self, int u) -> bool {
             for (int v : adj[u]) {
                 if (vis[v] == 0) {
                     vis[v] = 1;
-                    if (match[v] == -1 || self(self, match[v])) {
-                        match[v] = u;
+                    if (used[v] == -1 || self(self, used[v])) {
+                        used[v] = u;
                         return true;
                     }
                 }
             }
             return false;
         };
-        for (int i = 1; i <= n; i++) {
-            fill(all(vis), 0);
+        for (int i = 0; i < n; i++) {
+            fill(vis.begin(), vis.end(), 0);
             dfs(dfs, i);
         }
-        for (int i = n + 1; i <= n + m; i++) {
-            if (match[i] != -1) {
-                cnt += 1;
+        for (int i = n; i < n + m; i++) {
+            if (used[i] != -1) {
+                match.emplace_back(used[i], i - n);
             }
         }
-        for (int i = n + 1; i <= n + m; i++) {
-            if (match[i] != -1) {
-                ans.push_back({match[i], i - n});
-            }
-        }
-        return { cnt, ans };
+        return match;
     }
 };
-int main(){
-    int n, m, e; cin >> n >> m >> e;
-    vector<vector<int>> adj(n + m + 1);
-    for (int i = 1; i <= e; i++) {
-        int u, v; cin >> u >> v;
-        adj[u].push_back(v + n);
-        adj[v + n].push_back(u);
-    }
-    Bipartite_Matching bip(n, m, adj);
-    auto [cnt, ans] = bip.matching();
-    cout << cnt << "\n";
-    for (auto [u, v] : ans) {
-        cout << u << " " << v << "\n";
-    }
-}
