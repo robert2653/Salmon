@@ -72,28 +72,28 @@ struct TwoDFenwick {  // 全部以 0 based 使用
 int main() {
     int n, m;
     cin >> n >> m;
-    Fenwick<int> a(n);
-    for (int i = 0; i < n; i++) {
-        int x; cin >> x;
-        a.add(i, x);
-    }
-    for (int i = 0; i < m; i++) {
-        int x; cin >> x;
-        cout << a.select(x);
-    }
-    // TwoDFenwick<int> a(n, m);
-    // int q; cin >> q;
+    // Fenwick<int> a(n);
     // for (int i = 0; i < n; i++) {
-    //     for (int j = 0; j < m; j++) {
-    //         int x;
-    //         cin >> x;
-    //         a.add(i, j, x);
-    //     }
+    //     int x; cin >> x;
+    //     a.add(i, x);
     // }
-    // for (int i = 0; i < q; i++) {
-    //     int lx, ly, rx, ry;
-    //     cin >> lx >> ly >> rx >> ry;
-    //     cout << a.rangeSum(lx, ly, rx + 1, ry + 1) << "\n";
+    // for (int i = 0; i < m; i++) {
+    //     int x; cin >> x;
+    //     cout << a.select(x);
     // }
+    TwoDFenwick<int> a(n, m);
+    int q; cin >> q;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            int x;
+            cin >> x;
+            a.add(i, j, x);
+        }
+    }
+    for (int i = 0; i < q; i++) {
+        int lx, ly, rx, ry;
+        cin >> lx >> ly >> rx >> ry;
+        cout << a.rangeSum(lx, ly, rx + 1, ry + 1) << "\n";
+    }
     return 0;
 }
