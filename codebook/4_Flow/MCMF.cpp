@@ -18,7 +18,6 @@ struct MCMF {
         n = n_;
         m = 0;
         edges.clear();
-        pot.assign(n, 0);
         adj.assign(n, vector<int>{});
     }
     void add_edge(int u, int v, Tf cap, Tc cost){
@@ -114,5 +113,8 @@ struct MCMF {
             if (budget == 0 || f == 0) break;
         }
         return make_pair(flow, cost);
+    }
+    void reset() {
+        for (int i = 0; i < m; i++) edges[i].flow = 0;
     }
 };

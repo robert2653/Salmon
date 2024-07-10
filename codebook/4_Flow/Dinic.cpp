@@ -68,4 +68,7 @@ struct Dinic {
         }
         return flow;
     }
+    void reset() {
+        for (int i = 0; i < m; i++) edges[i].flow = 0;
+    }
 };
