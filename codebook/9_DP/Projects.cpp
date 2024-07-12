@@ -1,38 +1,32 @@
-// 排程有權重問題，輸出價值最多且時間最少
-struct project {
-    int from, end, gain, id;
-};
-int main() {
-    int n; cin >> n;
-    vector<project> projects(n + 1);
+int main() { // 排程有權重問題，輸出價值最多且時間最少
+struct E {
+    int from, to, w, id;
+    bool operator<(const E &rhs) {
+        return to == rhs.to ? w > rhs.w : to < rhs.to;
+}};
+    int n; cin >> n; vector<E> a(n + 1);
     for (int i = 1; i <= n; i++) {
-        int f, e, g; cin >> f >> e >> g;
-        projects[i] = {f, e, g, i};
+        int u, v, w; cin >> u >> v >> w;
+        a[i] = {u, v, w, i};
     }
-    sort(all(projects), [](project a, project b) {
-        if (a.end == b.end) return a.gain < b.gain;
-        return a.end < b.end;
-    });
-    vector<array<int, 3>> dp(n + 1); // nums, gain, time
-    vector<int> par(n + 1, 0), ans, add(n + 1, -1);
+    vector<array<ll, 2>> dp(n + 1); // w, time
+    vector<array<int, 2>> rec(n + 1); // 有沒選，上個是誰
+    sort(a.begin(), a.end());
     for (int i = 1; i <= n; i++) {
-        int id = --upper_bound(projects.begin(), projects.begin() + i, project({0, projects[i].from, 0, 0}), [](project &a, project &b) {
-            return a.end < b.end;
-        }) - projects.begin();   // 二分搜最接近 from 的 end
-        dp[i] = dp[i - 1];
-        par[i] = i - 1;
-        if (dp[i][1] < dp[id][1] + projects[i].gain || (dp[i][1] == dp[id][1] + projects[i].gain && dp[i][2] > dp[id][2] - projects[i].from + projects[i].end)) {
-            // 如果報酬率一樣，比時間少的
-            dp[i] = {dp[id][0] + 1, dp[id][1] + projects[i].gain, dp[id][2] + projects[i].end - projects[i].from};
-            par[i] = id;
-            add[i] = projects[i].id;
+        auto it = --lower_bound(all(a), E({0, a[i].from}),
+        [](E x, E y){ return x.to < y.to; });
+        int id = it - a.begin(); dp[i] = dp[i - 1];
+        ll nw = dp[id][0] + a[i].w;
+        ll nt = dp[id][1] + a[i].to - a[i].from;
+        if (dp[i][0] < nw || dp[i][0] == nw && dp[i][1] > nt) {
+            dp[i] = {nw, nt}; rec[i] = {1, id};
         }
     }
-    for (auto i : dp[n])
-        cout << i << " " << "\n";
-    for (int now = n; now > 0; now = par[now])
-        if (add[now] != -1)
-            ans.push_back(add[now]);
-    sort(all(ans));
-    for (auto &i : ans) cout << i << " ";
+    vector<int> ans;
+    for (int i = n; i != 0;) {
+        if (rec[i][0]) {
+            ans.push_back(a[i].id);
+            i = rec[i][1];
+        } else i--;
+    }
 }
