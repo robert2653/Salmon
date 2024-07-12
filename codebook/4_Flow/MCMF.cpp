@@ -1,5 +1,6 @@
 template<class Tf, class Tc>
 struct MCMF {
+    // 可以只用 spfa 或 dijkstra，把跟 pot 有關的拿掉就好
     int n, m, s, t;
     Tf INF_FLOW = numeric_limits<Tf>::max() / 2;
     Tc INF_COST = numeric_limits<Tc>::max() / 2;
@@ -12,7 +13,7 @@ struct MCMF {
     vector<Edge> edges; // 幫每個 edge 編號
     vector<Tc> dis, pot; // johnson algorithm, using spfa
     vector<int> rt; // 路徑恢復，對應 id
-    vector<bool> vis;
+    vector<bool> inq;
     MCMF(int n_ = 0) { init(n_); }
     void init(int n_ = 0) {
         n = n_;
@@ -28,19 +29,19 @@ struct MCMF {
     }
     bool spfa() {
         dis.assign(n, INF_COST);
-        rt.assign(n, -1); vis.assign(n, false);
+        rt.assign(n, -1); inq.assign(n, false);
         queue<int> q;
-        q.push(s), dis[s] = 0, vis[s] = true;
+        q.push(s), dis[s] = 0, inq[s] = true;
         while (!q.empty()) {
             int u = q.front(); q.pop();
-            vis[u] = false;
+            inq[u] = false;
             for (int id : adj[u]) {
                 auto [v, flow, cap, cost] = edges[id];
                 Tc ndis = dis[u] + cost + pot[u] - pot[v];
                 if (flow < cap && dis[v] > ndis) {
                     dis[v] = ndis; rt[v] = id;
-                    if (!vis[v]) {
-                        q.push(v); vis[v] = true;
+                    if (!inq[v]) {
+                        q.push(v); inq[v] = true;
                     }
                 }
             }
@@ -85,7 +86,7 @@ struct MCMF {
             }
             flow += f; need -= f;
             cost += f * dis[t]; fr = false;
-            for (int i = 0; i < n; i++) swap(dis[i], pot[i]);
+            swap(dis, pot);
             if (need == 0) break;
         }
         return make_pair(flow, cost);
@@ -109,7 +110,7 @@ struct MCMF {
             }
             flow += f; budget -= f * dis[t];
             cost += f * dis[t]; fr = false;
-            for (int i = 0; i < n; i++) swap(dis[i], pot[i]);
+            swap(dis, pot);
             if (budget == 0 || f == 0) break;
         }
         return make_pair(flow, cost);
