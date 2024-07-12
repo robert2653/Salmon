@@ -5,8 +5,7 @@ int main() {
     vector<int> dp(n2 + 1);
     iota(dp.begin(), dp.end(), 0);
     for (int i = 1; i <= n1; i++) {
-        vector<int> cur(n2 + 1);
-        cur[0] = i;
+        vector<int> cur(n2 + 1); cur[0] = i;
         for (int j = 1; j <= n2; j++) {
             if (s1[i - 1] == s2[j - 1]) {
                 cur[j] = dp[j - 1];
