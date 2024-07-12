@@ -1,39 +1,31 @@
 // 用 Bellman Ford 找負環
-vector<array<int, 3>> graph;    // u, v, w
 int main() {
-    int src = 0;
-    int n, m;    cin >> n >> m;
-    vector<int> par(n + 1), dis(n + 1, 1e9);
+    int n, m; cin >> n >> m;
+    vector<array<int, 3>> e;
     for (int i = 0; i < m; i++) {
-        int a, b, w; cin >> a >> b >> w;
-        graph.push_back({a, b, w});
+        int u, v, w; cin >> u >> v >> w;
+        u--, v--; e.push_back({u, v, w});
     }
-    dis[1] = 0;
-    for (int i = 0; i <= n; i++) {
-        src = 0;
-        for (auto [u, v, w] : graph) {
+    vector<ll> dis(n, inf), par(n);
+    int t = -1; dis[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        for (auto [u, v, w] : e) {
             if (dis[v] > dis[u] + w) {
                 dis[v] = dis[u] + w;
                 par[v] = u;
-                src = v;
+                if (i == n) t = v;
             }
         }
     }
-    if (src) {  // 到第 n + 1 次還在鬆弛
-        vector<int> ans;
-        cout << "YES" << endl;
-        for (int i = 0; i <= n; i++) src = par[src]; // 找那個負環
-        ans.push_back(src);
-        for (int i = par[src]; i != src; i = par[i]) {  // 輸出負環
-            ans.push_back(i);
-        }
-        ans.push_back(src);
-        reverse(ans.begin(), ans.end());
-        for (auto i : ans) {
-            cout << i << " ";
-        }
-    }
-    else {
-        cout << "NO" << "\n";
-    }
+    if (t == -1) { cout << "NO\n"; return; }
+    for (int i = 1; i < n; i++) t = par[t]; 
+    vector<int> ans {t};
+    int i = t;
+    do {
+        i = par[i];
+        ans.push_back(i);
+    } while (i != t);
+    reverse(ans.begin(), ans.end());
+    cout << "YES\n";
+    for (auto x : ans) cout << x + 1 << " ";
 }

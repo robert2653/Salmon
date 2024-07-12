@@ -38,7 +38,7 @@ int main() {
             if (in[v] == 0) q.push(v);
         }
     }
-    if (dis[n] == -1e9) {
+    if (dis[n] < 0) {
         // 如果 1 不能到達 n，n 也有可能被鬆弛
         // 所以要看的是 dis[n] < 0
         cout << "IMPOSSIBLE";
