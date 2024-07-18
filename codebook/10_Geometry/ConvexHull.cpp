@@ -8,14 +8,17 @@ int main() {
         return a.x == b.x ? a.y < b.y : a.x < b.x;
     });
     for (int i = 0; i < n; i++) {
-        while (L.size() >= 2 && cross(L.back() - L[L.size() - 2], P[i] - L[L.size() - 2]) < 0LL) {
+        while (L.size() >= 2 && cross(L.back() - L[L.size() - 2], P[i] - L[L.size() - 2]) <= 0LL) {
             L.pop_back();
         }
-        while (U.size() >= 2 && cross(U.back() - U[U.size() - 2], P[i] - U[U.size() - 2]) > 0LL){
+        while (U.size() >= 2 && cross(U.back() - U[U.size() - 2], P[i] - U[U.size() - 2]) >= 0LL){
             U.pop_back();
         }
-        L.push_back(P[i]);
-        U.push_back(P[i]);
+        if (L.empty() || !(L.back() == P[i])) L.push_back(P[i]);
+        if (U.empty() || !(U.back() == P[i])) U.push_back(P[i]);
+    }
+    if (L.size() <= 2 && U.size() <= 2) {
+        // No Hull
     }
     cout << L.size() + U.size() - 2 << "\n";
     for (int i = 0; i < L.size() - 1; i++) {

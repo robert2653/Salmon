@@ -1,7 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-using i64 = long long;
-
 template<class T>
 struct Point {
     T x;
@@ -377,4 +373,4 @@ vector<Point<T>> hp(vector<Line<T>> lines) {
     return vector(ps.begin(), ps.end());
 }
 
-using P = Point<i64>;
+using P = Point<ll>;
