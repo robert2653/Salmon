@@ -1,10 +1,9 @@
 struct SuffixArray {
-    int n;
-    vector<int> sa, rk, lc;
-    // n: 字串长度
-    // sa: 后缀数组，sa[i] 表示第 i 小的后缀的起始位置
-    // rk: 排名数组，rk[i] 表示从位置 i 开始的后缀的排名
-    // lc: LCP 数组，lc[i] 表示 sa[i] 和 sa[i+1] 的最长公共前缀长度
+    int n; vector<int> sa, rk, lc;
+    // n: 字串長度
+    // sa: 後綴數組，sa[i] 表示第 i 小的後綴的起始位置
+    // rk: 排名數組，rk[i] 表示從位置 i 開始的後綴的排名
+    // lc: LCP 數組，lc[i] 表示 sa[i] 和 sa[i+1] 的最長公共前綴長度
     SuffixArray(const string &s) {
         n = s.length();
         sa.resize(n);
