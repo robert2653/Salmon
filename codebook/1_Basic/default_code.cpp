@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #pragma GCC optimize("03")
-#pragma GCC target("popcnt")
+// #pragma GCC target("popcnt")
+// C++ 20 vector grammer will not work
 #define all(x) (x).begin(), (x).end()
 using namespace std;
 using ll = long long;
