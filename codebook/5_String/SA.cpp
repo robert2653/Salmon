@@ -1,11 +1,12 @@
 struct SuffixArray {
-    int n; vector<int> sa, rk, lc;
+    int n; string s;
+    vector<int> sa, rk, lc;
     // n: 字串長度
     // sa: 後綴數組，sa[i] 表示第 i 小的後綴的起始位置
     // rk: 排名數組，rk[i] 表示從位置 i 開始的後綴的排名
-    // lc: LCP 數組，lc[i] 表示 sa[i] 和 sa[i+1] 的最長公共前綴長度
-    SuffixArray(const string &s) {
-        n = s.length();
+    // lc: LCP 數組，lc[i] 表示 sa[i] 和 sa[i + 1] 的最長公共前綴長度
+    SuffixArray(const string &s_) {
+        s = s_; n = s.length();
         sa.resize(n);
         lc.resize(n - 1);
         rk.resize(n);
@@ -45,6 +46,24 @@ struct SuffixArray {
                     ++j;
                 lc[rk[i] - 1] = j;
             }
+        }
+    }
+    string getLCP() {
+        int cp = 0, k, lcp = 0, p;
+        for (int i = 0; i < n; i++) {
+            if (!rk[i]) continue;
+            k = sa[rk[i] - 1];
+            if (cp) cp--;
+            while (s[i + cp] == s[k + cp]) cp++;
+            if (cp > lcp){
+                lcp = cp;
+                p = i;
+            }
+        }
+        if (lcp) {
+            return s.substr(p, lcp);
+        } else {
+            return "-1";
         }
     }
 };

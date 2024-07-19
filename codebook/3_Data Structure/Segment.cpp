@@ -73,7 +73,7 @@ struct Seg {    // 左閉右開寫法
 };
 // ---define structure and info plus---
 struct Info {
-    int n = 1;
+    int n = 0;
     int sum = 0;
 };
 Info operator+(const Info &a, const Info &b) {
