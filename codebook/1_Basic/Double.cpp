@@ -1,7 +1,7 @@
 struct D {
     double x;
     constexpr static double eps = 1e-12;
-    D() : x{0} {}
+    D() : x{0.0} {}
     D(double v) : x{v} {}
     double val() const { return x; }
     explicit operator double() const { return x; }
@@ -55,7 +55,7 @@ struct D {
         double v; is >> v; a = D(v); return is;
     }
     friend ostream &operator<<(ostream &os, const D &a) {
-        return os << fixed << setprecision(12) << a.val()
+        return os << fixed << setprecision(10) << a.val()
         + (a.val() > 0 ? eps : a.val() < 0 ? -eps : 0);
     } // eps should < precision
 };

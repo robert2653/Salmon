@@ -66,7 +66,7 @@ T square(const Point<T> &p) {
 }
 template<class T>
 double length(const Point<T> &p) {
-    return sqrt(square(p));
+    return sqrt(double(square(p)));
 }
 template<class T>
 double length(const Line<T> &l) {
