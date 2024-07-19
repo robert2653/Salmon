@@ -1,11 +1,4 @@
 template<class T>
-Point<T> getCir(const Point<T> &a, const Point<T> &b, const Point<T> &c) {
-    T d = T(2) * (a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y));
-    T h = ((a.x * a.x + a.y * a.y) * (b.y - c.y) + (b.x * b.x + b.y * b.y) * (c.y - a.y) + (c.x * c.x + c.y * c.y) * (a.y - b.y)) / d;
-    T k = ((a.x * a.x + a.y * a.y) * (c.x - b.x) + (b.x * b.x + b.y * b.y) * (a.x - c.x) + (c.x * c.x + c.y * c.y) * (b.x - a.x)) / d;
-    return Point<T>(h, k);
-}
-template<class T>
 pair<T, Point<T>> MinCircular(vector<Point<T>> &a) {
     random_shuffle(a.begin(), a.end());
     int n = a.size();
@@ -19,7 +12,9 @@ pair<T, Point<T>> MinCircular(vector<Point<T>> &a) {
                     r = length(c - a[i]);
                     for (int k = 0; k < j; k++) {
                         if (T(length(c - a[k]) - r) > 0.0) {
-                            c = getCir(a[i], a[j], a[k]);
+                            Point<T> p = (a[j] + a[i]) / 2;
+                            Point<T> q = (a[j] + a[k]) / 2;
+                            c = lineIntersection(Line(p, p + rotate(a[j] - a[i])), Line(q, q + rotate(a[k] - a[j])));
                             r = length(c - a[i]);
                         }
                     }
