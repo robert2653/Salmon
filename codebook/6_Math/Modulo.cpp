@@ -1,113 +1,91 @@
 template<class T>
 constexpr T power(T a, ll b) {
-    T res = 1;
-    for (; b; b /= 2, a *= a) {
-        if (b % 2) {
-            res *= a;
-        }
-    }
+    T res {1};
+    for (; b; b /= 2, a *= a)
+        if (b % 2) res *= a;
     return res;
 }
 constexpr ll mul(ll a, ll b, ll p) {
     ll res = a * b - ll(1.L * a * b / p) * p;
     res %= p;
-    if (res < 0) {
-        res += p;
-    }
+    if (res < 0) res += p;
     return res;
 }
 template<ll P>
-struct MLong {
+struct MInt {
     ll x;
-    constexpr MLong() : x{} {}
-    constexpr MLong(ll x) : x{norm(x % getMod())} {}
+    constexpr MInt() : x {0} {}
+    constexpr MInt(ll x) : x {norm(x % getMod())} {}
     static ll Mod;
     constexpr static ll getMod() {
-        if (P > 0) {
-            return P;
-        } else {
-            return Mod;
-        }
+        if (P > 0) return P;
+        else return Mod;
     }
     constexpr static void setMod(ll Mod_) {
         Mod = Mod_;
     }
     constexpr ll norm(ll x) const {
-        if (x < 0) {
-            x += getMod();
-        }
-        if (x >= getMod()) {
-            x -= getMod();
-        }
+        if (x < 0) x += getMod();
+        if (x >= getMod()) x -= getMod();
         return x;
     }
-    constexpr ll val() const {
-        return x;
-    }
-    explicit constexpr operator ll() const {
-        return x;
-    }
-    constexpr MLong operator-() const {
-        MLong res;
+    constexpr ll val() const { return x; }
+    constexpr MInt operator-() const {
+        MInt res;
         res.x = norm(getMod() - x);
         return res;
     }
-    constexpr MLong inv() const {
-        assert(x != 0);
+    constexpr MInt inv() const {
         return power(*this, getMod() - 2);
     }
-    constexpr MLong &operator*=(MLong rhs) & {
-        x = mul(x, rhs.x, getMod());
+    constexpr MInt &operator*=(MInt rhs) & {
+        if (getMod() < (1ULL << 31)) {
+            x = x * rhs.x % int(getMod());
+        } else {
+            x = mul(x, rhs.x, getMod());
+        }
         return *this;
     }
-    constexpr MLong &operator+=(MLong rhs) & {
+    constexpr MInt &operator+=(MInt rhs) & {
         x = norm(x + rhs.x);
         return *this;
     }
-    constexpr MLong &operator-=(MLong rhs) & {
+    constexpr MInt &operator-=(MInt rhs) & {
         x = norm(x - rhs.x);
         return *this;
     }
-    constexpr MLong &operator/=(MLong rhs) & {
+    constexpr MInt &operator/=(MInt rhs) & {
         return *this *= rhs.inv();
     }
-    friend constexpr MLong operator*(MLong lhs, MLong rhs) {
-        MLong res = lhs;
-        res *= rhs;
-        return res;
+    friend constexpr MInt operator*(MInt lhs, MInt rhs) {
+        MInt res = lhs; return res *= rhs;
     }
-    friend constexpr MLong operator+(MLong lhs, MLong rhs) {
-        MLong res = lhs;
-        res += rhs;
-        return res;
+    friend constexpr MInt operator+(MInt lhs, MInt rhs) {
+        MInt res = lhs; return res += rhs;
     }
-    friend constexpr MLong operator-(MLong lhs, MLong rhs) {
-        MLong res = lhs;
-        res -= rhs;
-        return res;
+    friend constexpr MInt operator-(MInt lhs, MInt rhs) {
+        MInt res = lhs; return res -= rhs;
     }
-    friend constexpr MLong operator/(MLong lhs, MLong rhs) {
-        MLong res = lhs;
-        res /= rhs;
-        return res;
+    friend constexpr MInt operator/(MInt lhs, MInt rhs) {
+        MInt res = lhs; return res /= rhs;
     }
-    friend constexpr istream &operator>>(istream &is, MLong &a) {
-        ll v;
-        is >> v;
-        a = MLong(v);
-        return is;
+    friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
+        ll v; is >> v; a = MInt(v); return is;
     }
-    friend constexpr ostream &operator<<(ostream &os, const MLong &a) {
+    friend constexpr std::ostream &operator<<(std::ostream &os, const MInt &a) {
         return os << a.val();
     }
-    friend constexpr bool operator==(MLong lhs, MLong rhs) {
+    friend constexpr bool operator==(MInt lhs, MInt rhs) {
         return lhs.val() == rhs.val();
     }
-    friend constexpr bool operator!=(MLong lhs, MLong rhs) {
+    friend constexpr bool operator!=(MInt lhs, MInt rhs) {
         return lhs.val() != rhs.val();
+    }
+    friend constexpr bool operator<(MInt lhs, MInt rhs) {
+        return lhs.val() < rhs.val();
     }
 };
 template<>
-ll MLong<0LL>::Mod = ll(1E9) + 7;
-constexpr ll P = 998244353;
-using Z = MLong<P>;
+ll MInt<0>::Mod = 998244353;
+constexpr int P = 1e9 + 7;
+using Z = MInt<P>;

@@ -1,14 +1,14 @@
 template<class Tf, class Tc>
 struct MCMF {
-    // 可以只用 spfa 或 dijkstra，把跟 pot 有關的拿掉就好
-    int n, m, s, t;
-    Tf INF_FLOW = numeric_limits<Tf>::max() / 2;
-    Tc INF_COST = numeric_limits<Tc>::max() / 2;
     struct Edge {
         int to;
         Tf flow, cap; // 流量跟容量
         Tc cost;
     };
+    // 可以只用 spfa 或 dijkstra，把跟 pot 有關的拿掉就好
+    int n, m, s, t;
+    const Tf INF_FLOW = 1 << 30;
+    const Tc INF_COST = 1 << 30;
     vector<vector<int>> adj;
     vector<Edge> edges; // 幫每個 edge 編號
     vector<Tc> dis, pot; // johnson algorithm, using spfa

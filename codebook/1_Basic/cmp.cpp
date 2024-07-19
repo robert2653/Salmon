@@ -11,7 +11,6 @@ struct cmp {    // 在有 template 的資結使用
 // 內建 multiset 可以跟 set 一樣正常使用
 // 如果有自定義比較結構就比照以上
 };
-
 struct cmp {    // 要在 template 的資結用外部變數
     vector<int> &v;
     cmp(vector<int>& vec) : v(vec) {}

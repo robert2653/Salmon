@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+using namespace std;
 template<class T>
 struct Dinic {
     struct Edge {
@@ -5,7 +7,7 @@ struct Dinic {
         T flow, cap; // 流量跟容量
     };
     int n, m, s, t;
-    T INF_FlOW = numeric_limits<T>::max() / 2;
+    const T INF_FlOW = 1 << 30;
     vector<vector<int>> adj; // 此點對應的 edges 編號
     vector<Edge> edges; // 幫每個 edge 編號
     vector<int> dis, ptr;

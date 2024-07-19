@@ -8,7 +8,6 @@ struct Comb {
         _fac.resize(m + 1);
         _invfac.resize(m + 1);
         _inv.resize(m + 1);
-        
         for (int i = n + 1; i <= m; i++) {
             _fac[i] = _fac[i - 1] * i;
         }

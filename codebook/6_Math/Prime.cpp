@@ -5,7 +5,6 @@
 // FacNums = (x+1)(y+1)(z+1)...
 // FacSum = (a^0+a^1...+a^x)(b^0+...+b^y)
 // FacMul = N(x+1)(y+1)(z+1)/2
-
 vector<int> is_prime;
 // 1 代表是質數，非 1 不是
 void init(int n) {
@@ -20,16 +19,13 @@ void init(int n) {
 }
 int main() {
     init(1000000);
-    ll ans = 1;
-    ll q; cin >> q;
+    ll ans = 1, q; cin >> q;
     map<ll, ll> mp;
     while (is_prime[q] != 1) {
         mp[is_prime[q]]++;
         q /= is_prime[q];
     }
     if (q != 1) mp[q]++;
-    for (auto [a, b] : mp) {
-        ans *= b + 1;
-    }
+    for (auto [a, b] : mp) ans *= b + 1;
     cout << ans << "\n";
 }

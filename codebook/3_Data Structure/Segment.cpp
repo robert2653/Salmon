@@ -2,13 +2,9 @@ template <class Info>
 struct Seg {    // 左閉右開寫法
     int n; vector<Info> info;
     Seg() : n(0) {}
-    Seg(int n_, Info v_ = Info()) {
-        init(n_, v_);
-    }
+    Seg(int n_, Info v_ = Info()) { init(n_, v_); }
     template <class T>
-    Seg(vector<T> init_) {
-        init(init_);
-    }
+    Seg(vector<T> init_) { init(init_); }
     void init(int n_, Info v_ = Info()) {
         init(vector(n_, v_));
     }
@@ -28,18 +24,16 @@ struct Seg {    // 左閉右開寫法
         };
         build(1, 0, n);
     }
-    void pull(int p) { info[p] = info[p * 2] + info[p * 2 + 1]; }
+    void pull(int p) {
+        info[p] = info[p * 2] + info[p * 2 + 1];
+    }
     void modify(int p, int l, int r, int x, const Info &v) {
         if (r - l == 1) {
-            info[p] = v;
-            return;
+            info[p] = v; return;
         }
         int m = (l + r) / 2;
-        if (x < m) {
-            modify(2 * p, l, m, x, v);
-        } else {
-            modify(2 * p + 1, m, r, x, v);
-        }
+        if (x < m) modify(2 * p, l, m, x, v);
+        else modify(2 * p + 1, m, r, x, v);
         pull(p);
     }
     void modify(int p, const Info &i) {
@@ -51,7 +45,9 @@ struct Seg {    // 左閉右開寫法
         int m = (l + r) / 2;
 	    return query(p * 2, l, m, ql, qr) + query(p * 2 + 1, m, r, ql, qr);
     }
-    Info query(int ql, int qr) { return query(1, 0, n, ql, qr); }
+    Info query(int ql, int qr) {
+        return query(1, 0, n, ql, qr);
+    }
     template<class F>   // 尋找區間內，第一個符合條件的
     int findFirst(int p, int l, int r, int x, int y, F &&pred) {
         if (l >= y || r <= x)
