@@ -11,7 +11,8 @@ void solve() {
         int ansl = cal(ml), ansr = cal(mr);
         if (ansl < ansr) {
             l = ml + 1;
+        } else {
+            r = mr - 1;
         }
-        else r = mr - 1;
     }
 }
