@@ -10,7 +10,7 @@ struct Dinic {
     vector<Edge> edges; // 幫每個 edge 編號
     vector<int> dis, ptr;
     Dinic(int n_ = 0) { init(n_); }
-    void init(int n_ = 0) {
+    void init(int n_) {
         n = n_; m = 0;
         dis.resize(n); ptr.resize(n);
         adj.assign(n, vector<int>{});

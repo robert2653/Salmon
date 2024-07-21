@@ -15,9 +15,8 @@ struct MCMF {
     vector<int> rt; // 路徑恢復，對應 id
     vector<bool> inq;
     MCMF(int n_ = 0) { init(n_); }
-    void init(int n_ = 0) {
-        n = n_;
-        m = 0;
+    void init(int n_) {
+        n = n_; m = 0;
         edges.clear();
         adj.assign(n, vector<int>{});
     }

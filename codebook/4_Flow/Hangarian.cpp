@@ -6,7 +6,7 @@ struct Hangarian { // 0-based
     Hangarian(int n_ = 0, int m_ = 0) {
         init(n_, m_);
     }
-    void init(int n_ = 0, int m_ = 0) {
+    void init(int n_, int m_) {
         n = n_; m = m_;
         adj.assign(n + m, vector<int>());
         used.assign(n + m, -1);
