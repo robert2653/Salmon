@@ -1,7 +1,7 @@
 vector<vector<int>> par(maxn, vector<int>(18));
 vector<int> depth(maxn + 1);
 vector<int> dfn(maxn);
-void build_lca(int n, vector<vector<pair<int, int>>> &tree) {
+void build(int n, vector<vector<pair<int, int>>> &tree) {
     auto dfs = [&](auto self, int u, int pre) -> void {
         for (auto [v, w] : tree[u]) {
             if (v == pre) continue;

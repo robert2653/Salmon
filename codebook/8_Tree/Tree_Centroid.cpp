@@ -1,10 +1,10 @@
-struct centroid_decomposition {
+struct CenDecom {
     int n;
     vector<vector<int>> adj;
     vector<bool> vis;
     vector<int> siz;
-    centroid_decomposition() {}
-    centroid_decomposition(int n_) { init(n_); }
+    CenDecom() {}
+    CenDecom(int n_) { init(n_); }
     void init(int n_) {
         n = n_;
         adj.assign(n, {});

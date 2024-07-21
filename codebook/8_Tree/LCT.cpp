@@ -1,19 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
-using i64 = long long;
-constexpr i64 Mod = 51061;
+using ll = long long;
+constexpr int Mod = 51061;
 
 struct Tag {
-    i64 add = 0;
-    i64 mul = 1;
+    ll add = 0;
+    ll mul = 1;
     void apply(const Tag& v) {
         mul = mul * v.mul % Mod;
         add = (add * v.mul % Mod + v.add) % Mod;
     }
 };
 struct Info {
-    i64 val = 1;
-    i64 sum = 1;
+    ll val = 1;
+    ll sum = 1;
     void apply(int size, const Tag &v) {
         val = (val * v.mul % Mod + v.add) % Mod;
         sum = (sum * v.mul % Mod + v.add * size % Mod) % Mod;
