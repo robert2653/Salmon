@@ -1,4 +1,4 @@
-const int maxn = 1e5+5;
+const int maxn = 1e5 + 5;
 vector<int> graph[maxn];
 int color[maxn], parent[maxn];
 bool vis[maxn];
@@ -12,7 +12,7 @@ void print_ans(int ori) {
         now = parent[now];
     }
     ans.push_front(ori);
-    cout << ans.size() << endl;
+    cout << ans.size() << "\n";
     for (auto i : ans) {
         cout << i << " ";
     }
@@ -38,7 +38,7 @@ void solve() {
         int u, v; cin >> u >> v;
         graph[u].push_back(v);
     }
-    for (int i = 1; i <= n; i++) {
+    for (int i = 0; i < n; i++) {
         if (!vis[i])
             dfs(i);
     }

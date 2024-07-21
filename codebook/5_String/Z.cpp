@@ -2,16 +2,12 @@
 // 的最長公共前綴 (LCP) 的長度
 vector<int> Z(string s) {
     int n = s.size();
-    vector<int> z(n);
-    z[0] = n;
+    vector<int> z(n); z[0] = n;
     for (int i = 1, j = 1; i < n; i++) {
         z[i] = max(0, min(j + z[j] - i, z[i - j]));
-        while (i + z[i] < n && s[z[i]] == s[i + z[i]]) {
+        while (i + z[i] < n && s[z[i]] == s[i + z[i]])
             z[i]++;
-        }
-        if (i + z[i] > j + z[j]) {
-            j = i;
-        }
+        if (i + z[i] > j + z[j]) j = i;
     }
     return z; // 最後一格不算
 }

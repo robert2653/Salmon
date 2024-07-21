@@ -3,9 +3,7 @@ struct EBCC { // CF/contest/1986/pF
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
     vector<pair<int, int>> bridges; // 關鍵邊
-    EBCC(int n_) {
-        init(n_);
-    }
+    EBCC(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_;
         adj.assign(n, {});

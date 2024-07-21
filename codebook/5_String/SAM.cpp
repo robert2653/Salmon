@@ -7,9 +7,7 @@ struct SAM {
         Node() : len{}, link{}, next{} {}
     };
     vector<Node> t;
-    SAM() {
-        init();
-    }
+    SAM() { init(); }
     void init() {
         t.assign(2, Node());
         t[0].next.fill(1);
@@ -46,7 +44,6 @@ struct SAM {
         return cur;
     }
 };
-
 void solve() {
     string s; cin >> s;
     int n = s.length();

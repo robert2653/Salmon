@@ -2,25 +2,23 @@ struct DSU {
     int n;
     vector<int> boss, siz;
     DSU() {}
-    DSU(int n_) {
-        init(n_);
-    }
+    DSU(int n_) { init(n_); }
     void init(int n_) {
         n = n_;
         boss.resize(n);
         iota(boss.begin(), boss.end(), 0);
         siz.assign(n, 1);
     }
-    int find_boss(int x) {
+    int find(int x) {
         if (boss[x] == x) return x;
-        return boss[x] = find_boss(boss[x]);
+        return boss[x] = find(boss[x]);
     }
     bool same(int x, int y) {
-        return find_boss(x) == find_boss(y);
+        return find(x) == find(y);
     }
     bool merge(int x, int y) {
-        x = find_boss(x);
-        y = find_boss(y);
+        x = find(x);
+        y = find(y);
         if (x == y) {
             return false;
         }
@@ -31,7 +29,7 @@ struct DSU {
         return true;
     }
     int size(int x) {
-        return siz[find_boss(x)];
+        return siz[find(x)];
     }
 };
 
@@ -39,9 +37,7 @@ struct DSU {
     int n;
     vector<int> boss, siz, stk;
     DSU() {}
-    DSU(int n_) {
-        init(n_);
-    }
+    DSU(int n_) { init(n_); }
     void init(int n_) {
         n = n_;
         boss.resize(n);

@@ -2,9 +2,7 @@ struct SCC {
     int n, cur, cnt;
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
-    SCC(int n_ = 0) {
-        init(n_);
-    }
+    SCC(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_;
         adj.assign(n, {});

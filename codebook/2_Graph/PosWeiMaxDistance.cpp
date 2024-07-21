@@ -3,11 +3,11 @@
 void print_ans(int n, vector<int> &par) {
     deque<int> ans;
     int now = n;
-    while(now != 1) {
+    while(now != 0) {
         ans.push_front(now);
         now = par[now];
     }
-    ans.push_front(1);
+    ans.push_front(0);
     cout << ans.size() << "\n";
     for(auto i : ans) {
         cout << i << " ";
@@ -15,16 +15,16 @@ void print_ans(int n, vector<int> &par) {
 }
 int main() {
     int n, m; cin >> n >> m;
-    vector<vector<int>> graph(n + 1);
-    vector<int> dis(n + 1, -1e9); dis[1] = 0;
-    vector<int> par(n + 1), in(n + 1);
+    vector<vector<int>> graph(n);
+    vector<int> dis(n, -1e9); dis[1] = 0;
+    vector<int> par(n), in(n);
     queue<int> q;
-    for (int i = 1; i <= m; i++) {
+    for (int i = 0; i < m; i++) {
         int u, v; cin >> u >> v;
         graph[u].push_back(v);
         in[v]++;
     }
-    for (int i = 1; i <= n; i++) {
+    for (int i = 0; i < n; i++) {
         if (in[i] == 0) q.push(i);
     }
     while (!q.empty()) {
@@ -38,7 +38,7 @@ int main() {
             if (in[v] == 0) q.push(v);
         }
     }
-    if (dis[n] < 0) {
+    if (dis[n - 1] < 0) {
         // 如果 1 不能到達 n，n 也有可能被鬆弛
         // 所以要看的是 dis[n] < 0
         cout << "IMPOSSIBLE";

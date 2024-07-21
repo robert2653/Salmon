@@ -2,9 +2,7 @@ template <typename T>
 struct rangeFenwick { // 全部以 0 based 使用
     int n;
     vector<T> d, di;
-    rangeFenwick(int n_ = 0) {
-        init(n_);
-    }
+    rangeFenwick(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_;
         d.assign(n, T{});

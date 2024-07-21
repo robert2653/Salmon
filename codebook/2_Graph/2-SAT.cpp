@@ -1,7 +1,6 @@
 // CSES Giant Pizza
 struct TwoSat {
-    int n;
-    vector<vector<int>> e;
+    int n; vector<vector<int>> e;
     vector<bool> ans;
     TwoSat(int n) : n(n), e(2 * n), ans(n) {}
     void addClause(int u, bool f, int v, bool g) {

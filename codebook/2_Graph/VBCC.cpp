@@ -3,9 +3,7 @@ struct VBCC {
     vector<vector<int>> adj;
     vector<int> dfn, low, parent;
     vector<bool> is_cut;
-    VBCC(int n_ = 0) {
-        init(n_);
-    }
+    VBCC(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_;
         adj.assign(n, {});

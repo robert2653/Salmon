@@ -7,9 +7,7 @@ struct DSU {
     int n;
     vector<int> boss, siz, stk;
     DSU() {}
-    DSU(int n_) {
-        init(n_);
-    }
+    DSU(int n_) { init(n_); }
     void init(int n_) {
         n = n_;
         boss.resize(n);
