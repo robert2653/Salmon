@@ -1,5 +1,5 @@
 struct Hangarian { // 0-based
-    int n, m; // 最小路徑覆蓋，二分匹配
+    int n, m;
     vector<vector<int>> adj;
     vector<int> used, vis;
     vector<pair<int, int>> match;
@@ -16,29 +16,29 @@ struct Hangarian { // 0-based
         adj[u].push_back(n + v);
         adj[n + v].push_back(u);
     }
-    vector<pair<int, int>> work() {
-        match.clear();
-        used.assign(n + m, -1);
-        vis.assign(n + m, 0);
-        auto dfs = [&](auto self, int u) -> bool {
-            for (int v : adj[u]) {
-                if (vis[v] == 0) {
-                    vis[v] = 1;
-                    if (used[v] == -1 || self(self, used[v])) {
-                        used[v] = u;
-                        return true;
-                    }
+    bool dfs(int u) {
+        int sz = adj[u].size();
+        for (int i = 0; i < sz; i++) {
+            int v = adj[u][i];
+            if (vis[v] == 0) {
+                vis[v] = 1;
+                if (used[v] == -1 || dfs(used[v])) {
+                    used[v] = u;
+                    return true;
                 }
             }
-            return false;
-        };
+        }
+        return false;
+    }
+    vector<pair<int, int>> work() {
+        match.clear(); used.assign(n + m, -1);
+        vis.assign(n + m, 0);
         for (int i = 0; i < n; i++) {
-            fill(vis.begin(), vis.end(), 0);
-            dfs(dfs, i);
+            fill(vis.begin(), vis.end(), 0); dfs(i);
         }
         for (int i = n; i < n + m; i++) {
             if (used[i] != -1) {
-                match.emplace_back(used[i], i - n);
+                match.push_back(make_pair(used[i], i - n));
             }
         }
         return match;
