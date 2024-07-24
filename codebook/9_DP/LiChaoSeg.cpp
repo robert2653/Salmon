@@ -1,9 +1,9 @@
-constexpr ll Inf = 4e18;
-// dp[i] = min(f[j] * s[i] + dp[j])
-//   y   =     m        x  +   b
+// 應用: dp(i) = h(i) + min/max(A(j)X(i) + B(j)), for j ≤ r(i)
+//        y    =  c   +          m  x   +   b
+constexpr ll inf = 4e18;
 struct Line {
     ll m, b;
-    Line(ll m = 0, ll b = Inf) : m(m), b(b) {}
+    Line(ll m = 0, ll b = inf) : m(m), b(b) {}
     ll eval(ll x) const { return m * x + b; }
 };
 struct LiChaoSeg { // 取 max 再變換就好
