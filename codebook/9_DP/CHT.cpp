@@ -1,3 +1,5 @@
+// 應用: dp(i) = h(i) + max(A(j)X(i) + B(j)), for j ≤ r(i)
+// A(j), B(j) 可能包含 dp(j)，分別就是 m 跟 b
 struct Line {
     ll m, b;
     Line(ll m = 0, ll b = 0) : m(m), b(b) {}

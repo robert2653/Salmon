@@ -1,4 +1,6 @@
-int main() {
+// 應用: dp(i) = h(i) + max(A(j)), for l(i) ≤ j ≤ r(i)
+// A(j) 可能包含 dp(j), h(i) 可 O(1)
+void Bounded_Knapsack() {
     int n, k; // O(𝑛𝑘)
     vector<int> w(n), v(n), num(n); deque<int> q;
     // 於是我們將同餘的數分在同一組
