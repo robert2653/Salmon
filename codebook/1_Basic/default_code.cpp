@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 // #pragma GCC target("popcnt")
 // C++ 20 vector grammer will not work
-#define all(x) (x).begin(), (x).end()
 using namespace std;
 using ll = long long;
 

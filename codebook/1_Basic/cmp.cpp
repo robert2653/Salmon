@@ -1,10 +1,10 @@
-1. sort, 二分搜刻在函式內 lambda 就好
-2. priority queue 小到大是 >, set 是 <
-3. set 不能 = , multiset 必須 = 
-4. 確保每個成員都要比到
-5. pbds_multiset 不要用 lower_bound
-6. 如果要用 find, 插入 inf 後使用 upper_bound
-7. multiset 可以跟 set 一樣使用, 但請注意第 3、4 點
+// 1. sort, 二分搜刻在函式內 lambda 就好
+// 2. priority queue 小到大是 >, set 是 <
+// 3. set 不能 = , multiset 必須 = 
+// 4. 確保每個成員都要比到
+// 5. pbds_multiset 不要用 lower_bound
+// 6. 如果要用 find, 插入 inf 後使用 upper_bound
+// 7. multiset 可以跟 set 一樣使用, 但請注意第 3、4 點
 
 auto cmp = [](int i, int j) { return i > j; };
 priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
