@@ -15,7 +15,7 @@ void solve() {
     for (int i = 0; i < n; i++)
         dp[a[i]] += 1;
     for (int i = 0; i < m; i++)
-        for (int mask = (1 << m); mask >= 0; mask--)
+        for (int mask = 0; mask < 1 << m; mask++)
             if (mask >> i & 1) {
                 int pre = mask ^ (1 << i);
                 dp[pre] += dp[mask];
