@@ -1,4 +1,4 @@
-template <class Info, class Tag>
+template<class Info, class Tag>
 struct LazySeg {    // 左閉右開寫法
     int n;
     vector<Info> info;
@@ -7,14 +7,14 @@ struct LazySeg {    // 左閉右開寫法
     LazySeg(int n_, Info v_ = Info()) {
         init(n_, v_);
     }
-    template <class T>
+    template<class T>
     LazySeg(vector<T> init_) {
         init(init_);
     }
     void init(int n_, Info v_ = Info()) {
         init(vector(n_, v_));
     }
-    template <class T>
+    template<class T>
     void init (vector<T> init_) {
         n = init_.size();
         info.assign(4 << __lg(n), Info());

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-template <typename T>
+template<class T>
 struct Fenwick { // 全部以 0 based 使用
     int n;
     vector<T> a;
@@ -38,7 +38,7 @@ struct Fenwick { // 全部以 0 based 使用
         return x;
     }
 };
-template <class T>
+template<class T>
 struct TwoDFenwick {  // 全部以 0 based 使用
     int nx, ny;  // row, col 個數
     vector<vector<T>> a;

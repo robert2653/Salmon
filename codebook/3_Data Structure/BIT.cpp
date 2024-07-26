@@ -1,4 +1,4 @@
-template <typename T>
+template<typename T>
 struct Fenwick { // 全部以 0 based 使用
     int n; vector<T> a;
     Fenwick(int n_ = 0) { init(n_); }
@@ -33,7 +33,7 @@ struct Fenwick { // 全部以 0 based 使用
         return x;
     }
 };
-template <class T>
+template<class T>
 struct TwoDFenwick {  // 全部以 0 based 使用
     int nx, ny;  // row, col 個數
     vector<vector<T>> a;
