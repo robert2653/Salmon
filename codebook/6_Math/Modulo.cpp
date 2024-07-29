@@ -69,10 +69,10 @@ struct MInt {
     friend constexpr MInt operator/(MInt lhs, MInt rhs) {
         MInt res = lhs; return res /= rhs;
     }
-    friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
+    friend constexpr istream &operator>>(istream &is, MInt &a) {
         ll v; is >> v; a = MInt(v); return is;
     }
-    friend constexpr std::ostream &operator<<(std::ostream &os, const MInt &a) {
+    friend constexpr ostream &operator<<(ostream &os, const MInt &a) {
         return os << a.val();
     }
     friend constexpr bool operator==(MInt lhs, MInt rhs) {
