@@ -3,7 +3,7 @@ struct HLD {
     vector<int> siz, top, dep, parent, in, out, seq;
     vector<vector<int>> adj;
     HLD(int n_ = 0) { init(n_); }
-    void init(int n_ = 0) {
+    void init(int n_) {
         n = n_; cur = 0;
         siz.resize(n); top.resize(n); dep.resize(n);
         parent.resize(n); in.resize(n); out.resize(n);
