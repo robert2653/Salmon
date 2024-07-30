@@ -10,7 +10,7 @@ struct LiChaoSeg { // 取 max 再變換就好
     int n;
     vector<Line> info;
     LiChaoSeg(int n_ = 0) { init(n_); }
-    void init(int n_ = 0) {
+    void init(int n_) {
         n = n_;
         info.assign(4 << __lg(n), Line());
     }
