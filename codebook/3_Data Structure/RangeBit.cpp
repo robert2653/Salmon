@@ -29,9 +29,9 @@ struct rangeFenwick { // 全部以 0 based 使用
     T rangeSum(int l, int r) { // 左閉右開查詢
         return sum(r) - sum(l);
     }
-    int select(const T &k) { // 找到最小的 x, 使得 sum(x) > k
-        int x = 0;
-        T cur{};
+    int select(const T &k, int start = 0) {
+        // 找到最小的 x, 使得 sum(x + 1) - sum(start) > k
+        int x = 0; T cur = -sum(start);
         for (int i = 1 << __lg(n); i; i /= 2) {
             if (x + i <= n) {
                 T val = T(x + i + 1) * d[x + i - 1] - di[x + i - 1];
