@@ -4,7 +4,7 @@ struct Node {
     bool rev = false; int size = 1;
     Info info = Info(); Tag tag = Tag();
     Node() : ch{nullptr, nullptr}, p(nullptr) {}
-    bool isroot() {
+    bool isrt() {
         return !p || (p->ch[0] != this && p->ch[1] != this);
     }
     void make_rev() {
@@ -15,7 +15,7 @@ struct Node {
         info.apply(size, v);
         tag.apply(v);
     }
-    void push_tag() {
+    void push() {
         if (rev) {
             if (ch[0]) ch[0]->make_rev();
             if (ch[1]) ch[1]->make_rev();
@@ -25,12 +25,18 @@ struct Node {
         if (ch[1]) ch[1]->apply(tag);
         tag = Tag();
     }
-    void pull_info() {
+    void pull() {
         size = 1 + (ch[0] ? ch[0]->size : 0) + (ch[1] ? ch[1]->size : 0);
         info.pull(ch[0] ? ch[0]->info : Info(), ch[1] ? ch[1]->info : Info());
     }
     int pos() {
         return p->ch[1] == this;
+    }
+    void pushAll() {
+        if (!isrt()) {
+            p->pushAll();
+        }
+        push();
     }
     void rotate() {
         Node *q = p;
@@ -38,31 +44,30 @@ struct Node {
         q->ch[!x] = ch[x];
         if (ch[x]) ch[x]->p = q;
         p = q->p;
-        if (!q->isroot()) q->p->ch[q->pos()] = this;
+        if (!q->isrt()) q->p->ch[q->pos()] = this;
         ch[x] = q;
         q->p = this;
-        q->pull_info();
+        q->pull();
     }
     void splay() {
-        for (Node *q; !isroot(); rotate()) {
-            if (!p->isroot()) {
-                q = p->p;
-                q->push_tag();
-                p->push_tag();
-                push_tag();
-                (p->pos() == pos() ? p : this)->rotate();
-            } else {
-                p->push_tag();
-                push_tag();
+        pushAll();
+        while (!isrt()) {
+            if (!p->isrt()) {
+                if (pos() == p->pos()) {
+                    p->rotate();
+                } else {
+                    rotate();
+                }
             }
+            rotate();
         }
-        push_tag(); pull_info();
+        pull();
     }
-    void access() {
+    void access() { // access 後自動 splay
         for (Node *i = this, *q = nullptr; i; q = i, i = i->p) {
             i->splay();
             i->ch[1] = q;
-            i->pull_info();
+            i->pull();
         }
         splay();
     }
@@ -74,13 +79,29 @@ struct Node {
         access();
         Node *t = this;
         while (t->ch[0]) {
-            t->push_tag();
+            t->push();
             t = t->ch[0];
         }
-        t->splay();
+        t->access();
         return t;
     }
 };
+template<class Info, class Tag>
+bool connected(Node<Info, Tag> *x, Node<Info, Tag> *y) {
+    return x->findRoot() == y->findRoot();
+}
+template<class Info, class Tag>
+bool neighber(Node<Info, Tag> *x, Node<Info, Tag> *y) {
+    x->makeRoot();
+    y->access();
+    if (y->ch[0] != x || x->ch[1]) return false;
+    return true;
+}
+template<class Info, class Tag>
+void split(Node<Info, Tag> *rt, Node<Info, Tag> *y) {
+    y->makeRoot();
+    rt->access();
+}
 template<class Info, class Tag>
 void link(Node<Info, Tag> *t, Node<Info, Tag> *p) {
     t->makeRoot();
@@ -90,26 +111,17 @@ void link(Node<Info, Tag> *t, Node<Info, Tag> *p) {
 }
 template<class Info, class Tag>
 bool cut(Node<Info, Tag> *x, Node<Info, Tag> *y) {
-	x->makeRoot();
+    x->makeRoot();
     y->access();
     if (y->ch[0] != x || x->ch[1]) return false;
     y->ch[0] = y->ch[0]->p = nullptr;
-    y->pull_info();
+    x->pull();
+    y->pull();
     return true;
 }
 template<class Info, class Tag>
-void split(Node<Info, Tag> *rt, Node<Info, Tag> *y) {
-    y->makeRoot();
-    rt->access();
-}
-template<class Info, class Tag>
-bool connected(Node<Info, Tag> *x, Node<Info, Tag> *y) {
-	x->makeRoot();
-    return x->findRoot() == y->findRoot();
-}
-template<class Info, class Tag>
 void modify(Node<Info, Tag> *x, const Info &v) {
-    x->splay();
+    x->access();
     x->info = v;
 }
 template<class Info, class Tag>

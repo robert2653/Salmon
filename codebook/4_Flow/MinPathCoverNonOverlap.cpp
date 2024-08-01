@@ -4,12 +4,12 @@
 #include <bitset>
 using namespace std;
 
-struct Hangarian { // 0-based
+struct Hungarian { // 0-based
     int n, m; // 最小路徑覆蓋，二分匹配
     vector<vector<int>> adj;
     vector<int> used, vis;
     vector<pair<int, int>> match;
-    Hangarian(int n_ = 0, int m_ = 0) {
+    Hungarian(int n_ = 0, int m_ = 0) {
         init(n_, m_);
     }
     void init(int n_, int m_) {
@@ -62,7 +62,7 @@ void Floyd(int n, vector<bitset<N>> &dp) {
 }
 
 void solve(int n, int m) {
-    Hangarian g(n, n);
+    Hungarian g(n, n);
 
     vector<bitset<N>> dp(n);
     for (int i = 0; i < m; i++) {
