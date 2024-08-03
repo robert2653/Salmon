@@ -70,6 +70,10 @@ struct PST {
     void createVersion(int ori_ver) {
         rt.push_back(copy(rt[ori_ver]));
     }
+    void reserve(int n, int q) {
+        nd.reserve(n + q * (2 * __lg(n) + 1));
+        rt.reserve(q + 1);
+    }
 };
 struct Info {
     int sum = 0;
