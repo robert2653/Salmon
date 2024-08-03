@@ -1,3 +1,7 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+// Minimum Difference Spanning Tree
 template<class Info, class Tag>
 struct Node {
     Node *ch[2], *p;
@@ -137,22 +141,85 @@ Info path_query(Node<Info, Tag> *x, Node<Info, Tag> *y) {
     return x->info;
 }
 
-constexpr int Mod = 51061;
 struct Tag {
-    ll add = 0; ll mul = 1;
-    void apply(const Tag& v) {
-        mul = mul * v.mul % Mod;
-        add = (add * v.mul % Mod + v.add) % Mod;
-    }
+    void apply(const Tag& v) {}
 };
+constexpr int inf = 1e5;
 struct Info {
-    ll val = 0; ll sum = 0;
-    void apply(int size, const Tag &v) {
-        val = (val * v.mul % Mod + v.add) % Mod;
-        sum = (sum * v.mul % Mod + v.add * size % Mod) % Mod;
-    }
+    int val = inf;
+    int id = -1;
+    int mn = inf;
+    int mnId = -1;
+    void apply(int size, const Tag &v) {}
     void pull(const Info &l, const Info &r) {
-        sum = (l.sum + r.sum + val) % Mod;
+        mn = val;
+        mnId = id;
+        if (mn > l.mn) {
+            mn = l.mn;
+            mnId = l.mnId;
+        }
+        if (mn > r.mn) {
+            mn = r.mn;
+            mnId = r.mnId;
+        }
     }
 };
 using lct = Node<Info, Tag>;
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<lct*> nd(n);
+    for (auto &x : nd) x = new lct();
+    vector<lct*> e(m);
+    for (auto &x : e) x = new lct();
+
+    vector<array<int, 3>> edges(m);
+    for (int i = 0; i < m; i++) {
+        cin >> edges[i][0] >> edges[i][1] >> edges[i][2];
+        edges[i][0]--;
+        edges[i][1]--;
+    }
+    sort(edges.begin(), edges.end(), [](array<int, 3> &a, array<int, 3> &b) {
+        return a[2] < b[2];
+    });
+
+    int ans = inf;
+    multiset<int> usedW;
+    for (int i = 0; i < m; i++) {
+        auto [u, v, w] = edges[i];
+        if (u == v) continue;
+        e[i]->info.mn = e[i]->info.val = w;
+        e[i]->info.id = e[i]->info.mnId = i;
+        if (!connected(nd[u], nd[v])) {
+            link(nd[u], e[i]);
+            link(nd[v], e[i]);
+            usedW.insert(w);
+        } else {
+            Info res = path_query(nd[u], nd[v]);
+            if (res.mn < w) {
+                int id = res.mnId;
+                usedW.erase(usedW.find(res.mn));
+                assert(cut(nd[edges[id][0]], e[id]));
+                assert(cut(nd[edges[id][1]], e[id]));
+                link(nd[u], e[i]);
+                link(nd[v], e[i]);
+                usedW.insert(w);
+            }
+        }
+        if (usedW.size() == n - 1) {
+            ans = min(ans, *usedW.rbegin() - *usedW.begin());
+        }
+    }
+    cout << (ans == inf ? 0 : ans) << "\n";
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t = 1;
+    // cin >> t;
+    while (t--) {
+        solve();
+    }
+}

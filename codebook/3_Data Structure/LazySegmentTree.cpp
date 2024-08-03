@@ -108,7 +108,6 @@ struct LazySeg {    // 左閉右開寫法
         return findFirst(1, 0, n, l, r, pred);
     }
 };
-// ---define structure and info plus---
 struct Tag { // 有些 Tag 不用 push 例如 sweepLine
     int set_val; int add;
     void apply(const Tag& v) {
