@@ -20,7 +20,7 @@ struct PST {
         nd.emplace_back(); // 讓 root 指向 1-based
         rt.push_back(build(0, n, init_));
     }
-    int build(int l, int r, const vector<Info> &init_) {
+    int build(int l, int r, vector<Info> &init_) {
         int id = nd.size();
         nd.emplace_back();
         if (r - l == 1) {
@@ -36,36 +36,41 @@ struct PST {
     void pull(Node &t) {
         t.info = nd[t.lc].info + nd[t.rc].info;
     }
-    int copy(int t) {
+    int copy(int t) { // copy 一個 node
         nd.push_back(nd[t]);
         return nd.size() - 1;
     }
-    int modify(int t, int p, const Info &v, int l, int r) {
-        int nt = copy(t);
+    int generate() { // 創立新的 node
+        nd.emplace_back();
+        return nd.size() - 1;
+    }
+    int modify(int t, int l, int r, int x, const Info &v) {
+        t = t ? copy(t) : generate();
         if (r - l == 1) {
-            nd[nt].info = v;
-            return nt;
+            nd[t].info = v;
+            return t;
         }
         int m = (l + r) >> 1;
-        if (p < m) {
-            nd[nt].lc = modify(nd[t].lc, p, v, l, m);
+        if (x < m) {
+            nd[t].lc = modify(nd[t].lc, l, m, x, v);
         } else {
-            nd[nt].rc = modify(nd[t].rc, p, v, m, r);
+            nd[t].rc = modify(nd[t].rc, m, r, x, v);
         }
-        pull(nd[nt]);
-        return nt;
+        pull(nd[t]);
+        return t;
     }
-    void modify(int ver, int pos, const Info& val) {
-        rt[ver] = modify(rt[ver], pos, val, 0, n);
+    void modify(int ver, int pos, const Info &val) {
+        if (int(rt.size()) <= ver) rt.resize(ver + 1);
+        rt[ver] = modify(rt[ver], 0, n, pos, val);
     }
-    Info query(int t, int ql, int qr, int l, int r) {
+    Info query(int t, int l, int r, int ql, int qr) {
         if (l >= qr || r <= ql) return Info();
         if (ql <= l && r <= qr) return nd[t].info;
         int m = (l + r) >> 1;
-        return query(nd[t].lc, ql, qr, l, m) + query(nd[t].rc, ql, qr, m, r);
+        return query(nd[t].lc, l, m, ql, qr) + query(nd[t].rc, m, r, ql, qr);
     }
     Info query(int ver, int ql, int qr) {
-        return query(rt[ver], ql, qr, 0, n);
+        return query(rt[ver], 0, n, ql, qr);
     }
     void createVersion(int ori_ver) {
         rt.push_back(copy(rt[ori_ver]));
@@ -73,6 +78,9 @@ struct PST {
     void reserve(int n, int q) {
         nd.reserve(n + q * (2 * __lg(n) + 1));
         rt.reserve(q + 1);
+    }
+    void resize(int n) {
+        rt.resize(n);
     }
 };
 struct Info {
