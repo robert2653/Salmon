@@ -29,7 +29,6 @@ struct MInt {
         if (x >= getMod()) x -= getMod();
         return x;
     }
-    constexpr ll val() const { return x; }
     constexpr MInt operator-() const {
         MInt res;
         res.x = norm(getMod() - x);
@@ -73,16 +72,16 @@ struct MInt {
         ll v; is >> v; a = MInt(v); return is;
     }
     friend constexpr ostream &operator<<(ostream &os, const MInt &a) {
-        return os << a.val();
+        return os << a.x;
     }
     friend constexpr bool operator==(MInt lhs, MInt rhs) {
-        return lhs.val() == rhs.val();
+        return lhs.x == rhs.x;
     }
     friend constexpr bool operator!=(MInt lhs, MInt rhs) {
-        return lhs.val() != rhs.val();
+        return lhs.x != rhs.x;
     }
     friend constexpr bool operator<(MInt lhs, MInt rhs) {
-        return lhs.val() < rhs.val();
+        return lhs.x < rhs.x;
     }
 };
 template<>

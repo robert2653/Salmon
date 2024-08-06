@@ -34,7 +34,9 @@ struct Comb {
         if (n < m || m < 0) return 0;
         return fac(n) * invfac(m) * invfac(n - m);
     }
-    Z Lucas(Z m, Z n) {
-        return n == 0 ? Z(1) : Lucas(m.val() / Z::getMod(), n.val() / Z::getMod()) * binom(m.val(), n.val());
+    Z lucas(ll n, ll m) { // Mod 要在 1E5 左右
+        if (m == 0) return 1;
+        return binom(n % Z::getMod(), m % Z::getMod())
+        * lucas(n / Z::getMod(), m / Z::getMod());
     }
 } comb; // 注意宣告, 若要換模數需重新宣告
