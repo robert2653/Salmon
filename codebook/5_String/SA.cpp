@@ -48,22 +48,4 @@ struct SuffixArray {
             }
         }
     }
-    string getLCP() {
-        int cp = 0, k, lcp = 0, p;
-        for (int i = 0; i < n; i++) {
-            if (!rk[i]) continue;
-            k = sa[rk[i] - 1];
-            if (cp) cp--;
-            while (s[i + cp] == s[k + cp]) cp++;
-            if (cp > lcp){
-                lcp = cp;
-                p = i;
-            }
-        }
-        if (lcp) {
-            return s.substr(p, lcp);
-        } else {
-            return "-1";
-        }
-    }
 };

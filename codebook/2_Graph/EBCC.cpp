@@ -51,7 +51,7 @@ struct EBCC { // CF/contest/1986/pF
         }
         return bel;
     }
-    struct Graph {
+    struct Graph { // 不會有重邊
         int n;
         vector<pair<int, int>> edges;
         vector<int> siz; // BCC 內節點數
