@@ -1,17 +1,17 @@
 int main() {
-    int l = 1, r = 10;
-    // 1 to tar, find tar
-    while (l <= r) {
-        int m = (l + r) / 2;
-        if (check(m)) l = m + 1;
-        else r = m - 1;
+    int lo = 1, hi = 10;
+    // 二分找上界
+    while (lo < hi) {
+        int x = (lo + hi + 1) / 2;
+        if (check(x)) lo = x;
+        else hi = x - 1;
     }
-    cout << r;
-    // tar to end
-    while (l <= r) {
-        int m = (l + r) / 2;
-        if (check(m)) r = m - 1;
-        else l = m + 1;
+    cout << lo;
+    // 二分找下界
+    while (lo < hi) {
+        int x = (lo + hi) / 2;
+        if (check(m)) hi = x;
+        else lo = x + 1;
     }
-    cout << l;
+    cout << lo;
 }
