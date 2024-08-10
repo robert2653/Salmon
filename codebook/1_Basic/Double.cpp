@@ -1,6 +1,6 @@
 struct D {
     double x;
-    constexpr static double eps = 1e-12;
+    constexpr static double eps = 1E-12;
     D() : x{0.0} {}
     D(double v) : x{v} {}
     double val() const { return x; }
