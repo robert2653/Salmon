@@ -1,4 +1,4 @@
-struct SAM {
+struct SAM { // 0 is initial state, 1-based
     static constexpr int ALPHABET_SIZE = 26;
     struct Node {
         int len;
@@ -7,7 +7,9 @@ struct SAM {
         Node() : len{}, link{}, next{} {}
     };
     vector<Node> t;
-    SAM() { init(); }
+    SAM() {
+        init();
+    }
     void init() {
         t.assign(2, Node());
         t[0].next.fill(1);

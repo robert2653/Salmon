@@ -1,4 +1,4 @@
-constexpr int N = 2e5 + 5;
+constexpr int N = 2E5 + 5;
 int cht[N][31]; // 倍增表, 放外面不然 TLE
 struct FuntionalGraph {
     int n, cnt;
@@ -32,14 +32,15 @@ struct FuntionalGraph {
             p.push_back(cur);
             cur = g[cur];
         }
-        auto s = std::find(p.begin(), p.end(), cur);
+        auto s = find(p.begin(), p.end(), cur);
         vector<int> cyc(s, p.end());
         p.erase(s, p.end()); p.push_back(cur);
         for (int i = 0; i < (int)cyc.size(); i++) {
             bel[cyc[i]] = cnt;
             id[cyc[i]] = i;
         }
-        cnt++; len.push_back(cyc.size());
+        if (!cyc.empty())
+            ++cnt, len.push_back(cyc.size());
         for (int i = p.size() - 1; i > 0; i--)
             id[p[i - 1]] = id[p[i]] - 1;
     }
