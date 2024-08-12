@@ -86,5 +86,5 @@ struct MInt {
 };
 template<>
 ll MInt<0>::Mod = 998244353;
-constexpr int P = 1e9 + 7;
+constexpr ll P = 1E9 + 7;
 using Z = MInt<P>;

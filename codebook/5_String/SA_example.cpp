@@ -6,14 +6,14 @@ using ll = long long;
 // https://atcoder.jp/contests/abc362/tasks/abc362_g
 
 struct SuffixArray {
-    int n;
+    int n; string s;
     vector<int> sa, rk, lc;
-    // n: 字串长度
-    // sa: 后缀数组，sa[i] 表示第 i 小的后缀的起始位置
-    // rk: 排名数组，rk[i] 表示从位置 i 开始的后缀的排名
-    // lc: LCP 数组，lc[i] 表示 sa[i] 和 sa[i+1] 的最长公共前缀长度
-    SuffixArray(const string &s) {
-        n = s.length();
+    // n: 字串長度
+    // sa: 後綴數組，sa[i] 表示第 i 小的後綴的起始位置
+    // rk: 排名數組，rk[i] 表示從位置 i 開始的後綴的排名
+    // lc: LCP 數組，lc[i] 表示 sa[i] 和 sa[i + 1] 的最長公共前綴長度
+    SuffixArray(const string &s_) {
+        s = s_; n = s.length();
         sa.resize(n);
         lc.resize(n - 1);
         rk.resize(n);
@@ -58,42 +58,44 @@ struct SuffixArray {
 };
 
 void solve() {
-    string s; cin >> s;
-    int n = s.length();
-    // s += "$";  // 添加一個終止符
-    SuffixArray SA(s);
-
-    int q; cin >> q;
-
-    while (q--) {
-        string t; cin >> t;
-        int m = t.length();
-        // sa[i] 表示第 i 小的后缀的起始位置，所以可以二分搜找到跟 t 長度一樣且跟 t 長的一模一樣的 sa 位置
-        
-        // 二分搜索找到下界
-        int low = lower_bound(SA.sa.begin(), SA.sa.end(), t, [&](int i, const string& t) {
-            return s.compare(i, m, t) < 0;
-        }) - SA.sa.begin();
-        
-        // 二分搜索找到上界
-        int high = upper_bound(SA.sa.begin(), SA.sa.end(), t, [&](const string& t, int i) {
-            return s.compare(i, m, t) > 0;
-        }) - SA.sa.begin();
-        
-        cout << high - low << "\n";
+    string s;
+    cin >> s;
+    SuffixArray sa(s);
+    int len = s.length();
+    int n; cin >> n;
+    for (int i = 0; i < n; i++) {
+        string sub;
+        cin >> sub;
+        int lo = 0, hi = len - 1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            if (s.compare(sa.sa[mid], sub.length(), sub) <= 0) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        int res = hi;
+        lo = 0, hi = len - 1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            if (s.compare(sa.sa[mid], sub.length(), sub) >= 0) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        cout << res - lo + 1 << "\n";
     }
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-
     int t = 1;
     // cin >> t;
-
     while (t--) {
         solve();
     }
-
     return 0;
 }

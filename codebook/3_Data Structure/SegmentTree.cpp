@@ -67,7 +67,7 @@ struct Seg {    // 左閉右開寫法
         return findFirst(1, 0, n, l, r, pred);
     }
 };
-// ---define structure and info plus---
+
 struct Info {
     int n = 0;
     int sum = 0;
