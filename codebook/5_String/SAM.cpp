@@ -1,4 +1,4 @@
-struct SAM { // 0 is initial state, 1-based
+struct SAM { // 1 is initial state, 1-based
     static constexpr int ALPHABET_SIZE = 26;
     struct Node {
         int len;
@@ -49,10 +49,24 @@ struct SAM { // 0 is initial state, 1-based
 void solve() {
     string s; cin >> s;
     int n = s.length();
-    vector<int> pos(n + 1); // s[i - 1] 的後綴終點位置
-    pos[0] = 1;
+    vector<int> last(n + 1); // s[i - 1] 的後綴終點位置
+    last[0] = 1;
     SAM sam;
     for (int i = 0; i < n; i++) {
-        pos[i + 1] = sam.extend(pos[i], s[i] - 'a');
+        last[i + 1] = sam.extend(last[i], s[i] - 'a');
+    }
+    int sz = sam.t.size();
+    vector<int> cnt(sz);
+    for (int i = 1; i <= n; i++) cnt[last[i]]++;
+    vector<vector<int>> order(sz);
+    for (int i = 1; i < sz; i++) {
+        order[sam.t[i].len].push_back(i);
+    }
+    for (int i = sz - 1; i > 0; i--) {
+        for (int u : order[i]) {
+            if (sam.t[u].link != -1) {
+                cnt[sam.t[u].link] += cnt[u];
+            }
+        }
     }
 }
