@@ -1,30 +1,21 @@
-int main() {
-    int n; cin >> n;
-    vector<P> P(n), U, L;
-    for (int i = 0; i < n; i++) {
-        cin >> P[i];
-    }
-    sort(P.begin(), P.end(), [](const Point<i64> &a, const Point<i64> &b) {
-        return a.x == b.x ? a.y < b.y : a.x < b.x;
+template<class T>
+vector<Point<T>> convexHull(vector<Point<T>> a) {
+    sort(a.begin(), a.end(), [](const Point<T> &l, const Point<T> &r) {
+        return l.x == r.x ? l.y < r.y : l.x < r.x;
     });
-    for (int i = 0; i < n; i++) {
-        while (L.size() >= 2 && cross(L.back() - L[L.size() - 2], P[i] - L[L.size() - 2]) <= 0LL) {
-            L.pop_back();
+    a.resize(unique(a.begin(), a.end()) - a.begin());
+    if (a.size() <= 1) return a;
+    vector<Point<T>> hull; 
+    for(int i = 0; i < 2; i++){
+        int t = hull.size();
+        for (Point<T> p : a) {
+            while (hull.size() - t >= 2 && cross(hull.back() - hull[hull.size() - 2], p - hull[hull.size() - 2]) <= 0) {
+                hull.pop_back(); // 要不要有等於要看點有沒有在邊上
+            }
+            hull.push_back(p);
         }
-        while (U.size() >= 2 && cross(U.back() - U[U.size() - 2], P[i] - U[U.size() - 2]) >= 0LL){
-            U.pop_back();
-        }
-        if (L.empty() || !(L.back() == P[i])) L.push_back(P[i]);
-        if (U.empty() || !(U.back() == P[i])) U.push_back(P[i]);
+        hull.pop_back();
+        reverse(a.begin(), a.end());
     }
-    if (L.size() <= 2 && U.size() <= 2) {
-        // No Hull
-    }
-    cout << L.size() + U.size() - 2 << "\n";
-    for (int i = 0; i < L.size() - 1; i++) {
-        cout << L[i].x << " " << L[i].y << "\n";
-    }
-    for (int i = U.size() - 1; i > 0; i--) {
-        cout << U[i].x << " " << U[i].y << "\n";
-    }
+    return hull;
 }

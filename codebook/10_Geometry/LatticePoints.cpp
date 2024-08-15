@@ -1,5 +1,5 @@
 int main() {
-    // Polygun 內整數點數
+    // Area 求法與 Polygun 內整數點數
     int n; cin >> n;
     vector<Point<ll>> polygon(n);
     for (int i = 0; i < n; i++) cin >> polygon[i];

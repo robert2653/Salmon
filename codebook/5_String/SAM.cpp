@@ -1,4 +1,5 @@
-struct SAM { // 1 is initial state, 1-based
+struct SAM {
+    // 1 -> initial state
     static constexpr int ALPHABET_SIZE = 26;
     struct Node {
         int len;
@@ -57,7 +58,9 @@ void solve() {
     }
     int sz = sam.t.size();
     vector<int> cnt(sz);
-    for (int i = 1; i <= n; i++) cnt[last[i]]++;
+    for (int i = 1; i <= n; i++) {
+        cnt[last[i]]++; // 去重 = 1
+    }
     vector<vector<int>> order(sz);
     for (int i = 1; i < sz; i++) {
         order[sam.t[i].len].push_back(i);

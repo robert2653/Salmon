@@ -78,7 +78,7 @@ struct HLD {
         if (!isAncester(v, rt)) return siz[v];
         return n - siz[rootedParent(rt, v)];
     }
-    int rootedLca(int a, int b, int rt) {
-        return lca(a, b) ^ lca(b, rt) ^ lca(rt, a);
+    int rootedLca(int rt, int a, int b) {
+        return lca(rt, a) ^ lca(a, b) ^ lca(b, rt);
     }
 };
