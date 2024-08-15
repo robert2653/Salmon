@@ -1,14 +1,17 @@
-vector<int> prime, minp;
+vector<int> primes, minp;
 void sieve(int n) {
-    minp.assign(n + 1, 1); // 1 代表是質數，非 1 不是
-    minp[0] = minp[1] = -1;
-    int m = int(sqrt(n)) + 1;
-    for (int i = 2; i <= m; i++) {
-        if (minp[i] == 1) {
-            prime.push_back(i);
-            for (int j = 2; i * j <= n; j++) {
-                minp[i * j] = i;
-            }
+    minp.assign(n + 1, 0);
+    primes.clear();
+    // minp[i] == i, 質數
+    for (int i = 2; i <= n; i++) {
+        if (minp[i] == 0) {
+            minp[i] = i;
+            primes.push_back(i);
+        }
+        for (auto p : primes) {
+            if (i * p > n) break;
+            minp[i * p] = p;
+            if (p == minp[i]) break;
         }
     }
 }

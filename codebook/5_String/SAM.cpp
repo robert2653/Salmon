@@ -72,4 +72,16 @@ void solve() {
             }
         }
     }
+    vector<ll> dp(sz, -1);
+    auto dfs = [&](auto self, int u) -> void {
+        dp[u] = cnt[u];
+        for (int c = 0; c < SAM::ALPHABET_SIZE; c++) {
+            int v = sam.t[u].next[c];
+            if (v) {
+                if (dp[v] == -1) self(self, v);
+                dp[u] += dp[v];
+            }
+        }
+    };
+    dfs(dfs, 1);
 }
