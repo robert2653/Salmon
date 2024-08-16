@@ -1,7 +1,3 @@
-template<class T>
-T distanceSquare(const Point<T> &a, const Point<T> &b) {
-    return square(a - b);
-}
 void solve() {
     int n; cin >> n;
     constexpr ll inf = 8e18;
@@ -38,7 +34,7 @@ void solve() {
         sort(t.begin(), t.begin() + p, sortY());
         for (int i = 0; i < p; i++){
             for (int j = i + 1; j < p; j++) {
-                ans = min(ans, distanceSquare(t[i], t[j]));
+                ans = min(ans, square(t[i] - t[j]));
                 if ((t[i].y - t[j].y) * (t[i].y - t[j].y) > ans) break;
             } 
         }

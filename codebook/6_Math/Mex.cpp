@@ -1,4 +1,4 @@
-int mex(vector<int> v) {
+int mex(vector<int> &v) {
     unordered_set<int> s;
     for (auto e : v) s.insert(e);
     for (int i = 0; ; i++) {
