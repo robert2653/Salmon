@@ -1,4 +1,4 @@
-struct Hungarian { // 0-based
+struct Hungarian { // 0-based, O(VE)
     int n, m;
     vector<vector<int>> adj;
     vector<int> used, vis;

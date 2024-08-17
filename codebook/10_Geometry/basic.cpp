@@ -47,12 +47,6 @@ struct Point {
     }
 };
 template<class T>
-struct Line {
-    Point<T> a;
-    Point<T> b;
-    Line(const Point<T> &a_ = Point<T>(), const Point<T> &b_ = Point<T>()) : a(a_), b(b_) {}
-};
-template<class T>
 T dot(const Point<T> &a, const Point<T> &b) {
     return a.x * b.x + a.y * b.y;
 }
@@ -69,12 +63,27 @@ double length(const Point<T> &p) {
     return sqrt(double(square(p)));
 }
 template<class T>
-double length(const Line<T> &l) {
-    return length(l.a - l.b);
-}
-template<class T>
 Point<T> normalize(const Point<T> &p) {
     return p / length(p);
+}
+template<class T>
+Point<T> rotate(const Point<T> &a) {
+    return Point(-a.y, a.x);
+}
+template<class T>
+int sgn(const Point<T> &a) {
+    return a.y > 0 || (a.y == 0 && a.x > 0) ? 1 : -1;
+}
+
+template<class T>
+struct Line {
+    Point<T> a;
+    Point<T> b;
+    Line(const Point<T> &a_ = Point<T>(), const Point<T> &b_ = Point<T>()) : a(a_), b(b_) {}
+};
+template<class T>
+double length(const Line<T> &l) {
+    return length(l.a - l.b);
 }
 template<class T>
 bool parallel(const Line<T> &l1, const Line<T> &l2) {
@@ -95,14 +104,6 @@ double distancePS(const Point<T> &p, const Line<T> &l) {
     if (dot(p - l.b, l.a - l.b) < 0)
         return distance(p, l.b);
     return distancePL(p, l);
-}
-template<class T>
-Point<T> rotate(const Point<T> &a) {
-    return Point(-a.y, a.x);
-}
-template<class T>
-int sgn(const Point<T> &a) {
-    return a.y > 0 || (a.y == 0 && a.x > 0) ? 1 : -1;
 }
 template<class T>
 bool pointOnLineLeft(const Point<T> &p, const Line<T> &l) {
