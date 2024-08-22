@@ -13,13 +13,13 @@ struct Dinic {
     void init(int n_) {
         n = n_; m = 0;
         dis.resize(n); ptr.resize(n);
-        adj.assign(n, vector<int>{});
+        adj.assign(n, {});
         edges.clear();
     }
     void add_edge(int u, int v, T cap) {
         // 偶數 id 是正向邊
-        edges.push_back({ v, 0, cap });
-        edges.push_back({ u, 0, 0 });
+        edges.push_back({v, 0, cap});
+        edges.push_back({u, 0, 0});
         adj[u].push_back(m++);
         adj[v].push_back(m++);
     }
@@ -43,7 +43,7 @@ struct Dinic {
     T dfs(int u, T flow) {
         if (flow == 0) return 0;
         if (u == t) return flow;
-        for (int &cur = ptr[u]; cur < (int)adj[u].size(); cur++) {
+        for (int &cur = ptr[u]; cur < adj[u].size(); cur++) {
             Edge &e = edges[adj[u][cur]];
             if (dis[u] + 1 != dis[e.to]) continue;
             if (e.cap == e.flow) continue;

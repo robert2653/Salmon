@@ -8,7 +8,7 @@ struct Hungarian { // 0-based, O(VE)
     }
     void init(int n_, int m_) {
         n = n_; m = m_;
-        adj.assign(n + m, vector<int>());
+        adj.assign(n + m, {});
         used.assign(n + m, -1);
         vis.assign(n + m, 0);
     }
@@ -38,7 +38,7 @@ struct Hungarian { // 0-based, O(VE)
         }
         for (int i = n; i < n + m; i++) {
             if (used[i] != -1) {
-                match.push_back(make_pair(used[i], i - n));
+                match.emplace_back(used[i], i - n);
             }
         }
         return match;

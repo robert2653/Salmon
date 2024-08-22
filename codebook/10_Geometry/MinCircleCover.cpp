@@ -1,5 +1,5 @@
 template<class T>
-pair<T, Point<T>> MinCircular(vector<Point<T>> &a) {
+pair<T, Point<T>> minCircle(vector<Point<T>> &a) {
     random_shuffle(a.begin(), a.end(), rng);
     int n = a.size();
     Point<T> c = a[0]; T r = 0;

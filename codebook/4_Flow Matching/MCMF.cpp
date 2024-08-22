@@ -5,7 +5,6 @@ struct MCMF {
         Tf flow, cap; // 流量跟容量
         Tc cost;
     };
-    // 可以只用 spfa 或 dijkstra，把跟 pot 有關的拿掉就好
     int n, m, s, t;
     const Tf INF_FLOW = 1 << 30;
     const Tc INF_COST = 1 << 30;
@@ -18,7 +17,7 @@ struct MCMF {
     void init(int n_) {
         n = n_; m = 0;
         edges.clear();
-        adj.assign(n, vector<int>{});
+        adj.assign(n, {});
     }
     void add_edge(int u, int v, Tf cap, Tc cost){
         edges.push_back({v, 0, cap, cost});
@@ -88,7 +87,7 @@ struct MCMF {
             swap(dis, pot);
             if (need == 0) break;
         }
-        return make_pair(flow, cost);
+        return {flow, cost};
     }
     // 限定 cost, 最大化 flow
     pair<Tf, Tc> work_budget(int s_, int t_, Tc budget) {
@@ -112,7 +111,7 @@ struct MCMF {
             swap(dis, pot);
             if (budget == 0 || f == 0) break;
         }
-        return make_pair(flow, cost);
+        return {flow, cost};
     }
     void reset() {
         for (int i = 0; i < m; i++) edges[i].flow = 0;
