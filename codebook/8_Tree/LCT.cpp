@@ -140,7 +140,7 @@ Info path_query(Node<Info, Tag> *x, Node<Info, Tag> *y) {
 constexpr int Mod = 51061;
 struct Tag {
     ll add = 0; ll mul = 1;
-    void apply(const Tag& v) {
+    void apply(const Tag &v) {
         mul = mul * v.mul % Mod;
         add = (add * v.mul % Mod + v.add) % Mod;
     }

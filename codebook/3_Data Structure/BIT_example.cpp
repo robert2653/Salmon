@@ -1,12 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-template<class T>
+template<typename T>
 struct Fenwick { // 全部以 0 based 使用
-    int n;
-    vector<T> a;
-    Fenwick(int n_ = 0) {
-        init(n_);
-    }
+    int n; vector<T> a;
+    Fenwick(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_;
         a.assign(n, T{});
@@ -26,9 +23,9 @@ struct Fenwick { // 全部以 0 based 使用
     T rangeSum(int l, int r) { // 左閉右開查詢
         return sum(r) - sum(l);
     }
-    int select(const T &k) { // 找到最小的 x, 使得 sum(x) > k
-        int x = 0;
-        T cur{};
+    int select(const T &k, int start = 0) {
+        // 找到最小的 x, 使得 sum(x + 1) - sum(start) > k
+        int x = 0; T cur = -sum(start);
         for (int i = 1 << __lg(n); i; i /= 2) {
             if (x + i <= n && cur + a[x + i - 1] <= k) {
                 x += i;
@@ -72,28 +69,29 @@ struct TwoDFenwick {  // 全部以 0 based 使用
 int main() {
     int n, m;
     cin >> n >> m;
-    // Fenwick<int> a(n);
-    // for (int i = 0; i < n; i++) {
-    //     int x; cin >> x;
-    //     a.add(i, x);
-    // }
-    // for (int i = 0; i < m; i++) {
-    //     int x; cin >> x;
-    //     cout << a.select(x);
-    // }
-    TwoDFenwick<int> a(n, m);
-    int q; cin >> q;
+    Fenwick<int> a(n);
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            int x;
-            cin >> x;
-            a.add(i, j, x);
-        }
+        int x; cin >> x;
+        a.add(i, x);
     }
-    for (int i = 0; i < q; i++) {
-        int lx, ly, rx, ry;
-        cin >> lx >> ly >> rx >> ry;
-        cout << a.rangeSum(lx, ly, rx + 1, ry + 1) << "\n";
+    for (int i = 0; i < m; i++) {
+        int x; cin >> x;
+        int start; cin >> start;
+        cout << a.select(x, start) << "\n";
     }
+    // TwoDFenwick<int> a(n, m);
+    // int q; cin >> q;
+    // for (int i = 0; i < n; i++) {
+    //     for (int j = 0; j < m; j++) {
+    //         int x;
+    //         cin >> x;
+    //         a.add(i, j, x);
+    //     }
+    // }
+    // for (int i = 0; i < q; i++) {
+    //     int lx, ly, rx, ry;
+    //     cin >> lx >> ly >> rx >> ry;
+    //     cout << a.rangeSum(lx, ly, rx + 1, ry + 1) << "\n";
+    // }
     return 0;
 }
