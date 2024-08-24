@@ -42,7 +42,7 @@ struct SCC {
         }
         return bel;
     }
-    struct Graph { // 可能有重邊
+    struct Graph {
         int n;
         vector<pair<int, int>> edges;
         vector<int> siz;

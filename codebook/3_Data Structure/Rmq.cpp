@@ -1,4 +1,4 @@
-template<class T, class Cmp = greater<T>>
+template<class T, class Cmp = less<T>>
 struct RMQ {
     const Cmp cmp = Cmp();
     static constexpr unsigned B = 64;
