@@ -59,7 +59,11 @@ vector<T> mulT(const vector<T> &a, const vector<T> &b) {
     fft(fa, true);
     vector<T> res(n);
     for (int i = 0; i < n; i++) {
-        res[i] = round(fa[i].x);
+        if constexpr (!is_same_v<T, double>) {
+            res[i] = round(fa[i].x);
+        } else {
+            res[i] = fa[i].x;
+        }
     }
     return res;
 }

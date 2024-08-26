@@ -3,148 +3,153 @@ using namespace std;
 using ll = long long;
 // Minimum Difference Spanning Tree
 template<class Info, class Tag>
-struct Node {
-    Node *ch[2], *p;
-    bool rev = false; int size = 1;
-    Info info = Info(); Tag tag = Tag();
-    Node() : ch{nullptr, nullptr}, p(nullptr) {}
-    bool isrt() {
-        return !p || (p->ch[0] != this && p->ch[1] != this);
+struct LinkCutTree { // 1-based
+    struct Node {
+        Info info = Info();
+        Tag tag = Tag();
+        bool rev = false;
+        int size = 0;
+        int ch[2];
+        int p = 0;
+    };
+    vector<Node> nd;
+    LinkCutTree(int n = 0) {
+        init(n);
     }
-    void make_rev() {
-        swap(ch[0], ch[1]);
-        rev ^= true;
+    void init(int n = 0) {
+        nd.clear();
+        nd.emplace_back();
+        resize(n);
     }
-    void apply(const Tag &v) {
-        info.apply(size, v);
-        tag.apply(v);
+    void resize(int n) {
+        nd.resize(n + 1);
     }
-    void push() {
-        if (rev) {
-            if (ch[0]) ch[0]->make_rev();
-            if (ch[1]) ch[1]->make_rev();
-            rev = false;
+    bool isrt(int t) {
+        return !nd[t].p || (nd[nd[t].p].ch[0] != t && nd[nd[t].p].ch[1] != t);
+    }
+    void make_rev(int t) {
+        swap(nd[t].ch[0], nd[t].ch[1]);
+        nd[t].rev ^= true;
+    }
+    void apply(int t, const Tag &v) {
+        nd[t].info.apply(nd[t].size, v);
+        nd[t].tag.apply(v);
+    }
+    void push(int t) {
+        if (nd[t].rev) {
+            if (nd[t].ch[0]) make_rev(nd[t].ch[0]);
+            if (nd[t].ch[1]) make_rev(nd[t].ch[1]);
+            nd[t].rev = false;
         }
-        if (ch[0]) ch[0]->apply(tag);
-        if (ch[1]) ch[1]->apply(tag);
-        tag = Tag();
+        if (nd[t].ch[0]) apply(nd[t].ch[0], nd[t].tag);
+        if (nd[t].ch[1]) apply(nd[t].ch[1], nd[t].tag);
+        nd[t].tag = Tag();
     }
-    void pull() {
-        size = 1 + (ch[0] ? ch[0]->size : 0) + (ch[1] ? ch[1]->size : 0);
-        info.pull(ch[0] ? ch[0]->info : Info(), ch[1] ? ch[1]->info : Info());
+    void pull(int t) {
+        nd[t].size = 1 + nd[nd[t].ch[0]].size + nd[nd[t].ch[1]].size;
+        nd[t].info.pull(nd[nd[t].ch[0]].info, nd[nd[t].ch[1]].info);
     }
-    int pos() {
-        return p->ch[1] == this;
+    int pos(int t) {
+        return nd[nd[t].p].ch[1] == t;
     }
-    void pushAll() {
-        if (!isrt()) {
-            p->pushAll();
+    void pushAll(int t) {
+        if (!isrt(t)) {
+            pushAll(nd[t].p);
         }
-        push();
+        push(t);
     }
-    void rotate() {
-        Node *q = p;
-        int x = !pos();
-        q->ch[!x] = ch[x];
-        if (ch[x]) ch[x]->p = q;
-        p = q->p;
-        if (!q->isrt()) q->p->ch[q->pos()] = this;
-        ch[x] = q;
-        q->p = this;
-        q->pull();
+    void rotate(int t) {
+        int q = nd[t].p;
+        int x = !pos(t);
+        nd[q].ch[!x] = nd[t].ch[x];
+        if (nd[t].ch[x]) nd[nd[t].ch[x]].p = q;
+        nd[t].p = nd[q].p;
+        if (!isrt(q)) nd[nd[q].p].ch[pos(q)] = t;
+        nd[t].ch[x] = q;
+        nd[q].p = t;
+        pull(q);
     }
-    void splay() {
-        pushAll();
-        while (!isrt()) {
-            if (!p->isrt()) {
-                if (pos() == p->pos()) {
-                    p->rotate();
+    void splay(int t) {
+        pushAll(t);
+        while (!isrt(t)) {
+            if (!isrt(nd[t].p)) {
+                if (pos(t) == pos(nd[t].p)) {
+                    rotate(nd[t].p);
                 } else {
-                    rotate();
+                    rotate(t);
                 }
             }
-            rotate();
+            rotate(t);
         }
-        pull();
+        pull(t);
     }
-    void access() { // access 後自動 splay
-        for (Node *i = this, *q = nullptr; i; q = i, i = i->p) {
-            i->splay();
-            i->ch[1] = q;
-            i->pull();
+    void access(int t) { // access 後自動 splay
+        for (int i = t, q = 0; i; q = i, i = nd[i].p) {
+            splay(i);
+            nd[i].ch[1] = q;
+            pull(i);
         }
-        splay();
+        splay(t);
     }
-    void makeRoot() {
-        access();
-        make_rev();
+    void makeRoot(int t) {
+        access(t);
+        make_rev(t);
     }
-    Node* findRoot() {
-        access();
-        Node *t = this;
-        while (t->ch[0]) {
-            t->push();
-            t = t->ch[0];
+    int findRoot(int t) {
+        access(t);
+        int x = t;
+        while (nd[x].ch[0]) {
+            push(x);
+            x = nd[x].ch[0];
         }
-        t->access();
-        return t;
+        access(x);
+        return x;
+    }
+    bool connected(int x, int y) {
+        return findRoot(x) == findRoot(y);
+    }
+    bool neighber(int x, int y) {
+        makeRoot(x);
+        access(y);
+        if (nd[y].ch[0] != x || nd[x].ch[1]) return false;
+        return true;
+    }
+    void split(int rt, int y) {
+        makeRoot(y);
+        access(rt);
+    }
+    void link(int t, int p) {
+        makeRoot(t);
+        if (findRoot(p) != t) {
+            nd[t].p = p;
+        }
+    }
+    void cut(int x, int y) {
+        makeRoot(x);
+        access(y);
+        nd[y].ch[0] = nd[nd[y].ch[0]].p = 0;
+        pull(x);
+        pull(y);
+    }
+    void modify(int x, const Info &v) {
+        access(x);
+        nd[x].info = v;
+    }
+    void path_apply(int x, int y, const Tag &v) {
+        assert(connected(x, y));
+        split(x, y);
+        apply(x, v);
+    }
+    Info path_query(int x, int y) {
+        assert(connected(x, y));
+        split(x, y);
+        return nd[x].info;
     }
 };
-template<class Info, class Tag>
-bool connected(Node<Info, Tag> *x, Node<Info, Tag> *y) {
-    return x->findRoot() == y->findRoot();
-}
-template<class Info, class Tag>
-bool neighber(Node<Info, Tag> *x, Node<Info, Tag> *y) {
-    x->makeRoot();
-    y->access();
-    if (y->ch[0] != x || x->ch[1]) return false;
-    return true;
-}
-template<class Info, class Tag>
-void split(Node<Info, Tag> *rt, Node<Info, Tag> *y) {
-    y->makeRoot();
-    rt->access();
-}
-template<class Info, class Tag>
-void link(Node<Info, Tag> *t, Node<Info, Tag> *p) {
-    t->makeRoot();
-    if (p->findRoot() != t) {
-        t->p = p;
-    }
-}
-template<class Info, class Tag>
-bool cut(Node<Info, Tag> *x, Node<Info, Tag> *y) {
-    x->makeRoot();
-    y->access();
-    if (y->ch[0] != x || x->ch[1]) return false;
-    y->ch[0] = y->ch[0]->p = nullptr;
-    x->pull();
-    y->pull();
-    return true;
-}
-template<class Info, class Tag>
-void modify(Node<Info, Tag> *x, const Info &v) {
-    x->access();
-    x->info = v;
-}
-template<class Info, class Tag>
-void path_apply(Node<Info, Tag> *x, Node<Info, Tag> *y, const Tag &v) {
-    assert(connected(x, y));
-    split(x, y);
-    x->apply(v);
-}
-template<class Info, class Tag>
-Info path_query(Node<Info, Tag> *x, Node<Info, Tag> *y) {
-    assert(connected(x, y));
-    split(x, y);
-    return x->info;
-}
-
 struct Tag {
     void apply(const Tag& v) {}
 };
-constexpr int inf = 1e5;
+constexpr int inf = 1E5;
 struct Info {
     int val = inf;
     int id = -1;
@@ -164,46 +169,43 @@ struct Info {
         }
     }
 };
-using lct = Node<Info, Tag>;
 
-void solve() {
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int n, m;
     cin >> n >> m;
-    vector<lct*> nd(n);
-    for (auto &x : nd) x = new lct();
-    vector<lct*> e(m);
-    for (auto &x : e) x = new lct();
-
+    LinkCutTree<Info, Tag> lct(n + m);
+    
     vector<array<int, 3>> edges(m);
     for (int i = 0; i < m; i++) {
         cin >> edges[i][0] >> edges[i][1] >> edges[i][2];
-        edges[i][0]--;
-        edges[i][1]--;
     }
     sort(edges.begin(), edges.end(), [](array<int, 3> &a, array<int, 3> &b) {
         return a[2] < b[2];
     });
-
+    // 類似 kruskal, 只是插入的時候, 如果兩點連通, 把最小邊斷開
     int ans = inf;
     multiset<int> usedW;
     for (int i = 0; i < m; i++) {
         auto [u, v, w] = edges[i];
         if (u == v) continue;
-        e[i]->info.mn = e[i]->info.val = w;
-        e[i]->info.id = e[i]->info.mnId = i;
-        if (!connected(nd[u], nd[v])) {
-            link(nd[u], e[i]);
-            link(nd[v], e[i]);
+        lct.nd[n + i + 1].info.mn = lct.nd[n + i + 1].info.val = w;
+        lct.nd[n + i + 1].info.id = lct.nd[n + i + 1].info.mnId = i;
+        if (!lct.connected(u, v)) {
+            lct.link(u, n + i + 1);
+            lct.link(v, n + i + 1);
             usedW.insert(w);
         } else {
-            Info res = path_query(nd[u], nd[v]);
+            Info res = lct.path_query(u, v);
             if (res.mn < w) {
                 int id = res.mnId;
-                usedW.erase(usedW.find(res.mn));
-                assert(cut(nd[edges[id][0]], e[id]));
-                assert(cut(nd[edges[id][1]], e[id]));
-                link(nd[u], e[i]);
-                link(nd[v], e[i]);
+                usedW.extract(res.mn);
+                lct.cut(edges[id][0], n + id + 1);
+                lct.cut(edges[id][1], n + id + 1);
+                lct.link(u, n + i + 1);
+                lct.link(v, n + i + 1);
                 usedW.insert(w);
             }
         }
@@ -212,14 +214,5 @@ void solve() {
         }
     }
     cout << (ans == inf ? 0 : ans) << "\n";
-}
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int t = 1;
-    // cin >> t;
-    while (t--) {
-        solve();
-    }
+    return 0;
 }
