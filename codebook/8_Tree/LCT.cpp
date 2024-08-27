@@ -8,7 +8,8 @@ struct LinkCutTree { // 1-based
         int ch[2], p = 0;
     };
     vector<Node> nd;
-    void init(int n = 0) {
+    LinkCutTree(int n = 0) { init(n); }
+    void init(int n) {
         nd.clear();
         nd.emplace_back();
         resize(n);
@@ -110,10 +111,10 @@ struct LinkCutTree { // 1-based
         makeRoot(y);
         access(rt);
     }
-    void link(int t, int p) {
-        makeRoot(t);
-        if (findRoot(p) != t) {
-            nd[t].p = p;
+    void link(int x, int y) {
+        makeRoot(x);
+        if (findRoot(y) != x) {
+            nd[x].p = y;
         }
     }
     void cut(int x, int y) {

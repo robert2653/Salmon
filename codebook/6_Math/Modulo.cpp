@@ -18,8 +18,7 @@ struct MInt {
     constexpr MInt(ll x) : x {norm(x % getMod())} {}
     static ll Mod;
     constexpr static ll getMod() {
-        if (P > 0) return P;
-        else return Mod;
+        return P > 0 ? P : Mod;
     }
     constexpr static void setMod(ll Mod_) {
         Mod = Mod_;
@@ -30,9 +29,7 @@ struct MInt {
         return x;
     }
     constexpr MInt operator-() const {
-        MInt res;
-        res.x = norm(getMod() - x);
-        return res;
+        return MInt(norm(getMod() - x));
     }
     constexpr MInt inv() const {
         return power(*this, getMod() - 2);
@@ -57,21 +54,21 @@ struct MInt {
         return *this *= rhs.inv();
     }
     friend constexpr MInt operator*(MInt lhs, MInt rhs) {
-        MInt res = lhs; return res *= rhs;
+        return lhs *= rhs;
     }
     friend constexpr MInt operator+(MInt lhs, MInt rhs) {
-        MInt res = lhs; return res += rhs;
+        return lhs += rhs;
     }
     friend constexpr MInt operator-(MInt lhs, MInt rhs) {
-        MInt res = lhs; return res -= rhs;
+        return lhs -= rhs;
     }
     friend constexpr MInt operator/(MInt lhs, MInt rhs) {
-        MInt res = lhs; return res /= rhs;
+        return lhs /= rhs;
     }
-    friend constexpr istream &operator>>(istream &is, MInt &a) {
+    friend istream &operator>>(istream &is, MInt &a) {
         ll v; is >> v; a = MInt(v); return is;
     }
-    friend constexpr ostream &operator<<(ostream &os, const MInt &a) {
+    friend ostream &operator<<(ostream &os, const MInt &a) {
         return os << a.x;
     }
     friend constexpr bool operator==(MInt lhs, MInt rhs) {
