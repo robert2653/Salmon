@@ -1,21 +1,28 @@
 using i128 = __int128_t; // 1.7E38
-inline i128 read() {
-    i128 sgn = 1, x = 0;
+istream &operator>>(istream &is, i128 &a) {
+    i128 sgn = 1; a = 0;
     string s; cin >> s;
     for (auto c : s) {
         if (c == '-') {
             sgn = -1;
         } else {
-            x = x * 10 + c - '0';
+            a = a * 10 + c - '0';
         }
     }
-    return x * sgn;
+    a *= sgn;
+    return is;
 }
-inline void write(i128 x){
-    if (x < 0) {
-        cout << '-';
-        x = -x;
+ostream &operator<<(ostream &os, i128 a) {
+    string res; int sgn = 1;
+    if (a < 0) {
+        sgn = -1, a = -a;
     }
-    if (x > 9) write(x / 10);
-    cout << char(x % 10 + '0');
+    while (a) {
+        res.push_back(a % 10 + '0');
+        a /= 10;
+    }
+    if (sgn == -1) res.push_back('-');
+    reverse(res.begin(), res.end());
+    cout << res;
+    return os;
 }
