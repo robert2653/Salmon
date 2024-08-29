@@ -1,17 +1,18 @@
+// dom 存起點到達此點的必經的上個節點(起點 = 自己), 無法到達 = -1
 struct Dominator_tree {
     int n, id;
     vector<vector<int>> adj, radj, bucket;
     vector<int> sdom, dom, vis, rev, pa, rt, mn, res;
     Dominator_tree(int n_ = 0) { init(n_); }
-    void init(int _n) {
-        n = _n, id = 0;
-        adj.assign(n, vector<int>());
-        radj.assign(n, vector<int>());
-        bucket.assign(n, vector<int>());
-        sdom.resize(n); dom.assign(n, -1);
-        vis.assign(n, -1); rev.resize(n);
-        pa.resize(n); rt.resize(n);
-        mn.resize(n); res.resize(n);
+    void init(int n_) {
+        n = n_, id = 0;
+        adj.assign(n, {});
+        radj.assign(n, {});
+        bucket.assign(n, {});
+        sdom.resize(n), dom.assign(n, -1);
+        vis.assign(n, -1), rev.resize(n);
+        pa.resize(n), rt.resize(n);
+        mn.resize(n), res.resize(n);
     }
     void add_edge(int u, int v) { adj[u].push_back(v); }
     int query(int v, int x) {
@@ -30,7 +31,7 @@ struct Dominator_tree {
             radj[vis[u]].push_back(vis[v]);
         }
     }
-    void build(int s) {
+    vector<int> build(int s) {
         dfs(s);
         for (int i = id - 1; i >= 0; i--) {
             for (int u : radj[i])
@@ -44,9 +45,13 @@ struct Dominator_tree {
         }
         res.assign(n, -1);
         for (int i = 1; i < id; i++)
-            if (dom[i] != sdom[i]) dom[i] = dom[dom[i]];
-        for (int i = 1; i < id; i++) res[rev[i]] = rev[dom[i]];
+            if (dom[i] != sdom[i])
+                dom[i] = dom[dom[i]];
+        for (int i = 1; i < id; i++)
+            res[rev[i]] = rev[dom[i]];
         res[s] = s;
-        for (int i = 0; i < n; i++) dom[i] = res[i];
+        for (int i = 0; i < n; i++)
+            dom[i] = res[i];
+        return dom;
     }
 };
