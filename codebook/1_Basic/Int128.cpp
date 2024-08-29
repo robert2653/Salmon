@@ -13,16 +13,13 @@ istream &operator>>(istream &is, i128 &a) {
     return is;
 }
 ostream &operator<<(ostream &os, i128 a) {
-    string res; int sgn = 1;
-    if (a < 0) {
-        sgn = -1, a = -a;
-    }
+    string res;
+    if (a < 0) os << '-', a = -a;
     while (a) {
         res.push_back(a % 10 + '0');
         a /= 10;
     }
-    if (sgn == -1) res.push_back('-');
     reverse(res.begin(), res.end());
-    cout << res;
+    os << res;
     return os;
 }
