@@ -1,7 +1,7 @@
 using i128 = __int128_t; // 1.7E38
 istream &operator>>(istream &is, i128 &a) {
     i128 sgn = 1; a = 0;
-    string s; cin >> s;
+    string s; is >> s;
     for (auto c : s) {
         if (c == '-') {
             sgn = -1;
