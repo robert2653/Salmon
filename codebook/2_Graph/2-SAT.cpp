@@ -1,4 +1,3 @@
-// CSES Giant Pizza
 struct TwoSat {
     int n; vector<vector<int>> e;
     vector<bool> ans;
@@ -45,18 +44,3 @@ struct TwoSat {
     }
     vector<bool> answer() { return ans; }
 };
-int main() {
-    int m, n; cin >> m >> n;
-    TwoSat ts(n);
-    for (int i = 0; i < m; ++i) {
-        int u, v; char x, y;
-        cin >> x >> u >> y >> v;
-        ts.addClause(u - 1, x == '+', v - 1, y == '+');
-    }
-    if (ts.satisfiable()) {
-        for (int i = 0; i < n; ++i) {
-            cout << (ts.answer()[i] ? '+' : '-') << " ";
-        }
-    }
-    else cout << "IMPOSSIBLE\n";
-}
