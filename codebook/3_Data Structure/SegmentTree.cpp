@@ -32,8 +32,11 @@ struct Seg {    // 左閉右開寫法
             info[p] = v; return;
         }
         int m = (l + r) / 2;
-        if (x < m) modify(2 * p, l, m, x, v);
-        else modify(2 * p + 1, m, r, x, v);
+        if (x < m) {
+            modify(2 * p, l, m, x, v);
+        } else {
+            modify(2 * p + 1, m, r, x, v);
+        }
         pull(p);
     }
     void modify(int p, const Info &i) {
@@ -69,7 +72,7 @@ struct Seg {    // 左閉右開寫法
 };
 
 struct Info {
-    int n = 0;
+    int n = 1;
     int sum = 0;
 };
 Info operator+(const Info &a, const Info &b) {

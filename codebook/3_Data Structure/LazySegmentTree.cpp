@@ -31,7 +31,9 @@ struct LazySeg {    // 左閉右開寫法
         };
         build(1, 0, n);
     }
-    void pull(int p) { info[p] = info[p * 2] + info[p * 2 + 1]; }
+    void pull(int p) {
+        info[p] = info[p * 2] + info[p * 2 + 1];
+    }
     void apply(int p, int l, int r, const Tag &v) {
         info[p].apply(l, r, v);
         tag[p].apply(v);
@@ -68,7 +70,9 @@ struct LazySeg {    // 左閉右開寫法
         push(p, l, r);
 	    return query(p * 2, l, m, ql, qr) + query(p * 2 + 1, m, r, ql, qr);
     }
-    Info query(int ql, int qr) { return query(1, 0, n, ql, qr); }
+    Info query(int ql, int qr) {
+        return query(1, 0, n, ql, qr);
+    }
     void range_apply(int p, int l, int r, int ql, int qr, const Tag &v) {
         if (qr <= l || ql >= r) return;
         if (ql <= l && r <= qr) {
@@ -128,7 +132,7 @@ struct Info {
         }
         sum += (r - l) * v.add;
     }
-    // Info& operator=(const Info &rhs) {
+    // Info &operator=(const Info &rhs) {
     //     // 部分 assignment 使用
     //     return *this;
     // }
