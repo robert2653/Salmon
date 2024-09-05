@@ -136,6 +136,52 @@ bool pointInPolygon(const Point<T> &a, const vector<Point<T>> &p) {
     }
     return t == 1;
 }
+// 0 : not inside
+// 1 : on boundary
+// 2 : strictly inside
+template<class T>
+int pointInConvexPolygon(const Point<T> &a, const vector<Point<T>> &p) {
+    int n = p.size();
+    if (n == 0) {
+        return 0;
+    } else if (n == 1) {
+        return a == p[0];
+    }
+    if (pointOnSegment(a, Line(p[0], p[1])) || pointOnSegment(a, Line(p[0], p[n - 1]))) {
+        return 1;
+    } else if (pointOnLineLeft(a, Line(p[1], p[0])) || pointOnLineLeft(a, Line(p[0], p[n - 1]))) {
+        return 0;
+    }
+    int lo = 1, hi = n - 2;
+    while (lo < hi) {
+        int x = (lo + hi + 1) / 2;
+        if (pointOnLineLeft(a, Line(p[0], p[x]))) {
+            lo = x;
+        } else {
+            hi = x - 1;
+        }
+    }
+    if (pointOnLineLeft(a, Line(p[lo], p[lo + 1]))) {
+        return 2;
+    } else {
+        return pointOnSegment(a, Line(p[lo], p[lo + 1]));
+    }
+}
+template<class T>
+bool lineIntersectsPolygon(const Line<T> &l, const vector<Point<T>> &p) {
+    int n = p.size();
+    Point<T> a = l.a, b = l.b;
+    for (int i = 0; i < n; i++) {
+        Line<T> seg(p[i], p[(i + 1) % n]);
+        if (cross(b - a, seg.a - a) == 0 || cross(b - a, seg.b - a) == 0) {
+            return true;
+        }
+        if (cross(b - a, seg.a - a) > 0 ^ cross(b - a, seg.b - a) > 0) {
+            return true;
+        }
+    }
+    return false;
+}
 // 0 : not intersect
 // 1 : strictly intersect
 // 2 : overlap
@@ -249,6 +295,24 @@ bool segmentInPolygon(const Line<T> &l, const vector<Point<T>> &p) {
         }
     }
     return true;
+}
+template<class T>
+vector<Point<T>> convexHull(vector<Point<T>> a) {
+    sort(a.begin(), a.end(), [](const Point<T> &l, const Point<T> &r) {
+        return l.x == r.x ? l.y < r.y : l.x < r.x;
+    });
+    a.resize(unique(a.begin(), a.end()) - a.begin());
+    if (a.size() <= 1) return a;
+    vector<Point<T>> h(a.size() + 1);
+    int s = 0, t = 0;
+    for (int i = 0; i < 2; i++, s = --t) {
+        for (Point<T> p : a) {
+            while (t >= s + 2 && cross(h[t - 1] - h[t - 2], p - h[t - 2]) <= 0) t--;
+            h[t++] = p;
+        }
+        reverse(a.begin(), a.end());
+    }
+    return {h.begin(), h.begin() + t};
 }
 template<class T>
 vector<Point<T>> hp(vector<Line<T>> lines) {
