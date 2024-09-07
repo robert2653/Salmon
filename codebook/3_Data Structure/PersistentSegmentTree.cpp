@@ -5,7 +5,8 @@ struct PST {
         int lc = 0, rc = 0;
     };
     vector<Node> nd;
-    int n = 0; vector<int> rt;
+    int n = 0;
+    vector<int> rt;
     PST() : n(0) {}
     PST(int n_, Info v_ = Info()) { init(n_, v_); }
     template<class T>

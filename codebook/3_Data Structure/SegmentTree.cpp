@@ -1,8 +1,11 @@
 template<class Info>
 struct Seg {    // 左閉右開寫法
-    int n; vector<Info> info;
+    int n;
+    vector<Info> info;
     Seg() : n(0) {}
-    Seg(int n_, Info v_ = Info()) { init(n_, v_); }
+    Seg(int n_, Info v_ = Info()) {
+        init(n_, v_);
+    }
     template<class T>
     Seg(vector<T> init_) { init(init_); }
     void init(int n_, Info v_ = Info()) {
@@ -29,7 +32,8 @@ struct Seg {    // 左閉右開寫法
     }
     void modify(int p, int l, int r, int x, const Info &v) {
         if (r - l == 1) {
-            info[p] = v; return;
+            info[p] = v;
+            return;
         }
         int m = (l + r) / 2;
         if (x < m) {
@@ -53,16 +57,14 @@ struct Seg {    // 左閉右開寫法
     }
     template<class F>   // 尋找區間內，第一個符合條件的
     int findFirst(int p, int l, int r, int x, int y, F &&pred) {
-        if (l >= y || r <= x)
-            return -1;
-        if (l >= x && r <= y && !pred(info[p]))
-            return -1;
-        if (r - l == 1)
-            return l;
+        if (l >= y || r <= x) return -1;
+        if (l >= x && r <= y && !pred(info[p])) return -1;
+        if (r - l == 1) return l;
         int m = (l + r) / 2;
         int res = findFirst(2 * p, l, m, x, y, pred);
-        if (res == -1)
+        if (res == -1) {
             res = findFirst(2 * p + 1, m, r, x, y, pred);
+        }
         return res;
     }
     template<class F>   // 若要找 last，先右子樹遞迴即可

@@ -8,7 +8,8 @@ struct Line {
     }
 };
 struct CHT { // 用在查詢單調斜率也單調
-    int n, lptr, rptr; vector<Line> hull;
+    int n, lptr, rptr;
+    vector<Line> hull;
     CHT(int n_ = 0, Line init_ = Line()) {
         init(n_, init_);
     }

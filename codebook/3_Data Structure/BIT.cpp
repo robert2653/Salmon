@@ -1,7 +1,9 @@
 template<typename T>
 struct Fenwick { // 全部以 0 based 使用
     int n; vector<T> a;
-    Fenwick(int n_ = 0) { init(n_); }
+    Fenwick(int n_ = 0) {
+        init(n_);
+    }
     void init(int n_) {
         n = n_;
         a.assign(n, T{});

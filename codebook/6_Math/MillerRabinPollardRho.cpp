@@ -1,9 +1,3 @@
-constexpr ll mul(ll a, ll b, ll p) {
-    ll res = a * b - ll(1.L * a * b / p) * p;
-    res %= p;
-    if (res < 0) res += p;
-    return res;
-}
 template<class T>
 constexpr T power(T a, ll b, ll p) {
     T res {1};
@@ -12,6 +6,12 @@ constexpr T power(T a, ll b, ll p) {
             res = mul(res, a, p);
         }
     }
+    return res;
+}
+constexpr ll mul(ll a, ll b, ll p) {
+    ll res = a * b - ll(1.L * a * b / p) * p;
+    res %= p;
+    if (res < 0) res += p;
     return res;
 }
 vector<ll> chk {2, 325, 9375, 28178, 450775, 9780504, 1795265022};

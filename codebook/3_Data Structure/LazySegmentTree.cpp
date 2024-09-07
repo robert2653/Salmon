@@ -90,15 +90,9 @@ struct LazySeg {    // 左閉右開寫法
     }
     template<class F>   // 尋找區間內，第一個符合條件的
     int findFirst(int p, int l, int r, int x, int y, F &&pred) {
-        if (l >= y || r <= x) {
-            return -1;
-        }
-        if (l >= x && r <= y && !pred(info[p])) {
-            return -1;
-        }
-        if (r - l == 1) {
-            return l;
-        }
+        if (l >= y || r <= x) return -1;
+        if (l >= x && r <= y && !pred(info[p])) return -1;
+        if (r - l == 1) return l;
         int m = (l + r) / 2;
         push(p);
         int res = findFirst(2 * p, l, m, x, y, pred);

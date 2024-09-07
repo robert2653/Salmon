@@ -2,7 +2,7 @@ struct D {
     double x;
     D() : x{0} {}
     D(double x) : x{x} {}
-    static double eps = 1E-12;
+    constexpr static double eps = 1E-12;
     explicit operator double() const { return x; }
     D operator-() const {
         return D(-x);
