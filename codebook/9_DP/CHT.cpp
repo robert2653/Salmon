@@ -29,13 +29,15 @@ struct CHT { // 用在查詢單調斜率也單調
         return (l3.b - l2.b) * (l1.m - l3.m) <= (l3.b - l1.b) * (l2.m - l3.m);
     }
     void insert(Line L) {
-        while (rptr - lptr > 0 && pop_back(hull[rptr - 1], hull[rptr], L))
+        while (rptr - lptr > 0 && pop_back(hull[rptr - 1], hull[rptr], L)) {
             rptr--;
+        }
         hull[++rptr] = L;
     }
     ll query(ll x) {
-        while (rptr - lptr > 0 && pop_front(hull[lptr], hull[lptr + 1], x))
+        while (rptr - lptr > 0 && pop_front(hull[lptr], hull[lptr + 1], x)) {
             lptr++;
+        }
         return hull[lptr].eval(x);
     }
 };

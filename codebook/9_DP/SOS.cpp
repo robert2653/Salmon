@@ -7,19 +7,23 @@
 void solve() {
     int n; cin >> n; Z ans = 0;
     vector<int> a(n);
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++) {
         cin >> a[i];
+    }
     int m = __lg(*max_element(a.begin(), a.end())) + 1;
     // 定義 dp[mask] 為 mask 被包含於 a[i] 的 i 個數
     vector<Z> dp(1 << m);
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++) {
         dp[a[i]] += 1;
-    for (int i = 0; i < m; i++)
-        for (int mask = 0; mask < 1 << m; mask++)
+    }
+    for (int i = 0; i < m; i++) {
+        for (int mask = 0; mask < 1 << m; mask++) {
             if (mask >> i & 1) {
                 int pre = mask ^ (1 << i);
                 dp[pre] += dp[mask];
             }
+        }
+    }
     for (int mask = 0; mask < 1 << m; mask++) {
         int sgn = __builtin_popcount(mask) & 1 ? -1 : 1;
         ans += sgn * (power(Z(2), dp[mask].val()) - 1);

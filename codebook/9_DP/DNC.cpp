@@ -2,8 +2,8 @@
 // w(a,c) + w(b,d) ≤(≥) w(a,d) + w(b,c)
 // dp[k][j] = min(dp[k - 1][i] + cost[i][j])
 // cost: (i, j]
-constexpr int N = 3e3 + 5;
-constexpr ll inf = 4e18;
+constexpr int N = 3E3 + 5;
+constexpr ll inf = 4E18;
 ll dp[N][N]; // 1-based
 ll get_cost(int l, int r) {}
 void DNC(int k, int l, int r, int optl, int optr) {

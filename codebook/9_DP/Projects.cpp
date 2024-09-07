@@ -13,13 +13,18 @@ struct E {
     vector<array<int, 2>> rec(n + 1); // 有沒選，上個是誰
     sort(a.begin(), a.end());
     for (int i = 1; i <= n; i++) {
-        auto it = --lower_bound(all(a), E({0, a[i].from}),
-        [](E x, E y){ return x.to < y.to; });
-        int id = it - a.begin(); dp[i] = dp[i - 1];
+        auto it = --lower_bound(all(a), E({0, a[i].from}), [](E x, E y) {
+            return x.to < y.to;
+        });
+
+        int id = it - a.begin();
+        dp[i] = dp[i - 1];
+
         ll nw = dp[id][0] + a[i].w;
         ll nt = dp[id][1] + a[i].to - a[i].from;
         if (dp[i][0] < nw || dp[i][0] == nw && dp[i][1] > nt) {
-            dp[i] = {nw, nt}; rec[i] = {1, id};
+            dp[i] = {nw, nt};
+            rec[i] = {1, id};
         }
     }
     vector<int> ans;
@@ -27,6 +32,8 @@ struct E {
         if (rec[i][0]) {
             ans.push_back(a[i].id);
             i = rec[i][1];
-        } else i--;
+        } else {
+            i--;
+        }
     }
 }

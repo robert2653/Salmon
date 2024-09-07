@@ -20,8 +20,9 @@ struct HLD {
         dfs1(rt); dfs2(rt);
     }
     void dfs1(int u) {
-        if (parent[u] != -1)
+        if (parent[u] != -1) {
             adj[u].erase(find(adj[u].begin(), adj[u].end(), parent[u]));
+        }
         siz[u] = 1;
         for (auto &v : adj[u]) {
             parent[v] = u, dep[v] = dep[u] + 1;
@@ -57,8 +58,9 @@ struct HLD {
     int jump(int u, int k) {
         if (dep[u] < k) return -1;
         int d = dep[u] - k;
-        while (dep[top[u]] > d)
+        while (dep[top[u]] > d) {
             u = parent[top[u]];
+        }
         return seq[in[u] - dep[u] + d];
     }
     bool isAncester(int u, int v) {

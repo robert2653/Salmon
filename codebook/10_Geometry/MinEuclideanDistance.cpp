@@ -1,6 +1,6 @@
 void solve() {
     int n; cin >> n;
-    constexpr ll inf = 8e18;
+    constexpr ll inf = 8E18;
     vector<Point<ll>> a(n);
     for (int i = 0; i < n; i++) {
         ll x, y;
@@ -14,8 +14,7 @@ void solve() {
     };
     struct sortXY {
         bool operator()(const Point<ll> &a, const Point<ll> &b) const {
-            if (a.x == b.x) return a.y < b.y;
-            else return a.x < b.x;
+            return a.x == b.x ? a.y < b.y : a.x < b.x;
         }
     };
     sort(a.begin(), a.end(), sortXY());
