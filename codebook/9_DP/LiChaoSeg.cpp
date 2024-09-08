@@ -1,6 +1,6 @@
 // 應用: dp(i) = h(i) + min/max(A(j)X(i) + B(j)), for j ≤ r(i)
 //        y    =  c   +          m  x   +   b
-constexpr ll inf = 4e18;
+constexpr ll inf = 4E18;
 struct Line {
     ll m, b;
     Line(ll m = 0, ll b = inf) : m(m), b(b) {}
@@ -29,8 +29,13 @@ struct LiChaoSeg { // 取 max 再變換就好
     ll query(int x, int node, int l, int r) {
         if (r - l == 1) return info[node].eval(x);
         int m = (l + r) / 2;
-        if (x < m) return min(info[node].eval(x), query(x, 2 * node, l, m));
-        else return min(info[node].eval(x), query(x, 2 * node + 1, m, r));
+        if (x < m) {
+            return min(info[node].eval(x), query(x, 2 * node, l, m));
+        } else {
+            return min(info[node].eval(x), query(x, 2 * node + 1, m, r));
+        }
     }
-    ll query(int x) { return query(x, 1, 0, n); }
+    ll query(int x) {
+        return query(x, 1, 0, n);
+    }
 };
