@@ -1,4 +1,4 @@
-template<typename T>
+template<class T>
 struct Fenwick { // 全部以 0 based 使用
     int n; vector<T> a;
     Fenwick(int n_ = 0) {

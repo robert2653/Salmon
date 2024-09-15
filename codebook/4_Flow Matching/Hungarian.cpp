@@ -31,7 +31,8 @@ struct Hungarian { // 0-based, O(VE)
         return false;
     }
     vector<pair<int, int>> work() {
-        match.clear(); used.assign(n + m, -1);
+        match.clear();
+        used.assign(n + m, -1);
         vis.assign(n + m, 0);
         for (int i = 0; i < n; i++) {
             fill(vis.begin(), vis.end(), 0); dfs(i);

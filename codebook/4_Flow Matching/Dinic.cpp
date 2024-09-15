@@ -69,6 +69,16 @@ struct Dinic {
         return flow;
     }
     void reset() {
-        for (int i = 0; i < m; i++) edges[i].flow = 0;
+        for (int i = 0; i < m; i++) {
+            edges[i].flow = 0;
+        }
+    }
+    void reuse(int n_) { // 走殘留網路, res += flow
+        while (n < n_) {
+            adj.emplace_back();
+            dis.emplace_back();
+            ptr.emplace_back();
+            n += 1;
+        }
     }
 };

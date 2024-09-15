@@ -2,9 +2,9 @@ int main() {
     int n; cin >> n;
     vector<int> v(n);
     for (int i = 0; i < n; i++) cin >> v[i];
-    int dp[n]; vector<int> stk;
-    stk.push_back(v[0]);
-    dp[0] = 1;  int L = 1;
+    int dp[n], L = 1;
+    dp[0] = 1;
+    vector<int> stk {v[0]};
     for (int i = 1; i < n; i++) {
         if (v[i] > stk.back()) {
             stk.push_back(v[i]);

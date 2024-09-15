@@ -47,13 +47,13 @@ struct D {
     friend bool operator==(D lhs, D rhs) {
         return fabs(lhs.x - rhs.x) < eps;
     }
+    friend bool operator!=(D lhs, D rhs) {
+        return fabs(lhs.x - rhs.x) > eps;
+    }
     friend bool operator<=(D lhs, D rhs) {
         return lhs < rhs || lhs == rhs;
     }
     friend bool operator>=(D lhs, D rhs) {
         return lhs > rhs || lhs == rhs;
-    }
-    friend bool operator!=(D lhs, D rhs) {
-        return !(lhs == rhs);
     }
 };

@@ -114,6 +114,8 @@ struct MCMF {
         return {flow, cost};
     }
     void reset() {
-        for (int i = 0; i < m; i++) edges[i].flow = 0;
+        for (int i = 0; i < m; i++) {
+            edges[i].flow = 0;
+        }
     }
 };
