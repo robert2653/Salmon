@@ -6,8 +6,8 @@ from math import *
 setcontext(Context(prec=10, rounding=ROUND_FLOOR))
 # read and print
 x = int(input())
-a, b, c = map(Fraction, input().split())
-arr = map(Decimal, input().split())
+a, b, c = list(map(Fraction, input().split()))
+arr = list(map(Decimal, input().split()))
 print(x)
 print(a, b, c)
 print(*arr)
