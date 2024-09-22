@@ -15,11 +15,9 @@ int main() {
         }
     }
     vector<int> ans; cout << L << "\n";
-    for (int i = n - 1; i >= 0; i--) {
-        if (dp[i] == L) {
+    for (int i = n - 1; i >= 0; i--)
+        if (dp[i] == L)
             ans.push_back(v[i]), L--;
-        }
-    }
     reverse(ans.begin(), ans.end());
     for (auto i : ans) cout << i << " ";
 }

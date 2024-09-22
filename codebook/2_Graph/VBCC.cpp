@@ -51,9 +51,7 @@ struct VBCC {
     }
     vector<bool> work() {
         for (int i = 0; i < n; i++) {
-            if (dfn[i] == -1) {
-                dfs(i, -1);
-            }
+            if (dfn[i] == -1) dfs(i, -1);
         }
         return ap;
     }

@@ -12,7 +12,8 @@ int main() {
             }
         }
     }
-    int length = dp[m][n];  cout << length << "\n";
+    int length = dp[m][n];
+    cout << length << "\n";
     string s(length, 'c'); // backtracking
     while (m >= 1 && n >= 1) {
         if (s1[m - 1] == s2[n - 1]) {
@@ -20,11 +21,8 @@ int main() {
             m--, n--, length--;
         }
         else {
-            if (dp[m - 1][n] > dp[m][n - 1]) {
-                m--;
-            } else {
-                n--;
-            }
+            if (dp[m - 1][n] > dp[m][n - 1]) m--;
+            else n--;
         }
     }
     cout << s << "\n";

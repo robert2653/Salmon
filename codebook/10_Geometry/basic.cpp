@@ -121,11 +121,9 @@ bool pointOnSegment(const Point<T> &p, const Line<T> &l) {
 template<class T>
 bool pointInPolygon(const Point<T> &a, const vector<Point<T>> &p) {
     int n = p.size(), t = 0;
-    for (int i = 0; i < n; i++) {
-        if (pointOnSegment(a, Line(p[i], p[(i + 1) % n]))) {
+    for (int i = 0; i < n; i++)
+        if (pointOnSegment(a, Line(p[i], p[(i + 1) % n])))
             return true;
-        }
-    }
     for (int i = 0; i < n; i++) {
         auto u = p[i];
         auto v = p[(i + 1) % n];
@@ -173,12 +171,10 @@ bool lineIntersectsPolygon(const Line<T> &l, const vector<Point<T>> &p) {
     Point<T> a = l.a, b = l.b;
     for (int i = 0; i < n; i++) {
         Line<T> seg(p[i], p[(i + 1) % n]);
-        if (cross(b - a, seg.a - a) == 0 || cross(b - a, seg.b - a) == 0) {
+        if (cross(b - a, seg.a - a) == 0 || cross(b - a, seg.b - a) == 0)
             return true;
-        }
-        if (cross(b - a, seg.a - a) > 0 ^ cross(b - a, seg.b - a) > 0) {
+        if (cross(b - a, seg.a - a) > 0 ^ cross(b - a, seg.b - a) > 0)
             return true;
-        }
     }
     return false;
 }

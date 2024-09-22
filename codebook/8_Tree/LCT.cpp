@@ -113,9 +113,8 @@ struct LinkCutTree { // 1-based
     }
     void link(int x, int y) {
         makeRoot(x);
-        if (findRoot(y) != x) {
+        if (findRoot(y) != x)
             nd[x].p = y;
-        }
     }
     void cut(int x, int y) {
         makeRoot(x);

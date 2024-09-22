@@ -27,9 +27,8 @@ struct CenDecom {
     int get_cen(int x, int sz, int p = -1) {
         for (int y : adj[x]) {
             if (y == p || vis[y]) continue;
-            if (siz[y] * 2 > sz) {
+            if (siz[y] * 2 > sz)
                 return get_cen(y, sz, x);
-            }
         }
         return x;
     }

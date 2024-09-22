@@ -39,7 +39,8 @@ struct MCMF {
                 if (flow < cap && dis[v] > ndis) {
                     dis[v] = ndis; rt[v] = id;
                     if (!inq[v]) {
-                        q.push(v); inq[v] = true;
+                        q.push(v);
+                        inq[v] = true;
                     }
                 }
             }
@@ -60,7 +61,6 @@ struct MCMF {
                     dis[v] = ndis; rt[v] = id;
                     pq.emplace(ndis, v);
                 }
-
             }
         }
         return dis[t] != INF_COST;
@@ -74,9 +74,8 @@ struct MCMF {
                 dis[i] += pot[i] - pot[s];
             }
             Tf f = INF_FLOW;
-            for (int i = t; i != s; i = edges[rt[i] ^ 1].to) {
+            for (int i = t; i != s; i = edges[rt[i] ^ 1].to)
                 f = min(f, edges[rt[i]].cap - edges[rt[i]].flow);
-            }
             f = min<Tf>(f, need);
             for (int i = t; i != s; i = edges[rt[i] ^ 1].to) {
                 edges[rt[i]].flow += f;
@@ -98,9 +97,8 @@ struct MCMF {
                 dis[i] += pot[i] - pot[s];
             }
             Tf f = INF_FLOW;
-            for (int i = t; i != s; i = edges[rt[i] ^ 1].to) {
+            for (int i = t; i != s; i = edges[rt[i] ^ 1].to)
                 f = min(f, edges[rt[i]].cap - edges[rt[i]].flow);
-            }
             f = min<Tf>(f, budget / dis[t]);
             for (int i = t; i != s; i = edges[rt[i] ^ 1].to) {
                 edges[rt[i]].flow += f;
@@ -114,8 +112,7 @@ struct MCMF {
         return {flow, cost};
     }
     void reset() {
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++)
             edges[i].flow = 0;
-        }
     }
 };

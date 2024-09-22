@@ -4,7 +4,9 @@ constexpr ll inf = 4E18;
 struct Line {
     ll m, b;
     Line(ll m = 0, ll b = inf) : m(m), b(b) {}
-    ll eval(ll x) const { return m * x + b; }
+    ll eval(ll x) const {
+        return m * x + b;
+    }
 };
 struct LiChaoSeg { // 取 max 再變換就好
     int n;

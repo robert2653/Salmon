@@ -13,19 +13,16 @@ int main() {
         cnt[l]++;
         cnt[r + 1]--;
     }
-    for (int i = 2; i <= n; i++) {
+    for (int i = 2; i <= n; i++)
         cnt[i] += cnt[i - 1];
-    }
-    for (int i = n; i >= 2; i--) {
+    for (int i = n; i >= 2; i--)
         l_side[i - 1] = min(l_side[i - 1], l_side[i]);
-    }
     vector<int> dp(n + 1);
     dp[0] = 0;
     for (int i = 1; i <= n; i++) {
         dp[i] = cnt[i];
-        if (l_side[i] != inf) {
+        if (l_side[i] != inf)
             dp[i] += dp[l_side[i] - 1];
-        }
         dp[i] = max(dp[i], dp[i - 1]);
     }
     cout << dp[n] << "\n";
@@ -58,5 +55,5 @@ int main(){
         }
         dp[i][1] = min(dp[i - 1][1], v[i].first - v[i].second);
     }
-    cout << ans << endl;
+    cout << ans << "\n";
 }

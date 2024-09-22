@@ -1,25 +1,21 @@
 int main() { // 排程有權重問題，輸出價值最多且時間最少
-struct E {
-    int from, to, w, id;
-    bool operator<(const E &rhs) {
-        return to == rhs.to ? w > rhs.w : to < rhs.to;
-}};
+    struct E {
+        int from, to, w, id;
+    };
     int n; cin >> n; vector<E> a(n + 1);
     for (int i = 1; i <= n; i++) {
-        int u, v, w; cin >> u >> v >> w;
+        int u, v, w;
+        cin >> u >> v >> w;
         a[i] = {u, v, w, i};
     }
     vector<array<ll, 2>> dp(n + 1); // w, time
     vector<array<int, 2>> rec(n + 1); // 有沒選，上個是誰
     sort(a.begin(), a.end());
     for (int i = 1; i <= n; i++) {
-        auto it = --lower_bound(all(a), E({0, a[i].from}), [](E x, E y) {
+        int id = --lower_bound(all(a), E({0, a[i].from}), [](E x, E y) {
             return x.to < y.to;
-        });
-
-        int id = it - a.begin();
+        }) - a.begin();
         dp[i] = dp[i - 1];
-
         ll nw = dp[id][0] + a[i].w;
         ll nt = dp[id][1] + a[i].to - a[i].from;
         if (dp[i][0] < nw || dp[i][0] == nw && dp[i][1] > nt) {

@@ -17,13 +17,10 @@ struct Matrix {
         assert(mat[0].size() == rhs.mat.size());
         int n = mat.size(), k = mat[0].size(), m = rhs.mat[0].size();
         Matrix res(n, m);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                for (int l = 0; l < k; l++) {
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                for (int l = 0; l < k; l++)
                     res.mat[i][j] += mat[i][l] * rhs.mat[l][j];
-                }
-            }
-        }
         mat = res.mat;
         return *this;
     }
@@ -34,9 +31,8 @@ struct Matrix {
 template<class T>
 constexpr Matrix<T> unit(int n) {
     Matrix<T> res(n, n);
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
         res.mat[i][i] = 1;
-    }
     return res;
 }
 template<class T>

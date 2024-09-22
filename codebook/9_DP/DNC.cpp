@@ -13,9 +13,8 @@ void DNC(int k, int l, int r, int optl, int optr) {
     for (int i = max(k, optl); i <= min(m, optr); i++) {
         // 注意 i 的範圍、 get_cost 與 dp 的邊界
         ll cur = dp[k - 1][i] + get_cost(i, m);
-        if (cur < dp[k][m]) {
+        if (cur < dp[k][m])
             dp[k][m] = cur, opt = i;
-        }
     }
     DNC(k, l, m - 1, optl, opt);
     DNC(k, m + 1, r, opt, optr);
@@ -25,8 +24,7 @@ int main() {
     for (int i = 1; i <= n; i++) {
         // init dp[1][i]
     }
-    for (int i = 2; i <= k; i++) {
+    for (int i = 2; i <= k; i++)
         DNC(i, 1, n, 1, n);
-    }
     cout << dp[k][n] << "\n";
 }

@@ -4,9 +4,8 @@ int main() {
     vector<Point<ll>> polygon(n);
     for (int i = 0; i < n; i++) cin >> polygon[i];
     ll area = 0;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
         area += cross(polygon[i], polygon[(i + 1) % n]);
-    }
     area = abs(area);
     auto countBoundaryPoints = [](const vector<Point<ll>>& polygon) -> ll {
         ll res = 0;

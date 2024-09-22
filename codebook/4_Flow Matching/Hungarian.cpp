@@ -35,13 +35,12 @@ struct Hungarian { // 0-based, O(VE)
         used.assign(n + m, -1);
         vis.assign(n + m, 0);
         for (int i = 0; i < n; i++) {
-            fill(vis.begin(), vis.end(), 0); dfs(i);
+            fill(vis.begin(), vis.end(), 0);
+            dfs(i);
         }
-        for (int i = n; i < n + m; i++) {
-            if (used[i] != -1) {
+        for (int i = n; i < n + m; i++)
+            if (used[i] != -1)
                 match.emplace_back(used[i], i - n);
-            }
-        }
         return match;
     }
 };

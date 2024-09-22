@@ -7,15 +7,12 @@
 void solve() {
     int n; cin >> n; Z ans = 0;
     vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
+    for (int i = 0; i < n; i++) cin >> a[i];
     int m = __lg(*max_element(a.begin(), a.end())) + 1;
     // 定義 dp[mask] 為 mask 被包含於 a[i] 的 i 個數
     vector<Z> dp(1 << m);
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
         dp[a[i]] += 1;
-    }
     for (int i = 0; i < m; i++) {
         for (int mask = 0; mask < 1 << m; mask++) {
             if (mask >> i & 1) {
@@ -43,13 +40,11 @@ void solve() {
         mp[a[i]]++;
     }
     int m = __lg(*max_element(a.begin(), a.end())) + 1;
-
     vector<array<ll, 2>> dp(1 << m);
     for (int i = 0; i < n; i++) {
         dp[a[i]][0] += 1;
         dp[a[i]][1] += 1;
     }
-    
     for (int i = 0; i < m; i++) {
         for (int mask = 0; mask < 1 << m; mask++) {
             if (mask >> i & 1) {

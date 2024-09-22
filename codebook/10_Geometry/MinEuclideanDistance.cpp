@@ -25,11 +25,9 @@ void solve() {
         ll ans = min(self(self, l, m), self(self, m + 1, r));
         ll midval = a[m].x;
         ll p = 0;
-        for (int i = l; i <= r; i++) {
-            if ((midval - a[i].x) * (midval - a[i].x) <= ans) {
+        for (int i = l; i <= r; i++)
+            if ((midval - a[i].x) * (midval - a[i].x) <= ans)
                 t[p++] = a[i];
-            }
-        }
         sort(t.begin(), t.begin() + p, sortY());
         for (int i = 0; i < p; i++){
             for (int j = i + 1; j < p; j++) {
