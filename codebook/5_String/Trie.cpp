@@ -9,7 +9,7 @@ int newNode() {
     cnt[x] = 0, fill_n(trie[x], 26, 0);
     return x;
 }
-void add(string &s) {
+void add(const string &s) {
     int p = 0;
     for (auto c : s) {
         int &q = trie[p][c - 'a'];
@@ -18,7 +18,7 @@ void add(string &s) {
     }
     cnt[p] += 1;
 }
-int find(string &s) {
+int find(const string &s) {
     int p = 0;
     for (auto c : s) {
         int q = trie[p][c - 'a'];

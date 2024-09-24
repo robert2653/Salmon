@@ -3,6 +3,8 @@ struct KMP {
     vector<int> fail;
     // fail 存匹配失敗時，移去哪
     // 也就是 sub(0, i) 的最長共同前後綴長度
+    // ex : a   b  c a b c
+    //      -1 -1 -1 0 1 2
     KMP() {}
     KMP(const string &sub_) {
         build(sub_);
@@ -21,7 +23,6 @@ struct KMP {
     vector<int> match(const string &s) {
         vector<int> match;
         for (int i = 0, now = -1; i < s.size(); i++) {
-            // now 是成功匹配的長度 -1
             while (s[i] != sub[now + 1] && now != -1)
                 now = fail[now];
             if (s[i] == sub[now + 1]) now++;
