@@ -134,7 +134,7 @@ bool pointInPolygon(const Point<T> &a, const vector<Point<T>> &p) {
     }
     return t == 1;
 }
-// 0 : not inside
+// 0 : strictly outside
 // 1 : on boundary
 // 2 : strictly inside
 template<class T>
@@ -142,8 +142,8 @@ int pointInConvexPolygon(const Point<T> &a, const vector<Point<T>> &p) {
     int n = p.size();
     if (n == 0) {
         return 0;
-    } else if (n == 1) {
-        return a == p[0];
+    } else if (n <= 2) {
+        return pointOnSegment(a, Line(p[0], p.back()));
     }
     if (pointOnSegment(a, Line(p[0], p[1])) || pointOnSegment(a, Line(p[0], p[n - 1]))) {
         return 1;
