@@ -1,1 +1,1 @@
-## This is Salmon's codebook
+## Codebook of Salmon and CCU_RemovingDigit
