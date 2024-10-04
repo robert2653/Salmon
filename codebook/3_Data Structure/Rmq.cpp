@@ -13,9 +13,7 @@ struct RMQ {
         n = v.size();
         pre = suf = ini = v;
         stk.resize(n);
-        if (!n) {
-            return;
-        }
+        if (!n) return;
         const int M = (n - 1) / B + 1;
         const int lg = __lg(M);
         a.assign(lg + 1, vector<T>(M));

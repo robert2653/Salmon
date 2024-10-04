@@ -1,17 +1,14 @@
 struct VBCC {
     int n, cur, cnt;
-    vector<vector<int>> adj;
-    vector<vector<int>> bcc;
+    vector<vector<int>> adj, bcc;
     vector<int> stk, dfn, low;
     vector<bool> ap;
     VBCC(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_;
         adj.assign(n, {});
-        bcc.assign(n, {});
-        dfn.assign(n, -1);
-        low.resize(n);
-        ap.assign(n, false);
+        dfn.assign(n, -1), low.resize(n);
+        bcc.assign(n, {}), ap.assign(n, false);
         stk.clear();
         cur = cnt = 0;
     }
@@ -38,21 +35,18 @@ struct VBCC {
                     bcc[x].push_back(cnt);
                     cnt++;
                 }
-                if (low[y] >= dfn[x] && p != -1) {
+                if (low[y] >= dfn[x] && p != -1)
                     ap[x] = true;
-                }
             } else {
                 low[x] = min(low[x], dfn[y]);
             }
         }
-        if (p == -1 && child > 1) {
+        if (p == -1 && child > 1)
             ap[x] = true;
-        }
     }
     vector<bool> work() {
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
             if (dfn[i] == -1) dfs(i, -1);
-        }
         return ap;
     }
     struct Graph {
@@ -81,13 +75,10 @@ struct VBCC {
             g.siz[g.bel[u]]++;
         }
         g.n = cnt;
-        for (int i = 0; i < n; i++) {
-            for (auto j : adj[i]) {
-                if (g.bel[i] == g.bel[j] && i < j) {
+        for (int i = 0; i < n; i++)
+            for (auto j : adj[i])
+                if (g.bel[i] == g.bel[j] && i < j)
                     g.cnte[g.bel[i]]++;
-                }
-            }
-        }
         return g;
     }
 };

@@ -6,10 +6,8 @@ struct SCC {
     void init(int n_) {
         n = n_;
         adj.assign(n, {});
-        dfn.assign(n, -1);
-        low.resize(n);
-        bel.assign(n, -1);
-        stk.clear();
+        dfn.assign(n, -1), low.resize(n);
+        bel.assign(n, -1), stk.clear();
         cur = cnt = 0;
     }
     void addEdge(int u, int v) {
@@ -37,9 +35,8 @@ struct SCC {
         }
     }
     vector<int> work() {
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
             if (dfn[i] == -1) dfs(i);
-        }
         return bel;
     }
     struct Graph {
