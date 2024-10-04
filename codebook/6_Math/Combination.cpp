@@ -36,7 +36,6 @@ struct Comb {
     }
     Z lucas(ll n, ll m) { // Mod 要在 1E5 左右
         if (m == 0) return 1;
-        return binom(n % Z::getMod(), m % Z::getMod())
-        * lucas(n / Z::getMod(), m / Z::getMod());
+        return binom(n % Z::getMod(), m % Z::getMod()) * lucas(n / Z::getMod(), m / Z::getMod());
     }
 } comb; // 注意宣告, 若要換模數需重新宣告

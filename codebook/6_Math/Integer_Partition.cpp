@@ -1,5 +1,5 @@
 // CSES_Sum_of_Divisors
-const int mod = 1e9 + 7;
+const int mod = 1E9 + 7;
 const int inv_2 = 500000004;
 // n / 1 * 1 + n / 2 * 2 + n / 3 * 3 + ... + n / n * n
 int main() {

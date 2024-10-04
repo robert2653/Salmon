@@ -49,8 +49,7 @@ struct EBCC { // CF/contest/1986/pF
     struct Graph {
         int n;
         vector<pair<int, int>> edges;
-        vector<int> siz; // BCC 內節點數
-        vector<int> cnte; // BCC 內邊數
+        vector<int> siz, cnte;
     };
     Graph compress() {
         Graph g;

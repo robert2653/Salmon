@@ -1,4 +1,4 @@
-const int maxn = 2e5;
+const int maxn = 2E5;
 ll mobius_pref[maxn];
 void init() {
     mobius_pref[1] = 1;

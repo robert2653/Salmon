@@ -52,9 +52,7 @@ struct VBCC {
     struct Graph {
         int n;
         vector<pair<int, int>> edges;
-        vector<int> bel;
-        vector<int> siz; // BCC 內節點數
-        vector<int> cnte; // BCC 內邊數
+        vector<int> bel, siz, cnte;
     };
     Graph compress() {
         Graph g; // 壓完是一棵樹, 但不一定每個 bel 都有節點

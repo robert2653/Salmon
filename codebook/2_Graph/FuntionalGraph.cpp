@@ -45,7 +45,7 @@ struct FuntionalGraph {
             id[p[i - 1]] = id[p[i]] - 1;
     }
     int jump(int u, int k) {
-        for (int b = 0; k > 0; b++){
+        for (int b = 0; k > 0; b++) {
             if (k & 1) u = cht[u][b];
             k >>= 1;
         }

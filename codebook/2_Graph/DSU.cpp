@@ -1,8 +1,7 @@
 struct DSU {
     int n;
     vector<int> boss, siz;
-    DSU() {}
-    DSU(int n_) { init(n_); }
+    DSU(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_; boss.resize(n);
         iota(boss.begin(), boss.end(), 0);
@@ -32,8 +31,7 @@ struct DSU {
 struct DSU {
     int n;
     vector<int> boss, siz, stk;
-    DSU() {}
-    DSU(int n_) { init(n_); }
+    DSU(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_;
         boss.resize(n);

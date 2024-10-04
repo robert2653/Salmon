@@ -42,8 +42,7 @@ struct SCC {
     struct Graph {
         int n;
         vector<pair<int, int>> edges;
-        vector<int> siz;
-        vector<int> cnte;
+        vector<int> siz, cnte;
     };
     Graph compress() {
         Graph g;
