@@ -7,11 +7,9 @@ struct BigNum { // require Mint and NTT ~idft
         if (s.empty()) {
             *this = BigNum();
         } else if (s[0] == '-') {
-            sgn = -1;
-            x = s.substr(1);
+            sgn = -1, x = s.substr(1);
         } else {
-            sgn = 1;
-            x = s;
+            sgn = 1, x = s;
         }
         x = norm(x);
     }
@@ -55,22 +53,21 @@ struct BigNum { // require Mint and NTT ~idft
     }
     vector<Z> toVector() const {
         vector<Z> res;
-        for (int i = x.size() - 1; i >= 0; i--) {
+        for (int i = x.size() - 1; i >= 0; i--)
             res.push_back(x[i] - '0');
-        }
         return res;
     }
     string fromVector(const vector<Z> &v) {
         string res;
-        int carry = 0;
+        int c = 0;
         for (int i = 0; i < v.size(); ++i) {
-            carry += v[i].x;
-            res += (carry % 10) + '0';
-            carry /= 10;
+            c += v[i].x;
+            res += (c % 10) + '0';
+            c /= 10;
         }
-        while (carry) {
-            res += (carry % 10) + '0';
-            carry /= 10;
+        while (c) {
+            res += (c % 10) + '0';
+            c /= 10;
         }
         reverse(res.begin(), res.end());
         return norm(res);
@@ -106,29 +103,19 @@ struct BigNum { // require Mint and NTT ~idft
         return *this += -rhs;
     }
     vector<Z> ntt(vector<Z> a, vector<Z> b) {
-        if (a.size() < b.size()) {
-            swap(a, b);
-        }
+        if (a.size() < b.size()) swap(a, b);
         int n = 1, tot = a.size() + b.size() - 1;
-        while (n < tot) {
-            n *= 2;
-        }
+        while (n < tot) n *= 2;
         if (((P - 1) & (n - 1)) != 0 || b.size() < 128) {
             vector<Z> c(a.size() + b.size() - 1);
-            for (int i = 0; i < a.size(); i++) {
-                for (int j = 0; j < b.size(); j++) {
+            for (int i = 0; i < a.size(); i++)
+                for (int j = 0; j < b.size(); j++)
                     c[i + j] += a[i] * b[j];
-                }
-            }
             return c;
         }
-        a.resize(n);
-        b.resize(n);
-        dft(a);
-        dft(b);
-        for (int i = 0; i < n; ++i) {
-            a[i] *= b[i];
-        }
+        a.resize(n), b.resize(n);
+        dft(a), dft(b);
+        for (int i = 0; i < n; i++) a[i] *= b[i];
         idft(a);
         a.resize(tot);
         return a;
