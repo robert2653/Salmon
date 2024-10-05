@@ -1,13 +1,13 @@
 template<int V, ll P>
-MInt<P> CInv = MInt<P>(V).inv();
+Mint<P> CInv = Mint<P>(V).inv();
 
 vector<ll> rev;
 template<ll P>
-vector<MInt<P>> roots{0, 1};
+vector<Mint<P>> roots{0, 1};
 
 template<int P>
-MInt<P> findPrimitiveRoot() {
-    MInt<P> i = 2;
+Mint<P> findPrimitiveRoot() {
+    Mint<P> i = 2;
     int k = __builtin_ctz(P - 1);
     while (true) {
         if (power(i, (P - 1) / 2) != 1) break;
@@ -17,12 +17,12 @@ MInt<P> findPrimitiveRoot() {
 }
 
 template<ll P>
-MInt<P> primitiveRoot = findPrimitiveRoot<P>();
+Mint<P> primitiveRoot = findPrimitiveRoot<P>();
 template<>
-MInt<998244353> primitiveRoot<998244353> {31};
+Mint<998244353> primitiveRoot<998244353> {31};
  
 template<ll P>
-void dft(vector<MInt<P>> &a) {
+void dft(vector<Mint<P>> &a) {
     int n = a.size();
     if (int(rev.size()) != n) {
         int k = __builtin_ctz(n) - 1;
@@ -47,8 +47,8 @@ void dft(vector<MInt<P>> &a) {
     for (int k = 1; k < n; k *= 2) {
         for (int i = 0; i < n; i += 2 * k) {
             for (int j = 0; j < k; j++) {
-                MInt<P> u = a[i + j];
-                MInt<P> v = a[i + j + k] * roots<P>[k + j];
+                Mint<P> u = a[i + j];
+                Mint<P> v = a[i + j + k] * roots<P>[k + j];
                 a[i + j] = u + v;
                 a[i + j + k] = u - v;
             }
@@ -57,17 +57,17 @@ void dft(vector<MInt<P>> &a) {
 }
  
 template<ll P>
-void idft(vector<MInt<P>> &a) {
+void idft(vector<Mint<P>> &a) {
     int n = a.size();
     reverse(a.begin() + 1, a.end());
     dft(a);
-    MInt<P> inv = (1 - P) / n;
+    Mint<P> inv = (1 - P) / n;
     for (int i = 0; i < n; i++) a[i] *= inv;
 }
 
 template<ll P = 998244353>
-struct Poly : public vector<MInt<P>> {
-    using Value = MInt<P>;
+struct Poly : public vector<Mint<P>> {
+    using Value = Mint<P>;
     Poly() : vector<Value>() {}
     explicit Poly(int n) : vector<Value>(n) {}
     explicit Poly(const vector<Value> &a) : vector<Value>(a) {}
@@ -275,7 +275,7 @@ Poly<P> berlekampMassey(const Poly<P> &s) {
             auto d = oldC;
             d *= -1;
             d.insert(d.begin(), 1);
-            MInt<P> df1 = 0;
+            Mint<P> df1 = 0;
             for (int j = 1; j <= d.size(); j++)
                 df1 += d[j - 1] * s[f + 1 - j];
             assert(df1 != 0);
@@ -298,7 +298,7 @@ Poly<P> berlekampMassey(const Poly<P> &s) {
 }
 
 template<ll P = 998244353>
-MInt<P> linearRecurrence(Poly<P> p, Poly<P> q, ll n) {
+Mint<P> linearRecurrence(Poly<P> p, Poly<P> q, ll n) {
     int m = q.size() - 1;
     while (n > 0) {
         auto newq = q;
