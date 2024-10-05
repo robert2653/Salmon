@@ -1,4 +1,4 @@
-int main() {
+void LCS() {
     int m, n; cin >> m >> n;
     string s1, s2; cin >> s1 >> s2;
     int L = 0;

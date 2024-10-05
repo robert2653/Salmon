@@ -1,9 +1,9 @@
 // dom 存起點到達此點的必經的上個節點(起點 = 自己), 無法到達 = -1
-struct Dominator_tree {
+struct DominatorTree {
     int n, id;
     vector<vector<int>> adj, radj, bucket;
     vector<int> sdom, dom, vis, rev, pa, rt, mn, res;
-    Dominator_tree(int n_ = 0) { init(n_); }
+    DominatorTree(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_, id = 0;
         adj.assign(n, {});

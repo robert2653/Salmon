@@ -1,4 +1,4 @@
-const int maxn = 2e5+5;
+const int maxn = 2E5 + 5;
 int n, q;
 int nums[maxn], prefix[maxn], ans[maxn], BIT[maxn], contrib[maxn];
 vector<pair<int, int>> queries[maxn];
@@ -7,23 +7,23 @@ void update(int pos, int val) {
 }
 int query(int a, int b) {
 	int ans = 0;
-	for (; b; b -= b&-b) ans += BIT[b];
-	for (a--; a; a -= a&-a) ans -= BIT[a];
+	for (; b; b -= b & -b) ans += BIT[b];
+	for (a--; a; a -= a & -a) ans -= BIT[a];
 	return ans;
 }
-void solve() {
+void increasingArrayQueries() {
     cin >> n >> q;
     for (int i = 1; i <= n; i++) {
         cin >> nums[i];
         prefix[i] = prefix[i-1] + nums[i];
     }
-    nums[n + 1] = 1e9;
-    prefix[n + 1] = 2e18;
+    nums[n + 1] = 1E9;
+    prefix[n + 1] = 2E18;
     for (int i = 1; i <= q; i++) {
         int a, b; cin >> a >> b;
         queries[a].push_back({b, i});
     }
-    deque<int> mono; mono.push_front(n+1);
+    deque<int> mono; mono.push_front(n + 1);
     for (int i = n; i > 0; i--) { // question from start at n to start at 1
         while (nums[i] >= nums[mono.front()]) {
 		    update(mono.front(), -contrib[mono.front()]);   // mono.front's contrib become 0
@@ -34,13 +34,13 @@ void solve() {
 	    mono.push_front(i);
         for (auto j : queries[i]) {  // pos is the index in mono <= end's
 			int pos = upper_bound(mono.begin(), mono.end(), j.first) - mono.begin() - 1;
-			ans[j.second] = (pos ? query(i, mono[pos - 1]) : 0)   // smainter than y's mono
+			ans[j.second] = (pos ? query(i, mono[pos - 1]) : 0)   // smaller than y's mono
                             // mono to y caculate directly
 			              + (j.first - mono[pos]) * nums[mono[pos]]
                           - (prefix[j.first] - prefix[mono[pos]]);
 		}
 	}
     for (int i = 1; i <= q; i++) {
-        cout << ans[i] << endl;
+        cout << ans[i] << "\n";
     }
 }

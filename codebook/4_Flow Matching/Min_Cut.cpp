@@ -1,5 +1,4 @@
-// CSES Police Chase
-int main() {
+void minCut() {
     int n, m; cin >> n >> m;
     Dinic<int> g(n);
     for (int i = 0; i < m; i++) {

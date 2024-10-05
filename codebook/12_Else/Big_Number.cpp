@@ -1,4 +1,4 @@
-string Add(const string &a, const string &b) {
+string add(const string &a, const string &b) {
     int n = a.length() - 1, m = b.length() - 1, car = 0;
     string res;
     while (n >= 0 || m >= 0 || car) {
@@ -10,7 +10,7 @@ string Add(const string &a, const string &b) {
     reverse(res.begin(), res.end());
     return res;
 }
-string Minus(const string &a, const string &b) {
+string minus(const string &a, const string &b) {
     // Assume a >= b
     int n = a.length() - 1, m = b.length() - 1, bor = 0;
     string res;
@@ -25,7 +25,7 @@ string Minus(const string &a, const string &b) {
     reverse(res.begin(), res.end());
     return res;
 }
-string Multiple(const string &a, const string &b) {
+string multiple(const string &a, const string &b) {
     string res = "0";
     int n = a.length() - 1, m = b.length() - 1;
     for (int i = m; i >= 0; i--) {

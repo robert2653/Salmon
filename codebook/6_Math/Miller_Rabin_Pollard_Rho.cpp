@@ -24,7 +24,7 @@ bool check(ll a, ll d, int s, ll n) {
     }
     return 0;
 }
-bool IsPrime(ll n) {
+bool isPrime(ll n) {
     if (n < 2) return 0;
     if (n % 2 == 0) return n == 2;
     ll d = n - 1, s = 0;
@@ -37,8 +37,8 @@ bool IsPrime(ll n) {
     return 1;
 }
 const vector<ll> small = {2, 3, 5, 7, 11, 13, 17, 19};
-ll FindFactor(ll n) {
-    if (IsPrime(n)) return 1;
+ll findFactor(ll n) {
+    if (isPrime(n)) return 1;
     for (ll p : small) {
         if (n % p == 0) return p;
     }
@@ -64,12 +64,12 @@ ll FindFactor(ll n) {
     }
 }
 map<ll, int> res;
-void PollardRho(ll n) {
+void pollardRho(ll n) {
     if (n == 1) return;
-    if (IsPrime(n)) {
+    if (isPrime(n)) {
         res[n]++;
         return;
     }
-    ll d = FindFactor(n);
-    PollardRho(n / d), PollardRho(d);
+    ll d = findFactor(n);
+    pollardRho(n / d), pollardRho(d);
 }

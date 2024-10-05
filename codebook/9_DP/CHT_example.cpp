@@ -43,7 +43,9 @@ struct CHT {
         return hull[lptr].eval(x);
     }
 };
-void solve() {
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
     // dp[i] = min(fj * s[i] + dp[j])
     // 維護上凸包
     int n; ll x;
@@ -60,14 +62,5 @@ void solve() {
         cht.insert(Line(f[i], dp));
     }
     cout << ans << "\n";
-}
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int t = 1;
-    // cin >> t;
-    while (t--) {
-        solve();
-    }
+    return 0;
 }

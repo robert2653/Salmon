@@ -5,26 +5,26 @@
 constexpr int N = 3E3 + 5;
 constexpr ll inf = 4E18;
 ll dp[N][N]; // 1-based
-ll get_cost(int l, int r) {}
-void DNC(int k, int l, int r, int optl, int optr) {
+ll getCost(int l, int r) {}
+void rec(int k, int l, int r, int optl, int optr) {
     if (l > r) return;
     int m = (l + r) >> 1, opt = -1;
     dp[k][m] = inf;
     for (int i = max(k, optl); i <= min(m, optr); i++) {
         // 注意 i 的範圍、 get_cost 與 dp 的邊界
-        ll cur = dp[k - 1][i] + get_cost(i, m);
+        ll cur = dp[k - 1][i] + getCost(i, m);
         if (cur < dp[k][m])
             dp[k][m] = cur, opt = i;
     }
-    DNC(k, l, m - 1, optl, opt);
-    DNC(k, m + 1, r, opt, optr);
+    rec(k, l, m - 1, optl, opt);
+    rec(k, m + 1, r, opt, optr);
 }
-int main() {
+void DNC() {
     // first build cost...
     for (int i = 1; i <= n; i++) {
         // init dp[1][i]
     }
     for (int i = 2; i <= k; i++)
-        DNC(i, 1, n, 1, n);
+        rec(i, 1, n, 1, n);
     cout << dp[k][n] << "\n";
 }

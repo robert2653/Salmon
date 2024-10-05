@@ -1,6 +1,6 @@
 // 兩個人比賽，每個人輪流取一個數字且只能是頭尾
 // 問兩人都選得好，第一出手的人可取得的最大分數
-int main() {
+void removalGame() {
     int n; cin >> n;
     vector<ll> a(n);
     for (int i = 0; i < n; i++) cin >> a[i];

@@ -18,7 +18,7 @@ struct MCMF {
         e.clear();
         g.assign(n, {});
     }
-    void add_edge(int u, int v, Tf cap, Tc cost) {
+    void addEdge(int u, int v, Tf cap, Tc cost) {
         e.push_back({v, 0, cap, cost});
         e.push_back({u, 0, 0, -cost});
         g[u].push_back(m++);
@@ -45,7 +45,7 @@ struct MCMF {
         return dis[t] != INF_COST;
     }
     // 限定 flow, 最小化 cost
-    pair<Tf, Tc> work_flow(int s_, int t_, Tf need) {
+    pair<Tf, Tc> workFlow(int s_, int t_, Tf need) {
         s = s_, t = t_;
         Tf flow{}; Tc cost{};
         while (spfa()) {
@@ -61,7 +61,7 @@ struct MCMF {
         return {flow, cost};
     }
     // 限定 cost, 最大化 flow
-    pair<Tf, Tc> work_budget(int s_, int t_, Tc budget) {
+    pair<Tf, Tc> workBudget(int s_, int t_, Tc budget) {
         s = s_, t = t_;
         Tf flow{}; Tc cost{};
         while (spfa()) {

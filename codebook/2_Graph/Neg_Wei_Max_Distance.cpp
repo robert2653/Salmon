@@ -6,7 +6,7 @@ void dfs(int u, vector<int> &vis, vector<vector<int>> &adj) {
 		dfs(v, vis, adj);
 	}
 }
-int main() {
+void negWeiMaxDistance() {
     int n, m; cin >> n >> m;
     vector<array<int, 3>> edges;
     vector<vector<int>> adj(n);

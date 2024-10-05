@@ -1,4 +1,4 @@
-int main() {
+void ternarySearch() {
     int lo = 0, hi = 10;
     while (lo <= hi) {
         int xl = lo + (hi - lo) / 3;

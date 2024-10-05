@@ -3,7 +3,7 @@ vector<int> graph[maxn];
 int color[maxn], parent[maxn];
 bool vis[maxn];
 int n, m;
-void print_ans(int ori) {
+void printAns(int ori) {
     int now = parent[ori];
     deque<int> ans;
     ans.push_front(ori);
@@ -24,7 +24,7 @@ void dfs(int now) {
     for (auto nxt : graph[now]) {
         parent[nxt] = now;
         if (color[nxt] == 1) {
-            print_ans(nxt);
+            printAns(nxt);
         }
         else if (color[nxt] == 0) {
             dfs(nxt);
@@ -32,7 +32,7 @@ void dfs(int now) {
     }
     color[now] = 2;
 }
-void solve() {
+void posCycleFinding() {
     cin >> n >> m;
     for (int i = 1; i <= m; i++) {
         int u, v; cin >> u >> v;

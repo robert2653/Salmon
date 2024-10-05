@@ -1,5 +1,5 @@
 template<class T>
-tuple<T, int, int> mxdisPair(vector<Point<T>> a) {
+tuple<T, int, int> maxEuclideanDistance(vector<Point<T>> a) {
     auto get = [&](const Point<T> &p, const Line<T> &l) -> T {
         return abs(cross(l.a - l.b, l.a - p));
     };

@@ -1,4 +1,4 @@
-int main() {
+void binarySearch() {
     // 二分找上界
     while (lo < hi) {
         int x = (lo + hi + 1) / 2;

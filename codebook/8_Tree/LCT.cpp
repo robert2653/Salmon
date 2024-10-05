@@ -20,7 +20,7 @@ struct LinkCutTree { // 1-based
     bool isrt(int t) {
         return !nd[t].p || (nd[nd[t].p].ch[0] != t && nd[nd[t].p].ch[1] != t);
     }
-    void make_rev(int t) {
+    void makeRev(int t) {
         swap(nd[t].ch[0], nd[t].ch[1]);
         nd[t].rev ^= true;
     }
@@ -30,8 +30,8 @@ struct LinkCutTree { // 1-based
     }
     void push(int t) {
         if (nd[t].rev) {
-            if (nd[t].ch[0]) make_rev(nd[t].ch[0]);
-            if (nd[t].ch[1]) make_rev(nd[t].ch[1]);
+            if (nd[t].ch[0]) makeRev(nd[t].ch[0]);
+            if (nd[t].ch[1]) makeRev(nd[t].ch[1]);
             nd[t].rev = false;
         }
         if (nd[t].ch[0]) apply(nd[t].ch[0], nd[t].tag);
@@ -86,7 +86,7 @@ struct LinkCutTree { // 1-based
     }
     void makeRoot(int t) {
         access(t);
-        make_rev(t);
+        makeRev(t);
     }
     int findRoot(int t) {
         access(t);
@@ -127,12 +127,12 @@ struct LinkCutTree { // 1-based
         access(x);
         nd[x].info = v;
     }
-    void path_apply(int x, int y, const Tag &v) {
+    void pathApply(int x, int y, const Tag &v) {
         assert(connected(x, y));
         split(x, y);
         apply(x, v);
     }
-    Info path_query(int x, int y) {
+    Info pathQuery(int x, int y) {
         assert(connected(x, y));
         split(x, y);
         return nd[x].info;

@@ -1,4 +1,4 @@
-int main() {
+void latticePoints() {
     // Area 求法與 Polygun 內整數點數
     int n; cin >> n;
     vector<Point<ll>> polygon(n);

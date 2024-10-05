@@ -1,11 +1,11 @@
 const int maxn = 2E5;
-ll mobius_pref[maxn];
+ll mobiusPref[maxn];
 void init() {
-    mobius_pref[1] = 1;
+    mobiusPref[1] = 1;
     vector<ll> wei(maxn);  // wei = 0 代表是質數，-1 代表可被平方數整除
     for (ll i = 2; i < maxn; i++) {
         if (wei[i] == -1) {
-            mobius_pref[i] = mobius_pref[i - 1];
+            mobiusPref[i] = mobiusPref[i - 1];
             continue; // 包含平方
         }
         if (wei[i] == 0) {
@@ -15,7 +15,7 @@ void init() {
                 else if (wei[i * j] != -1) wei[i * j]++;
             }
         }
-        mobius_pref[i] = mobius_pref[i - 1] + (wei[i] % 2 == 0 ? 1 : -1);
+        mobiusPref[i] = mobiusPref[i - 1] + (wei[i] % 2 == 0 ? 1 : -1);
     }
 }
 void solve() {
@@ -24,7 +24,7 @@ void solve() {
         int res = 0;
         for (int l = 1, r; l <= min(x, y); l = r + 1) {
             r = min(x / (x / l), y / (y / l));
-            res += (mobius_pref[r] - mobius_pref[l - 1]) * (x / l) * (y / l);  // 代推出來的式子
+            res += (mobiusPref[r] - mobiusPref[l - 1]) * (x / l) * (y / l);  // 代推出來的式子
         }
         return res;
     };

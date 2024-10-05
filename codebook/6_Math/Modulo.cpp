@@ -12,10 +12,10 @@ ll mul(ll a, ll b, ll p) { // 大模數再抄
     return res;
 }
 template<ll P>
-struct MInt {
+struct Mint {
     ll x;
-    MInt() : x {0} {}
-    MInt(ll x) : x {norm(x % getMod())} {}
+    Mint() : x {0} {}
+    Mint(ll x) : x {norm(x % getMod())} {}
     static ll Mod;
     static ll getMod() {
         return P > 0 ? P : Mod;
@@ -28,13 +28,13 @@ struct MInt {
         if (x >= getMod()) x -= getMod();
         return x;
     }
-    MInt operator-() const {
-        return MInt(norm(getMod() - x));
+    Mint operator-() const {
+        return Mint(norm(getMod() - x));
     }
-    MInt inv() const {
+    Mint inv() const {
         return power(*this, getMod() - 2);
     }
-    MInt &operator*=(MInt rhs) & {
+    Mint &operator*=(Mint rhs) & {
         if (getMod() < (1ULL << 31)) {
             x = x * rhs.x % int(getMod());
         } else {
@@ -42,46 +42,46 @@ struct MInt {
         }
         return *this;
     }
-    MInt &operator+=(MInt rhs) & {
+    Mint &operator+=(Mint rhs) & {
         x = norm(x + rhs.x);
         return *this;
     }
-    MInt &operator-=(MInt rhs) & {
+    Mint &operator-=(Mint rhs) & {
         x = norm(x - rhs.x);
         return *this;
     }
-    MInt &operator/=(MInt rhs) & {
+    Mint &operator/=(Mint rhs) & {
         return *this *= rhs.inv();
     }
-    friend MInt operator*(MInt lhs, MInt rhs) {
+    friend Mint operator*(Mint lhs, Mint rhs) {
         return lhs *= rhs;
     }
-    friend MInt operator+(MInt lhs, MInt rhs) {
+    friend Mint operator+(Mint lhs, Mint rhs) {
         return lhs += rhs;
     }
-    friend MInt operator-(MInt lhs, MInt rhs) {
+    friend Mint operator-(Mint lhs, Mint rhs) {
         return lhs -= rhs;
     }
-    friend MInt operator/(MInt lhs, MInt rhs) {
+    friend Mint operator/(Mint lhs, Mint rhs) {
         return lhs /= rhs;
     }
-    friend istream &operator>>(istream &is, MInt &a) {
-        ll v; is >> v; a = MInt(v); return is;
+    friend istream &operator>>(istream &is, Mint &a) {
+        ll v; is >> v; a = Mint(v); return is;
     }
-    friend ostream &operator<<(ostream &os, const MInt &a) {
+    friend ostream &operator<<(ostream &os, const Mint &a) {
         return os << a.x;
     }
-    friend bool operator==(MInt lhs, MInt rhs) {
+    friend bool operator==(Mint lhs, Mint rhs) {
         return lhs.x == rhs.x;
     }
-    friend bool operator!=(MInt lhs, MInt rhs) {
+    friend bool operator!=(Mint lhs, Mint rhs) {
         return lhs.x != rhs.x;
     }
-    friend bool operator<(MInt lhs, MInt rhs) {
+    friend bool operator<(Mint lhs, Mint rhs) {
         return lhs.x < rhs.x;
     }
 };
 template<>
-ll MInt<0>::Mod = 998244353;
+ll Mint<0>::Mod = 998244353;
 constexpr ll P = 1E9 + 7;
-using Z = MInt<P>;
+using Z = Mint<P>;

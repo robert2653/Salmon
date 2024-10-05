@@ -1,5 +1,5 @@
 // 用 Bellman Ford 找負環
-int main() {
+void bellmanFord() {
     int n, m; cin >> n >> m;
     vector<array<int, 3>> e;
     for (int i = 0; i < m; i++) {

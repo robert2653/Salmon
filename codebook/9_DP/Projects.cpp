@@ -1,4 +1,4 @@
-int main() { // 排程有權重問題，輸出價值最多且時間最少
+void projects() { // 排程有權重問題，輸出價值最多且時間最少
     struct E {
         int from, to, w, id;
     };

@@ -74,7 +74,10 @@ struct CenDecom {
     }
 };
 
-void solve() {
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int n; cin >> n;
     CenDecom g;
     cin >> k;
@@ -90,14 +93,5 @@ void solve() {
     g.work(0);
 
     cout << ans << "\n";
-}
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int t = 1;
-    // cin >> t;
-    while (t--) {
-        solve();
-    }
+    return 0
 }

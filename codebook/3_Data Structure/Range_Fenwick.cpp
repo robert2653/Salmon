@@ -1,8 +1,8 @@
 template<class T>
-struct rangeFenwick { // 全部以 0 based 使用
+struct RangeFenwick { // 全部以 0 based 使用
     int n;
     vector<T> d, di;
-    rangeFenwick(int n_ = 0) {
+    RangeFenwick(int n_ = 0) {
         init(n_);
     }
     void init(int n_) {

@@ -1,6 +1,6 @@
-struct kthPST : PST<int> {
+struct KthPST : PST<int> {
     int len = 0;
-    kthPST(int n_, int len_) { // 數組大小, 離散化後大小
+    KthPST(int n_, int len_) { // 數組大小, 離散化後大小
         init(n_);
         len = len_;
         rt.resize(len);

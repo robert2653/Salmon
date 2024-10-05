@@ -57,7 +57,7 @@ void solve() {
     };
     dfs_dis(dfs_dis, 0, -1);
 
-    vector<bool> iskey(n);
+    vector<bool> isKey(n);
     vector<ll> dp(n);
     int q; cin >> q;
     while (q--) {
@@ -66,7 +66,7 @@ void solve() {
         for (int i = 0; i < m; i++) {
             cin >> key[i];
             key[i] -= 1;
-            iskey[key[i]] = true;
+            isKey[key[i]] = true;
         }
         key.push_back(0); // 固定 0 為 root, 看題目需求
         sort(key.begin(), key.end(), [&](int a, int b) {
@@ -77,12 +77,12 @@ void solve() {
         auto dfs = [&](auto &&self, int x) -> void {
             for (auto y : vt[x]) {
                 self(self, y);
-                if (iskey[y]) { // 直接砍了
+                if (isKey[y]) { // 直接砍了
                     dp[x] += dis[y];
                 } else { // 不砍 or 砍
                     dp[x] += min<ll>(dp[y], dis[y]);
                 } // 記得 reset
-                iskey[y] = dp[y] = 0;
+                isKey[y] = dp[y] = 0;
             }
             vt[x].clear(); // 記得 reset
         };

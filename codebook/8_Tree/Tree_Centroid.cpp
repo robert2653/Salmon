@@ -16,36 +16,36 @@ struct CenDecom {
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
-    void get_siz(int x, int p = -1) {
+    void getSiz(int x, int p = -1) {
         siz[x] = 1;
         for (int y : adj[x]) {
             if (y == p || vis[y]) continue;
-            get_siz(y, x);
+            getSiz(y, x);
             siz[x] += siz[y];
         }
     }
-    int get_cen(int x, int sz, int p = -1) {
+    int getCen(int x, int sz, int p = -1) {
         for (int y : adj[x]) {
             if (y == p || vis[y]) continue;
             if (siz[y] * 2 > sz)
-                return get_cen(y, sz, x);
+                return getCen(y, sz, x);
         }
         return x;
     }
-    void get_ans(int x, int p) {
+    void getAns(int x, int p) {
         // do something
         for (int y : adj[x]) {
             if (y == p || vis[y]) continue;
-            get_ans(y, x);
+            getAns(y, x);
         }
     }
     void work(int x = 0) {
-        get_siz(0, x);
-        int cen = get_cen(x, siz[x]);
+        getSiz(0, x);
+        int cen = getCen(x, siz[x]);
         vis[cen] = true;
         for (int y : adj[cen]) {
             if (vis[y]) continue;
-            get_ans(y, cen);
+            getAns(y, cen);
         }
         for (int y : adj[cen]) {
             if (vis[y]) continue;

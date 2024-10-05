@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 template<class T>
-struct rangeFenwick { // 全部以 0 based 使用
+struct RangeFenwick { // 全部以 0 based 使用
     int n;
     vector<T> a, b; // (𝑥+1)*(∑_𝑖=1^𝑥𝐷𝑖)−(∑_𝑖=1^𝑥𝐷𝑖*𝑖)
-    rangeFenwick(int n_ = 0) {
+    RangeFenwick(int n_ = 0) {
         init(n_);
     }
     void init(int n_) {
@@ -103,7 +103,7 @@ struct rangeTwoDFenwick {  // 全部以 0 based 使用
 int main() {
     // int n, q;
     // cin >> n >> q;
-    // rangeFenwick<int> bit(n);
+    // RangeFenwick<int> bit(n);
     // for (int i = 0; i < n; i++) {
     //     int x; cin >> x;
     //     bit.rangeAdd(i, i + 1, x);
@@ -145,4 +145,6 @@ int main() {
             cout << bit.rangeSum(lx, ly, rx + 1, ry + 1) << "\n";
         }
     }
+
+    return 0;
 }

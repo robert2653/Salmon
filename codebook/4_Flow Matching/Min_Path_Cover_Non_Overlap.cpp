@@ -54,11 +54,10 @@ struct Hungarian { // 0-based
 };
 
 const int N = 500;
-void Floyd(int n, vector<bitset<N>> &dp) {
+void floyd(int n, vector<bitset<N>> &dp) {
     for (int k = 0; k < n; k++)
         for (int i = 0; i < n; i++)
-            if (dp[i][k])
-                dp[i] |= dp[k]; 
+            if (dp[i][k]) dp[i] |= dp[k]; 
 }
 
 void solve(int n, int m) {
@@ -71,7 +70,7 @@ void solve(int n, int m) {
         u--; v--;
         dp[u][v] = 1;
     }
-    Floyd(n, dp);
+    floyd(n, dp);
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if (dp[i][j]) {
@@ -84,7 +83,7 @@ void solve(int n, int m) {
 
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(nullptr);
     int t = 1;
     int n, m;
     // cin >> t;
@@ -93,4 +92,5 @@ int main() {
             solve(n, m);
         }
     }
+    return 0;
 }

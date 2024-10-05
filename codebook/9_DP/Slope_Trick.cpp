@@ -1,8 +1,7 @@
 // 設 dp[i][j] 為將陣列前 i 個元素變為非嚴格遞增，並且所有 ai <= bj 所需要花的代價
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
-signed main() {
+void solve() {
     int n; cin >> n;
     vector<int> v(n);
     for (int i = 0; i < n; i++) {
@@ -13,7 +12,7 @@ signed main() {
     sort(discrete.begin(), discrete.end());
     int m = unique(discrete.begin(), discrete.end()) - discrete.begin();
     vector<vector<int>> dp(2, vector<int>(m + 1));
-    dp[0][0] = dp[1][0] = 2e18;
+    dp[0][0] = dp[1][0] = 2E18;
     for (int i = 0; i < n; i++) {
         for (int j = 1; j <= m; j++) {
             dp[1][j] = min(dp[1][j - 1], dp[0][j] + abs(v[i] - discrete[j - 1]));
@@ -31,7 +30,7 @@ signed main() {
 // 因此 g_i(x) 和 f_i(x) 都是 Slope Trickable 函數，因為 |x-a_i|，
 // 分段點是 a_i，且因為斜率一定大於 1，要 push 2 次
 // 因為 g_i(x) 最右邊函數的斜率是 1，因此我們只需去除 g_i(x) 的最大斜率變化點得到 f_i(x)。
-int main () {
+void solve() {
 	priority_queue<int> q;
 	int n; cin >> n;
 	for (int i = 0; i < n; i++) {

@@ -18,7 +18,7 @@ vector<string> duval(string s) {
     return res;
 }
 // 最小旋轉字串
-string min_round(string s) {
+string minRound(string s) {
     s += s;
     int i = 0, n = s.size();
     int start = i;

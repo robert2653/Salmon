@@ -1,6 +1,6 @@
 // CSES Longest Flight Route
 // 只能用在 DAG，用拓樸按順序鬆弛
-void print_ans(int n, vector<int> &par) {
+void printAns(int n, vector<int> &par) {
     deque<int> ans;
     int now = n;
     while (now != 0) {
@@ -13,7 +13,7 @@ void print_ans(int n, vector<int> &par) {
         cout << i << " ";
     }
 }
-int main() {
+int posWeiMaxDistance() {
     int n, m; cin >> n >> m;
     vector<vector<int>> graph(n);
     vector<int> dis(n, -1E9); dis[1] = 0;
@@ -43,5 +43,5 @@ int main() {
         // 所以要看的是 dis[n] < 0
         cout << "IMPOSSIBLE";
     }
-    else print_ans(n, par);
+    else printAns(n, par);
 }

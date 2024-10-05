@@ -1,4 +1,4 @@
-int main() {
+void dfsBfs() {
     int n;
     vector<vector<int>> adj(n);
     // dfs_graph

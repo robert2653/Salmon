@@ -1,5 +1,5 @@
 // Flight Discount
-int main() {
+void dijkstra() {
     int n, m; cin >> n >> m;
     vector<vector<pair<int, int>>> adj(n, vector<pair<int, int>>(n));
     vector<array<int, 2>> dis(n, {inf, inf});    // 0 for not used

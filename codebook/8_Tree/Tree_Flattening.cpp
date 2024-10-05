@@ -1,6 +1,6 @@
 // 父節點加值 = 所有子節點區間加值，求單點，使用 bit，做前綴差分
 // CSES 1138_Path Queries
-int main() {
+void treeFlattening() {
     int n, q; cin >> n >> q;
     vector<int> val(n + 1), dfnToVal(n);
     for (int i = 1; i <= n; i++) {

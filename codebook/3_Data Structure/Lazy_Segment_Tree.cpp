@@ -73,7 +73,7 @@ struct LazySeg {    // 左閉右開寫法
     Info query(int ql, int qr) {
         return query(1, 0, n, ql, qr);
     }
-    void range_apply(int p, int l, int r, int ql, int qr, const Tag &v) {
+    void rangeApply(int p, int l, int r, int ql, int qr, const Tag &v) {
         if (qr <= l || ql >= r) return;
         if (ql <= l && r <= qr) {
             apply(p, l, r, v);
@@ -81,12 +81,12 @@ struct LazySeg {    // 左閉右開寫法
         }
         int m = (l + r) / 2;
         push(p, l, r);
-        range_apply(p * 2, l, m, ql, qr, v);
-        range_apply(p * 2 + 1, m, r, ql, qr, v);
+        rangeApply(p * 2, l, m, ql, qr, v);
+        rangeApply(p * 2 + 1, m, r, ql, qr, v);
         pull(p);
     }
-    void range_apply(int l, int r, const Tag &v) {
-        range_apply(1, 0, n, l, r, v);
+    void rangeApply(int l, int r, const Tag &v) {
+        rangeApply(1, 0, n, l, r, v);
     }
     template<class F>   // 尋找區間內，第一個符合條件的
     int findFirst(int p, int l, int r, int x, int y, F &&pred) {

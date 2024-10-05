@@ -48,7 +48,10 @@ struct DSU {
     }
 };
 
-void solve() {
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int n, m, q;
     cin >> n >> m >> q;
     DSU dsu(n);
@@ -109,14 +112,6 @@ void solve() {
     apply(apply, 1, 0, q + 1);
     for (int i = 0; i <= q; i++) cout << ans[i] << " ";
     cout << "\n";
-}
 
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(nullptr);
-    int t = 1;
-    // cin >> t;
-    while (t--) {
-        solve();
-    }
+    return 0;
 }

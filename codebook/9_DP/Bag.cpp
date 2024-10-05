@@ -1,5 +1,5 @@
 // 考慮前 i 個，預算有 j 塊錢的最多 page
-int main() {
+void Bag() {
     int n, bud;
     cin >> n >> bud;
     vector<vector<int>> dp(n + 1, vector<int>(bud + 1));

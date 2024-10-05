@@ -1,5 +1,5 @@
 template<class T>
-pair<T, vector<Point<T>>> minRectangle(vector<Point<T>> a) {
+pair<T, vector<Point<T>>> minRectangleCover(vector<Point<T>> a) {
     if (a.size() <= 2) return {0, {}};
     auto get = [&](const Point<T> &p, const Line<T> &l) -> T {
         return abs(cross(l.a - l.b, l.a - p).x);
