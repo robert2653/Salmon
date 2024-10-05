@@ -3,20 +3,20 @@
 void print_ans(int n, vector<int> &par) {
     deque<int> ans;
     int now = n;
-    while(now != 0) {
+    while (now != 0) {
         ans.push_front(now);
         now = par[now];
     }
     ans.push_front(0);
     cout << ans.size() << "\n";
-    for(auto i : ans) {
+    for (auto i : ans) {
         cout << i << " ";
     }
 }
 int main() {
     int n, m; cin >> n >> m;
     vector<vector<int>> graph(n);
-    vector<int> dis(n, -1e9); dis[1] = 0;
+    vector<int> dis(n, -1E9); dis[1] = 0;
     vector<int> par(n), in(n);
     queue<int> q;
     for (int i = 0; i < m; i++) {

@@ -6,13 +6,13 @@ vector<int> cnt; // 當前深度數量
 ll ans = 0;
 int k; int mx_depth = 0;
 
-struct centroid_decomposition {
+struct CenDecom {
     int n;
     vector<vector<int>> adj;
     vector<bool> vis;
     vector<int> siz;
-    centroid_decomposition() {}
-    centroid_decomposition(int n_) { init(n_); }
+    CenDecom() {}
+    CenDecom(int n_) { init(n_); }
     void init(int n_) {
         n = n_;
         adj.assign(n, {});
@@ -76,7 +76,7 @@ struct centroid_decomposition {
 
 void solve() {
     int n; cin >> n;
-    centroid_decomposition g;
+    CenDecom g;
     cin >> k;
     g.init(n);
 
@@ -92,7 +92,7 @@ void solve() {
     cout << ans << "\n";
 }
 
-int main(){
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;

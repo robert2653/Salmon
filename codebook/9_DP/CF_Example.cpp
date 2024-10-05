@@ -31,7 +31,7 @@ int main() {
 // CF 1935 pC
 // 給你每個事件的 a, b，挑事件會把 a 全部加起來
 // 再加上 max(bi) - min(bi)
-int main(){
+int main() {
     int n, k, ans = 0; cin >> n >> k;
     vector<pii> v(n + 1);
     for (int i = 1; i <= n; i++) {

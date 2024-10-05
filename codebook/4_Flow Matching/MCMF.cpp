@@ -19,7 +19,7 @@ struct MCMF {
         edges.clear();
         adj.assign(n, {});
     }
-    void add_edge(int u, int v, Tf cap, Tc cost){
+    void add_edge(int u, int v, Tf cap, Tc cost) {
         edges.push_back({v, 0, cap, cost});
         edges.push_back({u, 0, 0, -cost});
         adj[u].push_back(m++);

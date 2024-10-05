@@ -2,6 +2,7 @@
 .vscode
 .cph
 testcode
+check_coding_style.py
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:

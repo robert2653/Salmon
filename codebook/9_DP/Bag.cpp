@@ -1,15 +1,15 @@
 // 考慮前 i 個，預算有 j 塊錢的最多 page
-int main(){
+int main() {
     int n, bud;
     cin >> n >> bud;
     vector<vector<int>> dp(n + 1, vector<int>(bud + 1));
     vector<int> Page(n + 1, 0);
     vector<int> Price(n + 1, 0); 
     
-    for(int i = 1; i <= n; i++){
+    for (int i = 1; i <= n; i++) {
         cin >> Price[i];
     }
-    for(int i = 1; i <= n; i++){
+    for (int i = 1; i <= n; i++) {
         cin >> Page[i];
     }
     for (int i = 1; i <= n; i++) {
