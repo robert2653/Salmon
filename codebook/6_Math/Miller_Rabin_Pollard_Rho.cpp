@@ -1,17 +1,13 @@
-template<class T>
-constexpr T power(T a, ll b, ll p) {
-    T res {1};
-    for (; b; b /= 2, a = mul(a, a, p)) {
-        if (b & 1) {
-            res = mul(res, a, p);
-        }
-    }
-    return res;
-}
-constexpr ll mul(ll a, ll b, ll p) {
+ll mul(ll a, ll b, ll p) {
     ll res = a * b - ll(1.L * a * b / p) * p;
     res %= p;
     if (res < 0) res += p;
+    return res;
+}
+ll power(ll a, ll b, ll p) {
+    ll res {1};
+    for (; b; b /= 2, a = mul(a, a, p))
+        if (b & 1) res = mul(res, a, p);
     return res;
 }
 vector<ll> chk {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
@@ -51,10 +47,10 @@ ll findFactor(ll n) {
         int m = min(l, 32);
         for (int i = 0; i < l; i += m) {
             d = 1;
-            for (int j = 0; j < m; ++j) {
+            for (int j = 0; j < m; j++) {
                 y = f(y), d = mul(d, abs(x - y), n);
             }
-            ll g = gcd(d, n);
+            ll g = __gcd(d, n);
             if (g == n) {
                 l = 1, y = 2, ++t;
                 break;
