@@ -1,8 +1,12 @@
 # test
 .vscode
 .cph
-testcode
 check_coding_style.py
+testcode
+
+# library checker
+yosupo
+luogu
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:

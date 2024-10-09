@@ -4,16 +4,23 @@ struct PST {
         Info info = Info();
         int lc = 0, rc = 0;
     };
-    vector<Node> nd;
     int n = 0;
+    vector<Node> nd;
     vector<int> rt;
     PST() : n(0) {}
-    PST(int n_, Info v_ = Info()) { init(n_, v_); }
+    PST(int n_, Info v_ = Info()) {
+        init(n_, v_);
+    }
+
     template<class T>
-    PST(vector<T> init_) { init(init_); }
+    PST(vector<T> init_) {
+        init(init_);
+    }
+
     void init(int n_, Info v_ = Info()) {
         init(vector<Info>(n_, v_));
     }
+    
     template<class T>
     void init(vector<T> init_) {
         n = init_.size();
