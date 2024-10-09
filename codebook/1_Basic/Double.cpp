@@ -7,27 +7,27 @@ struct D {
     D operator-() const {
         return D(-x);
     }
-    D &operator*=(D rhs) & {
-        x *= rhs.x; return *this;
-    }
     D &operator+=(D rhs) & {
         x += rhs.x; return *this;
     }
     D &operator-=(D rhs) & {
         x -= rhs.x; return *this;
     }
+    D &operator*=(D rhs) & {
+        x *= rhs.x; return *this;
+    }
     D &operator/=(D rhs) & {
         assert(fabs(rhs.x) > eps);
         x /= rhs.x; return *this;
-    }
-    friend D operator*(D lhs, D rhs) {
-        return lhs *= rhs;
     }
     friend D operator+(D lhs, D rhs) {
         return lhs += rhs;
     }
     friend D operator-(D lhs, D rhs) {
         return lhs -= rhs;
+    }
+    friend D operator*(D lhs, D rhs) {
+        return lhs *= rhs;
     }
     friend D operator/(D lhs, D rhs) {
         return lhs /= rhs;

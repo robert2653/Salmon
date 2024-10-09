@@ -14,17 +14,15 @@ ll inv(ll x, ll m) {
     if (a < 0) a += m;
     return a;
 }
-// remain, mod
+// gcd(mod) = 1, res % mod_i = remain_i
+// a: remain, mod
 ll CRT(vector<pair<ll, ll>> &a) {
-    ll prod = 1;
-    for (auto x : a) {
-        prod *= x.second;
-    }
-    ll res = 0;
-    for (auto x : a) {
-        auto t = prod / x.second;
-        res += x.first * t % prod * inv(t, x.second) % prod;
-        if (res >= prod) res -= prod;
+    ll s = 1, res = 0;
+    for (auto [r, m] : a) s *= m;
+    for (auto [r, m] : a) {
+        ll t = s / m;
+        res += r * t % s * inv(t, m) % s;
+        if (res >= s) res -= s;
     }
     return res;
 }

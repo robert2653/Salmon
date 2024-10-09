@@ -102,7 +102,7 @@ struct BigNum { // require Mint and NTT ~idft
     BigNum operator-=(const BigNum &rhs) & {
         return *this += -rhs;
     }
-    vector<Z> ntt(vector<Z> a, vector<Z> b) {
+    vector<Z> Multiple(vector<Z> a, vector<Z> b) {
         if (a.size() < b.size()) swap(a, b);
         int n = 1, tot = a.size() + b.size() - 1;
         while (n < tot) n *= 2;
@@ -122,7 +122,7 @@ struct BigNum { // require Mint and NTT ~idft
     }
     BigNum operator*=(const BigNum &rhs) & {
         vector<Z> a = toVector(), b = rhs.toVector();
-        return BigNum(fromVector(ntt(a, b)), sgn * rhs.sgn);
+        return BigNum(fromVector(Multiple(a, b)), sgn * rhs.sgn);
     }
     friend BigNum operator+(BigNum lhs, BigNum rhs) {
         return lhs += rhs;

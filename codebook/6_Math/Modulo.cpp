@@ -34,14 +34,6 @@ struct Mint {
     Mint inv() const {
         return power(*this, getMod() - 2);
     }
-    Mint &operator*=(Mint rhs) & {
-        if (getMod() < (1ULL << 31)) {
-            x = x * rhs.x % int(getMod());
-        } else {
-            x = mul(x, rhs.x, getMod());
-        }
-        return *this;
-    }
     Mint &operator+=(Mint rhs) & {
         x = norm(x + rhs.x);
         return *this;
@@ -50,17 +42,25 @@ struct Mint {
         x = norm(x - rhs.x);
         return *this;
     }
+    Mint &operator*=(Mint rhs) & {
+        if (getMod() < (1ULL << 31)) {
+            x = x * rhs.x % int(getMod());
+        } else {
+            x = mul(x, rhs.x, getMod());
+        }
+        return *this;
+    }
     Mint &operator/=(Mint rhs) & {
         return *this *= rhs.inv();
-    }
-    friend Mint operator*(Mint lhs, Mint rhs) {
-        return lhs *= rhs;
     }
     friend Mint operator+(Mint lhs, Mint rhs) {
         return lhs += rhs;
     }
     friend Mint operator-(Mint lhs, Mint rhs) {
         return lhs -= rhs;
+    }
+    friend Mint operator*(Mint lhs, Mint rhs) {
+        return lhs *= rhs;
     }
     friend Mint operator/(Mint lhs, Mint rhs) {
         return lhs /= rhs;

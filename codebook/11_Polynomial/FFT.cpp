@@ -28,7 +28,7 @@ void fft(vector<cd> &a, bool inv) {
     if (inv) for (auto &x : a) x /= n;
 }
 template<class T>
-vector<double> mulT(const vector<T> &a, const vector<T> &b) {
+vector<T> Multiple(const vector<T> &a, const vector<T> &b) {
     vector<cd> fa(a.begin(), a.end()), fb(b.begin(), b.end());
     int n = 1, tot = a.size() + b.size() - 1;
     while (n < tot) n *= 2;
@@ -37,8 +37,8 @@ vector<double> mulT(const vector<T> &a, const vector<T> &b) {
     for (int i = 0; i < n; i++)
         fa[i] = fa[i] * fb[i];
     fft(fa, true);
-    vector<double> res(tot);
+    vector<T> res(tot);
     for (int i = 0; i < tot; i++)
-        res[i] = fa[i].real();
-    return res; // use llround if need
+        res[i] = fa[i].real(); // use llround if need
+    return res; 
 }

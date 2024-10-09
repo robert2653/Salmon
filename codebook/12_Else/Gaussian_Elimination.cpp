@@ -4,9 +4,9 @@
 // 1  : one solution
 template<class T>
 tuple<T, int, vector<T>> gaussianElimination(vector<vector<T>> a) {
-    int n = a.size(), m = a[0].size(), rk = 0, sgn = 1;
     T det = 1;
-    bool zero_det = false;
+    bool zeroDet = false;
+    int n = a.size(), m = a[0].size(), rk = 0, sgn = 1;
     for (int c = 0; c < n; c++) {
         int p = -1;
         for (int r = rk; r < n; r++) {
@@ -16,7 +16,7 @@ tuple<T, int, vector<T>> gaussianElimination(vector<vector<T>> a) {
             }
         }
         if (p == -1) {
-            zero_det = true;
+            zeroDet = true;
             continue;
         }
         if (p != rk) swap(a[rk], a[p]), sgn *= -1;
@@ -31,7 +31,7 @@ tuple<T, int, vector<T>> gaussianElimination(vector<vector<T>> a) {
         }
         rk++;
     }
-    det = (zero_det ? 0 : det * sgn);
+    det = (zeroDet ? 0 : det * sgn);
     for (int r = rk; r < n; r++)
         if (a[r][m - 1] != 0) return {det, 0, {}};
     if (rk < n) return {det, -1, {}};
