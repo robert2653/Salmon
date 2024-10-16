@@ -2,22 +2,17 @@ struct PAM {
     // 0 -> even root, 1 -> odd root
     static constexpr int ALPHABET_SIZE = 26;
     struct Node {
-        int len;
-        int fail;
+        int len, fail;
         array<int, ALPHABET_SIZE> next;
         Node() : len{}, fail{}, next{} {}
     };
     vector<int> s;
     vector<Node> t;
-    PAM() {
-        init();
-    }
+    PAM() { init(); }
     void init() {
         t.assign(2, Node());
-        s.clear();
-        t[0].len = 0;
-        t[1].len = -1;
-        t[0].fail = 1;
+        s.clear(); t[1].len = -1;
+        t[0].len = 0, t[0].fail = 1;
     }
     int newNode() {
         t.emplace_back();

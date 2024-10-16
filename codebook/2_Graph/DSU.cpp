@@ -27,7 +27,6 @@ struct DSU {
         return siz[find(x)];
     }
 };
-
 struct DSU {
     int n;
     vector<int> boss, siz, stk;
