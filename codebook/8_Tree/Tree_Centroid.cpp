@@ -1,11 +1,9 @@
-#include <bits/stdc++.h>
-using namespace std;
-struct CenDecom {
+struct CentriodDecomposition {
     int n;
     vector<vector<int>> adj;
     vector<bool> vis;
     vector<int> siz;
-    CenDecom(int n_ = 0) { init(n_); }
+    CentriodDecomposition(int n_ = 0) { init(n_); }
     void init(int n_) {
         n = n_;
         adj.assign(n, {});

@@ -6,13 +6,13 @@ vector<int> cnt; // 當前深度數量
 ll ans = 0;
 int k; int mx_depth = 0;
 
-struct CenDecom {
+struct CentriodDecomposition {
     int n;
     vector<vector<int>> adj;
     vector<bool> vis;
     vector<int> siz;
-    CenDecom() {}
-    CenDecom(int n_) { init(n_); }
+    CentriodDecomposition() {}
+    CentriodDecomposition(int n_) { init(n_); }
     void init(int n_) {
         n = n_;
         adj.assign(n, {});
@@ -79,7 +79,7 @@ int main() {
     cin.tie(nullptr);
 
     int n; cin >> n;
-    CenDecom g;
+    CentriodDecomposition g;
     cin >> k;
     g.init(n);
 
