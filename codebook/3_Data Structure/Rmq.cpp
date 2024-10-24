@@ -1,5 +1,5 @@
 template<class T, class F = less<T>>
-struct RMQ {
+struct RMQ { // [l, r)
     int n;
     F cmp = F();
     vector<vector<T>> g;
