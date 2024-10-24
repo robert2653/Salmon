@@ -14,8 +14,7 @@ ll mul(ll a, ll b, ll p) { // 大模數再抄
 template<ll P>
 struct Mint {
     ll x;
-    Mint() : x {0} {}
-    Mint(ll x) : x {norm(x % getMod())} {}
+    Mint(ll x = 0) : x {norm(x % getMod())} {}
     static ll Mod;
     static ll getMod() {
         return P > 0 ? P : Mod;

@@ -8,8 +8,7 @@ T power(T a, ll b) {
 constexpr int Mod = 1E9 + 7;
 struct Z {
     ll x;
-    Z() : x {0} {}
-    Z(ll x) : x {norm(x % Mod)} {}
+    Z(ll x = 0) : x {norm(x % Mod)} {}
     ll norm(ll x) const {
         if (x < 0) x += Mod;
         if (x >= Mod) x -= Mod;

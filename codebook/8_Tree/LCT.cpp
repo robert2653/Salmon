@@ -46,20 +46,16 @@ struct LinkCutTree { // 1-based
         return nd[nd[t].p].ch[1] == t;
     }
     void pushAll(int t) {
-        if (!isrt(t)) {
-            pushAll(nd[t].p);
-        }
+        if (!isrt(t)) pushAll(nd[t].p);
         push(t);
     }
     void rotate(int t) {
-        int q = nd[t].p;
-        int x = !pos(t);
+        int q = nd[t].p, x = !pos(t);
         nd[q].ch[!x] = nd[t].ch[x];
         if (nd[t].ch[x]) nd[nd[t].ch[x]].p = q;
         nd[t].p = nd[q].p;
         if (!isrt(q)) nd[nd[q].p].ch[pos(q)] = t;
-        nd[t].ch[x] = q;
-        nd[q].p = t;
+        nd[t].ch[x] = q, nd[q].p = t;
         pull(q);
     }
     void splay(int t) {
@@ -85,8 +81,7 @@ struct LinkCutTree { // 1-based
         splay(t);
     }
     void makeRoot(int t) {
-        access(t);
-        makeRev(t);
+        access(t), makeRev(t);
     }
     int findRoot(int t) {
         access(t);
@@ -102,26 +97,21 @@ struct LinkCutTree { // 1-based
         return findRoot(x) == findRoot(y);
     }
     bool neighber(int x, int y) {
-        makeRoot(x);
-        access(y);
+        makeRoot(x), access(y);
         if (nd[y].ch[0] != x || nd[x].ch[1]) return false;
         return true;
     }
     void split(int rt, int y) {
-        makeRoot(y);
-        access(rt);
+        makeRoot(y), access(rt);
     }
     void link(int x, int y) {
         makeRoot(x);
-        if (findRoot(y) != x)
-            nd[x].p = y;
+        if (findRoot(y) != x) nd[x].p = y;
     }
     void cut(int x, int y) {
-        makeRoot(x);
-        access(y);
+        makeRoot(x), access(y);
         nd[y].ch[0] = nd[nd[y].ch[0]].p = 0;
-        pull(x);
-        pull(y);
+        pull(x), pull(y);
     }
     void modify(int x, const Info &v) {
         access(x);
@@ -129,8 +119,7 @@ struct LinkCutTree { // 1-based
     }
     void pathApply(int x, int y, const Tag &v) {
         assert(connected(x, y));
-        split(x, y);
-        apply(x, v);
+        split(x, y), apply(x, v);
     }
     Info pathQuery(int x, int y) {
         assert(connected(x, y));
