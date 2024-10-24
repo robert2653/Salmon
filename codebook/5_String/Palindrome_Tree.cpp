@@ -1,8 +1,10 @@
 struct PAM {
     // 0 -> even root, 1 -> odd root
     static constexpr int ALPHABET_SIZE = 26;
+    // fail -> longest prefix(suffix) palindrome
+    // number end at i = end at link[last[i]] + 1
     struct Node {
-        int len, fail;
+        int len, fail, cnt;
         array<int, ALPHABET_SIZE> next;
         Node() : len{}, fail{}, next{} {}
     };
@@ -10,30 +12,32 @@ struct PAM {
     vector<Node> t;
     PAM() { init(); }
     void init() {
+        s.clear(); 
         t.assign(2, Node());
-        s.clear(); t[1].len = -1;
         t[0].len = 0, t[0].fail = 1;
+        t[1].len = -1;
     }
     int newNode() {
         t.emplace_back();
         return t.size() - 1;
     }
-    int extend(int p, int c) {
-        int n = s.size();
-        s.push_back(c);
-        while (s[n - t[p].len - 1] != c)
+    int getFail(int p, int i) {
+        while (i - t[p].len < 1 || s[i - t[p].len - 1] != s[i])
             p = t[p].fail;
+        return p;
+    }
+    int extend(int p, int c) {
+        int i = s.size();
+        s.push_back(c);
+        p = getFail(p, i);
         if (!t[p].next[c]) {
             int r = newNode();
+            int v = getFail(t[p].fail, i);
             t[r].len = t[p].len + 2;
-            int cur = t[p].fail;
-            while (s[n - t[cur].len - 1] != c)
-                cur = t[cur].fail;
-            t[r].fail = t[cur].next[c];
+            t[r].fail = t[v].next[c];
             t[p].next[c] = r;
         }
-        p = t[p].next[c];
-        return p;
+        return p = t[p].next[c];
     }
 };
 void solve() {

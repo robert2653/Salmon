@@ -5,83 +5,54 @@ T power(T a, ll b) {
         if (b & 1) res *= a;
     return res;
 }
-ll mul(ll a, ll b, ll p) { // 大模數再抄
-    ll res = a * b - ll(1.L * a * b / p) * p;
-    res %= p;
-    if (res < 0) res += p;
-    return res;
-}
-template<ll P>
-struct Mint {
+constexpr int Mod = 1E9 + 7;
+struct Z {
     ll x;
-    Mint() : x {0} {}
-    Mint(ll x) : x {norm(x % getMod())} {}
-    static ll Mod;
-    static ll getMod() {
-        return P > 0 ? P : Mod;
-    }
-    static void setMod(ll Mod_) {
-        Mod = Mod_;
-    }
+    Z() : x {0} {}
+    Z(ll x) : x {norm(x % Mod)} {}
     ll norm(ll x) const {
-        if (x < 0) x += getMod();
-        if (x >= getMod()) x -= getMod();
+        if (x < 0) x += Mod;
+        if (x >= Mod) x -= Mod;
         return x;
     }
-    Mint operator-() const {
-        return Mint(norm(getMod() - x));
+    explicit operator int() const { return x; }
+    Z operator-() const {
+        return Z(norm(Mod - x));
     }
-    Mint inv() const {
-        return power(*this, getMod() - 2);
+    Z inv() const {
+        return power(*this, Mod - 2);
     }
-    Mint &operator+=(Mint rhs) & {
+    Z &operator+=(Z rhs) & {
         x = norm(x + rhs.x);
         return *this;
     }
-    Mint &operator-=(Mint rhs) & {
+    Z &operator-=(Z rhs) & {
         x = norm(x - rhs.x);
         return *this;
     }
-    Mint &operator*=(Mint rhs) & {
-        if (getMod() < (1ULL << 31)) {
-            x = x * rhs.x % int(getMod());
-        } else {
-            x = mul(x, rhs.x, getMod());
-        }
+    Z &operator*=(Z rhs) & {
+        x = x * rhs.x % Mod;
         return *this;
     }
-    Mint &operator/=(Mint rhs) & {
+    Z &operator/=(Z rhs) & {
         return *this *= rhs.inv();
     }
-    friend Mint operator+(Mint lhs, Mint rhs) {
+    friend Z operator+(Z lhs, Z rhs) {
         return lhs += rhs;
     }
-    friend Mint operator-(Mint lhs, Mint rhs) {
+    friend Z operator-(Z lhs, Z rhs) {
         return lhs -= rhs;
     }
-    friend Mint operator*(Mint lhs, Mint rhs) {
+    friend Z operator*(Z lhs, Z rhs) {
         return lhs *= rhs;
     }
-    friend Mint operator/(Mint lhs, Mint rhs) {
+    friend Z operator/(Z lhs, Z rhs) {
         return lhs /= rhs;
     }
-    friend istream &operator>>(istream &is, Mint &a) {
-        ll v; is >> v; a = Mint(v); return is;
+    friend istream &operator>>(istream &is, Z &a) {
+        ll v; is >> v; a = Z(v); return is;
     }
-    friend ostream &operator<<(ostream &os, const Mint &a) {
+    friend ostream &operator<<(ostream &os, const Z &a) {
         return os << a.x;
     }
-    friend bool operator==(Mint lhs, Mint rhs) {
-        return lhs.x == rhs.x;
-    }
-    friend bool operator!=(Mint lhs, Mint rhs) {
-        return lhs.x != rhs.x;
-    }
-    friend bool operator<(Mint lhs, Mint rhs) {
-        return lhs.x < rhs.x;
-    }
 };
-template<>
-ll Mint<0>::Mod = 998244353;
-constexpr ll P = 1E9 + 7;
-using Z = Mint<P>;

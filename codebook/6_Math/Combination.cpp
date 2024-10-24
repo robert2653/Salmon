@@ -34,7 +34,7 @@ struct Comb {
         if (n < m || m < 0) return 0;
         return fac(n) * invfac(m) * invfac(n - m);
     }
-    Z lucas(ll n, ll m) { // Mod 要在 1E5 左右
+    Z lucas(ll n, ll m) { // Mod 要在 1E5 左右, 動態 Mint
         if (m == 0) return 1;
         return binom(n % Z::getMod(), m % Z::getMod()) * lucas(n / Z::getMod(), m / Z::getMod());
     }

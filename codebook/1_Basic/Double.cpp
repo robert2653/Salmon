@@ -1,7 +1,6 @@
 struct D {
     double x;
-    D() : x{0} {}
-    D(double x) : x{x} {}
+    D(double x = 0.0) : x{x} {}
     constexpr static double eps = 1E-12;
     explicit operator double() const { return x; }
     D operator-() const {
@@ -46,14 +45,5 @@ struct D {
     }
     friend bool operator==(D lhs, D rhs) {
         return fabs(lhs.x - rhs.x) < eps;
-    }
-    friend bool operator!=(D lhs, D rhs) {
-        return fabs(lhs.x - rhs.x) > eps;
-    }
-    friend bool operator<=(D lhs, D rhs) {
-        return lhs < rhs || lhs == rhs;
-    }
-    friend bool operator>=(D lhs, D rhs) {
-        return lhs > rhs || lhs == rhs;
     }
 };

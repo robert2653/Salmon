@@ -1,81 +1,90 @@
 struct BigNum { // require Mint and NTT ~idft
     int sgn;
-    string x;
-    BigNum() : x("0"), sgn(1) {}
-    BigNum(string x, int sgn) : x(norm(x)), sgn(x == "0" ? 1 : sgn) {}
+    deque<int> x;
+    BigNum() : x {0}, sgn(1) {}
+    BigNum(deque<int> x, int sgn = 1) : x(norm(x)), sgn(sgn) {
+        resign();
+    }
     BigNum(string s) {
         if (s.empty()) {
             *this = BigNum();
         } else if (s[0] == '-') {
-            sgn = -1, x = s.substr(1);
+            sgn = -1;
+            for (auto &c : s) x.push_back(c - '0');
+            x.pop_front();
         } else {
-            sgn = 1, x = s;
+            sgn = 1;
+            for (auto &c : s) x.push_back(c - '0');
         }
         x = norm(x);
     }
-    string norm(string s) const {
-        if (s.empty()) return "0";
-        reverse(s.begin(), s.end());
-        while (s.length() > 1 && s.back() == '0') s.pop_back();
-        reverse(s.begin(), s.end());
+    void resign() {
+        sgn = x[0] == 0 ? 1 : sgn;
+    }
+    int cmp(const deque<int> &a, const deque<int> &b) const { // abs cmp
+        if (a.size() != b.size()) {
+            return a.size() - b.size();
+        } else {
+            return (a < b ? -1 : 1);
+        }
+    }
+    deque<int> norm(deque<int> s) {
+        if (s.empty()) return s = {0};
+        for (int i = s.size() - 1; i >= 0; i--) {
+            int c = s[i];
+            s[i] = c % 10;
+            c /= 10;
+            if (c) {
+                if (i == 0) s.push_front(c), i++;
+                else s[i - 1] += c;
+            }
+        }
+        while (s.size() > 1 && s.front() == 0) s.pop_front();
         return s;
     }
-    int cmp(string a, string b) { // abs cmp
-        if (a.length() != b.length()) {
-            return a.length() - b.length();
-        } else {
-            return (a < b ? -1 : a > b);
+    deque<int> Add(deque<int> a, deque<int> b) {
+        int i = a.size() - 1, j = b.size() - 1;
+        deque<int> res;
+        while (i >= 0 || j >= 0) {
+            int x = i >= 0 ? a[i] : 0, y = j >= 0 ? b[j] : 0;
+            res.push_front(x + y);
+            i--, j--;
         }
-    }
-    string Add(const string &a, const string &b) {
-        int n = a.length() - 1, m = b.length() - 1, c = 0;
-        string res;
-        while (n >= 0 || m >= 0 || c) {
-            int x = (n >= 0 ? a[n] - '0' : 0) + (m >= 0 ? b[m] - '0' : 0) + c;
-            res += (x % 10) + '0', c = x / 10;
-            n--, m--;
-        }
-        reverse(res.begin(), res.end());
-        return norm(res);
-    }
-    string Minus(const string &a, const string &b) {
-        int n = a.length() - 1, m = b.length() - 1, bor = 0;
-        string res;
-        while (n >= 0) {
-            int x = a[n] - '0' - bor, y = m >= 0 ? b[m] - '0' : 0;
-            bor = 0;
-            if (x < y) x += 10, bor = 1;
-            res += x - y + '0';
-            n--, m--;
-        }
-        reverse(res.begin(), res.end());
-        return norm(res);
-    }
-    vector<Z> toVector() const {
-        vector<Z> res;
-        for (int i = x.size() - 1; i >= 0; i--)
-            res.push_back(x[i] - '0');
         return res;
     }
-    string fromVector(const vector<Z> &v) {
-        string res;
-        int c = 0;
-        for (int i = 0; i < v.size(); ++i) {
-            c += v[i].x;
-            res += (c % 10) + '0';
-            c /= 10;
+    deque<int> Minus(deque<int> a, deque<int> b) {
+        int i = a.size() - 1, j = b.size() - 1;
+        deque<int> res;
+        while (i >= 0) {
+            int x = a[i], y = j >= 0 ? b[j] : 0;
+            if (x < y) x += 10, a[i - 1]--;
+            res.push_front(x - y);
+            i--, j--;
         }
-        while (c) {
-            res += (c % 10) + '0';
-            c /= 10;
+        return res;
+    }
+    vector<Z> Multiple(vector<Z> a, vector<Z> b) {
+        if (a.size() < b.size()) swap(a, b);
+        int n = 1, tot = a.size() + b.size() - 1;
+        while (n < tot) n *= 2;
+        if (((P - 1) & (n - 1)) != 0 || b.size() < 128) {
+            vector<Z> c(a.size() + b.size() - 1);
+            for (int i = 0; i < a.size(); i++)
+                for (int j = 0; j < b.size(); j++)
+                    c[i + j] += a[i] * b[j];
+            return c;
         }
-        reverse(res.begin(), res.end());
-        return norm(res);
+        a.resize(n), b.resize(n);
+        dft(a), dft(b);
+        for (int i = 0; i < n; i++) a[i] *= b[i];
+        idft(a);
+        a.resize(tot);
+        return a;
     }
     BigNum operator-() const {
         return BigNum(x, -sgn);
     }
-    BigNum operator+=(const BigNum &rhs) & {
+    BigNum &operator+=(const BigNum &rhs) & {
         if (sgn == 1) {
             if (rhs.sgn == -1) {
                 if (cmp(x, rhs.x) < 0) {
@@ -97,32 +106,17 @@ struct BigNum { // require Mint and NTT ~idft
                 }
             }
         }
+        x = norm(x), resign();
         return *this;
     }
-    BigNum operator-=(const BigNum &rhs) & {
+    BigNum &operator-=(const BigNum &rhs) & {
         return *this += -rhs;
     }
-    vector<Z> Multiple(vector<Z> a, vector<Z> b) {
-        if (a.size() < b.size()) swap(a, b);
-        int n = 1, tot = a.size() + b.size() - 1;
-        while (n < tot) n *= 2;
-        if (((P - 1) & (n - 1)) != 0 || b.size() < 128) {
-            vector<Z> c(a.size() + b.size() - 1);
-            for (int i = 0; i < a.size(); i++)
-                for (int j = 0; j < b.size(); j++)
-                    c[i + j] += a[i] * b[j];
-            return c;
-        }
-        a.resize(n), b.resize(n);
-        dft(a), dft(b);
-        for (int i = 0; i < n; i++) a[i] *= b[i];
-        idft(a);
-        a.resize(tot);
-        return a;
-    }
-    BigNum operator*=(const BigNum &rhs) & {
-        vector<Z> a = toVector(), b = rhs.toVector();
-        return BigNum(fromVector(Multiple(a, b)), sgn * rhs.sgn);
+    BigNum &operator*=(const BigNum &rhs) & {
+        vector<Z> a(x.rbegin(), x.rend()), b(rhs.x.rbegin(), rhs.x.rend()), c = Multiple(a, b);
+        x = norm(deque<int>(c.rbegin(), c.rend()));
+        sgn *= rhs.sgn, resign();
+        return *this;
     }
     friend BigNum operator+(BigNum lhs, BigNum rhs) {
         return lhs += rhs;
@@ -137,6 +131,8 @@ struct BigNum { // require Mint and NTT ~idft
         string v; is >> v; a = BigNum(v); return is;
     }
     friend ostream &operator<<(ostream &os, const BigNum &a) {
-        return os << (a.sgn == 1 ? "" : "-") << a.x;
+        os << (a.sgn == 1 ? "" : "-");
+        for (auto x : a.x) os << x;
+        return os;
     }
 };

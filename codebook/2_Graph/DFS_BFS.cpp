@@ -12,18 +12,17 @@ void dfsBfs() {
     };
     dfs(dfs, 0);
     // bfs
-    vector<int> depth(n, 1e9);
-    queue<int> q;
+    vector<int> dep(n, -1);
     auto bfs = [&](auto self, int s) -> void {
-        vis[s] = true, depth[s] = 0;
-        q.push(s);
-        while (!q.empty()) {
-            int u = q.front(); q.pop();
+        queue<int> que;
+        dep[s] = 0, que.push(s);
+        while (!que.empty()) {
+            int u = que.front(); que.pop();
             for (auto v : adj[u]) {
-                if (vis[v]) continue;
-                vis[v] = true;
-                depth[v] = depth[u] + 1;
-                q.push(v);
+                if (dep[v] == -1) {
+                    dep[v] = dep[u] + 1;
+                    que.push(v);
+                }
             }
         }
     };

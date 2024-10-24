@@ -1,7 +1,6 @@
 void editDistance() {
     string s1, s2; cin >> s1 >> s2;
     int n1 = s1.size(), n2 = s2.size();
-    // dp[i][j] 為 s1 的前 i 個字元，跟 s2 的前 j 個字元
     vector<int> dp(n2 + 1);
     iota(dp.begin(), dp.end(), 0);
     for (int i = 1; i <= n1; i++) {
