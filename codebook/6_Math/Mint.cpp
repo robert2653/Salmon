@@ -1,27 +1,30 @@
-template<class T>
-T power(T a, ll b) {
-    T res {1};
-    for (; b; b /= 2, a *= a)
-        if (b & 1) res *= a;
-    return res;
-}
-ll mul(ll a, ll b, ll p) { // 大模數再抄
+ll mul(ll a, ll b, ll p) {
     ll res = a * b - ll(1.L * a * b / p) * p;
     res %= p;
     if (res < 0) res += p;
     return res;
 }
-template<ll P>
+// 改 MLong: getMod() < (1ULL << 31)，會爆用 mul
+template<class T>
+constexpr T power(T a, ll b) {
+    T res {1};
+    for (; b; b /= 2, a *= a)
+        if (b & 1) res *= a;
+    return res;
+}
+template<int P>
 struct Mint {
-    ll x;
-    Mint(ll x = 0) : x {norm(x % getMod())} {}
-    static ll Mod;
-    static ll getMod() {
+    // Dynamic Mint, not necessary
+    static int Mod;
+    static int getMod() {
         return P > 0 ? P : Mod;
     }
-    static void setMod(ll Mod_) {
+    static void setMod(int Mod_) {
         Mod = Mod_;
     }
+
+    ll x;
+    Mint(ll x = 0) : x {norm(x % getMod())} {}
     ll norm(ll x) const {
         if (x < 0) x += getMod();
         if (x >= getMod()) x -= getMod();
@@ -43,11 +46,7 @@ struct Mint {
         return *this;
     }
     Mint &operator*=(Mint rhs) & {
-        if (getMod() < (1ULL << 31)) {
-            x = x * rhs.x % int(getMod());
-        } else {
-            x = mul(x, rhs.x, getMod());
-        }
+        x = x * rhs.x % getMod();
         return *this;
     }
     Mint &operator/=(Mint rhs) & {
@@ -83,6 +82,6 @@ struct Mint {
     }
 };
 template<>
-ll Mint<0>::Mod = 998244353;
-constexpr ll P = 1E9 + 7;
+int Mint<0>::Mod = 998244353;
+constexpr int P = 1E9 + 7;
 using Z = Mint<P>;

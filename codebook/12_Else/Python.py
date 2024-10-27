@@ -3,7 +3,7 @@ from fractions import * # 分數
 from random import *
 from math import *
 # set decimal prec if it could overflow in precision
-setcontext(Context(prec=10, rounding=ROUND_FLOOR))
+setcontext(Context(prec=10, Emax=MAX_EMAX, rounding=ROUND_FLOOR))
 # read and print
 x = int(input())
 a, b, c = list(map(Fraction, input().split()))
