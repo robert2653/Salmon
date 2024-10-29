@@ -12,8 +12,7 @@ struct PAM {
     vector<Node> t;
     PAM() { init(); }
     void init() {
-        s.clear(); 
-        t.assign(2, Node());
+        s.clear(); t.assign(2, Node());
         t[0].len = 0, t[0].fail = 1;
         t[1].len = -1;
     }

@@ -5,12 +5,11 @@ struct VBCC {
     vector<bool> ap;
     VBCC(int n_ = 0) { init(n_); }
     void init(int n_) {
-        n = n_;
+        n = n_; cur = cnt = 0;
         adj.assign(n, {});
         dfn.assign(n, -1), low.resize(n);
         bcc.assign(n, {}), ap.assign(n, false);
         stk.clear();
-        cur = cnt = 0;
     }
     void addEdge(int u, int v) {
         adj[u].push_back(v);
@@ -19,11 +18,11 @@ struct VBCC {
     void dfs(int x, int p) {
         dfn[x] = low[x] = cur++;
         stk.push_back(x);
-        int child = 0;
+        int ch = 0;
         for (auto y : adj[x]) {
             if (y == p) continue;
             if (dfn[y] == -1) {
-                dfs(y, x), child++;
+                dfs(y, x), ch++;
                 low[x] = min(low[x], low[y]);
                 if (low[y] >= dfn[x]) {
                     int v;
@@ -41,8 +40,7 @@ struct VBCC {
                 low[x] = min(low[x], dfn[y]);
             }
         }
-        if (p == -1 && child > 1)
-            ap[x] = true;
+        if (p == -1 && ch > 1) ap[x] = true;
     }
     vector<bool> work() {
         for (int i = 0; i < n; i++)

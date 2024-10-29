@@ -1,6 +1,4 @@
-struct Query {
-    int l, r, id;
-};
+struct Query { int l, r, id; };
 void Mo(vector<Query> &q) {
     int blk = sqrt(q.size());
     sort(q.begin(), q.end(), [&](const Query &a, const Query &b) {

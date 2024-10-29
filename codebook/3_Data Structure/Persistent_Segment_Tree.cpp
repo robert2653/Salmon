@@ -24,22 +24,22 @@ struct PST {
     template<class T>
     void init(vector<T> init_) {
         n = init_.size();
-        nd.clear(); rt.clear();
-        nd.emplace_back(); // 讓 root 指向 1-based
-        rt.push_back(build(0, n, init_));
-    }
-    int build(int l, int r, vector<Info> &init_) {
-        int id = nd.size();
-        nd.emplace_back();
-        if (r - l == 1) {
-            nd[id].info = init_[l];
+        nd.assign(1, Node());
+        rt.clear();
+        function<int(int, int)> build = [&](int l, int r) {
+            int id = nd.size();
+            nd.emplace_back();
+            if (r - l == 1) {
+                nd[id].info = init_[l];
+                return id;
+            }
+            int m = (l + r) >> 1;
+            nd[id].lc = build(l, m);
+            nd[id].rc = build(m, r);
+            pull(nd[id]);
             return id;
-        }
-        int m = (l + r) >> 1;
-        nd[id].lc = build(l, m, init_);
-        nd[id].rc = build(m, r, init_);
-        pull(nd[id]);
-        return id;
+        };
+        rt.push_back(build(0, n));
     }
     void pull(Node &t) {
         t.info = nd[t.lc].info + nd[t.rc].info;
@@ -58,7 +58,7 @@ struct PST {
             nd[t].info = v;
             return t;
         }
-        int m = (l + r) >> 1;
+        int m = (l + r) / 2;
         if (x < m) {
             nd[t].lc = modify(nd[t].lc, l, m, x, v);
         } else {
@@ -67,14 +67,14 @@ struct PST {
         pull(nd[t]);
         return t;
     }
-    void modify(int ver, int pos, const Info &val) {
+    void modify(int ver, int p, const Info &i) {
         if (int(rt.size()) <= ver) rt.resize(ver + 1);
-        rt[ver] = modify(rt[ver], 0, n, pos, val);
+        rt[ver] = modify(rt[ver], 0, n, p, i);
     }
     Info query(int t, int l, int r, int ql, int qr) {
         if (l >= qr || r <= ql) return Info();
         if (ql <= l && r <= qr) return nd[t].info;
-        int m = (l + r) >> 1;
+        int m = (l + r) / 2;
         return query(nd[t].lc, l, m, ql, qr) + query(nd[t].rc, m, r, ql, qr);
     }
     Info query(int ver, int ql, int qr) {
@@ -87,12 +87,10 @@ struct PST {
         nd.reserve(n + q * (2 * __lg(n) + 1));
         rt.reserve(q + 1);
     }
-    void resize(int n) {
-        rt.resize(n);
-    }
+    void resize(int n) { rt.resize(n); }
 };
 struct Info {
-    int sum = 0;
+    ll sum = 0;
 };
 Info operator+(const Info &a, const Info &b) {
     return { a.sum + b.sum };

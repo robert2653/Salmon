@@ -12,8 +12,7 @@ vector<vector<T>> operator*(const vector<vector<T>> &a, const vector<vector<T>> 
 template<class T>
 vector<vector<T>> unit(int n) {
     vector<vector<T>> res(n, vector<T>(n));
-    for (int i = 0; i < n; i++)
-        res[i][i] = 1;
+    for (int i = 0; i < n; i++) res[i][i] = 1;
     return res;
 }
 template<class T>

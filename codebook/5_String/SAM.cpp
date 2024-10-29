@@ -72,7 +72,6 @@ void solve() {  // Substring Order II: build
         for (int u : g[i])
             cnt[sam.t[u].link] += cnt[u];
 
-
     vector<ll> dp(sz, -1);
     auto rec = [&](auto self, int u) -> ll {
         if (dp[u] != -1) return dp[u];
@@ -100,6 +99,5 @@ void solve() {  // Substring Order II: build
                 }
             }
         }
-    }    
-    cout << ans << "\n";
+    }
 }

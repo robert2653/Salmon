@@ -10,8 +10,7 @@ void fft(vector<cd> &a, bool inv) {
             rev[i] = rev[i >> 1] >> 1 | (i & 1) << k;
     }
     for (int i = 0; i < n; i++)
-        if (rev[i] < i)
-            swap(a[i], a[rev[i]]);
+        if (rev[i] < i) swap(a[i], a[rev[i]]);
     for (int k = 1; k < n; k *= 2) {
         double ang = (inv ? -1 : 1) * PI / k;
         cd wn(cos(ang), sin(ang));

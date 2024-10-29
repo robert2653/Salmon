@@ -20,8 +20,7 @@ vector<string> duval(string s) {
 // 最小旋轉字串
 string minRound(string s) {
     s += s;
-    int i = 0, n = s.size();
-    int start = i;
+    int i = 0, n = s.size(), start = i;
     while (i < n / 2) {
         start = i;
         int k = i, j = i + 1;
@@ -30,9 +29,7 @@ string minRound(string s) {
             else k++;
             j++;
         }
-        while (i <= k) {
-            i += j - k;
-        }
+        while (i <= k) i += j - k;
     }
     return s.substr(start, n / 2);
 }

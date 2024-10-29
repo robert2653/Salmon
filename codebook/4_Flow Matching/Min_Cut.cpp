@@ -11,16 +11,15 @@ void minCut() {
     int res = g.work(0, n - 1);
     cout << res << "\n";
     if (res == 0) return;
-
+    
     vector<int> vis(n);
     auto find = [&](auto self, int u) -> void {
         if (!vis[u]) {
             vis[u] = 1;
             for (int id : g.adj[u]) {
                 auto e = g.edges[id];
-                if (e.cap - e.flow > 0) {
+                if (e.cap - e.flow > 0)
                     self(self, e.to);
-                }
             }
         }
     };
@@ -30,9 +29,8 @@ void minCut() {
         for (int id : g.adj[i]) {
             if (id & 1) continue;
             auto e = g.edges[id];
-            if (!vis[e.to]) {
+            if (!vis[e.to])
                 cout << i + 1 << " " << e.to + 1 << "\n";
-            }
         }
     }
 }

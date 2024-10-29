@@ -21,9 +21,8 @@ void rec(int k, int l, int r, int optl, int optr) {
 }
 void DNC() {
     // first build cost...
-    for (int i = 1; i <= n; i++) {
+    for (int i = 1; i <= n; i++)
         // init dp[1][i]
-    }
     for (int i = 2; i <= k; i++)
         rec(i, 1, n, 1, n);
     cout << dp[k][n] << "\n";

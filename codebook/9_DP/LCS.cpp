@@ -1,7 +1,6 @@
 void LCS() {
-    int m, n; cin >> m >> n;
+    int m, n, L = 0; cin >> m >> n;
     string s1, s2; cin >> s1 >> s2;
-    int L = 0;
     vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {

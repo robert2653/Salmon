@@ -3,8 +3,7 @@ vector<vector<int>> up;
 vector<int> dep, dfn;
 void build(int n, vector<vector<int>> &g, int rt = 0) {
     up.assign(n, vector<int>(Lg + 1));
-    dep.assign(n, 0);
-    dfn.assign(n, 0);
+    dep.assign(n, 0); dfn.assign(n, 0);
     int cur = 0;
     auto dfs = [&](auto self, int x, int p) -> void {
         dfn[x] = cur++;
@@ -24,8 +23,7 @@ int lca(int a, int b) {
     if (dep[a] < dep[b]) swap(a, b);
     int pull = dep[a] - dep[b];
     for (int i = 0; i <= Lg; i++)
-        if (pull & (1 << i))
-            a = up[a][i];
+        if (pull & (1 << i)) a = up[a][i];
     if (a == b) return a;
     for (int i = Lg; i >= 0; i--)
         if (up[a][i] != up[b][i])
@@ -34,7 +32,6 @@ int lca(int a, int b) {
 }
 int jump(int x, int k) {
     for (int i = Lg; i >= 0; i--)
-        if (k >> i & 1)
-            x = up[x][i];
+        if (k >> i & 1) x = up[x][i];
     return x;
 }

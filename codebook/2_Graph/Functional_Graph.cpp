@@ -13,10 +13,8 @@ struct FuntionalGraph {
         build();
     }
     void build() {
-        for (int i = 0; i < n; i++) {
-            cht[i][0] = g[i];
-            in[g[i]]++;
-        }
+        for (int i = 0; i < n; i++)
+            cht[i][0] = g[i], in[g[i]]++;
         for (int i = 1; i <= 30; i++)
             for (int u = 0; u < n; u++)
                 cht[u][i] = cht[cht[u][i - 1]][i - 1];
@@ -35,10 +33,8 @@ struct FuntionalGraph {
         auto s = find(p.begin(), p.end(), cur);
         vector<int> cyc(s, p.end());
         p.erase(s, p.end()); p.push_back(cur);
-        for (int i = 0; i < (int)cyc.size(); i++) {
-            bel[cyc[i]] = cnt;
-            id[cyc[i]] = i;
-        }
+        for (int i = 0; i < (int)cyc.size(); i++)
+            bel[cyc[i]] = cnt, id[cyc[i]] = i;
         if (!cyc.empty())
             ++cnt, len.push_back(cyc.size());
         for (int i = p.size() - 1; i > 0; i--)

@@ -4,11 +4,10 @@ struct SCC {
     vector<int> stk, dfn, low, bel;
     SCC(int n_ = 0) { init(n_); }
     void init(int n_) {
-        n = n_;
+        n = n_; cur = cnt = 0;
         adj.assign(n, {});
         dfn.assign(n, -1), low.resize(n);
         bel.assign(n, -1), stk.clear();
-        cur = cnt = 0;
     }
     void addEdge(int u, int v) {
         adj[u].push_back(v);

@@ -4,8 +4,7 @@ auto prim = [&](int n, vector<vector<pair<int, int>>> &adj) -> bool {
     pq.emplace(0, 0); // w, vertex
     vector<bool> vis(n);
     while (!pq.empty()) {
-        auto [u, w] = pq.top();
-        pq.pop();
+        auto [u, w] = pq.top(); pq.pop();
         if (vis[u]) continue;
         vis[u] = true;
         sz++;

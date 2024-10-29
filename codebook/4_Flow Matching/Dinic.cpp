@@ -5,7 +5,7 @@ struct Dinic {
         T f, cap; // 流量跟容量
     };
     int n, m, s, t;
-    const T INF_FlOW = 1LL << 60;
+    const T INF_FlOW = 1 << 30;
     vector<vector<int>> g;
     vector<_Edge> e;
     vector<int> h, cur;
@@ -68,9 +68,6 @@ struct Dinic {
             }
         }
         return f;
-    }
-    void reset() {
-        for (int i = 0; i < m; i++) e[i].f = 0;
     }
     void reuse(int n_) { // 走殘留網路, res += f
         while (n < n_) {

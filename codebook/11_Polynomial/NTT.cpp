@@ -132,7 +132,7 @@ struct Poly : public vector<Mint<P>> {
         }
         a.resize(n), b.resize(n);
         dft(a), dft(b);
-        for (int i = 0; i < n; ++i)
+        for (int i = 0; i < n; i++)
             a[i] *= b[i];
         idft(a);
         a.resize(tot);
@@ -171,13 +171,13 @@ struct Poly : public vector<Mint<P>> {
     Poly deriv() const {
         if (this->empty()) return Poly();
         Poly res(this->size() - 1);
-        for (int i = 0; i < this->size() - 1; ++i)
+        for (int i = 0; i < this->size() - 1; i++)
             res[i] = (i + 1) * (*this)[i + 1];
         return res;
     }
     Poly integr() const {
         Poly res(this->size() + 1);
-        for (int i = 0; i < this->size(); ++i)
+        for (int i = 0; i < this->size(); i++)
             res[i + 1] = (*this)[i] / (i + 1);
         return res;
     }

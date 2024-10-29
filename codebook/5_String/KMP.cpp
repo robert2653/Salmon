@@ -6,9 +6,7 @@ struct KMP {
     // ex : a   b  c a b c
     //      -1 -1 -1 0 1 2
     KMP() {}
-    KMP(const string &sub_) {
-        build(sub_);
-    }
+    KMP(const string &sub_) { build(sub_); }
     vector<int> build(const string &sub_) {
         sub = sub_, fail.resize(sub.size(), -1);
         for (int i = 1; i < sub.size(); i++) {

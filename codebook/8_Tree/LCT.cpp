@@ -10,13 +10,10 @@ struct LinkCutTree { // 1-based
     vector<Node> nd;
     LinkCutTree(int n = 0) { init(n); }
     void init(int n) {
-        nd.clear();
-        nd.emplace_back();
+        nd.clear(); nd.emplace_back();
         resize(n);
     }
-    void resize(int n) {
-        nd.resize(n + 1);
-    }
+    void resize(int n) { nd.resize(n + 1); }
     bool isrt(int t) {
         return !nd[t].p || (nd[nd[t].p].ch[0] != t && nd[nd[t].p].ch[1] != t);
     }
@@ -129,14 +126,14 @@ struct LinkCutTree { // 1-based
 };
 constexpr int Mod = 51061;
 struct Tag {
-    ll add = 0; ll mul = 1;
+    ll add = 0, mul = 1;
     void apply(const Tag &v) {
         mul = mul * v.mul % Mod;
         add = (add * v.mul % Mod + v.add) % Mod;
     }
 };
 struct Info {
-    ll val = 0; ll sum = 0;
+    ll val = 0, sum = 0;
     void apply(int size, const Tag &v) {
         val = (val * v.mul % Mod + v.add) % Mod;
         sum = (sum * v.mul % Mod + v.add * size % Mod) % Mod;

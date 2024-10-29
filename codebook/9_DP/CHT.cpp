@@ -3,9 +3,7 @@
 struct Line {
     ll m, b;
     Line(ll m = 0, ll b = 0) : m(m), b(b) {}
-    ll eval(ll x) {
-        return m * x + b;
-    }
+    ll eval(ll x) { return m * x + b; }
 };
 struct CHT { // 用在查詢單調斜率也單調
     int n, lptr, rptr;

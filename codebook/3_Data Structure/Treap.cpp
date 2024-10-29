@@ -1,7 +1,8 @@
 struct Treap {
     Treap *lc, *rc;
-    int pri, siz; bool rev_valid;
-    int val; int min;
+    int pri, siz;
+    bool rev_valid;
+    int val, min;
     Treap(int val_) {
         min = val = val_;
         pri = rand();
@@ -9,8 +10,7 @@ struct Treap {
         siz = 1; rev_valid = 0;
     }
     void pull() { // update siz or other information
-        siz = 1;
-        min = val;
+        siz = 1; min = val;
         for (auto c : {lc, rc}) {
             if (!c) continue;
             siz += c->siz;
@@ -33,9 +33,7 @@ struct Treap {
         else return rc->find(k) + ls;
     }
 };
-int size(Treap *t) {
-    return t ? t->siz : 0;
-}
+int size(Treap *t) { return t ? t->siz : 0; }
 Treap *merge(Treap *a, Treap *b) {
     if (!a || !b) return a ? a : b;
     a->push(); b->push();

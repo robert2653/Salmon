@@ -6,7 +6,7 @@ void binarySearch() {
         else hi = x - 1;
     }
     cout << lo; // 保證有解
-
+    
     while (lo <= hi) {
         int x = (lo + hi) / 2;
         if (check(x)) lo = x + 1;
