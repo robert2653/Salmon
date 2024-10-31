@@ -127,7 +127,7 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
 struct Tag {
     bool set_val = false;
     int add = 0;
-    void apply(const Tag& t) & {
+    void apply(const Tag &t) & {
         if (t.set_val) {
             set_val = t.set_val;
             add = t.add;

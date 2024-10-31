@@ -1,3 +1,4 @@
+// C(m, n) = C(m, n - 1) * (m - n + 1) / n
 struct Comb {
     int n;
     vector<Z> _fac, _invfac, _inv;

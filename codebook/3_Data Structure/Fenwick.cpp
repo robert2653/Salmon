@@ -1,5 +1,5 @@
 template<class T>
-struct Fenwick { // 全部以 0 based 使用
+struct Fenwick {
     int n; vector<T> a;
     Fenwick(int n_ = 0) {
         init(n_);
@@ -12,13 +12,13 @@ struct Fenwick { // 全部以 0 based 使用
         for (int i = x + 1; i <= n; i += i & -i)
             a[i - 1] = a[i - 1] + v;
     }
-    T sum(int x) { // 左閉右開查詢
+    T sum(int x) {
         T ans{};
         for (int i = x; i > 0; i -= i & -i)
             ans = ans + a[i - 1];
         return ans;
     }
-    T rangeSum(int l, int r) { // 左閉右開查詢
+    T rangeSum(int l, int r) {
         return sum(r) - sum(l);
     }
     int select(const T &k, int start = 0) {
@@ -34,7 +34,7 @@ struct Fenwick { // 全部以 0 based 使用
     }
 };
 template<class T>
-struct TwoDFenwick {  // 全部以 0 based 使用
+struct TwoDFenwick {
     int nx, ny;  // row, col 個數
     vector<vector<T>> a;
     TwoDFenwick(int nx_ = 0, int ny_ = 0) {
@@ -49,14 +49,14 @@ struct TwoDFenwick {  // 全部以 0 based 使用
             for (int j = y + 1; j <= ny; j += j & -j)
                 a[i - 1][j - 1] = a[i - 1][j - 1] + v;
     }
-    T sum(int x, int y) { // 左閉右開查詢
+    T sum(int x, int y) {
         T ans{};
         for (int i = x; i > 0; i -= i & -i)
             for (int j = y; j > 0; j -= j & -j)
                 ans = ans + a[i - 1][j - 1];
         return ans;
     }
-    T rangeSum(int lx, int ly, int rx, int ry) { // 左閉右開查詢
+    T rangeSum(int lx, int ly, int rx, int ry) {
         return sum(rx, ry) - sum(lx, ry) - sum(rx, ly) + sum(lx, ly);
     }
 };

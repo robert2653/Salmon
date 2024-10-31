@@ -47,10 +47,10 @@ struct RangeFenwick { // 全部以 0 based 使用
     }
 };
 template<class T>
-struct rangeTwoDFenwick {  // 全部以 0 based 使用
+struct RangeTwoDFenwick {  // 全部以 0 based 使用
     int nx, ny;  // row, col 個數
     vector<vector<T>> d, di, dj, dij;
-    rangeTwoDFenwick(int nx_ = 0, int ny_ = 0) {
+    RangeTwoDFenwick(int nx_ = 0, int ny_ = 0) {
         init(nx_, ny_);
     }
     void init(int nx_, int ny_) {

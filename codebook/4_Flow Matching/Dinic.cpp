@@ -5,7 +5,7 @@ struct Dinic {
         T f, cap; // 流量跟容量
     };
     int n, m, s, t;
-    const T INF_FlOW = 1 << 30;
+    const T INF_FlOW = numeric_limits<T>::max();
     vector<vector<int>> g;
     vector<_Edge> e;
     vector<int> h, cur;

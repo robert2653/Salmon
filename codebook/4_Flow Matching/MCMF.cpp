@@ -6,8 +6,8 @@ struct MCMF {
         Tc cost;
     };
     int n, m, s, t;
-    const Tf INF_FLOW = 1 << 30;
-    const Tc INF_COST = 1 << 30;
+    const Tf INF_FLOW = numeric_limits<Tf>::max();
+    const Tc INF_COST = numeric_limits<Tc>::max();
     vector<_Edge> e;
     vector<vector<int>> g;
     vector<Tc> dis;
