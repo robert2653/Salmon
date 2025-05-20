@@ -3,14 +3,7 @@ struct EBCC { // CF/contest/1986/pF
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
     vector<pair<int, int>> bridges; // 關鍵邊
-    EBCC(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_; cur = cnt = 0;
-        adj.assign(n, {});
-        dfn.assign(n, -1), low.resize(n);
-        bel.assign(n, -1), stk.clear();
-        bridges.clear();
-    }
+    EBCC(int n) : n(n), cur(0), cnt(0), adj(n), low(n), dfn(n, -1), bel(n, -1) {}
     void addEdge(int u, int v) {
         adj[u].push_back(v);
         adj[v].push_back(u);

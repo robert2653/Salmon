@@ -1,15 +1,7 @@
-constexpr int N = 2E5 + 5;
-int cht[N][31]; // 倍增表, 放外面不然 TLE
 struct FuntionalGraph {
     int n, cnt;
     vector<int> g, bel, id, len, in, top;
-    FuntionalGraph() : n(0) {}
-    FuntionalGraph(vector<int> g_) { init(g_); }
-    void init(vector<int> g_) {
-        n = g_.size(); cnt = 0;
-        g = g_; bel.assign(n, -1);
-        id.resize(n); len.clear();
-        in.assign(n, 0); top.assign(n, -1);
+    FuntionalGraph(const vector<int> &g) : n(g.size()), g(g), cnt(0), in(n), bel(n, -1), top(n, -1) {
         build();
     }
     void build() {

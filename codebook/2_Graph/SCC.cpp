@@ -2,13 +2,7 @@ struct SCC {
     int n, cur, cnt;
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
-    SCC(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_; cur = cnt = 0;
-        adj.assign(n, {});
-        dfn.assign(n, -1), low.resize(n);
-        bel.assign(n, -1), stk.clear();
-    }
+    SCC(int n) : n(n), cur(0), cnt(0), adj(n), low(n), dfn(n, -1), bel(n, -1) {}
     void addEdge(int u, int v) {
         adj[u].push_back(v);
     }

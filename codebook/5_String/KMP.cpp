@@ -5,7 +5,6 @@ struct KMP {
     // 也就是 sub(0, i) 的最長共同前後綴長度
     // ex : a   b  c a b c
     //      -1 -1 -1 0 1 2
-    KMP() {}
     KMP(const string &sub_) { build(sub_); }
     vector<int> build(const string &sub_) {
         sub = sub_, fail.resize(sub.size(), -1);

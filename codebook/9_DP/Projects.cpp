@@ -12,9 +12,9 @@ void projects() { // 排程有權重問題，輸出價值最多且時間最少
     vector<array<int, 2>> rec(n + 1); // 有沒選，上個是誰
     sort(a.begin(), a.end());
     for (int i = 1; i <= n; i++) {
-        int id = --lower_bound(all(a), {0, a[i].from}, [](E x, E y) {
+        int id = prev(lower_bound(all(a), {0, a[i].from}, [](E x, E y) {
             return x.to < y.to;
-        }) - a.begin();
+        })) - a.begin();
         dp[i] = dp[i - 1];
         ll nw = dp[id][0] + a[i].w;
         ll nt = dp[id][1] + a[i].to - a[i].from;

@@ -1,15 +1,12 @@
 struct DSU {
     int n;
-    vector<int> boss, siz;
-    DSU(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_; boss.resize(n);
-        iota(boss.begin(), boss.end(), 0);
-        siz.assign(n, 1);
+    vector<int> f, siz;
+    DSU(int n) : n(n), f(n), siz(n, 1) {
+        iota(f.begin(), f.end(), 0);
     }
     int find(int x) {
-        if (boss[x] == x) return x;
-        return boss[x] = find(boss[x]);
+        if (f[x] == x) return x;
+        return f[x] = find(f[x]);
     }
     bool same(int x, int y) {
         return find(x) == find(y);
@@ -19,7 +16,7 @@ struct DSU {
         if (x == y) return false;
         if (siz[x] < siz[y]) swap(x, y);
         siz[x] += siz[y];
-        boss[y] = x;
+        f[y] = x;
         n--;
         return true;
     }
@@ -29,17 +26,13 @@ struct DSU {
 };
 struct DSU {
     int n;
-    vector<int> boss, siz, stk;
-    DSU(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_;
-        boss.resize(n);
-        iota(boss.begin(), boss.end(), 0);
-        siz.assign(n, 1);
+    vector<int> f, siz, stk;
+    DSU(int n) : n(n), f(n), siz(n, 1) {
+        iota(f.begin(), f.end(), 0);
         stk.clear();
     }
     int find(int x) {
-        return x == boss[x] ? x : find(boss[x]);
+        return x == f[x] ? x : find(f[x]);
     }
     bool same(int x, int y) {
         return find(x) == find(y);
@@ -49,7 +42,7 @@ struct DSU {
         if (x == y) return false;
         if (siz[x] < siz[y]) swap(x, y);
         siz[x] += siz[y];
-        boss[y] = x;
+        f[y] = x;
         n--;
         stk.push_back(y);
         return true;
@@ -59,8 +52,8 @@ struct DSU {
             int y = stk.back();
             stk.pop_back();
             n++;
-            siz[boss[y]] -= siz[y];
-            boss[y] = y;
+            siz[f[y]] -= siz[y];
+            f[y] = y;
         }
     }
     int size(int x) {

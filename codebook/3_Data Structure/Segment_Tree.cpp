@@ -32,14 +32,14 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
                 return;
             }
             int m = (l + r) / 2;
-            build(p * 2, l, m);
-            build(p * 2 + 1, m, r);
+            build(2 * p, l, m);
+            build(2 * p + 1, m, r);
             pull(p);
         };
         build(1, 0, n);
     }
     void pull(int p) {
-        info[p] = info[p * 2] + info[p * 2 + 1];
+        info[p] = info[2 * p] + info[2 * p + 1];
     }
     /*
     void apply(int p, int l, int r, const Tag &v) {
@@ -49,8 +49,8 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
     void push(int p, int l, int r) {
         int m = (l + r) / 2;
         if (r - l >= 1) {
-            apply(p * 2, l, m, tag[p]);
-            apply(p * 2 + 1, m, r, tag[p]);
+            apply(2 * p, l, m, tag[p]);
+            apply(2 * p + 1, m, r, tag[p]);
         }
         tag[p] = Tag();
     }
@@ -81,7 +81,7 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
         /*
         push(p, l, r);
         */
-        return query(p * 2, l, m, ql, qr) + query(p * 2 + 1, m, r, ql, qr);
+        return query(2 * p, l, m, ql, qr) + query(2 * p + 1, m, r, ql, qr);
     }
     Info query(int ql, int qr) {
         return query(1, 0, n, ql, qr);
@@ -95,8 +95,8 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
         }
         int m = (l + r) / 2;
         push(p, l, r);
-        rangeApply(p * 2, l, m, ql, qr, v);
-        rangeApply(p * 2 + 1, m, r, ql, qr, v);
+        rangeApply(2 * p, l, m, ql, qr, v);
+        rangeApply(2 * p + 1, m, r, ql, qr, v);
         pull(p);
     }
     void rangeApply(int l, int r, const Tag &v) {
@@ -159,7 +159,6 @@ struct Info {
 };
 Info operator+(const Info &a, const Info &b) {
     Info c;
-    c.n = a.n + b.n;
     c.sum = a.sum + b.sum;
     return c;
 }

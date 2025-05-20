@@ -2,14 +2,7 @@ template<class T>
 struct RangeFenwick { // 全部以 0 based 使用
     int n;
     vector<T> d, di;
-    RangeFenwick(int n_ = 0) {
-        init(n_);
-    }
-    void init(int n_) {
-        n = n_;
-        d.assign(n, T{});
-        di.assign(n, T{});
-    }
+    RangeFenwick(int n) : n(n), d(n), di(n) {}
     void add(int x, const T &v) {
         T vi = v * (x + 1);
         for (int i = x + 1; i <= n; i += i & -i) {
@@ -50,11 +43,7 @@ template<class T>
 struct RangeTwoDFenwick {  // 全部以 0 based 使用
     int nx, ny;  // row, col 個數
     vector<vector<T>> d, di, dj, dij;
-    RangeTwoDFenwick(int nx_ = 0, int ny_ = 0) {
-        init(nx_, ny_);
-    }
-    void init(int nx_, int ny_) {
-        nx = nx_; ny = ny_;
+    RangeTwoDFenwick(int x, int y) : nx(x), ny(y) {
         d.assign(nx, vector<T>(ny, T{}));
         di.assign(nx, vector<T>(ny, T{}));
         dj.assign(nx, vector<T>(ny, T{}));

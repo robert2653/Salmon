@@ -3,16 +3,13 @@ struct DominatorTree {
     int n, id;
     vector<vector<int>> adj, radj, bucket;
     vector<int> sdom, dom, vis, rev, pa, rt, mn, res;
-    DominatorTree(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_, id = 0;
-        adj.assign(n, {});
-        radj.assign(n, {});
-        bucket.assign(n, {});
-        sdom.resize(n), dom.assign(n, -1);
-        vis.assign(n, -1), rev.resize(n);
+    DominatorTree(int n) : n(n), id(0) {
+        sdom.resize(n), rev.resize(n);
         pa.resize(n), rt.resize(n);
         mn.resize(n), res.resize(n);
+        bucket.assign(n, {});
+        adj.assign(n, {}), radj.assign(n, {});
+        dom.assign(n, -1), vis.assign(n, -1);
     }
     void add_edge(int u, int v) {
         adj[u].push_back(v);

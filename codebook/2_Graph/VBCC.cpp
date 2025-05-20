@@ -3,14 +3,7 @@ struct VBCC {
     vector<vector<int>> adj, bcc;
     vector<int> stk, dfn, low;
     vector<bool> ap;
-    VBCC(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_; cur = cnt = 0;
-        adj.assign(n, {});
-        dfn.assign(n, -1), low.resize(n);
-        bcc.assign(n, {}), ap.assign(n, false);
-        stk.clear();
-    }
+    VBCC(int n) : n(n), cur(0), cnt(0), adj(n), bcc(n), ap(n), low(n), dfn(n, -1) {}
     void addEdge(int u, int v) {
         adj[u].push_back(v);
         adj[v].push_back(u);

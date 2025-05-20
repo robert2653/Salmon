@@ -1,8 +1,8 @@
 string LCS(const string &a, const string &b) {
-    int m = a.length(), n = b.length(), L = 0;
-    vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
+    int n = a.length(), m = b.length();
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1));
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
             if (a[i - 1] == b[j - 1]) {
                 dp[i][j] = dp[i - 1][j - 1] + 1;
             } else {
@@ -10,16 +10,15 @@ string LCS(const string &a, const string &b) {
             }
         }
     }
-    int len = dp[m][n];
-    string ans(len, 'c');
-    while (m >= 1 && n >= 1) {
-        if (a[m - 1] == b[n - 1]) {
-            ans[len - 1] = a[m - 1];
-            m--, n--, len--;
-        }
-        else {
-            if (dp[m - 1][n] > dp[m][n - 1]) m--;
-            else n--;
+    int l = dp[n][m];
+    string ans(l, 0);
+    while (n >= 1 && m >= 1) {
+        if (a[n - 1] == b[m - 1]) {
+            ans[l - 1] = a[n - 1];
+            n--, m--, l--;
+        } else {
+            if (dp[n - 1][m] > dp[n][m - 1]) n--;
+            else m--;
         }
     }
     return ans;

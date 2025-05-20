@@ -8,11 +8,7 @@ struct LinkCutTree { // 1-based
         int ch[2], p = 0;
     };
     vector<Node> nd;
-    LinkCutTree(int n = 0) { init(n); }
-    void init(int n) {
-        nd.clear(); nd.emplace_back();
-        resize(n);
-    }
+    LinkCutTree(int n) { resize(n); }
     void resize(int n) { nd.resize(n + 1); }
     bool isrt(int t) {
         return !nd[t].p || (nd[nd[t].p].ch[0] != t && nd[nd[t].p].ch[1] != t);

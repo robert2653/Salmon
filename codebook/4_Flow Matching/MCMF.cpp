@@ -12,12 +12,7 @@ struct MCMF {
     vector<vector<int>> g;
     vector<Tc> dis;
     vector<int> rt, inq;
-    MCMF(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_; m = 0;
-        e.clear();
-        g.assign(n, {});
-    }
+    MCMF(int n) : n(n), m(0), g(n) {}
     void addEdge(int u, int v, Tf cap, Tc cost) {
         e.push_back({v, 0, cap, cost});
         e.push_back({u, 0, 0, -cost});

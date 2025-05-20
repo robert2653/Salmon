@@ -2,9 +2,7 @@ struct HLD {
     int n, cur;
     vector<int> siz, top, dep, parent, in, out, seq;
     vector<vector<int>> adj;
-    HLD(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_; cur = 0;
+    HLD(int n) : n(n), cur(0) {
         siz.resize(n); top.resize(n); dep.resize(n);
         parent.resize(n); in.resize(n); out.resize(n);
         seq.resize(n); adj.assign(n, {});
@@ -68,9 +66,10 @@ struct HLD {
         swap(rt, v);
         if (rt == v) return rt;
         if (!isAncester(rt, v)) return parent[rt];
-        auto it = upper_bound(adj[rt].begin(), adj[rt].end(), v, [&](int x, int y) {
-            return in[x] < in[y];
-        }) - 1;
+        auto it = upper_bound(adj[rt].begin(), adj[rt].end(), v,
+            [&](int x, int y) {
+                return in[x] < in[y];
+            }) - 1;
         return *it;
     }
     int rootedSize(int rt, int v) {

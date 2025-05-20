@@ -12,8 +12,8 @@ struct StaticKth : PST<int> {
         init(s.size());
         for (int i = 0; i < v.size(); i++) {
             createVersion(i);
-            cnt[v[i]]++;
-            modify(i + 1, dct(v[i]), cnt[v[i]]);
+            int d = dct(v[i]);
+            modify(i + 1, d, ++cnt[d]);
         }
     }
     int work(int a, int b, int l, int r, int k) {

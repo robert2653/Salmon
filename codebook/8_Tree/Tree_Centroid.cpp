@@ -3,9 +3,7 @@ struct CentriodDecomposition {
     vector<vector<int>> adj;
     vector<bool> vis;
     vector<int> siz;
-    CentriodDecomposition(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_;
+    CentriodDecomposition(int n) : n(n) {
         adj.assign(n, {});
         vis.assign(n, false);
         siz.assign(n, 1);

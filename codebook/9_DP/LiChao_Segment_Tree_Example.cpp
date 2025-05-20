@@ -5,10 +5,10 @@ using ll = long long;
 // dp[i] = min(f[j] * s[i] + dp[j])
 //   y   =     m        x  +   b
 
-constexpr ll Inf = 4e18;
+constexpr ll inf = 4E18;
 struct Line {
     ll m, b;
-    Line(ll m = 0, ll b = Inf) : m(m), b(b) {}
+    Line(ll m = 0, ll b = inf) : m(m), b(b) {}
     ll eval(ll x) const { return m * x + b; }
 };
 struct LiChaoSeg { // 取 max 再變換就好

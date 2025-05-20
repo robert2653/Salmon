@@ -3,11 +3,7 @@ struct Hungarian { // 0-based, O(VE)
     vector<vector<int>> adj;
     vector<int> used, vis;
     vector<pair<int, int>> match;
-    Hungarian(int n_ = 0, int m_ = 0) {
-        init(n_, m_);
-    }
-    void init(int n_, int m_) {
-        n = n_; m = m_;
+    Hungarian(int n, int m) : n(n), m(m) {
         adj.assign(n + m, {});
         used.assign(n + m, -1);
         vis.assign(n + m, 0);

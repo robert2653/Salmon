@@ -73,13 +73,14 @@ tuple<int, vector<T>, vector<vector<T>>> findBasis(vector<vector<T>> a) {
         if (pos[c] != -1)
             sol[c] = a[pos[c]][m - 1];
     for (int c = 0; c < m - 1; c++)
-        if (pos[c] == -1)
+        if (pos[c] == -1) {
             vector<T> v(m - 1);
             v[c] = 1;
             for (int j = 0; j < m - 1; j++)
                 if (pos[j] != -1)
                     v[j] = -a[pos[j]][c];
             basis.push_back(v);
+        }
     return {rk, sol, basis};
 }
 template<class T>

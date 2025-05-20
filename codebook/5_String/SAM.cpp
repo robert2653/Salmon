@@ -12,8 +12,7 @@ struct SAM {
         Node() : len{}, link{}, fpos{}, next{} {}
     };
     vector<Node> t;
-    SAM() { init(); }
-    void init() {
+    SAM() {
         t.assign(2, Node());
         t[0].len = -1;
     }

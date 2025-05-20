@@ -1,12 +1,13 @@
-constexpr int N = 1E7;
+const int N = 1E7;
+const int ALPHABET_SIZE = 1E7;
 int tot = 0;
-int trie[N][26], cnt[N];
+int trie[N][ALPHABET_SIZE], cnt[N];
 void reset() {
-    tot = 0, fill_n(trie[0], 26, 0);
+    tot = 0, fill_n(trie[0], ALPHABET_SIZE, 0);
 }
 int newNode() {
     int x = ++tot;
-    cnt[x] = 0, fill_n(trie[x], 26, 0);
+    cnt[x] = 0, fill_n(trie[x], ALPHABET_SIZE, 0);
     return x;
 }
 void add(const string &s) {

@@ -9,10 +9,8 @@ struct Dinic {
     vector<vector<int>> g;
     vector<_Edge> e;
     vector<int> h, cur;
-    Dinic(int n_ = 0) { init(n_); }
-    void init(int n_) {
-        n = n_; m = 0;
-        h.resize(n); cur.resize(n);
+    Dinic(int n) : n(n), m(0) {
+        h.resize(n), cur.resize(n);
         g.assign(n, {});
         e.clear();
     }

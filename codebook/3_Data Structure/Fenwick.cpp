@@ -1,13 +1,7 @@
 template<class T>
 struct Fenwick {
     int n; vector<T> a;
-    Fenwick(int n_ = 0) {
-        init(n_);
-    }
-    void init(int n_) {
-        n = n_;
-        a.assign(n, T{});
-    }
+    Fenwick(int n) : n(n), a(n) {}
     void add(int x, const T &v) {
         for (int i = x + 1; i <= n; i += i & -i)
             a[i - 1] = a[i - 1] + v;
@@ -37,11 +31,7 @@ template<class T>
 struct TwoDFenwick {
     int nx, ny;  // row, col 個數
     vector<vector<T>> a;
-    TwoDFenwick(int nx_ = 0, int ny_ = 0) {
-        init(nx_, ny_);
-    }
-    void init(int nx_, int ny_) {
-        nx = nx_; ny = ny_;
+    TwoDFenwick(int nx, int ny) : nx(nx), ny(ny) {
         a.assign(nx, vector<T>(ny, T{}));
     }
     void add(int x, int y, const T &v) {
