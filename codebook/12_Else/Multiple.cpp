@@ -11,7 +11,7 @@ const ll w1 = Mint<P1>::getMod();
 const ll w2 = w1 * Mint<P2>::getMod();
 // Garner's Algorithm
 template <typename T>
-vector<T> ArbitraryMult(const vector<int> &a, const vector<int> &b) {
+vector<T> arbitraryMult(const vector<int> &a, const vector<int> &b) {
     int n = a.size(), m = b.size();
     Poly<P1> x = Poly<P1>(a.begin(), a.end()) * Poly<P1>(b.begin(), b.end());
     Poly<P2> y = Poly<P2>(a.begin(), a.end()) * Poly<P2>(b.begin(), b.end());
@@ -27,16 +27,16 @@ vector<T> ArbitraryMult(const vector<int> &a, const vector<int> &b) {
 }
 private:
     vector<int> Multiple(vector<int> a, vector<int> b) {
-        return norm(ArbitraryMult<u128>(a, b));
+        return norm(arbitraryMult<u128>(a, b));
     }
-    vector<int> small_mul(vector<int> a, int v) {
+    vector<int> smallMul(vector<int> a, int v) {
         vector<ll> res(a.begin(), a.end());
         for (auto &x : res) x *= v;
         return norm(res);
     }
 public:
     Bigint &operator*=(const Bigint &rhs) & {
-        x = rhs.size() == 1 ? small_mul(x, rhs.x[0]) : Multiple(x, rhs.x);
+        x = rhs.size() == 1 ? smallMul(x, rhs.x[0]) : Multiple(x, rhs.x);
         sgn *= rhs.sgn, resign();
         return *this;
     }

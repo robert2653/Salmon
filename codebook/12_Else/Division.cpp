@@ -1,5 +1,5 @@
 private:
-    vector<int> small_div(vector<int> a, int v) {
+    vector<int> smallDiv(vector<int> a, int v) {
         ll add = 0;
         for (int i = a.size() - 1; i >= 0; i--) {
             add = add * B + a[i];
@@ -32,7 +32,7 @@ public:
         sgn *= rhs.sgn;
         if (a < b) return *this = Bigint();
         if (b.size() == 1) {
-            x = small_div(x, rhs.x[0]);
+            x = smallDiv(x, rhs.x[0]);
         } else {
             Bigint inv = 1LL * B * B / b.x.back();
             Bigint pre = 0, res = 0;
