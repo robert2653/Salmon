@@ -5,30 +5,16 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
     /*
     vector<Tag> tag;
     */
-    SegmentTree() : n(0) {}
-    SegmentTree(int n_, Info v_ = Info()) {
-        init(n_, v_);
-    }
-
     template<class T>
-    SegmentTree(vector<T> init_) {
-        init(init_);
-    }
-
-    void init(int n_, Info v_ = Info()) {
-        init(vector(n_, v_));
-    }
-
-    template<class T>
-    void init(vector<T> init_) {
-        n = init_.size();
+    SegmentTree(const vector<T> &init) {
+        n = init.size();
         info.assign(4 << __lg(n), Info());
         /*
         tag.assign(4 << __lg(n), Tag());
         */
         function<void(int, int, int)> build = [&](int p, int l, int r) {
             if (r - l == 1) {
-                info[p] = init_[l];
+                info[p] = init[l];
                 return;
             }
             int m = (l + r) / 2;
@@ -125,14 +111,13 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
 // 有些 Tag 不用 push 例如 sweepLine
 /*
 struct Tag {
-    bool set_val = false;
+    int setVal = 0;
     int add = 0;
     void apply(const Tag &t) & {
-        if (t.set_val) {
-            set_val = t.set_val;
+        if (t.setVal) {
+            setVal = t.setVal;
             add = t.add;
-        }
-        else {
+        } else {
             add += t.add;
         }
     }
@@ -142,8 +127,8 @@ struct Info {
     ll sum = 0;
     /*
     void apply(int l, int r, const Tag &t) & {
-        if (t.set_val) {
-            sum = (r - l) * t.set_val;
+        if (t.setVal) {
+            sum = (r - l) * t.setVal;
         }
         sum += (r - l) * t.add;
     }

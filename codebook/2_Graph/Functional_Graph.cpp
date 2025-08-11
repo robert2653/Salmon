@@ -1,15 +1,17 @@
+const int N = 2E5;
+const int Lg = __lg(N); // __lg(max(n, qi)), [0, Lg]
+int cht[N][Lg];
 struct FuntionalGraph {
     int n, cnt;
-    vector<int> g, bel, id, len, in, top;
-    FuntionalGraph(const vector<int> &g) : n(g.size()), g(g), cnt(0), in(n), bel(n, -1), top(n, -1) {
-        build();
-    }
-    void build() {
+    vector<int> g, bel, id, cycsz, in, top, hei;
+    FuntionalGraph(const vector<int> &g) : n(g.size()), cnt(0), g(g), bel(n, -1), id(n), in(n), top(n, -1), hei(n) {
         for (int i = 0; i < n; i++)
             cht[i][0] = g[i], in[g[i]]++;
-        for (int i = 1; i <= 30; i++)
-            for (int u = 0; u < n; u++)
-                cht[u][i] = cht[cht[u][i - 1]][i - 1];
+        for (int i = 1; i <= Lg; i++)
+            for (int u = 0; u < n; u++) {
+                int nxt = cht[u][i - 1];
+                cht[u][i] = cht[nxt][i - 1];
+            }
         for (int i = 0; i < n; i++)
             if (in[i] == 0) label(i);
         for (int i = 0; i < n; i++)
@@ -26,11 +28,11 @@ struct FuntionalGraph {
         vector<int> cyc(s, p.end());
         p.erase(s, p.end()); p.push_back(cur);
         for (int i = 0; i < (int)cyc.size(); i++)
-            bel[cyc[i]] = cnt, id[cyc[i]] = i;
+            bel[cyc[i]] = cnt, id[cyc[i]] = i, hei[cyc[i]] = cyc.size();
         if (!cyc.empty())
-            ++cnt, len.push_back(cyc.size());
+            ++cnt, cycsz.push_back(cyc.size());
         for (int i = p.size() - 1; i > 0; i--)
-            id[p[i - 1]] = id[p[i]] - 1;
+            id[p[i - 1]] = id[p[i]] - 1, hei[p[i - 1]] = hei[p[i]] + 1;
     }
     int jump(int u, int k) {
         for (int b = 0; k > 0; b++) {

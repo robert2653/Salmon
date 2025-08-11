@@ -1,5 +1,5 @@
-const int N = 1E7;
-const int ALPHABET_SIZE = 1E7;
+const int N = 1E7; // 0 -> initial state
+const int ALPHABET_SIZE = 26;
 int tot = 0;
 int trie[N][ALPHABET_SIZE], cnt[N];
 void reset() {

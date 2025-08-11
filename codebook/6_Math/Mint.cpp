@@ -8,7 +8,7 @@ ll mul(ll a, ll b, ll p) {
 template<class T>
 constexpr T power(T a, ll b) {
     T res {1};
-    for (; b; b /= 2, a *= a)
+    for (; b > 0; b >>= 1, a *= a)
         if (b & 1) res *= a;
     return res;
 }

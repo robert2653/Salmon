@@ -5,10 +5,10 @@ struct DynamicKth : PST<int> {
         return lower_bound(s.begin(), s.end(), x) - s.begin();
     }
     vector<T> v, s; // array, sorted
-    DynamicKth(const vector<T> &v_, const vector<T> &s_) {
-        assert(is_sorted(s.begin(), s.end()));
+    DynamicKth(const vector<T> &v_, const vector<T> &s_) 
+        : PST<int>(vector<int>(s_.size(), 0)) {
+        assert(is_sorted(s_.begin(), s_.end()));
         v = v_, s = s_;
-        init(s.size());
         rt.resize(v.size());
         for (int i = 0; i < v.size(); i++) add(i, dct(v[i]), 1);
     }

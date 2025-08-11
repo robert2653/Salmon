@@ -25,8 +25,7 @@ void dfs(int now) {
         parent[nxt] = now;
         if (color[nxt] == 1) {
             printAns(nxt);
-        }
-        else if (color[nxt] == 0) {
+        } else if (color[nxt] == 0) {
             dfs(nxt);
         }
     }

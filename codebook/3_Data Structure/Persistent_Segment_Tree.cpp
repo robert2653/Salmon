@@ -4,33 +4,19 @@ struct PST {
         Info info = Info();
         int lc = 0, rc = 0;
     };
-    int n = 0;
+    int n;
     vector<Node> nd;
     vector<int> rt;
-    PST() : n(0) {}
-    PST(int n_, Info v_ = Info()) {
-        init(n_, v_);
-    }
-
     template<class T>
-    PST(vector<T> init_) {
-        init(init_);
-    }
-
-    void init(int n_, Info v_ = Info()) {
-        init(vector<Info>(n_, v_));
-    }
-    
-    template<class T>
-    void init(vector<T> init_) {
-        n = init_.size();
+    PST(const vector<T> &init) {
+        n = init.size();
         nd.assign(1, Node());
         rt.clear();
         function<int(int, int)> build = [&](int l, int r) {
             int id = nd.size();
             nd.emplace_back();
             if (r - l == 1) {
-                nd[id].info = init_[l];
+                nd[id].info = init[l];
                 return id;
             }
             int m = (l + r) >> 1;

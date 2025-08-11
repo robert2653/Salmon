@@ -41,8 +41,7 @@ void treeFlattening() {
             if (mp[s].first < n) { // root 就不用扣了
                 bit.modify(mp[s].second + 1, -add);
             }
-        }
-        else {
+        } else {
             int node; cin >> node;
             cout << bit.query(mp[node].first) << "\n";
         }

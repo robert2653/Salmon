@@ -1,4 +1,4 @@
-constexpr ll inf = 1E18;
+const ll inf = 1E18;
 void floydWarshall(int n, int m) {
     int n, m; cin >> n >> m;
     vector<vector<int>> dis(n, vector<int>(n, inf));

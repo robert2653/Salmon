@@ -63,10 +63,9 @@ struct HLD {
         return in[u] <= in[v] && in[v] < out[u];
     }
     int rootedParent(int rt, int v) {
-        swap(rt, v);
         if (rt == v) return rt;
-        if (!isAncester(rt, v)) return parent[rt];
-        auto it = upper_bound(adj[rt].begin(), adj[rt].end(), v,
+        if (!isAncester(v, rt)) return parent[v];
+        auto it = upper_bound(adj[v].begin(), adj[v].end(), rt,
             [&](int x, int y) {
                 return in[x] < in[y];
             }) - 1;

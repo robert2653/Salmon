@@ -1,6 +1,6 @@
 void minEuclideanDistance() {
     int n; cin >> n;
-    constexpr ll inf = 8E18;
+    const ll inf = 8E18;
     vector<Point<ll>> a(n);
     for (int i = 0; i < n; i++) {
         ll x, y;

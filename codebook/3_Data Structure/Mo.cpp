@@ -6,3 +6,10 @@ void mo(vector<Query> &q) {
         return x == y ? a.r < b.r : x < y;
     });
 }
+int nl = 0, nr = -1;
+for (auto [id, l, r] : qry) {
+    while (nr < r) nr++, addR();
+    while (l < nl) nl--, addL();
+    while (r < nr) delR(), nr--;
+    while (nl < l) delL(), nl++;
+}
