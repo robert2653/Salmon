@@ -1,20 +1,16 @@
 template<class T>
 struct Dinic {
-    struct _Edge {
+    struct Edge {
         int to;
         T f, cap; // 流量跟容量
     };
     int n, m, s, t;
     const T INF_FlOW = numeric_limits<T>::max();
     vector<vector<int>> g;
-    vector<_Edge> e;
+    vector<Edge> e;
     vector<int> h, cur;
-    Dinic(int n) : n(n), m(0) {
-        h.resize(n), cur.resize(n);
-        g.assign(n, {});
-        e.clear();
-    }
-    void add_edge(int u, int v, T cap) {
+    Dinic(int n) : n(n), m(0), g(n), h(n), cur(n) {}
+    void addEdge(int u, int v, T cap) {
         e.push_back({v, 0, cap});
         e.push_back({u, 0, 0});
         g[u].push_back(m++);

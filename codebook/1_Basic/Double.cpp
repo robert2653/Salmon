@@ -19,7 +19,7 @@ struct D {
         double v; is >> v; a = D(v); return is;
     }
     friend ostream &operator<<(ostream &os, const D &a) {
-        return os << fixed << setprecision(10) << a.x + (a.x > 0 ? eps : a.x < 0 ? -eps : 0);
+        return os << fixed << setprecision(9) << a.x + (a.x > 0 ? eps : a.x < 0 ? -eps : 0);
     } // eps should < precision
     friend bool operator<(D lhs, D rhs) {
         return lhs.x - rhs.x < -eps;
@@ -31,3 +31,4 @@ struct D {
         return fabs(lhs.x - rhs.x) < eps;
     }
 };
+D abs(D a) { return a < 0 ? -a : a; }
