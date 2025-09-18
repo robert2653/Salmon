@@ -43,7 +43,7 @@ struct KDTree { // 1-indexed
     int n, rt;
     vector<Info> info;
     vector<int> l, r;
-    KDTree(int n, const vector<Info> &info) : n(n), info(info), l(n + 1), r(n + 1) {
+    KDTree(const vector<Info> &info) : n(info.size()), info(info), l(n + 1), r(n + 1) {
         rt = rebuild(1, n);
     }
     void pull(int p) {
@@ -57,26 +57,23 @@ struct KDTree { // 1-indexed
             }
         }
     }
-    int rebuild(int l, int r, int dep = 0) {
+    int rebuild(int l, int r) {
         if (r == l) return 0;
         int m = (l + r) / 2;
-        double avx = 0, avy = 0, vax = 0, vay = 0;  // average variance
+        array<double, DIM> av = {}, va = {};
         for (int i = l; i < r; i++)
-            avx += info[i].x[0], avy += info[i].x[1];
-        avx /= (double)(r - l), avy /= (double)(r - l);
-        for (int i = l; i < r; i++) {
-            vax += (info[i].x[0] - avx) * (info[i].x[0] - avx);
-            vay += (info[i].x[1] - avy) * (info[i].x[1] - avy);
-        }
-        if (vax >= vay) {
-            nth_element(info.begin() + l, info.begin() + m, info.begin() + r,
-                [&](const Info &x, const Info &y) { return x.x[0] < y.x[0]; });
-        } else {
-            nth_element(info.begin() + l, info.begin() + m, info.begin() + r,
-                [&](const Info &x, const Info &y) { return x.x[1] < y.x[1]; });
-        }
-        this->l[m] = rebuild(l, m, (dep + 1) % DIM);
-        this->r[m] = rebuild(m + 1, r, (dep + 1) % DIM);
+            for (int d = 0; d < DIM; d++)
+                av[d] += info[i].x[d];
+        for (int d = 0; d < DIM; d++)
+            av[d] /= (double)(r - l);
+        for (int i = l; i < r; i++)
+            for (int d = 0; d < DIM; d++)
+                va[d] += (info[i].x[d] - av[d]) * (info[i].x[d] - av[d]);
+        int dep = max_element(va.begin(), va.end()) - va.begin();
+        nth_element(info.begin() + l, info.begin() + m, info.begin() + r,
+            [&](const Info &x, const Info &y) { return x.x[dep] < y.x[dep]; });
+        this->l[m] = rebuild(l, m);
+        this->r[m] = rebuild(m + 1, r);
         pull(m); return m;
     }
     ll ans = 9E18;
