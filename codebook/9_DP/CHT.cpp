@@ -19,13 +19,11 @@ struct CHT { // 斜率單調
         return (l3.b - l2.b) * (l1.m - l3.m) <= (l3.b - l1.b) * (l2.m - l3.m);
     }
     void addLine(Line l) {
-        while (rptr - lptr > 0 && backBad(hull[rptr - 1], hull[rptr], l))
-            hull.pop_back(), rptr--;
+        while (rptr - lptr > 0 && backBad(hull[rptr - 1], hull[rptr], l)) hull.pop_back(), rptr--;
         hull.push_back(l), rptr++;
     }
     ll query(ll x) { // 查詢沒單調性需要二分搜
-        while (rptr - lptr > 0 && frontBad(hull[lptr], hull[lptr + 1], x))
-            lptr++;
+        while (rptr - lptr > 0 && frontBad(hull[lptr], hull[lptr + 1], x)) lptr++;
         return hull[lptr].eval(x);
     }
 };

@@ -7,7 +7,6 @@ void binarySearch() {
         else hi = x - 1;
     }
     cout << lo;
-
     // 二分找下界
     // 如果無解會 = 原 hi, hi 要先 + 1
     while (lo < hi) {

@@ -55,8 +55,7 @@ struct HLD {
     int jump(int u, int k) {
         if (dep[u] < k) return -1;
         int d = dep[u] - k;
-        while (dep[top[u]] > d)
-            u = parent[top[u]];
+        while (dep[top[u]] > d) u = parent[top[u]];
         return seq[in[u] - dep[u] + d];
     }
     bool isAncester(int u, int v) {

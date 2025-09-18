@@ -8,15 +8,13 @@ setcontext(Context(prec=10, Emax=MAX_EMAX, rounding=ROUND_FLOOR))
 x = int(input())
 a, b, c = list(map(Fraction, input().split()))
 arr = list(map(Decimal, input().split()))
-print(x)
-print(a, b, c)
 print(*arr)
 # set
-S = set(); S.add((a, b)); S.remove((a, b))
-if not (a, b) in S:
+st = set(); st.add((a, b)); st.remove((a, b))
+if not (a, b) in st:
 # dict
-D = dict(); D[(a, b)] = 1; del D[(a, b)]
-for (a, b) in D.items():
+d = dict(); d[(a, b)] = 1; del d[(a, b)]
+for (a, b) in d.items():
 # random
 arr = [randint(l, r) for i in range(size)]
 choice([8, 6, 4, 1]) # random pick one

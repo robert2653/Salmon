@@ -34,9 +34,7 @@ int lca(int a, int b) {
 }
 int jump(int x, int k) {
     for (int i = Lg; i >= 0; i--)
-        if (k >> i & 1) {
-            x = up[x][i];
-        }
+        if (k >> i & 1) x = up[x][i];
     return x;
 }
 int dist(int a, int b) {

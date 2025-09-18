@@ -11,8 +11,7 @@ void solve() {
     int m = __lg(*max_element(a.begin(), a.end())) + 1;
     // 定義 dp[mask] 為 mask 被包含於 a[i] 的 i 個數
     vector<ll> dp(1 << m);
-    for (int i = 0; i < n; i++)
-        dp[a[i]]++;
+    for (int i = 0; i < n; i++) dp[a[i]]++;
     for (int i = 0; i < m; i++) {
         for (int mask = 0; mask < 1 << m; mask++) {
             if (mask >> i & 1) {
@@ -25,9 +24,7 @@ void solve() {
         int sgn = __builtin_popcount(mask) & 1 ? -1 : 1;
         ans += sgn * (power(Z(2), dp[mask]) - 1);
     }
-    cout << ans << "\n";
 }
-
 // x | y = x, 代表包含於 x 的 y 個數, 定義為 dp[x][0]
 // x & y = x, 代表包含 x 的 y 個數, 定義為 dp[x][1]
 // x & y != 0, 代表至少有一個位元都為 1 的 y 個數, = n - dp[~x][0]
@@ -36,15 +33,11 @@ void solve() {
     vector<int> a(n);
     map<int, int> mp;
     for (int i = 0; i < n; i++) {
-        cin >> a[i];
-        mp[a[i]]++;
+        cin >> a[i]; mp[a[i]]++;
     }
     int m = __lg(*max_element(a.begin(), a.end())) + 1;
     vector<array<ll, 2>> dp(1 << m);
-    for (int i = 0; i < n; i++) {
-        dp[a[i]][0]++;
-        dp[a[i]][1]++;
-    }
+    for (int i = 0; i < n; i++) dp[a[i]][0]++, dp[a[i]][1]++;
     for (int i = 0; i < m; i++) {
         for (int mask = 0; mask < 1 << m; mask++) {
             if (mask >> i & 1) {

@@ -1,11 +1,8 @@
 void projects() { // 排程有權重問題，輸出價值最多且時間最少
-    struct E {
-        int from, to, w, id;
-    };
+    struct E { int from, to, w, id; };
     int n; cin >> n; vector<E> a(n + 1);
     for (int i = 1; i <= n; i++) {
-        int u, v, w;
-        cin >> u >> v >> w;
+        int u, v, w; cin >> u >> v >> w;
         a[i] = {u, v, w, i};
     }
     vector<array<ll, 2>> dp(n + 1); // w, time
@@ -28,8 +25,6 @@ void projects() { // 排程有權重問題，輸出價值最多且時間最少
         if (rec[i][0]) {
             ans.push_back(a[i].id);
             i = rec[i][1];
-        } else {
-            i--;
-        }
+        } else i--;
     }
 }

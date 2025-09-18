@@ -11,9 +11,7 @@ struct DominatorTree {
         adj.assign(n, {}), radj.assign(n, {});
         dom.assign(n, -1), vis.assign(n, -1);
     }
-    void add_edge(int u, int v) {
-        adj[u].push_back(v);
-    }
+    void add_edge(int u, int v) { adj[u].push_back(v); }
     int query(int v, int x) {
         if (rt[v] == v) return x ? -1 : v;
         int p = query(rt[v], 1);

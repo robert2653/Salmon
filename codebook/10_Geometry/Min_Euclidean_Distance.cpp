@@ -8,11 +8,7 @@ void minEuclideanDistance() {
         cin >> x >> y;
         a[i] = Point<ll>(x, y);
     }
-    struct sortY {
-        bool operator()(const Point<ll> &a, const Point<ll> &b) const {
-            return a.y < b.y;
-        }
-    };
+    struct sortY { bool operator()(const Point<ll> &a, const Point<ll> &b) const { return a.y < b.y; } };
     struct sortXY {
         bool operator()(const Point<ll> &a, const Point<ll> &b) const {
             return a.x == b.x ? a.y < b.y : a.x < b.x;

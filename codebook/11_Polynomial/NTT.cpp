@@ -1,10 +1,8 @@
 template<int V, int P>
 Mint<P> CInv = Mint<P>(V).inv();
-
 vector<int> rev;
 template<int P>
 vector<Mint<P>> roots{0, 1};
-
 template<int P>
 Mint<P> findPrimitiveRoot() {
     Mint<P> i = 2;
@@ -15,12 +13,10 @@ Mint<P> findPrimitiveRoot() {
     }
     return power(i, (P - 1) >> k);
 }
-
 template<int P>
 Mint<P> primitiveRoot = findPrimitiveRoot<P>();
 template<>
 Mint<998244353> primitiveRoot<998244353> {31};
- 
 template<int P>
 void dft(vector<Mint<P>> &a) {
     int n = a.size();
@@ -55,7 +51,6 @@ void dft(vector<Mint<P>> &a) {
         }
     }
 }
- 
 template<int P>
 void idft(vector<Mint<P>> &a) {
     int n = a.size();
@@ -64,7 +59,6 @@ void idft(vector<Mint<P>> &a) {
     Mint<P> inv = (1 - P) / n;
     for (int i = 0; i < n; i++) a[i] *= inv;
 }
-
 template<int P = 998244353>
 struct Poly : public vector<Mint<P>> {
     using Value = Mint<P>;
@@ -258,7 +252,6 @@ struct Poly : public vector<Mint<P>> {
         return ans;
     }
 };
-
 template<int P = 998244353>
 Poly<P> berlekampMassey(const Poly<P> &s) {
     Poly<P> c, oldC;
@@ -296,7 +289,6 @@ Poly<P> berlekampMassey(const Poly<P> &s) {
     c.insert(c.begin(), 1);
     return c;
 }
-
 template<int P = 998244353>
 Mint<P> linearRecurrence(Poly<P> p, Poly<P> q, ll n) {
     int m = q.size() - 1;
