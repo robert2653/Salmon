@@ -21,10 +21,13 @@ void solve() {
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    auto s = chrono::high_resolution_clock::now();
     int t = 1;
     cin >> t;
     while (t--) {
         solve();
     }
+    auto e = chrono::high_resolution_clock::now();
+    cerr << chrono::duration_cast<chrono::milliseconds>(e - s).count() << " ms\n";
     return 0;
 }
