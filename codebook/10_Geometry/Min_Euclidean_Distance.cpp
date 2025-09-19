@@ -44,7 +44,7 @@ struct KDTree { // 1-indexed
     vector<Info> info;
     vector<int> l, r;
     KDTree(const vector<Info> &info) : n(info.size()), info(info), l(n + 1), r(n + 1) {
-        rt = rebuild(1, n);
+        rt = build(1, n);
     }
     void pull(int p) {
         info[p].L = info[p].R = info[p].x;
@@ -57,7 +57,7 @@ struct KDTree { // 1-indexed
             }
         }
     }
-    int rebuild(int l, int r) {
+    int build(int l, int r) {
         if (r == l) return 0;
         int m = (l + r) / 2;
         array<double, DIM> av = {}, va = {};
@@ -72,8 +72,8 @@ struct KDTree { // 1-indexed
         int dep = max_element(va.begin(), va.end()) - va.begin();
         nth_element(info.begin() + l, info.begin() + m, info.begin() + r,
             [&](const Info &x, const Info &y) { return x.x[dep] < y.x[dep]; });
-        this->l[m] = rebuild(l, m);
-        this->r[m] = rebuild(m + 1, r);
+        this->l[m] = build(l, m);
+        this->r[m] = build(m + 1, r);
         pull(m); return m;
     }
     ll ans = 9E18;
