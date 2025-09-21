@@ -64,3 +64,9 @@ public:
     friend Bigint operator%(Bigint lhs, Bigint rhs) {
         return lhs %= rhs;
     }
+Bigint gcd(Bigint a, Bigint b) {
+    while (b != 0) {
+        Bigint r = a % b;
+        a = b, b = r;
+    } return a;
+}

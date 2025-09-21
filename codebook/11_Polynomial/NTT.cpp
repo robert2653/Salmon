@@ -2,7 +2,7 @@ template<int V, int P>
 Mint<P> CInv = Mint<P>(V).inv();
 vector<int> rev;
 template<int P>
-vector<Mint<P>> roots{0, 1};
+vector<Mint<P>> roots {0, 1};
 template<int P>
 Mint<P> findPrimitiveRoot() {
     Mint<P> i = 2;

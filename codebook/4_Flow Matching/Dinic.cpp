@@ -1,11 +1,11 @@
 template<class T>
-struct Dinic {
+struct Dinic { // O(EV^2) / O(EV^0.5) for bipartite matching)
     struct Edge {
         int to;
         T f, cap; // 流量跟容量
     };
     int n, m, s, t;
-    const T INF_FlOW = numeric_limits<T>::max();
+    const T INF_FlOW = numeric_limits<T>::max() / 2;
     vector<vector<int>> g;
     vector<Edge> e;
     vector<int> h, cur;

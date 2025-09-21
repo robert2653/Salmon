@@ -6,54 +6,31 @@ struct Fraction {
         n /= g, d /= g;
         if (d < 0) n = -n, d = -d;
     }
-    Fraction(T n_ = 0, T d_ = 1) : n(n_), d(d_) {
-        assert(d != 0); reduce();
+    Fraction(T n = 0, T d = 1) : n(n), d(d)
+    {
+        assert(d != 0);
+        reduce();
     }
     Fraction(const string &str) {
-        istringstream ss(str);
         char slash;
         if (str.find('/') != -1) {
-            ss >> n >> slash >> d;
+            string x = str.substr(0, str.find('/'));
+            string y = str.substr(str.find('/') + 1);
+            n = stoBigint(x), d = stoBigint(y);
         } else {
-            ss >> n;
-            d = 1;
+            n = stoBigint(str), d = 1;
         }
         Fraction(n, d);
     }
-    Fraction operator+=(Fraction rhs) & {
-        n = n * rhs.d + rhs.n * d;
-        d *= rhs.d;
-        reduce();
-        return *this;
-    }
-    Fraction operator-=(Fraction rhs) & {
-        n = n * rhs.d - rhs.n * d;
-        d *= rhs.d;
-        reduce();
-        return *this;
-    }
-    Fraction operator*=(Fraction rhs) & {
-        n *= rhs.n, d *= rhs.d;
-        reduce();
-        return *this;
-    }
-    Fraction operator/=(Fraction rhs) & {
+    Fraction operator+(Fraction rhs) const
+    { return Fraction(n * rhs.d + rhs.n * d, d * rhs.d); }
+    Fraction operator-(Fraction rhs) const
+    { return Fraction(n * rhs.d - rhs.n * d, d * rhs.d); }
+    Fraction operator*(Fraction rhs) const
+    { return Fraction(n * rhs.n, d * rhs.d); }
+    Fraction operator/(Fraction rhs) const {
         assert(rhs.n != 0);
-        n *= rhs.d, d *= rhs.n;
-        reduce();
-        return *this;
-    }
-    friend Fraction operator+(Fraction lhs, Fraction rhs) {
-        return lhs += rhs;
-    }
-    friend Fraction operator-(Fraction lhs, Fraction rhs) {
-        return lhs -= rhs;
-    }
-    friend Fraction operator*(Fraction lhs, Fraction rhs) {
-        return lhs *= rhs;
-    }
-    friend Fraction operator/(Fraction lhs, Fraction rhs) {
-        return lhs /= rhs;
+        return Fraction(n * rhs.d, d * rhs.n);
     }
     friend istream &operator>>(istream &is, Fraction &f) {
         string s; is >> s;
@@ -65,13 +42,10 @@ struct Fraction {
         else os << f.n << "/" << f.d;
         return os;
     }
-    friend bool operator==(Fraction lhs, Fraction rhs) {
-        return lhs.n * rhs.d == rhs.n * lhs.d;
-    }
-    friend bool operator!=(Fraction lhs, Fraction rhs) {
-        return lhs.n * rhs.d != rhs.n * lhs.d;
-    }
-    friend bool operator<(Fraction lhs, Fraction rhs) {
-        return lhs.n * rhs.d < rhs.n * lhs.d;
-    }
+    bool operator==(Fraction b) const
+    { return n * b.d == b.n * d; }
+    bool operator!=(Fraction b) const
+    { return n * b.d != b.n * d; }
+    bool operator<(Fraction b) const
+    { return n * b.d < b.n * d; }
 };

@@ -146,3 +146,5 @@ public:
         return a == b || a < b;
     }
 };
+Bigint abs(const Bigint &a) { return a.abs(); }
+Bigint stoBigint(const string &s) { return Bigint(s); }

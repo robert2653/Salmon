@@ -2,20 +2,19 @@
 void minEuclideanDistance() {
     int n; cin >> n;
     const ll inf = 8E18;
-    vector<Point<ll>> a(n);
+    vector<P> a(n);
     for (int i = 0; i < n; i++) {
-        ll x, y;
-        cin >> x >> y;
-        a[i] = Point<ll>(x, y);
+        ll x, y; cin >> x >> y;
+        a[i] = P(x, y);
     }
-    struct sortY { bool operator()(const Point<ll> &a, const Point<ll> &b) const { return a.y < b.y; } };
+    struct sortY { bool operator()(const P &a, const P &b) const { return a.y < b.y; } };
     struct sortXY {
-        bool operator()(const Point<ll> &a, const Point<ll> &b) const {
+        bool operator()(const P &a, const P &b) const {
             return a.x == b.x ? a.y < b.y : a.x < b.x;
         }
     };
     sort(a.begin(), a.end(), sortXY());
-    vector<Point<ll>> t(n);
+    vector<P> t(n);
     auto divide = [&](auto &&self, int l, int r) -> ll {
         if (l == r) return inf;
         int m = (l + r) / 2;	

@@ -1,13 +1,13 @@
 void latticePoints() {
     // Area 求法與 Polygon 內整數點數
     int n; cin >> n;
-    vector<Point<ll>> polygon(n);
+    vector<P> polygon(n);
     for (int i = 0; i < n; i++) cin >> polygon[i];
     ll area = 0;
     for (int i = 0; i < n; i++)
         area += cross(polygon[i], polygon[(i + 1) % n]);
     area = abs(area);
-    auto countBoundaryPoints = [](const vector<Point<ll>> &polygon) -> ll {
+    auto countBoundaryPoints = [](const vector<P> &polygon) -> ll {
         ll res = 0;
         int n = polygon.size();
         for (int i = 0; i < n; i++) {
