@@ -1,5 +1,8 @@
 template<class T>
-struct Dinic { // O(EV^2) / O(EV^0.5) for bipartite matching)
+struct Dinic {
+    // argument time: O(VE), O(E) for unit capacity, 
+    // argument number: O(V), min(O(E^0.5), O(V^2/3)) for unit capacity, O(V^0.5) for deg_in(u) or deg_out(u) <= 1
+    // so bipartite matching: O(EV^0.5)
     struct Edge {
         int to;
         T f, cap; // 流量跟容量
@@ -63,7 +66,7 @@ struct Dinic { // O(EV^2) / O(EV^0.5) for bipartite matching)
         }
         return f;
     }
-    void reuse(int n_) { // 走殘留網路, res += f
+    void reuse(int n_) { // 走殘留網路，res += f
         while (n < n_) {
             g.emplace_back();
             h.emplace_back();

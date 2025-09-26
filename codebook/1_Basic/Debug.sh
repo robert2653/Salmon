@@ -1,5 +1,5 @@
 CODE1="a"
-CODE2="brute"
+CODE2="ac"
 set -e
 g++ $CODE1.cpp -o $CODE1
 g++ $CODE2.cpp -o $CODE2
