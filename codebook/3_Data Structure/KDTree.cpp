@@ -1,4 +1,11 @@
-template<class Info>
+struct Info {
+    static constexpr int DIM = 2;
+    array<int, DIM> x, L, R;
+    int v = 0, sum = 0;
+    void pull(const Info &l, const Info &r) {
+        sum = v + l.sum + r.sum;
+    }
+};
 struct KDTree {
     static constexpr int DIM = Info::DIM;
     vector<Info> info;
@@ -75,13 +82,5 @@ struct KDTree {
             res.pull(res, query(rt[i], l, r));
         }
         return res;
-    }
-};
-struct Info {
-    static constexpr int DIM = 2;
-    array<int, DIM> x, L, R;
-    int v = 0, sum = 0;
-    void pull(const Info &l, const Info &r) {
-        sum = v + l.sum + r.sum;
     }
 };

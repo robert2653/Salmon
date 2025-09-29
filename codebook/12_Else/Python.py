@@ -1,8 +1,8 @@
-from decimal import * # 無誤差浮點數
+from decimal import * # 高精度浮點數
 from fractions import * # 分數
 from random import *
 from math import *
-# set decimal prec if it could overflow in precision
+# set decimal prec bigger if it could overflow in precision
 setcontext(Context(prec=10, Emax=MAX_EMAX, rounding=ROUND_FLOOR))
 # read and print
 x = int(input())

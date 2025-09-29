@@ -36,7 +36,22 @@ void minEuclideanDistance() {
     cout << divide(divide, 0, n - 1) << "\n";
 }
 // K-D tree solution
-template<class Info>
+struct Info {
+    static constexpr int DIM = 2;
+    array<ll, DIM> x, L, R;
+    ll distl, distr;
+    ll f(const Info &i) {
+        ll ret = 0;
+        if (i.L[0] > x[0]) ret += (i.L[0] - x[0]) * (i.L[0] - x[0]);
+        if (i.R[0] < x[0]) ret += (x[0] - i.R[0]) * (x[0] - i.R[0]);
+        if (i.L[1] > x[1]) ret += (i.L[1] - x[1]) * (i.L[1] - x[1]);
+        if (i.R[1] < x[1]) ret += (x[1] - i.R[1]) * (x[1] - i.R[1]);
+        return ret;
+    }
+    void pull(const Info &l, const Info &r) {
+        distl = f(l), distr = f(r);
+    }
+};
 struct KDTree { // 1-indexed
     static constexpr int DIM = Info::DIM;
     int n, rt;
@@ -97,21 +112,5 @@ struct KDTree { // 1-indexed
             if (distl < ans) query(l[p], x);
             if (distr < ans) query(r[p], x);
         }
-    }
-};
-struct Info {
-    static constexpr int DIM = 2;
-    array<ll, DIM> x, L, R;
-    ll distl, distr;
-    ll f(const Info &i) {
-        ll ret = 0;
-        if (i.L[0] > x[0]) ret += (i.L[0] - x[0]) * (i.L[0] - x[0]);
-        if (i.R[0] < x[0]) ret += (x[0] - i.R[0]) * (x[0] - i.R[0]);
-        if (i.L[1] > x[1]) ret += (i.L[1] - x[1]) * (i.L[1] - x[1]);
-        if (i.R[1] < x[1]) ret += (x[1] - i.R[1]) * (x[1] - i.R[1]);
-        return ret;
-    }
-    void pull(const Info &l, const Info &r) {
-        distl = f(l), distr = f(r);
     }
 };
