@@ -1,1 +1,1 @@
-## Codebook of Salmon and CCU_RemovingDigit
+## Codebook of Salmon and CCU_ZenbuHikenai
