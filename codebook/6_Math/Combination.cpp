@@ -1,4 +1,6 @@
-// C(m, n) = C(m, n - 1) * (m - n + 1) / n
+// C(n, m) = C(n, m - 1) * (n - m + 1) / m
+// C(n + 1, m) = C(n, m) + C(n, m - 1)
+// C(n, k) = 1 (mod 2) <=> all bit of k <= all bit of n in binary
 struct Comb {
     int n;
     vector<Z> _fac, _invfac, _inv;
