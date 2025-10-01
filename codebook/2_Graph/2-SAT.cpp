@@ -8,7 +8,7 @@ struct TwoSat {
     }
     void ifThen(int u, bool f, int v, bool g) {
         // 必取 A: not A -> A
-        e[2 * u + !f].push_back(2 * v + g);
+        e[2 * u + f].push_back(2 * v + g);
     }
     bool satisfiable() {
         vector<int> id(2 * n, -1), dfn(2 * n, -1), low(2 * n, -1);
