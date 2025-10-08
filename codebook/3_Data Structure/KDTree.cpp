@@ -10,10 +10,7 @@ struct KDTree {
     static constexpr int DIM = Info::DIM;
     vector<Info> info;
     vector<int> rt, l, r, p;
-    int n = 0, lg;
-    KDTree(int n) : info(1), lg(__lg(n)), l(n + 1), r(n + 1) {
-        rt.resize(lg + 1);
-    }
+    KDTree(int n) : n(n), lg(__lg(n)), info(1), rt(lg + 1), l(n + 1), r(n + 1) {}
     void pull(int p) {
         info[p].L = info[p].R = info[p].x;
         info[p].pull(info[l[p]], info[r[p]]);
