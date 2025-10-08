@@ -17,6 +17,7 @@ struct Fenwick {
     }
     int select(const T &k, int start = 0) {
         // 找到最小的 x, 使得 sum(x + 1) - sum(start) > k
+        // prefix sum 要有單調性
         int x = 0; T cur = -sum(start);
         for (int i = 1 << __lg(n); i; i /= 2) {
             if (x + i <= n && cur + a[x + i - 1] <= k) {
