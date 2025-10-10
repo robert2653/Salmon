@@ -7,7 +7,7 @@ struct Treap { // 0 -> initial root
     Treap(int n) : info(n + 1), siz(n + 1), par(n + 1), rev(n + 1), pri(n + 1), ch(n + 1) {
         // tag.resize(n + 1);
         for (int i = 1; i <= n; i++)
-            siz[i] = 1, pri[i] = rand();
+            siz[i] = 1, pri[i] = gen();
     }
     // void apply(int t, const Tag &v) {
     //     info[t].apply(siz[t], v);
