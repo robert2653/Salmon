@@ -8,31 +8,25 @@ private:
         }
         return norm(a);
     }
-    Bigint &operator<<=(int n) & {
-        if (!x.empty()) {
-            vector<int> add(n, 0);
-            x.insert(x.begin(), add.begin(), add.end());
+    friend Bigint operator<<(Bigint a, int k) {
+        if (!a.x.empty()) {
+            vector<int> add(k, 0);
+            a.x.insert(a.x.begin(), add.begin(), add.end());
         }
-        return *this;
+        return a;
     }
-    Bigint &operator>>=(int n) & {
-        x = vector<int>(x.begin() + min(n, int(x.size())), x.end());
-        x = norm(x);
-        return *this;
-    }
-    friend Bigint operator<<(Bigint lhs, int n) {
-        return lhs <<= n;
-    }
-    friend Bigint operator>>(Bigint lhs, int n) {
-        return lhs >>= n;
+    friend Bigint operator>>(Bigint a, int k) {
+        a.x = vector<int>(a.x.begin() + min(k, int(a.x.size())), a.x.end());
+        a.x = a.norm(a.x);
+        return a;
     }
 public:
-    Bigint &operator/=(const Bigint &rhs) & {
-        Bigint a = abs(), b = rhs.abs();
-        sgn *= rhs.sgn;
-        if (a < b) return *this = Bigint();
+    friend Bigint operator/(Bigint a, Bigint b) {
+        a = a.abs(), b = b.abs();
+        a.sgn *= b.sgn;
+        if (a < b) return Bigint();
         if (b.size() == 1) {
-            x = smallDiv(x, rhs.x[0]);
+            a.x = a.smallDiv(a.x, b.x[0]);
         } else {
             Bigint inv = 1LL * B * B / b.x.back();
             Bigint pre = 0, res = 0;
@@ -42,28 +36,20 @@ public:
                 bcur = min(bcur << 1, b.size());
                 res.x = {b.x.end() - bcur, b.x.end()};
                 pre = inv;
-                inv *= ((Bigint(2) << (cur + bcur - 1)) - inv * res);
+                inv = inv * ((Bigint(2) << (cur + bcur - 1)) - inv * res);
                 cur = min(cur << 1, d);
                 inv.x = {inv.x.end() - cur, inv.x.end()};
             }
             inv.x = {inv.x.end() - d, inv.x.end()};
-            res = a * inv;
-            res >>= a.size();
+            res = (a * inv) >> a.size();
             Bigint mul = res * b;
-            while (mul + b <= a) res += 1, mul += b;
-            x = norm(res.x);
+            while (mul + b <= a) res = res + 1, mul = mul + b;
+            a.x = a.norm(res.x);
         }
-        return *this;
+        return a;
     }
-    Bigint &operator%=(const Bigint &rhs) & {
-        return *this = *this - (*this / rhs) * rhs;
-    }
-    friend Bigint operator/(Bigint lhs, Bigint rhs) {
-        return lhs /= rhs;
-    }
-    friend Bigint operator%(Bigint lhs, Bigint rhs) {
-        return lhs %= rhs;
-    }
+    friend Bigint operator%(Bigint a, Bigint b)
+    { return a = a - (a / b) * b; }
 Bigint gcd(Bigint a, Bigint b) {
     while (b != 0) {
         Bigint r = a % b;
