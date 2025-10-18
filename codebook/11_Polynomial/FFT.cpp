@@ -1,7 +1,7 @@
 const double PI = acos(-1.0);
 using cd = complex<double>;
 vector<int> rev;
-void fft(vector<cd> &a, bool inv) {
+void fft(vector<cd> &a, bool inv = false) {
     int n = a.size();
     if (int(rev.size()) != n) {
         int k = __builtin_ctz(n) - 1;
@@ -32,7 +32,7 @@ vector<T> Multiple(const vector<T> &a, const vector<T> &b) {
     int n = 1, tot = a.size() + b.size() - 1;
     while (n < tot) n *= 2;
     fa.resize(n), fb.resize(n);
-    fft(fa, false), fft(fb, false);
+    fft(fa), fft(fb);
     for (int i = 0; i < n; i++)
         fa[i] = fa[i] * fb[i];
     fft(fa, true);
