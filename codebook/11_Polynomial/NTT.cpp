@@ -1,77 +1,53 @@
-template<int V, int P>
-Mint<P> CInv = Mint<P>(V).inv();
-vector<int> rev;
-template<int P>
-vector<Mint<P>> roots {0, 1};
-template<int P>
-Mint<P> findPrimitiveRoot() {
-    Mint<P> i = 2;
-    int k = __builtin_ctz(P - 1);
-    while (true) {
-        if (power(i, (P - 1) / 2) != 1) break;
-        i += 1;
-    }
-    return power(i, (P - 1) >> k);
-}
-template<int P>
-Mint<P> primitiveRoot = findPrimitiveRoot<P>();
-template<>
-Mint<998244353> primitiveRoot<998244353> {31};
-template<int P>
-void dft(vector<Mint<P>> &a) {
-    int n = a.size();
-    if (int(rev.size()) != n) {
-        int k = __builtin_ctz(n) - 1;
-        rev.resize(n);
-        for (int i = 0; i < n; i++)
-            rev[i] = rev[i >> 1] >> 1 | (i & 1) << k;
-    }
-    for (int i = 0; i < n; i++)
-        if (rev[i] < i) swap(a[i], a[rev[i]]);
-    if (roots<P>.size() < n) {
-        int k = __builtin_ctz(roots<P>.size());
-        roots<P>.resize(n);
-        while ((1 << k) < n) {
-            auto e = power(primitiveRoot<P>, 1 << (__builtin_ctz(P - 1) - k - 1));
-            for (int i = 1 << (k - 1); i < (1 << k); i++) {
-                roots<P>[2 * i] = roots<P>[i];
-                roots<P>[2 * i + 1] = roots<P>[i] * e;
-            }
-            k++;
-        }
-    }
-    for (int k = 1; k < n; k *= 2) {
-        for (int i = 0; i < n; i += 2 * k) {
-            for (int j = 0; j < k; j++) {
-                Mint<P> u = a[i + j];
-                Mint<P> v = a[i + j + k] * roots<P>[k + j];
-                a[i + j] = u + v;
-                a[i + j + k] = u - v;
-            }
-        }
-    }
-}
-template<int P>
-void idft(vector<Mint<P>> &a) {
-    int n = a.size();
-    reverse(a.begin() + 1, a.end());
-    dft(a);
-    Mint<P> inv = (1 - P) / n;
-    for (int i = 0; i < n; i++) a[i] *= inv;
-}
-template<int P = 998244353>
+template<int P = 998244353, int G = 3>
 struct Poly : public vector<Mint<P>> {
-    using Value = Mint<P>;
-    Poly() : vector<Value>() {}
-    explicit Poly(int n) : vector<Value>(n) {}
-    explicit Poly(const vector<Value> &a) : vector<Value>(a) {}
-    Poly(const initializer_list<Value> &a) : vector<Value>(a) {}
+    using Z = Mint<P>;
+    static vector<int> rev;
+    static vector<Z> w;
+    static void ntt(vector<Z> &a, bool inv = false) {
+        int n = a.size();
+        if (rev.size() != n) {
+            int k = __builtin_ctz(n) - 1;
+            rev.resize(n);
+            for (int i = 0; i < n; i++) rev[i] = rev[i >> 1] >> 1 | (i & 1) << k;
+        }
+        for (int i = 0; i < n; i++) if (rev[i] < i) swap(a[i], a[rev[i]]);
+        if (w.size() < n) {
+            int k = __builtin_ctz(w.size());
+            w.resize(n);
+            while ((1 << k) < n) {
+                Z u = power(Z(G), (P - 1) >> (k + 1));
+                for (int i = 1 << (k - 1); i < (1 << k); i++) {
+                    w[i * 2] = w[i];
+                    w[i * 2 + 1] = w[i] * u;
+                }
+                k++;
+            }
+        }
+        for (int k = 1; k < n; k *= 2) {
+            for (int i = 0; i < n; i += 2 * k) {
+                for (int j = 0; j < k; j++) {
+                    Z u = a[i + j], v = a[i + j + k] * w[k + j];
+                    a[i + j] = u + v; a[i + j + k] = u - v;
+                }
+            }
+        }
+        if (inv) {
+            reverse(a.begin() + 1, a.end());
+            Z inv_n = Z(n).inv();
+            for (auto &x : a) x *= inv_n;
+        }
+    }
+
+    Poly(int n = 0) : vector<Z>(n) {}
+    Poly(const vector<Z> &a) : vector<Z>(a) {}
+    Poly(const initializer_list<Z> &a) : vector<Z>(a) {}
     template<class InputIt, class = _RequireInputIter<InputIt>>
-    explicit Poly(InputIt first, InputIt last) : vector<Value>(first, last) {}
-    template<class F>
-    explicit Poly(int n, F f) : vector<Value>(n) {
-        for (int i = 0; i < n; i++)
-            (*this)[i] = f(i);
+    Poly(InputIt first, InputIt last) : vector<Z>(first, last) {}
+
+    Poly operator-() const {
+        vector<Z> res(this->size());
+        for (int i = 0; i < int(res.size()); i++) res[i] = -(*this)[i];
+        return Poly(res);
     }
     Poly shift(int k) const {
         if (k >= 0) {
@@ -79,94 +55,60 @@ struct Poly : public vector<Mint<P>> {
             b.insert(b.begin(), k, 0);
             return b;
         } else if (this->size() <= -k) {
-            return Poly();
+            return {};
         } else {
             return Poly(this->begin() + (-k), this->end());
         }
     }
     Poly trunc(int k) const {
-        Poly f = *this;
-        f.resize(k);
-        return f;
+        Poly f = *this; f.resize(k); return f;
     }
-    friend Poly operator+(const Poly &a, const Poly &b) {
-        Poly res(max(a.size(), b.size()));
-        for (int i = 0; i < a.size(); i++)
-            res[i] += a[i];
-        for (int i = 0; i < b.size(); i++)
-            res[i] += b[i];
-        return res;
+    friend Poly operator+(Poly a, Poly b) {
+        a.resize(max(a.size(), b.size()));
+        for (int i = 0; i < b.size(); i++) a[i] += b[i];
+        return a;
     }
-    friend Poly operator-(const Poly &a, const Poly &b) {
-        Poly res(max(a.size(), b.size()));
-        for (int i = 0; i < a.size(); i++)
-            res[i] += a[i];
-        for (int i = 0; i < b.size(); i++)
-            res[i] -= b[i];
-        return res;
-    }
-    friend Poly operator-(const Poly &a) {
-        vector<Value> res(a.size());
-        for (int i = 0; i < int(res.size()); i++)
-            res[i] = -a[i];
-        return Poly(res);
+    friend Poly operator-(Poly a, Poly b) {
+        a.resize(max(a.size(), b.size()));
+        for (int i = 0; i < b.size(); i++) a[i] -= b[i];
+        return a;
     }
     friend Poly operator*(Poly a, Poly b) {
-        if (a.size() == 0 || b.size() == 0)
-            return Poly();
+        if (a.empty() || b.empty()) return {};
         if (a.size() < b.size()) swap(a, b);
         int n = 1, tot = a.size() + b.size() - 1;
         while (n < tot) n *= 2;
-        if (((P - 1) & (n - 1)) != 0 || b.size() < 128) {
-            Poly c(a.size() + b.size() - 1);
-            for (int i = 0; i < a.size(); i++)
-                for (int j = 0; j < b.size(); j++)
-                    c[i + j] += a[i] * b[j];
-            return c;
-        }
         a.resize(n), b.resize(n);
-        dft(a), dft(b);
-        for (int i = 0; i < n; i++)
-            a[i] *= b[i];
-        idft(a);
+        ntt(a), ntt(b);
+        for (int i = 0; i < n; i++) a[i] *= b[i];
+        ntt(a, true);
         a.resize(tot);
         return a;
     }
-    friend Poly operator*(Value a, Poly b) {
-        for (int i = 0; i < int(b.size()); i++)
-            b[i] *= a;
-        return b;
-    }
-    friend Poly operator*(Poly a, Value b) {
-        for (int i = 0; i < int(a.size()); i++)
-            a[i] *= b;
+    friend Poly operator*(Poly a, Z x) {
+        for (int i = 0; i < int(a.size()); i++) a[i] *= x;
         return a;
     }
-    friend Poly operator/(Poly a, Value b) {
-        for (int i = 0; i < int(a.size()); i++)
-            a[i] /= b;
+    friend Poly operator/(Poly a, Z x) {
+        for (int i = 0; i < int(a.size()); i++) a[i] /= x;
         return a;
     }
-    Poly &operator+=(Poly b) {
-        return (*this) = (*this) + b;
-    }
-    Poly &operator-=(Poly b) {
-        return (*this) = (*this) - b;
-    }
-    Poly &operator*=(Poly b) {
-        return (*this) = (*this) * b;
-    }
-    Poly &operator*=(Value b) {
-        return (*this) = (*this) * b;
-    }
-    Poly &operator/=(Value b) {
-        return (*this) = (*this) / b;
-    }
+    Poly &operator+=(Poly a)
+    { return (*this) = (*this) + a; }
+    Poly &operator-=(Poly a)
+    { return (*this) = (*this) - a; }
+    Poly &operator*=(Poly a)
+    { return (*this) = (*this) * a; }
+    Poly &operator*=(Z a)
+    { return (*this) = (*this) * a; }
+    Poly &operator/=(Z a)
+    { return (*this) = (*this) / a; }
+
     Poly deriv() const {
-        if (this->empty()) return Poly();
+        if (this->empty()) return {};
         Poly res(this->size() - 1);
         for (int i = 0; i < this->size() - 1; i++)
-            res[i] = (i + 1) * (*this)[i + 1];
+            res[i] = (*this)[i + 1] * (i + 1);
         return res;
     }
     Poly integr() const {
@@ -175,6 +117,7 @@ struct Poly : public vector<Mint<P>> {
             res[i + 1] = (*this)[i] / (i + 1);
         return res;
     }
+
     Poly inv(int m) const {
         Poly x{(*this)[0].inv()};
         int k = 1;
@@ -184,8 +127,37 @@ struct Poly : public vector<Mint<P>> {
         }
         return x.trunc(m);
     }
+
     Poly log(int m) const {
         return (deriv() * inv(m)).integr().trunc(m);
+    }
+    Poly pow(ll k, int m) const {
+        if (k == 0) { Poly res(m); res[0] = 1; return res; }
+        int i = 0;
+        while (i < this->size() && (*this)[i] == 0) i++;
+        if (i == this->size() || i > 0 && k > (m - 1) / i) return Poly(m);
+        Z v = (*this)[i];
+        auto f = shift(-i) * v.inv();
+        return (f.log(m - i * k) * Z(k)).exp(m - i * k).shift(i * k) * power(v, k);
+    }
+
+    Poly sqrt(int m) const { // need quadraticResidue
+        int k = 0;
+        while (k < this->size() && (*this)[k] == 0) k++; // 找前導零
+        if (k == this->size()) return Poly(m); // 全零多項式
+        if (k % 2 != 0) return {}; // 無解: 最低次項為奇數
+        int s = quadraticResidue((*this)[k]);
+        if (s == -1) return {}; // 無解: 係數無平方根
+        int oft = k / 2, r = m - oft;
+        if (r <= 0) return Poly(m);
+        Poly h = this->shift(-k) * (*this)[k].inv(), g{1};
+        for (int i = 1; i < r; i <<= 1) {
+            int len = i << 1;
+            g = (g + h.trunc(len) * g.inv(len)).trunc(len) / 2;
+        }
+        g.resize(r);
+        g = (g * Z(s)).shift(oft).trunc(m);
+        return g;
     }
     Poly exp(int m) const {
         Poly x{1};
@@ -196,36 +168,18 @@ struct Poly : public vector<Mint<P>> {
         }
         return x.trunc(m);
     }
-    Poly pow(int k, int m) const {
-        int i = 0;
-        while (i < this->size() && (*this)[i] == 0) i++;
-        if (i == this->size() || 1LL * i * k >= m)
-            return Poly(m);
-        Value v = (*this)[i];
-        auto f = shift(-i) * v.inv();
-        return (f.log(m - i * k) * k).exp(m - i * k).shift(i * k) * power(v, k);
-    }
-    Poly sqrt(int m) const {
-        Poly x{1};
-        int k = 1;
-        while (k < m) {
-            k *= 2;
-            x = (x + (trunc(k) * x.inv(k)).trunc(k)) * CInv<2, P>;
-        }
-        return x.trunc(m);
-    }
+
     Poly mulT(Poly b) const {
-        if (b.size() == 0) return Poly();
+        if (b.empty()) return {};
         int n = b.size();
         reverse(b.begin(), b.end());
         return ((*this) * b).shift(-(n - 1));
     }
-    vector<Value> eval(vector<Value> x) const {
-        if (this->size() == 0)
-            return vector<Value>(x.size(), 0);
+    vector<Z> eval(vector<Z> x) const {
+        if (this->size() == 0) return vector<Z>(x.size(), 0);
         const int n = max(x.size(), this->size());
         vector<Poly> q(4 * n);
-        vector<Value> ans(x.size());
+        vector<Z> ans(x.size());
         x.resize(n);
         function<void(int, int, int)> build = [&](int p, int l, int r) {
             if (r - l == 1) {
@@ -240,8 +194,7 @@ struct Poly : public vector<Mint<P>> {
         build(1, 0, n);
         function<void(int, int, int, const Poly &)> work = [&](int p, int l, int r, const Poly &num) {
             if (r - l == 1) {
-                if (l < int(ans.size()))
-                    ans[l] = num[0];
+                if (l < int(ans.size())) ans[l] = num[0];
             } else {
                 int m = (l + r) / 2;
                 work(2 * p, l, m, num.mulT(q[2 * p + 1]).resize(m - l));
@@ -252,57 +205,5 @@ struct Poly : public vector<Mint<P>> {
         return ans;
     }
 };
-template<int P = 998244353>
-Poly<P> berlekampMassey(const Poly<P> &s) {
-    Poly<P> c, oldC;
-    int f = -1;
-    for (int i = 0; i < s.size(); i++) {
-        auto delta = s[i];
-        for (int j = 1; j <= c.size(); j++)
-            delta -= c[j - 1] * s[i - j];
-        if (delta == 0) continue;
-        if (f == -1) {
-            c.resize(i + 1);
-            f = i;
-        } else {
-            auto d = oldC;
-            d *= -1;
-            d.insert(d.begin(), 1);
-            Mint<P> df1 = 0;
-            for (int j = 1; j <= d.size(); j++)
-                df1 += d[j - 1] * s[f + 1 - j];
-            assert(df1 != 0);
-            auto coef = delta / df1;
-            d *= coef;
-            Poly<P> zeros(i - f - 1);
-            zeros.insert(zeros.end(), d.begin(), d.end());
-            d = zeros;
-            auto temp = c;
-            c += d;
-            if (i - temp.size() > f - oldC.size()) {
-                oldC = temp;
-                f = i;
-            }
-        }
-    }
-    c *= -1;
-    c.insert(c.begin(), 1);
-    return c;
-}
-template<int P = 998244353>
-Mint<P> linearRecurrence(Poly<P> p, Poly<P> q, ll n) {
-    int m = q.size() - 1;
-    while (n > 0) {
-        auto newq = q;
-        for (int i = 1; i <= m; i += 2)
-            newq[i] *= -1;
-        auto newp = p * newq;
-        newq = q * newq;
-        for (int i = 0; i < m; i++)
-            p[i] = newp[i * 2 + n % 2];
-        for (int i = 0; i <= m; i++)
-            q[i] = newq[i * 2];
-        n /= 2;
-    }
-    return p[0] / q[0];
-}
+template<int P, int G> vector<int> Poly<P, G>::rev;
+template<int P, int G> vector<Mint<P>> Poly<P, G>::w = {0, 1};
