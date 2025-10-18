@@ -7,10 +7,7 @@ struct Fraction {
         if (d < 0) n = -n, d = -d;
     }
     Fraction(T n = 0, T d = 1) : n(n), d(d)
-    {
-        assert(d != 0);
-        reduce();
-    }
+    { assert(d != 0); reduce(); }
     Fraction(const string &str) {
         char slash;
         if (str.find('/') != -1) {
