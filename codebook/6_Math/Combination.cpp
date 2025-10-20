@@ -38,9 +38,10 @@ struct Comb {
         if (n < m || m < 0) return 0;
         return fac(n) * invfac(m) * invfac(n - m);
     }
-    Z lucas(int n, int m) { // Mod 要在 1E5 左右
-        if (m == 0) return 1;
-        return binom(n % Z::getMod(), m % Z::getMod()) *
-            lucas(n / Z::getMod(), m / Z::getMod());
+    Z fastfac(ll n) { // O(p + T log(n)), p is prime
+        return n ? power(Z(-1), n / Z::getMod()) * fac(n % Z::getMod()) * fastfac(n / Z::getMod()) : 1;
+    }
+    Z lucas(ll n, ll m) { // O(p + T log(n)), p is prime
+        return m ? binom(n % Z::getMod(), m % Z::getMod()) * lucas(n / Z::getMod(), m / Z::getMod()) : 1;
     }
 } comb; // 若要換模數需重新宣告
