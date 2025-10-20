@@ -134,11 +134,11 @@ struct Info {
     }
     */
     // 部分 assignment 使用
-    // Info &operator=(const Info &rhs) & {
+    // Info &operator=(const Info &i) & {
     //     return *this;
     // }
-    Info &operator=(const ll &rhs) & {
-        sum = rhs;
+    Info &operator=(const ll &x) & {
+        sum = x;
         return *this;
     }
 };
