@@ -38,7 +38,7 @@ struct Poly : public vector<Mint<P>> {
         }
     }
 
-    Poly(int n = 0) : vector<Z>(n) {}
+    explicit Poly(int n = 0) : vector<Z>(n) {}
     Poly(const vector<Z> &a) : vector<Z>(a) {}
     Poly(const initializer_list<Z> &a) : vector<Z>(a) {}
     template<class InputIt, class = _RequireInputIter<InputIt>>
@@ -55,7 +55,7 @@ struct Poly : public vector<Mint<P>> {
             b.insert(b.begin(), k, 0);
             return b;
         } else if (this->size() <= -k) {
-            return {};
+            return Poly();
         } else {
             return Poly(this->begin() + (-k), this->end());
         }
@@ -74,7 +74,7 @@ struct Poly : public vector<Mint<P>> {
         return a;
     }
     friend Poly operator*(Poly a, Poly b) {
-        if (a.empty() || b.empty()) return {};
+        if (a.empty() || b.empty()) return Poly();
         if (a.size() < b.size()) swap(a, b);
         int n = 1, tot = a.size() + b.size() - 1;
         while (n < tot) n *= 2;
@@ -105,7 +105,7 @@ struct Poly : public vector<Mint<P>> {
     { return (*this) = (*this) / a; }
 
     Poly deriv() const {
-        if (this->empty()) return {};
+        if (this->empty()) return Poly();
         Poly res(this->size() - 1);
         for (int i = 0; i < this->size() - 1; i++)
             res[i] = (*this)[i + 1] * (i + 1);
@@ -145,9 +145,9 @@ struct Poly : public vector<Mint<P>> {
         int k = 0;
         while (k < this->size() && (*this)[k] == 0) k++; // 找前導零
         if (k == this->size()) return Poly(m); // 全零多項式
-        if (k % 2 != 0) return {}; // 無解: 最低次項為奇數
+        if (k % 2 != 0) return Poly(); // 無解: 最低次項為奇數
         int s = quadraticResidue((*this)[k]);
-        if (s == -1) return {}; // 無解: 係數無平方根
+        if (s == -1) return Poly(); // 無解: 係數無平方根
         int oft = k / 2, r = m - oft;
         if (r <= 0) return Poly(m);
         Poly h = this->shift(-k) * (*this)[k].inv(), g{1};
@@ -170,7 +170,7 @@ struct Poly : public vector<Mint<P>> {
     }
 
     Poly mulT(Poly b) const {
-        if (b.empty()) return {};
+        if (b.empty()) return Poly();
         int n = b.size();
         reverse(b.begin(), b.end());
         return ((*this) * b).shift(-(n - 1));
