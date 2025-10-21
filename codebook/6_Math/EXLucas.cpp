@@ -11,7 +11,7 @@ Z C_pe(ll n, ll m, int p, int e) {
         if (j % p == 0) fac[j] = fac[j - 1];
         else fac[j] = fac[j - 1] * j;
     }
-    Z wilson = p == 2 && e >= 3 ? 1 : -1; // (p^e)! ≡ wilson (mod p^e)
+    Z wilson = p == 2 && e >= 3 ? 1 : -1; // (p^e)! = wilson (mod p^e)
     function<Z(ll)> fastFac = [&](ll n)
     { return n ? power(wilson, n / pe) * fac[n % pe] * fastFac(n / p) : 1; };
     ll vp = legendre(n, p) - legendre(m, p) - legendre(n - m, p);
