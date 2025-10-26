@@ -10,12 +10,10 @@ struct Pt {
     Pt operator/(T k) const { return Pt(x / k, y / k); }
     bool operator==(Pt p) const { return x == p.x && y == p.y; }
     bool operator!=(Pt p) const { return x != p.x || y != p.y; }
-    friend istream &operator>>(istream &is, Pt &p) {
-        return is >> p.x >> p.y;
-    }
-    friend ostream &operator<<(ostream &os, const Pt &p) {
-        return os << "(" << p.x << ", " << p.y << ")";
-    }
+    friend istream &operator>>(istream &is, Pt &p)
+    { return is >> p.x >> p.y; }
+    friend ostream &operator<<(ostream &os, const Pt &p)
+    { return os << "(" << p.x << ", " << p.y << ")"; }
 };
 int sign(double x)
 { return fabs(x) <= eps ? 0 : (x > 0 ? 1 : -1); }

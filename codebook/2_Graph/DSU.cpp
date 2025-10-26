@@ -8,9 +8,8 @@ struct DSU {
         if (f[x] == x) return x;
         return f[x] = find(f[x]);
     }
-    bool same(int x, int y) {
-        return find(x) == find(y);
-    }
+    bool same(int x, int y)
+    { return find(x) == find(y); }
     bool merge(int x, int y) {
         x = find(x); y = find(y);
         if (x == y) return false;
@@ -20,9 +19,7 @@ struct DSU {
         n--;
         return true;
     }
-    int size(int x) {
-        return siz[find(x)];
-    }
+    int size(int x) { return siz[find(x)]; }
 };
 struct DSU {
     int n;
@@ -31,14 +28,12 @@ struct DSU {
         iota(f.begin(), f.end(), 0);
         stk.clear();
     }
-    int find(int x) {
-        return x == f[x] ? x : find(f[x]);
-    }
-    bool same(int x, int y) {
-        return find(x) == find(y);
-    }
+    int find(int x)
+    { return x == f[x] ? x : find(f[x]); }
+    bool same(int x, int y)
+    { return find(x) == find(y); }
     bool merge(int x, int y) {
-        x = find(x); y = find(y);
+        x = find(x), y = find(y);
         if (x == y) return false;
         if (siz[x] < siz[y]) swap(x, y);
         siz[x] += siz[y];
@@ -56,7 +51,5 @@ struct DSU {
             f[y] = y;
         }
     }
-    int size(int x) {
-        return siz[find(x)];
-    }
+    int size(int x) { return siz[find(x)]; }
 };

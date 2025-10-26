@@ -48,8 +48,7 @@ struct VBCC {
     Graph compress() {
         Graph g; // 壓完是一棵樹, 但不一定每個 bel 都有節點
         g.bel.resize(n);
-        g.siz.resize(cnt);
-        g.cnte.resize(cnt);
+        g.siz.resize(cnt); g.cnte.resize(cnt);
         for (int u = 0; u < n; u++) {
             if (ap[u]) {
                 g.bel[u] = cnt++;

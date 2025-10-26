@@ -1,5 +1,5 @@
 void latticePoints() {
-    // Area 求法與 Polygon 內整數點數
+    // 求 Area 與 Polygon 內整數點數
     int n; cin >> n;
     vector<P> polygon(n);
     for (int i = 0; i < n; i++) cin >> polygon[i];
@@ -19,5 +19,4 @@ void latticePoints() {
     };
     ll res = countBoundaryPoints(polygon);
     ll ans = (area - res + 2) / 2;
-    cout << ans << " " << res << "\n";
 }

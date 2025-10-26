@@ -1,10 +1,10 @@
-// 應用: dp(i) = h(i) + max(A(j)), for l(i)≤j≤r(i)
+// 應用: dp(i) = h(i) + max(A(j)), for l(i) \leq j \leq r(i)
 // A(j) 可能包含 dp(j), h(i) 可 O(1)
 void boundedKnapsack() {
     int n, k; // O(nk)
     vector<int> w(n), v(n), num(n);
     deque<int> q;
-    // 於是我們將同餘的數分在同一組
+    // 將同餘的數分在同一組
     // 每次取出連續 num[i] 格中最大值
     // g_x = max(_{k=0}^num[i] (g'_{x-k} + v_i*k))
     // G_x = g'_{x} - v_i*x

@@ -37,31 +37,15 @@ struct Poly : public vector<Mint<P>> {
             for (auto &x : a) x *= inv_n;
         }
     }
-
     explicit Poly(int n = 0) : vector<Z>(n) {}
     Poly(const vector<Z> &a) : vector<Z>(a) {}
     Poly(const initializer_list<Z> &a) : vector<Z>(a) {}
     template<class InputIt, class = _RequireInputIter<InputIt>>
     Poly(InputIt first, InputIt last) : vector<Z>(first, last) {}
-
     Poly operator-() const {
         vector<Z> res(this->size());
         for (int i = 0; i < int(res.size()); i++) res[i] = -(*this)[i];
         return Poly(res);
-    }
-    Poly shift(int k) const {
-        if (k >= 0) {
-            auto b = *this;
-            b.insert(b.begin(), k, 0);
-            return b;
-        } else if (this->size() <= -k) {
-            return Poly();
-        } else {
-            return Poly(this->begin() + (-k), this->end());
-        }
-    }
-    Poly trunc(int k) const {
-        Poly f = *this; f.resize(k); return f;
     }
     friend Poly operator+(Poly a, Poly b) {
         a.resize(max(a.size(), b.size()));
@@ -103,7 +87,20 @@ struct Poly : public vector<Mint<P>> {
     { return (*this) = (*this) * a; }
     Poly &operator/=(Z a)
     { return (*this) = (*this) / a; }
-
+    Poly shift(int k) const {
+        if (k >= 0) {
+            auto b = *this;
+            b.insert(b.begin(), k, 0);
+            return b;
+        } else if (this->size() <= -k) {
+            return Poly();
+        } else {
+            return Poly(this->begin() + (-k), this->end());
+        }
+    }
+    Poly trunc(int k) const {
+        Poly f = *this; f.resize(k); return f;
+    }
     Poly deriv() const {
         if (this->empty()) return Poly();
         Poly res(this->size() - 1);
@@ -117,7 +114,6 @@ struct Poly : public vector<Mint<P>> {
             res[i + 1] = (*this)[i] / (i + 1);
         return res;
     }
-
     Poly inv(int m) const {
         Poly x{(*this)[0].inv()};
         int k = 1;
@@ -127,7 +123,6 @@ struct Poly : public vector<Mint<P>> {
         }
         return x.trunc(m);
     }
-
     Poly log(int m) const {
         return (deriv() * inv(m)).integr().trunc(m);
     }
@@ -140,7 +135,6 @@ struct Poly : public vector<Mint<P>> {
         auto f = shift(-i) * v.inv();
         return (f.log(m - i * k) * Z(k)).exp(m - i * k).shift(i * k) * power(v, k);
     }
-
     Poly sqrt(int m) const { // need quadraticResidue
         int k = 0;
         while (k < this->size() && (*this)[k] == 0) k++; // 找前導零
@@ -168,7 +162,6 @@ struct Poly : public vector<Mint<P>> {
         }
         return x.trunc(m);
     }
-
     Poly mulT(Poly b) const {
         if (b.empty()) return Poly();
         int n = b.size();

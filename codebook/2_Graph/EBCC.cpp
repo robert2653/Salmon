@@ -44,10 +44,8 @@ struct EBCC { // CF/contest/1986/pF
         vector<int> siz, cnte;
     };
     Graph compress() {
-        Graph g;
-        g.n = cnt;
-        g.siz.resize(cnt);
-        g.cnte.resize(cnt);
+        Graph g; g.n = cnt;
+        g.siz.resize(cnt); g.cnte.resize(cnt);
         for (int i = 0; i < n; i++) {
             g.siz[bel[i]]++;
             for (auto j : adj[i]) {

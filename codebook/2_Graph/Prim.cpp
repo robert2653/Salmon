@@ -9,8 +9,7 @@ auto prim = [&](int n, vector<vector<pair<int, int>>> &adj) -> bool {
         vis[u] = true;
         ans += w, sz++;
         for (auto [v, w] : g[u])
-            if (!vis[v])
-                pq.emplace(w, v);
+            if (!vis[v]) pq.emplace(w, v);
     }
     if (sz == n) return true;
     return false;
