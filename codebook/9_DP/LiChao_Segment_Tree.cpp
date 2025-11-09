@@ -1,4 +1,4 @@
-// 應用: dp(i) = h(i) + min/max(A(j)X(i) + B(j)), for j ≤ r(i)
+// 應用: dp(i) = h(i) + min/max(A(j)X(i) + B(j)), for j <= r(i)
 //        y    =  c   +          m  x   +   b
 template<class T, class F = less<ll>>
 struct LiChaoSeg {

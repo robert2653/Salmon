@@ -1,4 +1,4 @@
-// 應用: dp(i) = h(i) + max(A(j)), for l(i) \leq j \leq r(i)
+// 應用: dp(i) = h(i) + max(A(j)), for l(i) <= j <= r(i)
 // A(j) 可能包含 dp(j), h(i) 可 O(1)
 void boundedKnapsack() {
     int n, k; // O(nk)

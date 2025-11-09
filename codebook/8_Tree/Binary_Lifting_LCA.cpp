@@ -1,5 +1,5 @@
 const int N = 2E5;
-const int Lg = __lg(N); // __lg(max(n, qi)), [0, Lg]
+const int Lg = __lg(N); // __lg(max(N, Qi)), [0, Lg]
 int up[N][Lg + 1];
 vector<int> dep, dfn;
 void build(int n, vector<vector<int>> &g, int rt = 0) {
