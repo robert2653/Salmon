@@ -1,4 +1,5 @@
 // a^x = b (mod m)
+// x = A * sq - B (0 <= A, B <= sq)
 vector<int> BSGS(int a, int b, int m) { // gcd(a, m) = 1
     Z::setMod(m);
     unordered_map<int, int> mp;
