@@ -1,5 +1,4 @@
-template<class T>
-struct Fenwick {
+template<class T> struct Fenwick {
     int n; vector<T> a;
     Fenwick(int n) : n(n), a(n) {}
     void add(int x, const T &v) {
@@ -28,8 +27,7 @@ struct Fenwick {
         return x;
     }
 };
-template<class T>
-struct TwoDFenwick {
+template<class T> struct TwoDFenwick {
     int nx, ny;  // row, col 個數
     vector<vector<T>> a;
     TwoDFenwick(int nx, int ny) : nx(nx), ny(ny) {

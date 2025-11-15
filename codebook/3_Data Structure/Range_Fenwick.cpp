@@ -1,5 +1,4 @@
-template<class T>
-struct RangeFenwick { // 全部以 0 based 使用
+template<class T> struct RangeFenwick {
     int n;
     vector<T> d, di;
     RangeFenwick(int n) : n(n), d(n), di(n) {}
@@ -39,8 +38,7 @@ struct RangeFenwick { // 全部以 0 based 使用
         return x;
     }
 };
-template<class T>
-struct RangeTwoDFenwick {  // 全部以 0 based 使用
+template<class T> struct RangeTwoDFenwick {
     int nx, ny;  // row, col 個數
     vector<vector<T>> d, di, dj, dij;
     RangeTwoDFenwick(int x, int y) : nx(x), ny(y) {

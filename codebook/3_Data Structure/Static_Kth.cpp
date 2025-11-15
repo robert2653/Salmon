@@ -1,5 +1,4 @@
-template<class T>
-struct StaticKth : PST<int> {
+template<class T> struct StaticKth : PST<int> {
     int dct(T x) {
         return lower_bound(s.begin(), s.end(), x) - s.begin();
     }
