@@ -16,13 +16,9 @@ void insert(int key, vector<vector<int>> &vt) {
         vt[stk[stk.size() - 2]].push_back(stk.back());
         stk.pop_back();
     }
-    if (stk.size() < 2 || stk[stk.size() - 2] != l) {
-        vt[l].push_back(stk.back());
-        stk.back() = l;
-    } else {
-        vt[l].push_back(stk.back());
-        stk.pop_back();
-    }
+    vt[l].push_back(stk.back());
+    if (stk.size() < 2 || stk[stk.size() - 2] != l) stk.back() = l;
+    else stk.pop_back();
     stk.push_back(key);
 }
 int work(vector<vector<int>> &vt) {
@@ -30,8 +26,7 @@ int work(vector<vector<int>> &vt) {
         vt[stk[stk.size() - 2]].push_back(stk.back());
         stk.pop_back();
     }
-    int rt = stk[0];
-    stk.clear();
+    int rt = stk[0]; stk.clear();
     return rt;
 }
 void solve() {
@@ -48,16 +43,16 @@ void solve() {
     }
     build(n, g); // build LCA
     vector<int> dis(n, 1E9); // root 到各點的最小邊權
-    auto dfs_dis = [&](auto &&self, int x, int p) -> void {
+    auto dfs = [&](auto &&self, int x, int p) -> void {
         for (auto [y, w] : wg[x]) {
             if (y == p) continue;
             dis[y] = min(w, dis[x]);
             self(self, y, x);
         }
     };
-    dfs_dis(dfs_dis, 0, -1);
+    dfs(dfs, 0, -1);
 
-    vector<bool> isKey(n);
+    vector<int> isKey(n);
     vector<ll> dp(n);
     int q; cin >> q;
     while (q--) {
@@ -65,16 +60,16 @@ void solve() {
         vector<int> key(m);
         for (int i = 0; i < m; i++) {
             cin >> key[i];
-            key[i] -= 1;
-            isKey[key[i]] = true;
+            key[i]--;
+            isKey[key[i]] = 1;
         }
         key.push_back(0); // 固定 0 為 root, 看題目需求
         sort(key.begin(), key.end(), [&](int a, int b) {
             return dfn[a] < dfn[b];
         }); // 要 sort 再 insert
         for (auto x : key) insert(x, vt);
-        work(vt);
-        auto dfs = [&](auto &&self, int x) -> void {
+        int rt = work(vt);
+        auto dfs = [&](auto self, int x) -> void {
             for (auto y : vt[x]) {
                 self(self, y);
                 if (isKey[y]) { // 直接砍了
@@ -86,8 +81,9 @@ void solve() {
             }
             vt[x].clear(); // 記得 reset
         };
-        dfs(dfs, 0);
-        cout << dp[0] << "\n";
-        dp[0] = 0; // 最後 reset root
+        dfs(dfs, rt);
+        cout << dp[rt] << "\n";
+        isKey[rt] = 0;
+        dp[rt] = 0; // 最後 reset root
     }
 }
