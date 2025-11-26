@@ -15,11 +15,9 @@ template<int P> struct Mint {
     static int getMod() { return P > 0 ? P : Mod; }
     static void setMod(int Mod_) { Mod = Mod_; }
     ll x;
-    Mint(ll x = 0) : x {norm(x % getMod())} {}
-    ll norm(ll x) const {
+    Mint(ll v = 0) {
+        x = v % getMod();
         if (x < 0) x += getMod();
-        if (x >= getMod()) x -= getMod();
-        return x;
     }
     explicit operator int() const { return x; }
     Mint operator-() const { return getMod() - x; }
