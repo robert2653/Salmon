@@ -1,10 +1,10 @@
 struct HLD {
     int n, cur;
-    vector<int> siz, top, dep, parent, in, out, seq;
+    vector<int> siz, top, dep, par, in, out, seq;
     vector<vector<int>> adj;
     HLD(int n) : n(n), cur(0) {
         siz.resize(n); top.resize(n); dep.resize(n);
-        parent.resize(n); in.resize(n); out.resize(n);
+        par.resize(n); in.resize(n); out.resize(n);
         seq.resize(n); adj.assign(n, {});
     }
     void addEdge(int u, int v) {
@@ -14,15 +14,14 @@ struct HLD {
     void work(int rt = 0) {
         top[rt] = rt;
         dep[rt] = 0;
-        parent[rt] = -1;
+        par[rt] = -1;
         dfs1(rt); dfs2(rt);
     }
     void dfs1(int u) {
-        if (parent[u] != -1)
-            adj[u].erase(find(adj[u].begin(), adj[u].end(), parent[u]));
+        if (par[u] != -1) adj[u].erase(find(adj[u].begin(), adj[u].end(), par[u]));
         siz[u] = 1;
         for (auto &v : adj[u]) {
-            parent[v] = u, dep[v] = dep[u] + 1;
+            par[v] = u, dep[v] = dep[u] + 1;
             dfs1(v);
             siz[u] += siz[v];
             if (siz[v] > siz[adj[u][0]]) {
@@ -42,9 +41,9 @@ struct HLD {
     int lca(int u, int v) {
         while (top[u] != top[v]) {
             if (dep[top[u]] > dep[top[v]]) {
-                u = parent[top[u]];
+                u = par[top[u]];
             } else {
-                v = parent[top[v]];
+                v = par[top[v]];
             }
         }
         return dep[u] < dep[v] ? u : v;
@@ -55,7 +54,7 @@ struct HLD {
     int jump(int u, int k) {
         if (dep[u] < k) return -1;
         int d = dep[u] - k;
-        while (dep[top[u]] > d) u = parent[top[u]];
+        while (dep[top[u]] > d) u = par[top[u]];
         return seq[in[u] - dep[u] + d];
     }
     bool isAncester(int u, int v) {
@@ -63,7 +62,7 @@ struct HLD {
     }
     int rootedParent(int rt, int v) {
         if (rt == v) return rt;
-        if (!isAncester(v, rt)) return parent[v];
+        if (!isAncester(v, rt)) return par[v];
         auto it = upper_bound(adj[v].begin(), adj[v].end(), rt,
             [&](int x, int y) {
                 return in[x] < in[y];
