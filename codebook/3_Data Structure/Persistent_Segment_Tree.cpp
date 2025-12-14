@@ -7,16 +7,15 @@ struct PST {
     int n;
     vector<Node> nd;
     vector<int> rt;
-    template<class T>
-    PST(const vector<T> &init) {
-        n = init.size();
+    template<class T> PST(const vector<T> &v) {
+        n = v.size();
         nd.assign(1, Node());
         rt.clear();
         function<int(int, int)> build = [&](int l, int r) {
             int id = nd.size();
             nd.emplace_back();
             if (r - l == 1) {
-                nd[id].info = init[l];
+                nd[id].info = v[l];
                 return id;
             }
             int m = (l + r) >> 1;
@@ -45,11 +44,8 @@ struct PST {
             return t;
         }
         int m = (l + r) / 2;
-        if (x < m) {
-            nd[t].lc = modify(nd[t].lc, l, m, x, v);
-        } else {
-            nd[t].rc = modify(nd[t].rc, m, r, x, v);
-        }
+        if (x < m) nd[t].lc = modify(nd[t].lc, l, m, x, v);
+        else nd[t].rc = modify(nd[t].rc, m, r, x, v);
         pull(nd[t]);
         return t;
     }
@@ -75,9 +71,6 @@ struct PST {
     }
     void resize(int n) { rt.resize(n); }
 };
-struct Info {
-    ll sum = 0;
-};
-Info operator+(const Info &a, const Info &b) {
-    return { a.sum + b.sum };
-}
+struct Info { ll sum = 0; };
+Info operator+(const Info &a, const Info &b)
+{ return { a.sum + b.sum }; }
