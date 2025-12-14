@@ -3,6 +3,8 @@
 using namespace std;
 using ll = long long;
 
+template<class T> void chmin(T &a, const T &b) { if (a > b) a = b; }
+template<class T> void chmax(T &a, const T &b) { if (a < b) a = b; }
 const int Mod = 1E9 + 7;
 int add(int a, int b) { a += b; if (a >= Mod) a -= Mod; return a; }
 int sub(int a, int b) { a -= b; if (a < 0) a += Mod; return a; }
