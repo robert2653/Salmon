@@ -38,10 +38,10 @@ template<class T> struct RangeFenwick {
         return x;
     }
 };
-template<class T> struct RangeTwoDFenwick {
+template<class T> struct RangeFenwick2D {
     int nx, ny;  // row, col 個數
     vector<vector<T>> d, di, dj, dij;
-    RangeTwoDFenwick(int x, int y) : nx(x), ny(y) {
+    RangeFenwick2D(int x, int y) : nx(x), ny(y) {
         d.assign(nx, vector<T>(ny, T{}));
         di.assign(nx, vector<T>(ny, T{}));
         dj.assign(nx, vector<T>(ny, T{}));
