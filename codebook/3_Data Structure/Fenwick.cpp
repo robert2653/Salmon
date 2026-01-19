@@ -27,10 +27,10 @@ template<class T> struct Fenwick {
         return x;
     }
 };
-template<class T> struct TwoDFenwick {
+template<class T> struct Fenwick2D {
     int nx, ny;  // row, col 個數
     vector<vector<T>> a;
-    TwoDFenwick(int nx, int ny) : nx(nx), ny(ny) {
+    Fenwick2D(int nx, int ny) : nx(nx), ny(ny) {
         a.assign(nx, vector<T>(ny, T{}));
     }
     void add(int x, int y, const T &v) {
