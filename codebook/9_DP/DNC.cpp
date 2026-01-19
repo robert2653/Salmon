@@ -1,5 +1,5 @@
 // 應用: 切 k 段問題, 且滿足四邊形不等式
-// w(a,c) + w(b,d) ≤ w(a,d) + w(b,c)
+// w(a,c) + w(b,d) <= w(a,d) + w(b,c)
 // dp[k][j] = min(dp[k - 1][i] + cost[i][j])
 // O(K N logN)
 ll dp[K + 1][N + 1];

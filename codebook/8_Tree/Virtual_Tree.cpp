@@ -33,7 +33,6 @@ void solve() {
     int n; cin >> n;
     vector<vector<int>> g(n);
     vector<vector<pair<int, int>>> wg(n);
-    vector<vector<int>> vt(n);
     for (int i = 1; i < n; i++) {
         int u, v, w;
         cin >> u >> v >> w;
@@ -52,6 +51,7 @@ void solve() {
     };
     dfs(dfs, 0, -1);
 
+    vector<vector<int>> vt(n);
     vector<int> isKey(n);
     vector<ll> dp(n);
     int q; cin >> q;
