@@ -69,5 +69,5 @@ void sieve(int n) {
 // a ^ (m-2) = 1/a (Mod m)
 // exp2: cout << power(x, power(y, p, Mod - 1), Mod)
 // num = (x+1) * (y+1) * (z+1)...
-// sum = (a^0 + a^1+...+ a^x) * (b^0 +...+ b^y)
+// sum = (a^0 + a^1+...+ a^x) * (b^0 +...+ b^y) = (a^{x+1} - 1) / (a-1) * ...
 // mul = N ^ ((x+1) * (y+1) * (z+1) / 2)
