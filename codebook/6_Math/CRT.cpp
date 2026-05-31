@@ -5,7 +5,7 @@ pair<ll, ll> exgcd(ll a, ll b) {
     auto [y, x] = exgcd(b, a % b);
     return {x, y - (a / b) * x};
 }
-// smallest non-negative solution
+// Smallest non-negative solution
 using i128 = __int128_t;
 pair<ll, ll> CRT(ll r1, ll m1, ll r2, ll m2) {
     ll g = __gcd(m1, m2);
@@ -16,22 +16,22 @@ pair<ll, ll> CRT(ll r1, ll m1, ll r2, ll m2) {
     i128 res = i128(p1) * (r2 - r1) * m1 + r1;
     return {(res % lcm + lcm) % lcm, lcm};
 }
-ll EXCRT(vector<pair<int, int>> a) {
+pair<ll, ll> EXCRT(vector<pair<int, int>> a) {
     ll R = 0, M = 1;
     for (auto [r, m] : a) {
         auto [res, lcm] = CRT(R, M, r, m);
-        if (res == -1) return -1;
+        if (res == -1) return {-1, -1};
         R = res, M = lcm;
     }
-    return R;
+    return {R, M};
 }
 // gcd(mod) = 1, support 3 1E9 Mod
-i128 CRT(vector<pair<int, int>> a) {
+pair<i128, i128> CRT(vector<pair<int, int>> a) {
     i128 s = 1, res = 0;
     for (auto [r, m] : a) s *= m;
     for (auto [r, m] : a) {
         i128 t = s / m;
         res = (res + r * t % s * exgcd(t, m).first % s) % s;
     }
-    return (res + s) % s;
+    return {(res + s) % s, s};
 }

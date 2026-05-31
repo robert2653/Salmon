@@ -4,31 +4,39 @@
 \item 迪利克雷捲積 $h(x) = \sum_{d \mid x} f(d) g(\frac{x}{d})$
 \item 積性函數
     \begin{itemize}
+        \item $\epsilon (n)$: 只在 $n = 1$ 時為 1，其餘情況皆為 0。
         \item 莫比烏斯函數
             \begin{enumerate}
-                \item 定義
-                $$ \begin{aligned}
-                    \sum_{d \mid n} \mu (d)
-                    &=
-                    \begin{cases}
-                        1 & \text{for } n = 1\\
-                        0 & \text{for } n \neq 1
-                    \end{cases}
-                \end{aligned} $$
+                \item $$
+                    \begin{aligned}
+                        \sum_{d \mid n} \mu (d)
+                        &=
+                        \begin{cases}
+                            1 & \text{for } n = 1\\
+                            0 & \text{for } n \neq 1
+                        \end{cases}
+                    \end{aligned}
+                    $$
 
                 \item $\mu$ 是常數函數 $1$ 的反元素\\
-                $\Rightarrow \mu \ast 1 = \epsilon$，$\epsilon (n) \text{只在} n = 1 \text{時為 1，其餘情況皆為 0。}$
+                    $\Rightarrow \mu \ast 1 = \epsilon$，
             \end{enumerate}
 
         \item $\phi$ 歐拉函數: $x$ 以下與 $x$ 互質的數量
-        $$ \begin{aligned}
-            \phi \ast 1
-            &= \sum_{d \mid n} \phi(\dfrac {n}{d}) \ \ \text{質因數分解}\\
-            &= \sum_{i = 0} ^ {c} \phi(p ^ i)\\
-            &= 1 + p^0(p-1) + p^1(p-1) + ... + p^{c-1}(p-1)\\
-            &= p^c\\
-            &= id
-        \end{aligned} $$
+        \begin{itemize}
+            \item $\phi(p_1^{a_1} \cdots p_k^{a_k}) = (p_1^{a_1 - 1} (p_1 - 1)) \cdots (p_k^{a_k - 1} (p_k - 1))$
+            \item $n = \sum_{d \mid n} \phi(d)$
+            \item $$
+                \begin{aligned}
+                \phi \ast 1
+                &= \sum_{d \mid n} \phi(\dfrac {n}{d}) \ \ \text{質因數分解}\\
+                &= \sum_{i = 0} ^ {c} \phi(p ^ i)\\
+                &= 1 + p^0(p-1) + p^1(p-1) + ... + p^{c-1}(p-1)\\
+                &= p^c\\
+                &= id
+                \end{aligned}
+                $$
+        \end{itemize}
     \end{itemize}
 
 \item 莫比烏斯反演公式

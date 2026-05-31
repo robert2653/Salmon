@@ -3,7 +3,7 @@ void dfsBfs() {
     vector<vector<int>> adj(n);
     // dfs_graph
     vector<bool> vis(n);
-    auto dfs = [&](auto self, int u) -> void {
+    auto dfs = [&](auto &&self, int u) -> void {
         if (vis[u]) return;
         vis[u] = true;
         for (auto v: adj[u]) {

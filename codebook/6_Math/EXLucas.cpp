@@ -7,10 +7,7 @@ Z C_pe(ll n, ll m, int p, int e) {
     int pe = power(p, e);
     Z::setMod(pe); // inv 要用 exgcd
     vector<Z> fac(pe); fac[0] = 1;
-    for (int j = 1; j < pe; j++) {
-        if (j % p == 0) fac[j] = fac[j - 1];
-        else fac[j] = fac[j - 1] * j;
-    }
+    for (int j = 1; j < pe; j++) fac[j] = fac[j - 1] * (j % p ? j : 1);
     Z wilson = p == 2 && e >= 3 ? 1 : -1; // (p^e)! = wilson (mod p^e)
     function<Z(ll)> fastFac = [&](ll n)
     { return n ? power(wilson, n / pe) * fac[n % pe] * fastFac(n / p) : 1; };

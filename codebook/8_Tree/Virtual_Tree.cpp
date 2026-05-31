@@ -69,7 +69,7 @@ void solve() {
         }); // 要 sort 再 insert
         for (auto x : key) insert(x, vt);
         int rt = work(vt);
-        auto dfs = [&](auto self, int x) -> void {
+        auto dfs = [&](auto &&self, int x) -> void {
             for (auto y : vt[x]) {
                 self(self, y);
                 if (isKey[y]) { // 直接砍了

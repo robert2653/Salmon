@@ -14,7 +14,7 @@ void treeFlattening() {
     }
     vector<pair<int, int>> mp(n + 1); // dfn 區間
     int cnt = 0;
-    auto dfs = [&](auto self, int u, int par) -> void {
+    auto dfs = [&](auto &&self, int u, int par) -> void {
         dfnToVal[++cnt] = val[u];
         mp[u].first = cnt;
         for (auto v : tree[u]) {
