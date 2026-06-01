@@ -1,10 +1,13 @@
 // ax = b (mod m) 的前提是 gcd(a, m) | b
-// a * p.first + b * p.second = gcd(a, b)
+// Ax + By = C    (g = gcd(A, B))
+// (A/g) * x + (B/g) * y = C/g
+// solve (A/g) * x' + (B/g) * y' = 1
+// x = (x' * (C/g)) + i(B/g)
 pair<ll, ll> exgcd(ll a, ll b) {
     if (b == 0) return {1, 0};
     auto [y, x] = exgcd(b, a % b);
     return {x, y - (a / b) * x};
-}
+} // 結果可能為負，注意正規化
 // Smallest non-negative solution
 using i128 = __int128_t;
 pair<ll, ll> CRT(ll r1, ll m1, ll r2, ll m2) {
