@@ -1,42 +1,30 @@
 // 有用到 pathApply 才需要 apply 有關的
-// 需要 pathQuery 才需要 pathInfo 有關的
-// 需要 subtreeQuery 才需要 info, subtreeInfo
 const int Mod = 51061;
 struct Tag {
     ll add = 0, mul = 1;
-    void apply(const Tag &v) {
-        mul = mul * v.mul % Mod;
-        add = (add * v.mul % Mod + v.add) % Mod;
+    void apply(const Tag &t) {
+        mul = mul * t.mul % Mod;
+        add = (add * t.mul % Mod + t.add) % Mod;
     }
 };
 struct Info {
     int siz = 0;
     ll val = 0, sum = 0;
-    void apply(const Tag &v) {
-        val = (val * v.mul % Mod + v.add) % Mod;
-        sum = (sum * v.mul % Mod + v.add * siz % Mod) % Mod;
+    void apply(const Tag &t) {
+        val = (val * t.mul % Mod + t.add) % Mod;
+        sum = (sum * t.mul % Mod + t.add * siz % Mod) % Mod;
     }
     void pull(const Info &l, const Info &r) {
         siz = 1 + l.siz + r.siz;
         sum = (l.sum + r.sum + val) % Mod;
     }
-    Info &operator+=(const Info &i) {
-        siz += i.siz;
-        sum = (sum + i.sum) % Mod;
-        return *this;
-    }
-    Info &operator-=(const Info &i) {
-        siz -= i.siz;
-        sum = (sum - (i.sum % Mod) + Mod) % Mod;
-        return *this;
-    }
 };
 struct LinkCutTree { // 1-based
-    vector<Info> info, pathInfo, subtreeInfo;
+    vector<Info> info;
     vector<Tag> tag;
     vector<array<int, 2>> ch;
     vector<int> p, rev;
-    LinkCutTree(int n) : info(n + 1), pathInfo(n + 1), subtreeInfo(n + 1), tag(n + 1), ch(n + 1), p(n + 1), rev(n + 1) {}
+    LinkCutTree(int n) : info(n + 1), tag(n + 1), ch(n + 1), p(n + 1), rev(n + 1) {}
     bool isrt(int x) {
         return ch[p[x]][0] != x && ch[p[x]][1] != x;
     }
@@ -44,29 +32,28 @@ struct LinkCutTree { // 1-based
         return ch[p[x]][1] == x;
     }
     void applyRev(int x) {
+        if (!x) return;
         swap(ch[x][0], ch[x][1]);
         rev[x] ^= 1;
     }
-    void apply(int x, const Tag &v) {
-        info[x].apply(v);
-        pathInfo[x].apply(v);
-        tag[x].apply(v);
+    void apply(int x, const Tag &t) {
+        if (!x) return;
+        info[x].apply(t);
+        tag[x].apply(t);
     }
     void push(int x) {
         if (rev[x]) {
-            if (ch[x][0]) applyRev(ch[x][0]);
-            if (ch[x][1]) applyRev(ch[x][1]);
+            applyRev(ch[x][0]);
+            applyRev(ch[x][1]);
             rev[x] = 0;
         }
-        if (ch[x][0]) apply(ch[x][0], tag[x]);
-        if (ch[x][1]) apply(ch[x][1], tag[x]);
+        apply(ch[x][0], tag[x]);
+        apply(ch[x][1], tag[x]);
         tag[x] = Tag();
     }
     void pull(int x) {
         if (!x) return;
-        pathInfo[x].pull(pathInfo[ch[x][0]], pathInfo[ch[x][1]]);
         info[x].pull(info[ch[x][0]], info[ch[x][1]]);
-        info[x] += subtreeInfo[x];
     }
     void pushAll(int x) {
         if (!isrt(x)) pushAll(p[x]);
@@ -91,8 +78,6 @@ struct LinkCutTree { // 1-based
         int c;
         for (c = 0; x; c = x, x = p[x]) {
             splay(x);
-            subtreeInfo[x] += info[ch[x][1]];
-            subtreeInfo[x] -= info[c];
             ch[x][1] = c;
             pull(x);
         }
@@ -113,7 +98,6 @@ struct LinkCutTree { // 1-based
         makeRoot(rt);
         access(x), splay(x);
         p[rt] = x;
-        subtreeInfo[x] += info[rt];
         pull(x);
     }
     void cut(int rt, int x) {
@@ -127,24 +111,18 @@ struct LinkCutTree { // 1-based
     bool neighbor(int x, int y) {
         if (!connected(x, y)) return false;
         split(x, y);
-        return pathInfo[x].siz == 2;
+        return info[x].siz == 2;
     }
-    void modify(int x, const Info &v) {
+    void modify(int x, const Info &i) {
         splay(x);
-        info[x] = pathInfo[x] = v, pull(x);
+        info[x] = i, pull(x);
     }
-    void pathApply(int x, int y, const Tag &v) {
+    void pathApply(int x, int y, const Tag &t) {
         assert(connected(x, y));
-        split(x, y), apply(x, v);
+        split(x, y), apply(x, t);
     }
     Info pathQuery(int x, int y) {
         assert(connected(x, y));
-        split(x, y); return pathInfo[x];
-    }
-    Info subtreeQuery(int rt, int x) {
-        assert(connected(rt, x));
-        split(rt, x);
-        auto res = subtreeInfo[x];
-        return res += pathQuery(x, x);
+        split(x, y); return info[x];
     }
 };
