@@ -8,7 +8,7 @@ struct Tag {
     }
 };
 struct Info {
-    int siz = 0;
+    int siz = 0; // 實鏈的長度
     ll val = 0, sum = 0;
     void apply(const Tag &t) {
         val = (val * t.mul % Mod + t.add) % Mod;
@@ -71,9 +71,9 @@ struct LinkCutTree { // 1-based
     void splay(int x) { // x 旋轉到當前的根
         pushAll(x);
         for (int f = p[x]; f = p[x], !isrt(x); rotate(x))
-        if (!isrt(f)) rotate(pos(x) == pos(f) ? f : x);
+            if (!isrt(f)) rotate(pos(x) == pos(f) ? f : x);
     }
-    // 第二次 access 可以回傳 LCA
+    // access(x), access(y) 可以回傳 LCA
     int access(int x) { // 根到 x 換成實鏈
         int c;
         for (c = 0; x; c = x, x = p[x]) {
@@ -91,16 +91,16 @@ struct LinkCutTree { // 1-based
         while (ch[x][0]) x = ch[x][0];
         splay(x); return x;
     }
-    void split(int rt, int x) {
+    void split(int rt, int x) { // 以 rt 為根, x 為子樹根
         makeRoot(x), access(rt), splay(rt);
     }
-    void link(int rt, int x) {
+    void link(int rt, int x) { // 以 rt 為根, x 為子樹根
         makeRoot(rt);
         access(x), splay(x);
         p[rt] = x;
         pull(x);
     }
-    void cut(int rt, int x) {
+    void cut(int rt, int x) { // 以 rt 為根, x 為子樹根
         split(rt, x);
         ch[rt][0] = p[x] = 0;
         pull(rt);
@@ -111,10 +111,10 @@ struct LinkCutTree { // 1-based
     bool neighbor(int x, int y) {
         if (!connected(x, y)) return false;
         split(x, y);
-        return info[x].siz == 2;
+        return info[x].siz == 2; // psiz
     }
     void modify(int x, const Info &i) {
-        splay(x);
+        access(x), splay(x);
         info[x] = i, pull(x);
     }
     void pathApply(int x, int y, const Tag &t) {
