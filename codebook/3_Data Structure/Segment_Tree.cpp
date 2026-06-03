@@ -104,10 +104,6 @@ struct Info {
         // do something... 部分 assignment 使用
         return *this;
     } */
-    Info &operator=(const ll x) & {
-        sum = x;
-        return *this;
-    }
 };
 Info operator+(const Info &a, const Info &b) {
     Info c;
