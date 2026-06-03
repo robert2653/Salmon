@@ -10,7 +10,6 @@ template<class Info> struct PST {
     template<class T> PST(const vector<T> &v) {
         n = v.size();
         nd.assign(1, Node());
-        rt.clear();
         function<int(int, int)> build = [&](int l, int r) {
             int id = nd.size();
             nd.emplace_back();
