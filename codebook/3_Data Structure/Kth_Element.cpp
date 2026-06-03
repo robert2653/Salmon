@@ -5,7 +5,7 @@ template<class T> struct StaticKth : PST<int> {
         assert(is_sorted(s.begin(), s.end()));
         for (int i = 0; i < a.size(); i++) {
             createVersion(i);
-            add(i + 1, dct(a[i]), 1);
+            add(dct(a[i]), 1, i + 1);
         }
     }
     int work(int a, int b, int l, int r, int k) {
@@ -30,28 +30,28 @@ struct DynamicKth : PST<int> {
     DynamicKth(const vector<T> &a, const vector<T> &s) : a(a), s(s), PST<int>(vector<int>(s.size())) {
         assert(is_sorted(s.begin(), s.end()));
         rt.resize(a.size());
-        for (int i = 0; i < a.size(); i++) add(i, dct(a[i]), 1);
+        for (int i = 0; i < a.size(); i++) add(dct(a[i]), 1, i);
     }
-    int modify(int t, int l, int r, int x, int v) {
+    int modify(int x, int v, int l, int r, int t) {
         t = t ? t : generate();
         if (r - l == 1) {
             nd[t].info += v;
             return t;
         }
         int m = (l + r) / 2;
-        if (x < m) nd[t].lc = modify(nd[t].lc, l, m, x, v);
-        else nd[t].rc = modify(nd[t].rc, m, r, x, v);
+        if (x < m) nd[t].lc = modify(x, v, l, m, nd[t].lc);
+        else nd[t].rc = modify(x, v, m, r, nd[t].rc);
         pull(nd[t]);
         return t;
     }
-    void add(int p, int x, int val) {
+    void add(int x, int v, int p) {
         for (int i = p + 1; i <= rt.size(); i += i & -i)
-            rt[i - 1] = modify(rt[i - 1], 0, s.size(), x, val);
+            rt[i - 1] = modify(x, v, 0, s.size(), rt[i - 1]);
     }
     void modify(int p, int y) {
-        add(p, dct(a[p]), -1);
+        add(dct(a[p]), -1, p);
         a[p] = y;
-        add(p, dct(a[p]), 1);
+        add(dct(a[p]), 1, p);
     }
     int work(vector<int> &a, vector<int> &b, int l, int r, int k) {
         if (r - l == 1) return l;
