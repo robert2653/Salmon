@@ -1,8 +1,3 @@
-#include <bits/stdc++.h>
-
-using namespace std;
-using ll = long long;
-
 int mod = 1E9 + 7;
 template<class T> constexpr T power(T a, ll b) {
     T res {1};
