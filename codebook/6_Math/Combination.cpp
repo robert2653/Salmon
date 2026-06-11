@@ -1,7 +1,3 @@
-// C(n, m) = C(n, m-1) * (n-m+1) / m
-// C(n+1, m) = C(n, m) + C(n, m-1)
-// C(n, k) = 1 (mod 2) <=> all bit of k <= all bit of n in binary
-// (x+y)^n = \sum_{k=0}^{n} C(n,k) x^{n-k} y^k
 struct Comb {
     int n;
     vector<Z> _fac, _invfac, _inv;
