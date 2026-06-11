@@ -1,0 +1,36 @@
+\section{Combination}
+\begin{itemize}
+    \item $C(n, m) = C(n, m - 1) * (n - m + 1) / m$
+    \item $C(n + 1, m) = C(n, m) + C(n, m - 1)$
+    \item $C(n, k) = 1$ (mod 2) $\Leftrightarrow$ all bit of $k$ $\leq$ all bit of $n$ in binary
+    \item $(x+y)^n = \sum_{k=0}^{n} C(n,k) x^{n-k} y^k$
+\end{itemize}
+
+\section{Burnside's lemma}
+$|X/G| = \frac{1}{|G|} \sum_{g\in G} |X^g|$
+\begin{itemize}
+    \item $G$：各種翻轉操作所構成的置換群
+    \item $X/G$：本質不同的方案的集合
+    \item $X^g$：對於某一種操作 $g$，所有方案中，經過 $g$ 這種翻轉後保持不變的方案的集合
+    \item 集合取絕對值代表集合數
+\end{itemize}
+
+\section{Catalan theorem}
+\includegraphics[width=8cm]{6_Math/Catalan.png}
+\begin{enumerate}
+\item $n$ 個往上 $n$ 個往下，先枚舉所有情況 $\frac{(2n)!}{n!n!} = C_{n}^{2n}$
+\item 扣掉非法的，有多少種可能讓最後的點落在 $(2n, -2)$
+\end{enumerate}
+假設往上有 $x$ 個，往下有 $y$ 個，會有:
+$$
+\begin{cases}
+x + y = 2n\\
+y - x = 2
+\end{cases}
+\Rightarrow
+\begin{cases}
+x = n - 1\\
+y = n + 1
+\end{cases}
+$$
+所以只要扣掉 $C_{n-1}^{2n}$ 即可

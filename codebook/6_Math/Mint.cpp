@@ -19,7 +19,7 @@ template<int P> struct Mint {
         x = v % getMod();
         if (x < 0) x += getMod();
     }
-    explicit operator int() const { return x; }
+    explicit operator ll() const { return x; }
     Mint operator-() const { return getMod() - x; }
     Mint inv() const { return power(*this, getMod() - 2); }
     Mint operator+(Mint a) const { return x + a.x; }
