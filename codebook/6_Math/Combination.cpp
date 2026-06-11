@@ -1,6 +1,7 @@
-// C(n, m) = C(n, m - 1) * (n - m + 1) / m
-// C(n + 1, m) = C(n, m) + C(n, m - 1)
+// C(n, m) = C(n, m-1) * (n-m+1) / m
+// C(n+1, m) = C(n, m) + C(n, m-1)
 // C(n, k) = 1 (mod 2) <=> all bit of k <= all bit of n in binary
+// (x+y)^n = \sum_{k=0}^{n} C(n,k) x^{n-k} y^k
 struct Comb {
     int n;
     vector<Z> _fac, _invfac, _inv;
@@ -37,9 +38,6 @@ struct Comb {
     Z binom(int n, int m) {
         if (n < m || m < 0) return 0;
         return fac(n) * invfac(m) * invfac(n - m);
-    }
-    Z fastfac(ll n) { // O(p + T log(n)), p is prime
-        return n ? power(Z(-1), n / Z::getMod()) * fac(n % Z::getMod()) * fastfac(n / Z::getMod()) : 1;
     }
     Z lucas(ll n, ll m) { // O(p + T log(n)), p is prime
         return m ? binom(n % Z::getMod(), m % Z::getMod()) * lucas(n / Z::getMod(), m / Z::getMod()) : 1;
