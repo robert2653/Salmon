@@ -25,7 +25,7 @@ int lca(int a, int b) {
     if (dep[a] < dep[b]) swap(a, b);
     int pull = dep[a] - dep[b];
     for (int i = 0; i <= Lg; i++)
-        if (pull & (1 << i)) a = up[a][i];
+        if (pull >> i & 1) a = up[a][i];
     if (a == b) return a;
     for (int i = Lg; i >= 0; i--)
         if (up[a][i] != up[b][i])

@@ -1,4 +1,4 @@
-int mod = 1E9 + 7;
+const int Mod = 1E9 + 7; // 非 const 會慢很多，需要動態再改
 template<class T> constexpr T power(T a, ll b) {
     T res {1};
     for (; b > 0; b >>= 1, a = a * a)
@@ -8,12 +8,12 @@ template<class T> constexpr T power(T a, ll b) {
 struct Z {
     ll x;
     Z(ll v = 0) {
-        x = v % mod;
-        if (x < 0) x += mod;
+        x = v % Mod;
+        if (x < 0) x += Mod;
     }
     explicit operator ll() const { return x; }
-    Z operator-() const { return mod - x; }
-    Z inv() const { return power(*this, mod - 2); }
+    Z operator-() const { return Mod - x; }
+    Z inv() const { return power(*this, Mod - 2); }
     Z operator+(Z a) const { return x + a.x; }
     Z operator-(Z a) const { return x - a.x; }
     Z operator*(Z a) const { return x * a.x; }
