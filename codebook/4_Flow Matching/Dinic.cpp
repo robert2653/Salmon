@@ -1,5 +1,4 @@
-template<class T>
-struct Dinic {
+template<class T> struct Dinic {
     // argument time: O(VE), O(E) for unit capacity, 
     // argument number: O(V), min(O(E^0.5), O(V^2/3)) for unit capacity, O(V^0.5) for deg_in(u) or deg_out(u) <= 1
     // so bipartite matching: O(EV^0.5)

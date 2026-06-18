@@ -1,4 +1,4 @@
-void minCut(int n, int m, Dinic<int> d) {
+void policeChase(int n, Dinic<int> d) {
     int ans = d.work(0, n - 1);
     vector<int> vis(n);
     auto dfs = [&](auto self, int u) -> void {

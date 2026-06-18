@@ -2,8 +2,7 @@
 // 0  : no solution
 // -1 : infinity solution
 // 1  : one solution
-template<class T>
-tuple<T, int, vector<T>> gaussianElimination(vector<vector<T>> a) {
+template<class T> tuple<T, int, vector<T>> gaussianElimination(vector<vector<T>> a) {
     T det = 1;
     bool zeroDet = false;
     int n = a.size(), m = a[0].size(), rk = 0, sgn = 1;
@@ -39,8 +38,7 @@ tuple<T, int, vector<T>> gaussianElimination(vector<vector<T>> a) {
     for (int i = 0; i < n; i++) ans[i] = a[i][m - 1];
     return {det, 1, ans};
 }
-template<class T>
-tuple<int, vector<T>, vector<vector<T>>> findBasis(vector<vector<T>> a) {
+template<class T> tuple<int, vector<T>, vector<vector<T>>> findBasis(vector<vector<T>> a) {
     int n = a.size(), m = a[0].size(), rk = 0;
     vector<int> pos(m - 1, -1);
     for (int c = 0; c < m - 1; c++) {
@@ -83,5 +81,4 @@ tuple<int, vector<T>, vector<vector<T>>> findBasis(vector<vector<T>> a) {
         }
     return {rk, sol, basis};
 }
-template<class T>
-using Matrix = vector<vector<T>>;
+template<class T> using Matrix = vector<vector<T>>;

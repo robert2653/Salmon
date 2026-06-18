@@ -1,5 +1,4 @@
-template<class Tf, class Tc>
-struct MCMF {
+template<class Tf, class Tc> struct MCMF {
     struct Edge {
         int to;
         Tf f, cap; // 流量跟容量

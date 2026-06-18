@@ -11,8 +11,7 @@ int jacobi(int x, int p) {
     }
     return s;
 }
-template<class Z>
-int quadraticResidue(Z x) {
+template<class Z> int quadraticResidue(Z x) {
     int p = Z::getMod();
     if (p == 2) return x.x & 1;
     const int jc = jacobi(x.x, p);

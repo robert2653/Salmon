@@ -28,7 +28,7 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
         int m = (l + r) / 2;
         if (r - l >= 1) {
             apply(tag[p], l, m, 2 * p);
-            apply(tag[p], m, r, 2 * p + 1);
+            apply(tag[p], m, r, 2 * p + 1); // tag 可位移 (m - l)
         }
         tag[p] = Tag();
     } */
@@ -56,7 +56,7 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
     void rangeApply(int ql, int qr, const Tag &t, int l, int r, int p) {
         if (qr <= l || ql >= r) return;
         if (ql <= l && r <= qr) {
-            apply(t, l, r, p);
+            apply(t, l, r, p); // tag 可位移 (l - ql)
             return;
         }
         int m = (l + r) / 2;
