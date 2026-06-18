@@ -27,7 +27,7 @@ void minEuclideanDistance() {
         sort(t.begin(), t.begin() + p, sortY());
         for (int i = 0; i < p; i++) {
             for (int j = i + 1; j < p; j++) {
-                ans = min(ans, square(t[i] - t[j]));
+                ans = min(ans, abs2(t[i] - t[j]));
                 if ((t[i].y - t[j].y) * (t[i].y - t[j].y) > ans) break;
             } 
         }

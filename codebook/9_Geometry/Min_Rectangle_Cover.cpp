@@ -17,7 +17,7 @@ pair<double, vector<P>> minRectangleCover(vector<P> p) {
             l = (l + 1) % n;
         double area = get(p[j], {p[i], p[i + 1]});
         double w = dot(p[i] - p[i + 1], p[l] - p[i]) + dot(p[i + 1] - p[i], p[r] - p[i]);
-        area *= w / square(p[i + 1] - p[i]);
+        area *= w / abs2(p[i + 1] - p[i]);
         if (area < ans) {
             ps.clear(), ans = area;
             Line l1 {p[i], p[i + 1]};

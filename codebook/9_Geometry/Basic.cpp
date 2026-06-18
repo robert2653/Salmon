@@ -1,6 +1,5 @@
 const double eps = 1E-9;
-template<class T>
-struct Pt {
+template<class T> struct Pt {
     T x, y;
     Pt(T x = 0, T y = 0) : x(x), y(y) {}
     Pt operator-() const { return Pt(-x, -y); }
@@ -20,10 +19,10 @@ int sign(double x)
 using P = Pt<double>;
 
 struct Line { P a, b; };
-double dot(P a, P b) { return a.x * b.x + a.y * b.y; }
-double cross(P a, P b) { return a.x * b.y - a.y * b.x; }
-double square(P p) { return dot(p, p); }
-double abs(P p) { return sqrt(square(p)); }
+template<class T> T dot(Pt<T> a, Pt<T> b) { return a.x * b.x + a.y * b.y; }
+template<class T> T cross(Pt<T> a, Pt<T> b) { return a.x * b.y - a.y * b.x; }
+template<class T> T abs2(Pt<T> p) { return dot(p, p); }
+double abs(P p) { return sqrt(abs2(p)); }
 double dist(P a, P b) { return abs(a - b); }
 double abs(Line l) { return abs(l.a - l.b); }
 int dir(P p, Line l) // left -1, right 1, on 0
@@ -45,7 +44,7 @@ bool pointOnSegment(P p, Line l)
 { return dir(p, l) == 0 && sign(dot(p - l.a, p - l.b)) <= 0; }
 P projvec(P p, Line l) {
     P v = l.b - l.a;
-    return l.a + v * (dot(p - l.a, v) / square(v));
+    return l.a + v * (dot(p - l.a, v) / abs2(v));
 }
 // 0 : not intersect
 // 1 : strictly intersect
