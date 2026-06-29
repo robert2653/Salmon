@@ -23,8 +23,7 @@ template<class T> struct StaticKth : PST<int> {
     }
 };
 // Fenwick(rt-indexed) 包線段樹
-template<class T>
-struct DynamicKth : PST<int> {
+template<class T> struct DynamicKth : PST<int> {
     int dct(T x) { return lower_bound(s.begin(), s.end(), x) - s.begin(); }
     vector<T> a, s; // array, sorted
     DynamicKth(const vector<T> &a, const vector<T> &s) : a(a), s(s), PST<int>(vector<int>(s.size())) {

@@ -17,7 +17,7 @@ void sieve(int n) {
     dsum.resize(n + 1);
 
     phi[1] = mu[1] = 1;
-    dsum[1] = 1;
+    dnum[1] = 1;
     powpref[1] = dsum[1] = 1;
     for (int i = 2; i <= n; i++) {
         if (!minp[i]) {
@@ -48,8 +48,8 @@ void sieve(int n) {
                 powpref[i * p] = powpref[i] * p + 1;
                 dsum[i * p] = dsum[i] / powpref[i] * powpref[i * p];
                 break;
-                // i * p = (p * x) * p
-                // i * q = (p * x) * q
+                // i * p = (p * x) * p，就不篩 p < q 的 i * q 了
+                // i * q = (p * x) * q = p * (x * q)
                 // 到達 x * q 再用 p 篩掉就好
             } else {
                 phi[i * p] = phi[i] * (p - 1);

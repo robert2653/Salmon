@@ -5,19 +5,18 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
     /* vector<Tag> tag; */
     template<class T> SegmentTree(const vector<T> &v) {
         n = v.size();
-        info.resize(4 * n);
-        /* tag.resize(4 * n); */
-        function<void(int, int, int)> build = [&](int l, int r, int p) {
+        info.resize(4 << __lg(n));
+        /* tag.resize(4 << __lg(n)); */
+        [&](this auto &&self, int l, int r, int p) -> void {
             if (r - l == 1) {
                 info[p] = v[l];
                 return;
             }
             int m = (l + r) / 2;
-            build(l, m, 2 * p);
-            build(m, r, 2 * p + 1);
+            self(l, m, 2 * p);
+            self(m, r, 2 * p + 1);
             pull(p);
-        };
-        build(0, n, 1);
+        } (0, n, 1);
     }
     void pull(int p) { info[p] = info[2 * p] + info[2 * p + 1]; } /*
     void apply(const Tag &t, int l, int r, int p) {
@@ -26,10 +25,8 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
     }
     void push(int l, int r, int p) {
         int m = (l + r) / 2;
-        if (r - l >= 1) {
-            apply(tag[p], l, m, 2 * p);
-            apply(tag[p], m, r, 2 * p + 1); // tag 可位移 (m - l)
-        }
+        apply(tag[p], l, m, 2 * p);
+        apply(tag[p], m, r, 2 * p + 1); // tag 可位移 (m - l)
         tag[p] = Tag();
     } */
     void modify(int x, const Info &i) { modify(x, i, 0, n, 1); }
@@ -69,8 +66,8 @@ struct SegmentTree { // [l, r), uncomment /**/ to lazy
         return findFirst(ql, qr, pred, 0, n, 1);
     } // 若要找 last，先右子樹遞迴即可
     template<class F> int findFirst(int ql, int qr, F &&pred, int l, int r, int p) {
-        if (l >= qr || r <= ql) return -1;
-        if (l >= ql && r <= qr && !pred(info[p])) return -1;
+        if (qr <= l || ql >= r) return -1;
+        if (ql <= l && r <= qr && !pred(info[p])) return -1;
         if (r - l == 1) return l;
         int m = (l + r) / 2;
         /* push(l, r, p); */
@@ -99,7 +96,7 @@ struct Info {
             sum = (r - l) * t.setVal;
         }
         sum += (r - l) * t.add;
-    } *//*
+    } */ /*
     Info &operator=(const Info &i) & {
         // do something... 部分 assignment 使用
         return *this;

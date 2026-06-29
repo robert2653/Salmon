@@ -4,7 +4,7 @@ int cht[N][Lg];
 struct FuntionalGraph {
     int n, cnt;
     vector<int> g, bel, id, cycsz, in, top, hei;
-    FuntionalGraph(const vector<int> &g) : n(g.size()), cnt(0), g(g), bel(n, -1), id(n), in(n), top(n, -1), hei(n) {
+    FuntionalGraph(const vector<int> &g) : n(g.size()), g(g), bel(n, -1), id(n), in(n), top(n, -1), hei(n) {
         for (int i = 0; i < n; i++)
             cht[i][0] = g[i], in[g[i]]++;
         for (int i = 1; i <= Lg; i++)

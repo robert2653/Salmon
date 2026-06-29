@@ -1,30 +1,20 @@
-// recursive solution
-void minEuclideanDistance() {
-    int n; cin >> n;
-    const ll inf = 8E18;
-    vector<P> a(n);
-    for (int i = 0; i < n; i++) {
-        ll x, y; cin >> x >> y;
-        a[i] = P(x, y);
-    }
-    struct sortY { bool operator()(const P &a, const P &b) const { return a.y < b.y; } };
-    struct sortXY {
-        bool operator()(const P &a, const P &b) const {
-            return a.x == b.x ? a.y < b.y : a.x < b.x;
-        }
-    };
-    sort(a.begin(), a.end(), sortXY());
+void solve(int n, vector<P> &a) { // recursive solution
+    sort(a.begin(), a.end(), [](const P &a, const P &b) {
+        return a.x == b.x ? a.y < b.y : a.x < b.x;
+    });
     vector<P> t(n);
-    auto divide = [&](auto &&self, int l, int r) -> ll {
-        if (l == r) return inf;
-        int m = (l + r) / 2;	
-        ll ans = min(self(self, l, m), self(self, m + 1, r));
-        ll midval = a[m].x;
+    cout << [&](this auto &&self, int l, int r) -> ll {
+        if (l == r) return 9E18;
+        int m = (l + r) / 2;
+        ll ans = min(self(l, m), self(m + 1, r));
+        ll mid = a[m].x;
         ll p = 0;
         for (int i = l; i <= r; i++)
-            if ((midval - a[i].x) * (midval - a[i].x) <= ans)
+            if ((mid - a[i].x) * (mid - a[i].x) <= ans)
                 t[p++] = a[i];
-        sort(t.begin(), t.begin() + p, sortY());
+        sort(t.begin(), t.begin() + p, [](const P &a, const P &b) {
+            return a.y < b.y;
+        });
         for (int i = 0; i < p; i++) {
             for (int j = i + 1; j < p; j++) {
                 ans = min(ans, abs2(t[i] - t[j]));
@@ -32,8 +22,7 @@ void minEuclideanDistance() {
             } 
         }
         return ans;
-    };
-    cout << divide(divide, 0, n - 1) << "\n";
+    } (0, n - 1) << "\n";
 }
 // K-D tree solution
 struct Info {

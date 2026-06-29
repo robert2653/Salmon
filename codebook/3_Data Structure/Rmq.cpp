@@ -1,5 +1,4 @@
-template<class T, class F = less<T>>
-struct RMQ { // [l, r)
+template<class T, class F = less<T>> struct RMQ { // [l, r)
     int n;
     F cmp = F();
     vector<vector<T>> g;

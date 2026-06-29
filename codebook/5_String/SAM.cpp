@@ -56,23 +56,21 @@ void solve(int n, string s, ll k) { // Substring Order II
     vector<vector<int>> g(sz);
     for (int i = 1; i < sz; i++)
         g[sam.t[i].link].push_back(i);
-    auto dfs = [&](auto self, int u) -> void {
-        for (auto v : g[u])
-            self(self, v), cnt[u] += cnt[v];
-    }; dfs(dfs, 0);
+    [&](this auto &&self, int u) -> void {
+        for (auto v : g[u]) self(v), cnt[u] += cnt[v];
+    }; (0);
 
     vector<ll> dp(sz, -1);
     // for any path from root, how many substring's prefix is the the path string
-    auto rec = [&](auto self, int u) -> ll {
+    [&](this auto &&self, int u) -> ll {
         if (dp[u] != -1) return dp[u];
         dp[u] = cnt[u]; // distinct: = 1
         for (int c = 0; c < SAM::ALPHABET_SIZE; c++) {
             int v = sam.t[u].next[c];
-            if (v) dp[u] += self(self, v);
+            if (v) dp[u] += self(v);
         }
         return dp[u];
-    };
-    rec(rec, 0);
+    } (0);
 
     int p = 0; string ans;
     while (k > 0) { // 1-based

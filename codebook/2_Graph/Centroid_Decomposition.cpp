@@ -15,10 +15,9 @@ auto findCen = [&](auto &&self, int u, int p, int sz) -> int {
     }
     return u;
 };
-auto buildCen = [&](auto &&self, int u, int p) -> void {
+auto build = [&](auto &&self, int u, int p) -> void {
     findSize(findSize, u, p);
     int c = findCen(findCen, u, -1, siz[u]);
     vis[c] = true, par[c] = p;
     for (int v : g[c]) if (!vis[v]) self(self, v, c);
-};
-buildCen(buildCen, 0, -1);
+}; build(build, 0, -1);

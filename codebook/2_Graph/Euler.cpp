@@ -16,13 +16,11 @@
 // 至多一個頂點的入度與出度之差為 1
 // 其他頂點的入度和出度相等
 vector<int> ans;
-auto dfs = [&](auto &&self, int u) -> void {
+[&](this auto &&self, int u) -> void {
     while (g[u].size()) {
         int v = *g[u].begin();
         g[u].erase(v);
-        self(self, v);
+        self(v);
     }
     ans.push_back(u);
-};
-dfs(dfs, 0);
-reverse(ans.begin(), ans.end());
+} (0); reverse(ans.begin(), ans.end());

@@ -1,77 +1,58 @@
 // 多次詢問給某些關鍵點, 虛樹可達成快速樹 DP (前處理每個點)
 // 例如這題是有權樹，給一些關鍵點, 求跟 vertex 1 隔開的最小成本
 // 前處理 root 到所有點的最小邊權
-vector<int> stk;
-void insert(int key, vector<vector<int>> &vt) {
-    if (stk.empty()) {
-        stk.push_back(key);
-        return;
-    }
-    int l = lca(stk.back(), key);
-    if (l == stk.back()) {
-        stk.push_back(key);
-        return;
-    }
-    while (stk.size() > 1 && dfn[stk[stk.size() - 2]] > dfn[l]) {
-        vt[stk[stk.size() - 2]].push_back(stk.back());
-        stk.pop_back();
-    }
-    vt[l].push_back(stk.back());
-    if (stk.size() < 2 || stk[stk.size() - 2] != l) stk.back() = l;
-    else stk.pop_back();
-    stk.push_back(key);
-}
-int work(vector<vector<int>> &vt) {
-    while (stk.size() > 1) {
-        vt[stk[stk.size() - 2]].push_back(stk.back());
-        stk.pop_back();
-    }
-    int rt = stk[0]; stk.clear();
-    return rt;
-}
-void solve() {
-    int n; cin >> n;
-    vector<vector<int>> g(n);
-    vector<vector<pair<int, int>>> wg(n);
-    for (int i = 1; i < n; i++) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        u--, v--;
-        g[u].push_back(v), g[v].push_back(u);
-        wg[u].emplace_back(v, w), wg[v].emplace_back(u, w);
-    }
+void solve(int n, vector<vector<pair<int, int>>> &g, int q) {
     build(n, g); // build LCA
     vector<int> dis(n, 1E9); // root 到各點的最小邊權
-    auto dfs = [&](auto &&self, int x, int p) -> void {
-        for (auto [y, w] : wg[x]) {
+    [&](this auto &&self, int x, int p) -> void {
+        for (auto [y, w] : g[x]) {
             if (y == p) continue;
             dis[y] = min(w, dis[x]);
-            self(self, y, x);
+            self(y, x);
         }
-    };
-    dfs(dfs, 0, -1);
-
+    } (0, -1);
     vector<vector<int>> vt(n);
     vector<int> isKey(n);
     vector<ll> dp(n);
-    int q; cin >> q;
     while (q--) {
         int m; cin >> m;
         vector<int> key(m);
         for (int i = 0; i < m; i++) {
             cin >> key[i];
-            key[i]--;
-            isKey[key[i]] = 1;
+            isKey[--key[i]] = 1;
         }
         key.push_back(0); // 固定 0 為 root, 看題目需求
         sort(key.begin(), key.end(), [&](int a, int b) {
             return dfn[a] < dfn[b];
         }); // 要 sort 再 insert
-        for (auto x : key) insert(x, vt);
-        int rt = work(vt);
-        auto dfs = [&](auto &&self, int x) -> void {
+        vector<int> stk; // 維護一條虛樹鏈
+        for (int k : key) {
+            if (stk.empty()) {
+                stk.push_back(k);
+                continue;
+            }
+            int l = lca(stk.back(), k);
+            if (l == stk.back()) { // 直接一條鏈
+                stk.push_back(k);
+                continue;
+            } // 次頂是 lca 的子孫，直接跟最頂連邊
+            while (stk.size() > 1 && dfn[stk[stk.size() - 2]] > dfn[l]) {
+                vt[stk[stk.size() - 2]].push_back(stk.back());
+                stk.pop_back();
+            } // 保證 back 是 lca 的子孫，且次頂不是 lca 的子孫
+            vt[l].push_back(stk.back());
+            if (stk.size() < 2 || stk[stk.size() - 2] != l) stk.back() = l;
+            else stk.pop_back(); // lca 的子孫已經用不到了，直接換成 lca
+            stk.push_back(k);
+        }
+        while (stk.size() > 1) {
+            vt[stk[stk.size() - 2]].push_back(stk.back());
+            stk.pop_back();
+        }
+        int rt = stk[0]; stk.clear();
+        [&](this auto &&self, int x) -> void {
             for (auto y : vt[x]) {
-                self(self, y);
+                self(y);
                 if (isKey[y]) { // 直接砍了
                     dp[x] += dis[y];
                 } else { // 不砍 or 砍
@@ -80,8 +61,7 @@ void solve() {
                 isKey[y] = dp[y] = 0;
             }
             vt[x].clear(); // 記得 reset
-        };
-        dfs(dfs, rt);
+        } (rt);
         cout << dp[rt] << "\n";
         isKey[rt] = 0;
         dp[rt] = 0; // 最後 reset root

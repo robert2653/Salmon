@@ -33,7 +33,7 @@ P norm(P p) { return p / abs(p); }
 P rot(P p) { return { -p.y, p.x }; } // 90 degree CCW
 P rot(P p, double d) {
     double c = cos(d), s = sin(d);
-    return { p.x * c - p.y * s, p.x * s + p.y * c };
+    return P(p.x * c - p.y * s, p.x * s + p.y * c);
 }
 
 bool parallel(Line l1, Line l2)

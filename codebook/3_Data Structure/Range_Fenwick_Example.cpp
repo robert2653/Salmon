@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-template<class T>
-struct RangeFenwick { // 全部以 0 based 使用
+template<class T> struct RangeFenwick { // 全部以 0 based 使用
     int n;
     vector<T> a, b; // (𝑥+1)*(∑_𝑖=1^𝑥𝐷𝑖)−(∑_𝑖=1^𝑥𝐷𝑖*𝑖)
     RangeFenwick(int n_ = 0) {
@@ -49,8 +48,7 @@ struct RangeFenwick { // 全部以 0 based 使用
     }
 };
 
-template<class T>
-struct rangeTwoDFenwick {  // 全部以 0 based 使用
+template<class T> struct rangeTwoDFenwick {  // 全部以 0 based 使用
     // d(i,j) = a(i,j) - a(i-1,j) - a(i,j-1) + a(i-1,j-1)
     int nx, ny;  // row, col 個數
     vector<vector<T>> d, di, dj, dij;

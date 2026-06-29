@@ -3,7 +3,7 @@ struct DominatorTree {
     int n, id;
     vector<vector<int>> adj, radj, bucket;
     vector<int> sdom, dom, vis, rev, pa, rt, mn, res;
-    DominatorTree(int n) : n(n), id(0) {
+    DominatorTree(int n) : n(n) {
         sdom.resize(n), rev.resize(n);
         pa.resize(n), rt.resize(n);
         mn.resize(n), res.resize(n);

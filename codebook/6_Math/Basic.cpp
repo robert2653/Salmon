@@ -38,6 +38,7 @@ void init(int n) {
     for (int i = 1; i <= n; i++) {
         fac[i] = fac[i - 1] * i;
     }
+    invfac[n] = fac[n].inv();
     for (int i = n; i > 0; i--) {
         invfac[i - 1] = invfac[i] * i;
         inv[i] = invfac[i] * fac[i - 1];
