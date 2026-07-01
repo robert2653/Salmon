@@ -1,5 +1,5 @@
 struct SCC {
-    int n, cur, cnt;
+    int n, cur = 0, cnt = 0;
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
     SCC(int n) : n(n), adj(n), dfn(n, -1), low(n), bel(n, -1) {}

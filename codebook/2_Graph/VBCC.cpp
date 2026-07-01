@@ -1,5 +1,5 @@
 struct VBCC {
-    int n, cur, cnt;
+    int n, cur = 0, cnt = 0;
     vector<vector<int>> adj, bcc;
     vector<int> stk, dfn, low;
     vector<bool> ap;

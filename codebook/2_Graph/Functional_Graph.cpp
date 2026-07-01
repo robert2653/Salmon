@@ -2,7 +2,7 @@ const int N = 2E5;
 const int Lg = __lg(N); // __lg(max(n, qi)), [0, Lg]
 int cht[N][Lg];
 struct FuntionalGraph {
-    int n, cnt;
+    int n, cnt = 0;
     vector<int> g, bel, id, cycsz, in, top, hei;
     FuntionalGraph(const vector<int> &g) : n(g.size()), g(g), bel(n, -1), id(n), in(n), top(n, -1), hei(n) {
         for (int i = 0; i < n; i++)

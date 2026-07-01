@@ -6,26 +6,23 @@ template<class Info> struct PST {
     int n;
     vector<Node> nd;
     vector<int> rt;
-    PST(int n) : n(n), nd(1), rt(1, 0) {}
-    template<class T> PST(const vector<T> &v) {
-        n = v.size();
-        nd.assign(1, Node());
-        function<int(int, int)> build = [&](int l, int r) {
-            int id = nd.size();
-            nd.emplace_back();
+    PST(int n) : n(n), nd(1), rt(1) {}
+    PST(const vector<Info> &v) : n(v.size()), nd(1) {
+        auto build = [&](auto &&self, int l, int r) -> int {
+            int p = generate();
             if (r - l == 1) {
-                nd[id].info = v[l];
-                return id;
+                nd[p].info = v[l];
+                return p;
             }
             int m = (l + r) / 2;
-            int lc = build(l, m);
-            int rc = build(m, r);
-            nd[id].lc = lc;
-            nd[id].rc = rc;
-            pull(nd[id]);
-            return id;
+            int lc = self(self, l, m);
+            int rc = self(self, m, r);
+            nd[p].lc = lc;
+            nd[p].rc = rc;
+            pull(nd[p]);
+            return p;
         };
-        rt.push_back(build(0, n));
+        rt.push_back(build(build, 0, n));
     }
     void pull(Node &p) { p.info = nd[p.lc].info + nd[p.rc].info; }
     int copy(int p) { // copy 一個 node
@@ -66,5 +63,4 @@ template<class Info> struct PST {
         return query(ql, qr, l, m, nd[p].lc) + query(ql, qr, m, r, nd[p].rc);
     }
     void createVersion(int ver) { rt.push_back(rt[ver]); }
-    void resize(int n) { rt.resize(n); }
 };

@@ -1,5 +1,5 @@
 struct EBCC { // CF/contest/1986/pF
-    int n, cur, cnt;
+    int n, cur = 0, cnt = 0;
     vector<vector<int>> adj;
     vector<int> stk, dfn, low, bel;
     vector<pair<int, int>> bridges; // 關鍵邊
@@ -51,7 +51,7 @@ struct EBCC { // CF/contest/1986/pF
             for (auto j : adj[i]) {
                 if (bel[i] < bel[j]) {
                     g.edges.emplace_back(bel[i], bel[j]);
-                } else if (i < j) {
+                } else if (bel[i] == bel[j] && i < j) {
                     g.cnte[bel[i]]++;
                 }
             }

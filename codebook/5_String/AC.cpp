@@ -15,8 +15,10 @@ struct AC {
     int insert(const string &s) {
         int u = 0;
         for (char c : s) {
-            if (!t[u].ch[c - 'a'])
-                t[u].ch[c - 'a'] = newNode();
+            if (!t[u].ch[c - 'a']) {
+                int v = newNode();
+                t[u].ch[c - 'a'] = v;
+            }
             u = t[u].ch[c - 'a'];
         }
         t[u].cnt++;
@@ -34,11 +36,9 @@ struct AC {
             int u = q.front(); q.pop();
             for (int c = 0; c < ALPHABET_SIZE; c++) {
                 if (t[u].ch[c]) {
-                    int v = t[u].ch[c], f = t[u].fail;
-                    while (f && !t[f].ch[c]) f = t[f].fail;
-                    if (t[f].ch[c]) f = t[f].ch[c];
-                    t[v].fail = f;
-                    t[v].cnt += t[f].cnt;
+                    int v = t[u].ch[c];
+                    t[v].fail = t[t[u].fail].next[c];
+                    t[v].cnt += t[t[v].fail].cnt;
                     t[u].next[c] = v;
                     q.push(v);
                 } else {

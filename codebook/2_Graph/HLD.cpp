@@ -1,8 +1,8 @@
 struct HLD {
-    int n, cur;
+    int n, cur = 0;
     vector<int> siz, top, dep, par, in, out, seq;
     vector<vector<int>> adj;
-    HLD(int n) : n(n), cur(0) {
+    HLD(int n) : n(n) {
         siz.resize(n); top.resize(n); dep.resize(n);
         par.resize(n); in.resize(n); out.resize(n);
         seq.resize(n); adj.assign(n, {});
