@@ -24,10 +24,8 @@ struct DSU {
 struct DSU {
     int n;
     vector<int> f, siz, stk;
-    DSU(int n) : n(n), f(n), siz(n, 1) {
-        iota(f.begin(), f.end(), 0);
-        stk.clear();
-    }
+    DSU(int n) : n(n), f(n), siz(n, 1)
+    { iota(f.begin(), f.end(), 0); }
     int find(int x)
     { return x == f[x] ? x : find(f[x]); }
     bool same(int x, int y)

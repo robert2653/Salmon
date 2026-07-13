@@ -51,7 +51,7 @@ template<class Info, class Tag> struct LazySegmentTreeDynamic {
         if (nd[p].lc == 0) nd[p].lc = generate();
         if (nd[p].rc == 0) nd[p].rc = generate();
         apply(nd[p].tag, l, m, nd[p].lc);
-        apply(nd[p].tag, m, r, nd[p].rc);
+        apply(nd[p].tag.offset(m - l), m, r, nd[p].rc);
         nd[p].tag = Tag();
         nd[p].isLazy = false;
     }
@@ -60,7 +60,7 @@ template<class Info, class Tag> struct LazySegmentTreeDynamic {
         if (l >= qr || r <= ql) return p;
         if (p == 0) p = generate();
         if (ql <= l && r <= qr) {
-            apply(t, l, r, p);
+            apply(t.offset(l - ql), l, r, p);
             return p;
         }
         push(l, r, p);
@@ -82,25 +82,11 @@ template<class Info, class Tag> struct LazySegmentTreeDynamic {
     }
 };
 struct Tag { // 有些 Tag 不用 push 例如 sweepLine
-    ll setVal = 0;
-    ll add = 0;
-    void apply(const Tag &t) & {
-        if (t.setVal) {
-            setVal = t.setVal;
-            add = t.add;
-        } else {
-            add += t.add;
-        }
-    }
+    void apply(const Tag &t) & {}
+    Tag offset(int d) const { return *this; }
 };
 struct Info {
-    ll sum = 0;
-    void apply(const Tag &t, int l, int r) & {
-        if (t.setVal) {
-            sum = (r - l) * t.setVal;
-        }
-        sum += (r - l) * t.add;
-    } /*
+    void apply(const Tag &t, int l, int r) & {} /*
     Info &operator=(const Info &i) & {
         // do something... 部分 assignment 使用
         return *this;
@@ -108,6 +94,5 @@ struct Info {
 };
 Info operator+(const Info &a, const Info &b) {
     Info c;
-    c.sum = a.sum + b.sum;
     return c;
 }

@@ -24,7 +24,7 @@ template<class Info, class Tag> struct LazySegmentTree {
     void push(int l, int r, int p) {
         int m = (l + r) / 2;
         apply(tag[p], l, m, 2 * p);
-        apply(tag[p], m, r, 2 * p + 1); // tag 可位移 (m - l)
+        apply(tag[p].offset(m - l), m, r, 2 * p + 1); // tag 可位移 (m - l)
         tag[p] = Tag();
     }
     void modify(int x, const Info &i) { modify(x, i, 0, n, 1); }
@@ -51,7 +51,7 @@ template<class Info, class Tag> struct LazySegmentTree {
     void rangeApply(int ql, int qr, const Tag &t, int l, int r, int p) {
         if (qr <= l || ql >= r) return;
         if (ql <= l && r <= qr) {
-            apply(t, l, r, p); // tag 可位移 (l - ql)
+            apply(t.offset(l - ql), l, r, p); // tag 可位移 (l - ql)
             return;
         }
         int m = (l + r) / 2;
@@ -75,25 +75,11 @@ template<class Info, class Tag> struct LazySegmentTree {
     }
 };
 struct Tag { // 有些 Tag 不用 push 例如 sweepLine
-    ll setVal = 0;
-    ll add = 0;
-    void apply(const Tag &t) & {
-        if (t.setVal) {
-            setVal = t.setVal;
-            add = t.add;
-        } else {
-            add += t.add;
-        }
-    }
+    void apply(const Tag &t) & {}
+    Tag offset(int d) const { return *this; }
 };
 struct Info {
-    ll sum = 0;
-    void apply(const Tag &t, int l, int r) & {
-        if (t.setVal) {
-            sum = (r - l) * t.setVal;
-        }
-        sum += (r - l) * t.add;
-    } /*
+    void apply(const Tag &t, int l, int r) & {} /*
     Info &operator=(const Info &i) & {
         // do something... 部分 assignment 使用
         return *this;
@@ -101,6 +87,5 @@ struct Info {
 };
 Info operator+(const Info &a, const Info &b) {
     Info c;
-    c.sum = a.sum + b.sum;
     return c;
 }

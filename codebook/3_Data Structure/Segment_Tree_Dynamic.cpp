@@ -46,11 +46,8 @@ template<class Info> struct SegmentTreeDynamic {
         return findFirst(ql, qr, f, m, r, nd[p].rc);
     }
 };
-struct Info {
-    ll sum = 0;
-};
+struct Info {};
 Info operator+(const Info &a, const Info &b) {
     Info c;
-    c.sum = a.sum + b.sum;
     return c;
 }

@@ -47,11 +47,8 @@ template<class Info> struct SegmentTree {
         return res;
     }
 };
-struct Info {
-    ll sum = 0;
-};
+struct Info {};
 Info operator+(const Info &a, const Info &b) {
     Info c;
-    c.sum = a.sum + b.sum;
     return c;
 }
