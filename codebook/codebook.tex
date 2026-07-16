@@ -53,7 +53,6 @@
 \setCJKmainfont[AutoFakeBold=6]{Noto Serif CJK TC Medium}    %中文字型
 \XeTeXlinebreaklocale "zh"						%中文自動換行
 \XeTeXlinebreakskip = 0pt plus 1pt				%設定段落之間的距離
-\setCJKmonofont[AutoFakeBold=6]{Noto Serif CJK TC Medium}    %中文字等寬字型
 \setcounter{secnumdepth}{3}						%目錄顯示第三層
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,15 +110,17 @@ tabsize=2,											% sets default tabsize to 2 spaces
 captionpos=b,										% sets the caption-position to bottom
 breaklines=true,									% sets automatic line breaking
 breakatwhitespace=false,							% sets if automatic breaks should only happen at whitespace
-breakautoindent=false,\t\t\t\t\t\t\t\t% disable automatic continuation indentation
-postbreak=\mbox{\hspace{2em}},\t\t\t\t\t\t\t% indent wrapped lines like a tab
 escapeinside={\%*}{*)},							% if you want to add a comment within your code
-morekeywords={constexpr, ll},									% if you want to add more keywords to the set
-morekeywords=[2]{vector,string,pair,tuple,queue,deque,set,map,multiset,multimap,unordered_map,unordered_set,priority_queue,function,optional,variant,bitset,array,stack,complex,initializer_list},
-keywordstyle=\color{Blue1},
-keywordstyle=[2]\color{Green4},
-commentstyle=\color{Red4},
-stringstyle=\color{Green4},
+% morekeywords={constexpr, ll},									% if you want to add more keywords to the set
+% morekeywords=[2]{vector,string,pair,tuple,queue,deque,set,map,multiset,multimap,unordered_map,unordered_set,priority_queue,function,optional,variant,bitset,array,stack,complex,initializer_list},
+% keywordstyle=\color{Blue1},
+% keywordstyle=[2]\color{ForestGreen4},
+% commentstyle=\color{Red4},
+% stringstyle=\color{Green4},
+morekeywords={constexpr},									% if you want to add more keywords to the set
+keywordstyle=\bfseries\color{Blue1},
+commentstyle=\shape\color{Red4},
+stringstyle=\shape\color{Green4},
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -161,7 +162,7 @@ stringstyle=\color{Green4},
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\contentsname}{Contents} 
 \newcommand{\inputcode}[2]{
-  \subsection[#1]{#1 \footnotesize{[\texttt{\captureshell{md5sum "#2" | cut -c-6}}]}}
+    \subsection[#1]{#1 \footnotesize{[\texttt{\captureshell{cpp #2 -dD -P -fpreprocessed | tr -d '[:space:]' | md5sum | cut -c-6}}]}}
     \lstinputlisting{#2}
 }
 
