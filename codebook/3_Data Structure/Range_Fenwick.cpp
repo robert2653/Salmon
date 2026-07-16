@@ -9,7 +9,7 @@ template<class T> struct RangeFenwick {
     }
     void rangeAdd(int l, int r, const T &v) { add(l, v), add(r, -v); }
     T sum(int x) {
-        T ans {};
+        T ans{};
         for (int i = x; i > 0; i -= i & -i)
             ans = ans + T(x + 1) * d[i - 1] - di[i - 1];
         return ans;
@@ -48,7 +48,7 @@ template<class T> struct RangeFenwick2D {
         add(x1, y2, -v), add(x2, y1, -v);
     }
     T sum(int x, int y) {
-        T ans {};
+        T ans{};
         for (int i = x; i > 0; i -= i & -i)
             for (int j = y; j > 0; j -= j & -j)
                 ans = ans + (x + 1) * (y + 1) * d[i - 1][j - 1]

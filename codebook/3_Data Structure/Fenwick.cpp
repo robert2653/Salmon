@@ -6,7 +6,7 @@ template<class T> struct Fenwick {
             a[i - 1] = a[i - 1] + v;
     }
     T sum(int x) {
-        T ans {};
+        T ans{};
         for (int i = x; i > 0; i -= i & -i)
             ans = ans + a[i - 1];
         return ans;
@@ -32,7 +32,7 @@ template<class T> struct Fenwick2D {
                 a[i - 1][j - 1] = a[i - 1][j - 1] + v;
     }
     T sum(int x, int y) {
-        T ans {};
+        T ans{};
         for (int i = x; i > 0; i -= i & -i)
             for (int j = y; j > 0; j -= j & -j)
                 ans = ans + a[i - 1][j - 1];
