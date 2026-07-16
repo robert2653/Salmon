@@ -2,24 +2,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 void solve() {
-    int n; cin >> n;
-    vector<int> v(n);
-    for (int i = 0; i < n; i++) {
-        cin >> v[i];
-        v[i] -= i;
-    }
-    vector<int> discrete = v;
-    sort(discrete.begin(), discrete.end());
-    int m = unique(discrete.begin(), discrete.end()) - discrete.begin();
-    vector<vector<int>> dp(2, vector<int>(m + 1));
-    dp[0][0] = dp[1][0] = 2E18;
-    for (int i = 0; i < n; i++) {
-        for (int j = 1; j <= m; j++) {
-            dp[1][j] = min(dp[1][j - 1], dp[0][j] + abs(v[i] - discrete[j - 1]));
-        }
-        swap(dp[0], dp[1]);
-    }
-    cout << *min_element(dp[0].begin(), dp[0].end());
+	int n; cin >> n;
+	vector<int> v(n);
+	for (int i = 0; i < n; i++) {
+		cin >> v[i];
+		v[i] -= i;
+	}
+	vector<int> discrete = v;
+	sort(discrete.begin(), discrete.end());
+	int m = unique(discrete.begin(), discrete.end()) - discrete.begin();
+	vector<vector<int>> dp(2, vector<int>(m + 1));
+	dp[0][0] = dp[1][0] = 2E18;
+	for (int i = 0; i < n; i++) {
+		for (int j = 1; j <= m; j++) {
+			dp[1][j] = min(dp[1][j - 1], dp[0][j] + abs(v[i] - discrete[j - 1]));
+		}
+		swap(dp[0], dp[1]);
+	}
+	cout << *min_element(dp[0].begin(), dp[0].end());
 }
 // 當 dp 是凸函數且答案是極值時，可以用 slope trick 優化
 // 要注意的是如果兩個相鄰段的斜率差異大於 1，那麼這個關鍵點是要存兩次的
@@ -35,7 +35,7 @@ void solve() {
 	int n; cin >> n;
 	for (int i = 0; i < n; i++) {
 		int x; cin >> x;
-        x -= i + 1;
+		x -= i + 1;
 		q.push(x);
 		q.push(x);
 		ans += q.top() - x;

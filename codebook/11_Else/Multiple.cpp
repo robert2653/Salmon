@@ -15,20 +15,20 @@ const int I2 = Mint<P2>(T2).inv().x;
 const int I3 = Mint<P3>(T3).inv().x;
 const i128 M = i128(P1) * P2 * P3;
 vector<i128> arbitraryMult(const vector<int> &a, const vector<int> &b) {
-    int n = a.size(), m = b.size();
-    Poly1 x = Poly1(a.begin(), a.end()) * Poly1(b.begin(), b.end());
-    Poly2 y = Poly2(a.begin(), a.end()) * Poly2(b.begin(), b.end());
-    Poly3 z = Poly3(a.begin(), a.end()) * Poly3(b.begin(), b.end());
-    vector<i128> res(x.size());
-    for (int i = 0; i < x.size(); i++)
-        res[i] = (x[i].x * T1 % M * I1 +
-                  y[i].x * T2 % M * I2 +
-                  z[i].x * T3 % M * I3) % M;
-    return res;
+	int n = a.size(), m = b.size();
+	Poly1 x = Poly1(a.begin(), a.end()) * Poly1(b.begin(), b.end());
+	Poly2 y = Poly2(a.begin(), a.end()) * Poly2(b.begin(), b.end());
+	Poly3 z = Poly3(a.begin(), a.end()) * Poly3(b.begin(), b.end());
+	vector<i128> res(x.size());
+	for (int i = 0; i < x.size(); i++)
+		res[i] = (x[i].x * T1 % M * I1 +
+				  y[i].x * T2 % M * I2 +
+				  z[i].x * T3 % M * I3) % M;
+	return res;
 }
 public:
-    friend Bigint operator*(Bigint a, Bigint b) {
-        a.x = a.norm(arbitraryMult(a.x, b.x));
-        a.sgn *= b.sgn, a.resign();
-        return a;
-    }
+	friend Bigint operator*(Bigint a, Bigint b) {
+		a.x = a.norm(arbitraryMult(a.x, b.x));
+		a.sgn *= b.sgn, a.resign();
+		return a;
+	}

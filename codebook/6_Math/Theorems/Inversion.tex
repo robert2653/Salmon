@@ -2,55 +2,55 @@
 \item 數論分塊可以快速計算一些含有除法向下取整的和式，就是像 $\sum_{i = 1} ^ {n} f(i) g(\left\lfloor\dfrac ni\right\rfloor)$ 的和式。當可以在 $O(1)$ 內計算 $f(r) - f(l)$ 或已經預處理出f的前綴和時，數論分塊就可以在 $O(\sqrt n)$ 的時間內計算上述和式的值。
 \item 迪利克雷捲積 $h(x) = \sum_{d \mid x} f(d) g(\frac{x}{d})$
 \item 積性函數
-    \begin{itemize}
-        \item $\epsilon (n)$: 只在 $n = 1$ 時為 1，其餘情況皆為 0。
-        \item 莫比烏斯函數
-            \begin{enumerate}
-                \item $$
-                    \begin{aligned}
-                        \sum_{d \mid n} \mu (d)
-                        &=
-                        \begin{cases}
-                            1 & \text{for } n = 1\\
-                            0 & \text{for } n \neq 1
-                        \end{cases}
-                    \end{aligned}
-                    $$
+	\begin{itemize}
+		\item $\epsilon (n)$: 只在 $n = 1$ 時為 1，其餘情況皆為 0。
+		\item 莫比烏斯函數
+			\begin{enumerate}
+				\item $$
+					\begin{aligned}
+						\sum_{d \mid n} \mu (d)
+						&=
+						\begin{cases}
+							1 & \text{for } n = 1\\
+							0 & \text{for } n \neq 1
+						\end{cases}
+					\end{aligned}
+					$$
 
-                \item $\mu$ 是常數函數 $1$ 的反元素\\
-                    $\Rightarrow \mu \ast 1 = \epsilon$，
-            \end{enumerate}
+				\item $\mu$ 是常數函數 $1$ 的反元素\\
+					$\Rightarrow \mu \ast 1 = \epsilon$，
+			\end{enumerate}
 
-        \item $\phi$ 歐拉函數: $x$ 以下與 $x$ 互質的數量
-        \begin{itemize}
-            \item $\phi(p_1^{a_1} \cdots p_k^{a_k}) = (p_1^{a_1 - 1} (p_1 - 1)) \cdots (p_k^{a_k - 1} (p_k - 1))$
-            \item $n = \sum_{d \mid n} \phi(d)$
-            \item $$
-                \begin{aligned}
-                \phi \ast 1
-                &= \sum_{d \mid n} \phi(\dfrac {n}{d}) \ \ \text{質因數分解}\\
-                &= \sum_{i = 0} ^ {c} \phi(p ^ i)\\
-                &= 1 + p^0(p-1) + p^1(p-1) + ... + p^{c-1}(p-1)\\
-                &= p^c\\
-                &= id
-                \end{aligned}
-                $$
-        \end{itemize}
-    \end{itemize}
+		\item $\phi$ 歐拉函數: $x$ 以下與 $x$ 互質的數量
+		\begin{itemize}
+			\item $\phi(p_1^{a_1} \cdots p_k^{a_k}) = (p_1^{a_1 - 1} (p_1 - 1)) \cdots (p_k^{a_k - 1} (p_k - 1))$
+			\item $n = \sum_{d \mid n} \phi(d)$
+			\item $$
+				\begin{aligned}
+				\phi \ast 1
+				&= \sum_{d \mid n} \phi(\dfrac {n}{d}) \ \ \text{質因數分解}\\
+				&= \sum_{i = 0} ^ {c} \phi(p ^ i)\\
+				&= 1 + p^0(p-1) + p^1(p-1) + ... + p^{c-1}(p-1)\\
+				&= p^c\\
+				&= id
+				\end{aligned}
+				$$
+		\end{itemize}
+	\end{itemize}
 
 \item 莫比烏斯反演公式
-    \begin{itemize}
-        \item $f(n)=\sum_{d\mid n}g(d)\Leftrightarrow g(n)=\sum_{d\mid n}\mu(d)f(\frac{n}{d})$
-        \item $f(n)=\sum_{n\mid d}g(d)\Leftrightarrow g(n)=\sum_{n\mid d}\mu(\frac{d}{n})f(d)$
-    \end{itemize}
+	\begin{itemize}
+		\item $f(n)=\sum_{d\mid n}g(d)\Leftrightarrow g(n)=\sum_{d\mid n}\mu(d)f(\frac{n}{d})$
+		\item $f(n)=\sum_{n\mid d}g(d)\Leftrightarrow g(n)=\sum_{n\mid d}\mu(\frac{d}{n})f(d)$
+	\end{itemize}
 
 \item 例子
 $$ \begin{aligned}
-    &\sum_{i = a}^{b} \sum_{j = c}^{d} [gcd(i, j) = k]\\
-    &\Rightarrow \sum_{i = 1}^{x} \sum_{j = 1}^{y} [gcd(i, j) = k]\\
-    &= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \epsilon(gcd(i, j))\\
-    &= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \sum_{d \mid gcd(i, j)} \mu(d)\\
-    &= \sum_{d = 1}^{\infty} \mu(d) \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} [d \mid i] \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} [d \mid j] \text{\ \ d 可整除 i 時為 1}\\
-    &= \sum_{d = 1}^{min(\left\lfloor\dfrac {x}{k} \right\rfloor, \left\lfloor\dfrac {y}{k} \right\rfloor)} \mu(d) \left\lfloor\dfrac {x}{kd} \right\rfloor \left\lfloor\dfrac {y}{kd} \right\rfloor
+	&\sum_{i = a}^{b} \sum_{j = c}^{d} [gcd(i, j) = k]\\
+	&\Rightarrow \sum_{i = 1}^{x} \sum_{j = 1}^{y} [gcd(i, j) = k]\\
+	&= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \epsilon(gcd(i, j))\\
+	&= \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} \sum_{d \mid gcd(i, j)} \mu(d)\\
+	&= \sum_{d = 1}^{\infty} \mu(d) \sum_{i = 1}^{\left\lfloor\dfrac {x}{k} \right\rfloor} [d \mid i] \sum_{j = 1}^{\left\lfloor\dfrac {y}{k} \right\rfloor} [d \mid j] \text{\ \ d 可整除 i 時為 1}\\
+	&= \sum_{d = 1}^{min(\left\lfloor\dfrac {x}{k} \right\rfloor, \left\lfloor\dfrac {y}{k} \right\rfloor)} \mu(d) \left\lfloor\dfrac {x}{kd} \right\rfloor \left\lfloor\dfrac {y}{kd} \right\rfloor
 \end{aligned} $$
 \end{itemize}

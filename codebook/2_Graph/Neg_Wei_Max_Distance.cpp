@@ -7,10 +7,10 @@ void dfs(int u, vector<int> &vis, vector<vector<int>> &adj) {
 	}
 }
 void negWeiMaxDistance() {
-    int n, m; cin >> n >> m;
-    vector<array<int, 3>> edges;
-    vector<vector<int>> adj(n);
-    vector<int> dis(n), vis(n);
+	int n, m; cin >> n >> m;
+	vector<array<int, 3>> edges;
+	vector<vector<int>> adj(n);
+	vector<int> dis(n), vis(n);
 	while (m--) {
 		int u, v, w;
 		cin >> u >> v >> w;
