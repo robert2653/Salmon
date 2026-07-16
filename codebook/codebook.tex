@@ -111,10 +111,12 @@ captionpos=b,										% sets the caption-position to bottom
 breaklines=true,									% sets automatic line breaking
 breakatwhitespace=false,							% sets if automatic breaks should only happen at whitespace
 escapeinside={\%*}{*)},							% if you want to add a comment within your code
-morekeywords={constexpr},									% if you want to add more keywords to the set
-keywordstyle=\bfseries\color{Blue1},
-commentstyle=\itshape\color{Red4},
-stringstyle=\itshape\color{Green4},
+morekeywords={constexpr, ll},									% if you want to add more keywords to the set
+morekeywords=[2]{vector,string,pair,tuple,queue,deque,set,map,multiset,multimap,unordered_map,unordered_set,priority_queue,function,optional,variant,bitset,array,stack,complex,initializer_list},
+keywordstyle=\color{Blue1},
+keywordstyle=[2]\color{ForestGreen4},
+commentstyle=\color{Red4},
+stringstyle=\color{Green4},
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
