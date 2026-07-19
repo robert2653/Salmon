@@ -1,6 +1,6 @@
 const int Mod = 1E9 + 7; // 非 const 會慢很多，需要動態再改
 template<class T> constexpr T power(T a, ll b) {
-	T res {1};
+	T res{1};
 	for (; b > 0; b >>= 1, a = a * a)
 	if (b & 1) res = res * a;
 	return res;

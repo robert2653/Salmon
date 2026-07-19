@@ -9,7 +9,7 @@ template<class T> void chmin(T &a, const T &b) { if (a > b) a = b; }
 template<class T> void chmax(T &a, const T &b) { if (a < b) a = b; }
 
 void solve() {
-
+	
 }
 
 int main() {
