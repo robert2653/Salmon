@@ -8,6 +8,7 @@ template<class T, class F = less<T>> struct RMQ { // [l, r)
 	}
 	void init(const vector<T> &a) {
 		n = a.size();
+		if (!n) return;
 		int lg = __lg(n);
 		g.resize(lg + 1);
 		g[0] = a;

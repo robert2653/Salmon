@@ -11,3 +11,9 @@ priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
 vector<int> a {1, 2, 5, 4, 3}; // 小心不要改到 a
 auto cmp = [&a](int i, int j) { return a[i] > a[j]; };
 priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
+
+vector<int> v {1, 2, 3, 4, 5};
+upper_bound(v.begin(), v.end(), 2, [](int a, int b)
+{ return a < b; }); // find first b that a < b, a is 2
+lower_bound(v.begin(), v.end(), 2, [](int a, int b)
+{ return a < b; }); // find first a that a < b fail, b is 2

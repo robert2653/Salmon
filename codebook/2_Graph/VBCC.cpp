@@ -1,72 +1,77 @@
 struct VBCC {
-	int n, cur = 0, cnt = 0;
-	vector<vector<int>> adj, bcc;
-	vector<int> stk, dfn, low;
-	vector<bool> ap;
-	VBCC(int n) : n(n), adj(n), bcc(n), dfn(n, -1), low(n), ap(n) {}
-	void addEdge(int u, int v) {
-		adj[u].push_back(v);
-		adj[v].push_back(u);
-	}
-	void dfs(int x, int p) {
-		dfn[x] = low[x] = cur++;
-		stk.push_back(x);
-		int ch = 0;
-		for (auto y : adj[x]) {
-			if (y == p) continue;
-			if (dfn[y] == -1) {
-				dfs(y, x), ch++;
-				low[x] = min(low[x], low[y]);
-				if (low[y] >= dfn[x]) {
-					int v;
-					do {
-						v = stk.back();
-						bcc[v].push_back(cnt);
-						stk.pop_back();
-					} while (v != y);
-					bcc[x].push_back(cnt);
-					cnt++;
-				}
-				if (low[y] >= dfn[x] && p != -1)
-					ap[x] = true;
-			} else {
-				low[x] = min(low[x], dfn[y]);
-			}
-		}
-		if (p == -1 && ch > 1) ap[x] = true;
-	}
-	vector<bool> work() {
-		for (int i = 0; i < n; i++)
-			if (dfn[i] == -1) dfs(i, -1);
-		return ap;
-	}
-	struct Graph {
-		int n;
-		vector<pair<int, int>> edges;
-		vector<int> bel, siz, cnte;
-	};
-	Graph compress() {
-		Graph g; // 壓完是一棵樹, 但不一定每個 bel 都有節點
-		g.bel.resize(n);
-		g.siz.resize(cnt); g.cnte.resize(cnt);
-		for (int u = 0; u < n; u++) {
-			if (ap[u]) {
-				g.bel[u] = cnt++;
-				g.siz.emplace_back();
-				g.cnte.emplace_back();
-				for (auto v : bcc[u]) {
-					g.edges.emplace_back(g.bel[u], v);
-				}
-			} else if (bcc[u].size() == 1) {
-				g.bel[u] = bcc[u][0];
-			}
-			g.siz[g.bel[u]]++;
-		}
-		g.n = cnt;
-		for (int i = 0; i < n; i++)
-			for (auto j : adj[i])
-				if (g.bel[i] == g.bel[j] && i < j)
-					g.cnte[g.bel[i]]++;
-		return g;
-	}
+    int n, cur = 0, cnt = 0;
+    vector<vector<int>> adj, bcc;
+    vector<int> dfn, low, stk;
+    vector<bool> ap;
+    VBCC(int n) : n(n), adj(n), dfn(n, 0), low(n, 0), ap(n) {}
+    void addEdge(int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    void dfs(int x, int p = -1) {
+        int ch = 0;
+        dfn[x] = low[x] = ++cur;
+        stk.push_back(x);
+        for (int y : adj[x]) {
+            if (!dfn[y]) {
+                dfs(y, x);
+                ch++;
+                low[x] = min(low[x], low[y]);
+                if (dfn[x] <= low[y]) {
+                    ap[x] = true;
+                    bcc.emplace_back();
+                    int v;
+                    do {
+                        v = stk.back();
+                        stk.pop_back();
+                        bcc.back().push_back(v);
+                    } while (v != y);
+                    bcc.back().push_back(x);
+                    cnt++;
+                }
+            } else if (dfn[y] < dfn[x] && y != p)
+                low[x] = min(low[x], dfn[y]);
+        }
+        if (p == -1 && ch < 2) ap[x] = false;
+    }
+    void work() {
+        for (int i = 0; i < n; i++)
+            if (!dfn[i])
+                if (adj[i].empty()) {
+                    bcc.emplace_back(1, i);
+                    cnt++;
+                } else dfs(i);
+    }
+    struct Graph {
+        int n;
+        vector<pair<int, int>> edges;
+        vector<int> bel, siz, cnte;
+    };
+    Graph compress() {
+        Graph g;
+        g.bel.assign(n, -1);
+        g.siz.assign(cnt, 0);
+        g.cnte.assign(cnt, 0);
+        g.n = cnt;
+        for (int i = 0; i < n; i++) {
+            if (ap[i]) {
+                g.bel[i] = g.n++;
+                g.siz.push_back(1);
+                g.cnte.push_back(0);
+            }
+        }
+        vector<bool> in_bcc(n);
+        for (int i = 0; i < cnt; i++) {
+            for (int u : bcc[i]) in_bcc[u] = true;
+            int edges = 0;
+            for (int u : bcc[i]) {
+                if (ap[u]) g.edges.emplace_back(g.bel[u], i); 
+                else g.bel[u] = i, g.siz[i]++;
+                for (int v : adj[u]) if (in_bcc[v]) edges++;
+            }
+            g.cnte[i] = edges / 2;
+            for (int u : bcc[i]) in_bcc[u] = false;
+        }
+        return g;
+    }
 };

@@ -1,3 +1,4 @@
+const int P = 1E9 + 7;
 ll mul(ll a, ll b, ll p) { // P 超過 int 再用，慢
 	ll res = a * b - ll(1.L * a * b / p) * p;
 	res %= p;
@@ -32,13 +33,36 @@ template<int P> struct Mint {
 	Mint &operator*=(Mint a) { return *this = *this * a; }
 	Mint &operator/=(Mint a) { return *this = *this / a; }
 	
+	bool operator==(Mint y) const { return x == y.x; }
+	bool operator!=(Mint y) const { return x != y.x; }
+
 	friend istream &operator>>(istream &is, Mint &a)
 	{ ll v; is >> v; a = Mint(v); return is; }
 	friend ostream &operator<<(ostream &os, Mint a)
 	{ return os << a.x; }
-	bool operator==(Mint y) const { return x == y.x; }
-	bool operator!=(Mint y) const { return x != y.x; }
 };
 template<> int Mint<0>::Mod = 998244353;
-constexpr int P = 1E9 + 7;
 using Z = Mint<P>;
+
+vector<Z> fac, invfac, inv;
+void init(int n) {
+	fac.resize(n + 1);
+	invfac.resize(n + 1);
+	inv.resize(n + 1);
+	fac[0] = invfac[0] = 1;
+	for (int i = 1; i <= n; i++) {
+		fac[i] = fac[i - 1] * i;
+	}
+	invfac[n] = fac[n].inv();
+	for (int i = n; i > 0; i--) {
+		invfac[i - 1] = invfac[i] * i;
+		inv[i] = invfac[i] * fac[i - 1];
+	}
+}
+Z binom(int n, int m) {
+	if (n < m || m < 0) return 0;
+	return fac[n] * invfac[m] * invfac[n - m];
+}
+Z lucas(ll n, ll m) { // O(p + T log(n)), p is prime
+	return m ? binom(n % Mod, m % Mod) * lucas(n / Mod, m / Mod) : 1;
+}

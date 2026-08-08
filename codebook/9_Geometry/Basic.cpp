@@ -207,9 +207,9 @@ vector<P> hp(vector<Line> lines) {
 		}
 		while (!ps.empty() && dir(ps.back(), l) >= 0) ps.pop_back(), ls.pop_back();
 		while (!ps.empty() && dir(ps[0], l) >= 0) ps.pop_front(), ls.pop_front();
-		if (cross(l.b - l.a, ls.back().b - ls.back().a) == 0) {
-			if (dot(l.b - l.a, ls.back().b - ls.back().a) > 0) {
-				if (dir(ls.back().a, l) >= 0) {
+		if (cross(l.b - l.a, ls.back().b - ls.back().a) == 0) { // 平行
+			if (dot(l.b - l.a, ls.back().b - ls.back().a) > 0) { // 同向
+				if (dir(ls.back().a, l) >= 0) { // l 在內側
 					assert(ls.size() == 1);
 					ls[0] = l;
 				}
