@@ -2,7 +2,7 @@
 .vscode
 .cph
 check_coding_style.py
-testcode
+checker
 
 # library checker
 yosupo

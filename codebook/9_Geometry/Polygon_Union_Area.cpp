@@ -8,9 +8,7 @@ double polygonUnion(vector<vector<P>> ps) { // CCW needed
 	};
 	for (int pi = 0; pi < n; pi++) {
 		for (int i = 0; i + 1 < ps[pi].size(); i++) {
-			vector<pair<double, int>> e;
-			e.emplace_back(0, 0);
-			e.emplace_back(1, 0);
+			vector<pair<double, int>> e {{0, 0}, {1, 0}};
 			for (int pj = 0; pj < n; pj++) {
 				if (pi == pj) continue;
 				for (int j = 0; j + 1 < ps[pj].size(); j++) {

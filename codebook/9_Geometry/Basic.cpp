@@ -37,7 +37,7 @@ P rot(P p, double d) {
 }
 
 bool parallel(Line l1, Line l2)
-{ return cross(l1.b - l1.a, l2.b - l2.a) == 0; }
+{ return sign(cross(l1.b - l1.a, l2.b - l2.a)) == 0; }
 P lineIntersection(Line l1, Line l2)
 { return l1.a + (l1.b - l1.a) * (cross(l2.b - l2.a, l1.a - l2.a) / cross(l2.b - l2.a, l1.a - l1.b)); }
 bool pointOnSegment(P p, Line l)
@@ -51,51 +51,47 @@ P projvec(P p, Line l) {
 // 2 : overlap
 // 3 : intersect at endpoint
 tuple<int, P, P> segmentIntersection(Line l1, Line l2) {
-	if (max(l1.a.x, l1.b.x) < min(l2.a.x, l2.b.x) ||
-		min(l1.a.x, l1.b.x) > max(l2.a.x, l2.b.x) ||
-		max(l1.a.y, l1.b.y) < min(l2.a.y, l2.b.y) ||
-		min(l1.a.y, l1.b.y) > max(l2.a.y, l2.b.y))
+	if (sign(max(l1.a.x, l1.b.x) - min(l2.a.x, l2.b.x)) == -1 ||
+		sign(min(l1.a.x, l1.b.x) - max(l2.a.x, l2.b.x)) == 1 ||
+		sign(max(l1.a.y, l1.b.y) - min(l2.a.y, l2.b.y)) == -1 ||
+		sign(min(l1.a.y, l1.b.y) - max(l2.a.y, l2.b.y)) == 1)
 		return {0, {}, {}};
-	if (cross(l1.b - l1.a, l2.b - l2.a) == 0) {
-		if (cross(l1.b - l1.a, l2.a - l1.a) != 0) {
-			return {0, {}, {}};
-		} else {
-			auto maxx1 = max(l1.a.x, l1.b.x);
-			auto minx1 = min(l1.a.x, l1.b.x);
-			auto maxy1 = max(l1.a.y, l1.b.y);
-			auto miny1 = min(l1.a.y, l1.b.y);
-			auto maxx2 = max(l2.a.x, l2.b.x);
-			auto minx2 = min(l2.a.x, l2.b.x);
-			auto maxy2 = max(l2.a.y, l2.b.y);
-			auto miny2 = min(l2.a.y, l2.b.y);
-			P p1(max(minx1, minx2), max(miny1, miny2));
-			P p2(min(maxx1, maxx2), min(maxy1, maxy2));
-			if (!pointOnSegment(p1, l1)) swap(p1.y, p2.y);
-			if (p1 == p2) return {3, p1, p2};
-			else return {2, p1, p2};
+	if (parallel(l1, l2)) {
+		if (dir(l1.a, l2) != 0) return {0, {}, {}};
+		else {
+			vector<P> res;
+			if (pointOnSegment(l1.a, l2)) res.push_back(l1.a);
+			if (pointOnSegment(l1.b, l2)) res.push_back(l1.b);
+			if (pointOnSegment(l2.a, l1)) res.push_back(l2.a);
+			if (pointOnSegment(l2.b, l1)) res.push_back(l2.b);
+			if (res.empty()) return {0, {}, {}};
+			sort(res.begin(), res.end(), [](const P &a, const P &b)
+			{ return sign(a.x - b.x) == 0 ? a.y < b.y : a.x < b.x; });
+			res.resize(unique(res.begin(), res.end()) - res.begin());
+			if (res.size() == 1) return {3, res[0], res[0]};
+			else return {2, res.front(), res.back()};
 		}
 	}
-	auto cp1 = cross(l2.a - l1.a, l2.b - l1.a);
-	auto cp2 = cross(l2.a - l1.b, l2.b - l1.b);
-	auto cp3 = cross(l1.a - l2.a, l1.b - l2.a);
-	auto cp4 = cross(l1.a - l2.b, l1.b - l2.b);
-	if ((cp1 > 0 && cp2 > 0) || (cp1 < 0 && cp2 < 0) || (cp3 > 0 && cp4 > 0) || (cp3 < 0 && cp4 < 0)) return {0, P(), P()};
+	auto cp1 = dir(l2.b, l1), cp2 = dir(l2.a, l1), cp3 = dir(l1.b, l2), cp4 = dir(l1.a, l2);
+	if ((cp1 > 0 && cp2 > 0) ||
+		(cp1 < 0 && cp2 < 0) ||
+		(cp3 > 0 && cp4 > 0) ||
+		(cp3 < 0 && cp4 < 0)) return {0, {}, {}};
 	P p = lineIntersection(l1, l2);
 	if (cp1 != 0 && cp2 != 0 && cp3 != 0 && cp4 != 0) return {1, p, p};
 	else return {3, p, p};
 }
 
 vector<P> convexHull(vector<P> a) {
-	sort(a.begin(), a.end(), [](const P &l, const P &r) {
-		return l.x == r.x ? l.y < r.y : l.x < r.x;
-	});
+	sort(a.begin(), a.end(), [](const P &a, const P &b)
+	{ return sign(a.x - b.x) == 0 ? a.y < b.y : a.x < b.x; });
 	a.resize(unique(a.begin(), a.end()) - a.begin());
 	if (a.size() <= 1) return a;
-	vector<P> h(a.size() + 1);
+	vector<P> h(a.size() * 2);
 	int s = 0, t = 0;
 	for (int i = 0; i < 2; i++, s = --t) {
 		for (P p : a) {
-			while (t >= s + 2 && cross(h[t - 1] - h[t - 2], p - h[t - 2]) <= 0) t--;
+			while (t >= s + 2 && sign(cross(h[t - 1] - h[t - 2], p - h[t - 2])) <= 0) t--;
 			h[t++] = p;
 		}
 		reverse(a.begin(), a.end());
@@ -103,11 +99,11 @@ vector<P> convexHull(vector<P> a) {
 	return {h.begin(), h.begin() + t};
 }
 
-double distPL(P &p, Line &l)
+double distPL(P p, Line l)
 { return abs(cross(l.a - l.b, l.a - p)) / abs(l); }
-double distancePS(P &p, Line &l) {
-	if (dot(p - l.a, l.b - l.a) < 0) return dist(p, l.a);
-	if (dot(p - l.b, l.a - l.b) < 0) return dist(p, l.b);
+double distancePS(P p, Line l) {
+	if (sign(dot(p - l.a, l.b - l.a)) < 0) return dist(p, l.a);
+	if (sign(dot(p - l.b, l.a - l.b)) < 0) return dist(p, l.b);
 	return distPL(p, l);
 }
 double distanceSS(Line l1, Line l2) {
@@ -117,11 +113,10 @@ double distanceSS(Line l1, Line l2) {
 
 bool lineIntersectsPolygon(Line l, const vector<P> &p) {
 	int n = p.size();
-	P a = l.a, b = l.b;
 	for (int i = 0; i < n; i++) {
-		Line seg {p[i], p[(i + 1) % n]};
-		if (cross(b - a, seg.a - a) == 0 || cross(b - a, seg.b - a) == 0) return true;
-		if ((cross(b - a, seg.a - a) > 0) ^ (cross(b - a, seg.b - a) > 0)) return true;
+		P a = p[i], b = p[(i + 1) % n];
+		if (dir(a, l) == 0 || dir(b, l) == 0) return true;
+		if ((dir(a, l) < 0) ^ (dir(b, l) < 0)) return true;
 	}
 	return false;
 }
@@ -156,46 +151,27 @@ int pointInConvexPolygon(P a, const vector<P> &p) {
 }
 bool segmentInPolygon(Line l, const vector<P> &p) {
 	int n = p.size();
-	if (!pointInPolygon(l.a, p)) return false;
-	if (!pointInPolygon(l.b, p)) return false;
+	vector<P> a {l.a, l.b};
 	for (int i = 0; i < n; i++) {
-		auto u = p[i];
-		auto v = p[(i + 1) % n];
-		auto w = p[(i + 2) % n];
-		auto [t, p1, p2] = segmentIntersection(l, {u, v});
-		if (t == 1) return false;
-		if (t == 0) continue;
-		if (t == 2) {
-			if (pointOnSegment(v, l) && v != l.a && v != l.b && cross(u - v, w - v) < 0) return false;
-		} else {
-			if (p1 != u && p1 != v) {
-				if (dir(l.a, {v, u}) < 0 || dir(l.b, {v, u}) < 0) return false;
-			} else if (p1 == v) {
-				if (l.a == v) {
-					if (dir(u, l) < 0) {
-						if (dir(w, l) < 0 && dir(w, {u, v}) < 0) return false;
-					} else if (dir(w, l) < 0 || dir(w, {u, v}) < 0) return false;
-				} else if (l.b == v) {
-					if (dir(u, {l.b, l.a}) < 0) {
-						if (dir(w, {l.b, l.a}) < 0 && dir(w, {u, v}) < 0) return false;
-					} else if (dir(w, {l.b, l.a}) < 0 || dir(w, {u, v}) < 0) return false;
-				} else {
-					if (dir(u, l) < 0) {
-						if (dir(w, {l.b, l.a}) < 0 || dir(w, {u, v}) < 0) return false;
-					} else if (dir(w, l) < 0 || dir(w, {u, v}) < 0) return false;
-				}
-			}
-		}
+		auto [t, p1, p2] = segmentIntersection(l, {p[i], p[(i + 1) % n]});
+		if (t == 1 || t == 3) a.push_back(p1);
+		else if (t == 2) a.push_back(p1), a.push_back(p2);
+	}
+	sort(a.begin(), a.end(), [](const P &a, const P &b)
+	{ return sign(a.x - b.x) == 0 ? a.y < b.y : a.x < b.x; });
+	for (int i = 0; i + 1 < a.size(); i++) {
+		if (sign(dist(a[i], a[i + 1])) == 0) continue;
+		if (!pointInPolygon((a[i] + a[i + 1]) / 2, p)) return false;
 	}
 	return true;
 }
+// non-strict -> >= 都改 >, assert 拿掉, 在外面特判直線(area == 0)
 vector<P> hp(vector<Line> lines) {
 	auto sgn = [](P p) { return p.y > 0 || (p.y == 0 && p.x > 0) ? 1 : -1; };
 	sort(lines.begin(), lines.end(), [&](auto l1, auto l2) {
 		auto d1 = l1.b - l1.a;
 		auto d2 = l2.b - l2.a;
-		if (sgn(d1) != sgn(d2))
-			return sgn(d1) == 1;
+		if (sgn(d1) != sgn(d2)) return sgn(d1) == 1;
 		return cross(d1, d2) > 0;
 	});
 	deque<Line> ls;
@@ -207,8 +183,8 @@ vector<P> hp(vector<Line> lines) {
 		}
 		while (!ps.empty() && dir(ps.back(), l) >= 0) ps.pop_back(), ls.pop_back();
 		while (!ps.empty() && dir(ps[0], l) >= 0) ps.pop_front(), ls.pop_front();
-		if (cross(l.b - l.a, ls.back().b - ls.back().a) == 0) { // 平行
-			if (dot(l.b - l.a, ls.back().b - ls.back().a) > 0) { // 同向
+		if (sign(cross(l.b - l.a, ls.back().b - ls.back().a)) == 0) { // 平行
+			if (sign(dot(l.b - l.a, ls.back().b - ls.back().a)) > 0) { // 同向
 				if (dir(ls.back().a, l) >= 0) { // l 在內側
 					assert(ls.size() == 1);
 					ls[0] = l;

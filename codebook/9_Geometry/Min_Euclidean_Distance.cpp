@@ -1,25 +1,23 @@
 void solve(int n, vector<P> &a) { // recursive solution
-	sort(a.begin(), a.end(), [](const P &a, const P &b) {
-		return a.x == b.x ? a.y < b.y : a.x < b.x;
-	});
+	sort(a.begin(), a.end(), [](const P &a, const P &b)
+	{ return a.x == b.x ? a.y < b.y : a.x < b.x; });
 	vector<P> t(n);
 	cout << [&](this auto &&self, int l, int r) -> ll {
 		if (l == r) return 9E18;
-		int m = (l + r) / 2;
-		ll ans = min(self(l, m), self(m + 1, r));
+		int p = 0, m = (l + r) / 2;
 		ll mid = a[m].x;
-		ll p = 0;
+		ll ans = min(self(l, m), self(m + 1, r));
+		merge(a.begin() + l, a.begin() + m + 1,
+			a.begin() + m + 1, a.begin() + r + 1,
+			t.begin(), [](const P &a, const P &b) { return a.y < b.y; });
+		copy(t.begin(), t.begin() + r - l + 1, a.begin() + l);
 		for (int i = l; i <= r; i++)
-			if ((mid - a[i].x) * (mid - a[i].x) <= ans)
-				t[p++] = a[i];
-		sort(t.begin(), t.begin() + p, [](const P &a, const P &b) {
-			return a.y < b.y;
-		});
+			if ((mid - a[i].x) * (mid - a[i].x) <= ans) t[p++] = a[i];
 		for (int i = 0; i < p; i++) {
 			for (int j = i + 1; j < p; j++) {
-				ans = min(ans, abs2(t[i] - t[j]));
 				if ((t[i].y - t[j].y) * (t[i].y - t[j].y) > ans) break;
-			} 
+				ans = min(ans, abs2(t[i] - t[j]));
+			}
 		}
 		return ans;
 	} (0, n - 1) << "\n";

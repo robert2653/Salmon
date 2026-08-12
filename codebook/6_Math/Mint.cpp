@@ -64,5 +64,5 @@ Z binom(int n, int m) {
 	return fac[n] * invfac[m] * invfac[n - m];
 }
 Z lucas(ll n, ll m) { // O(p + T log(n)), p is prime
-	return m ? binom(n % Mod, m % Mod) * lucas(n / Mod, m / Mod) : 1;
+	return m ? binom(n % P, m % P) * lucas(n / P, m / P) : 1;
 }

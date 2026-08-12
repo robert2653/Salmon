@@ -1,7 +1,6 @@
 tuple<ll, int, int> maxEuclideanDistance(vector<P> a) {
-	auto get = [&](P p, Line l) -> ll {
-		return abs(cross(l.a - l.b, l.a - p));
-	};
+	auto get = [&](P p, Line l) -> ll
+	{ return abs(cross(l.a - l.b, l.a - p)); };
 	ll res = 0; int n = a.size(), x, y, id = 2;
 	a.push_back(a.front());
 	if (n == 1) return {0, 0, 0};
