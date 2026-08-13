@@ -1,6 +1,6 @@
 // z[i] 表示 s 和 s[i, n - 1] (以 s[i] 開頭的後綴)
 // 的最長公共前綴 (LCP) 的長度
-vector<int> Z(const string &s) {
+template<class T> vector<int> Z(const T &s) {
 	int n = s.size();
 	vector<int> z(n);
 	z[0] = n; // lcp(s, s), -1 or n

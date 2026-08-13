@@ -10,21 +10,18 @@ int newNode() {
 	cnt[x] = 0, fill_n(trie[x], ALPHABET_SIZE, 0);
 	return x;
 }
-void add(const string &s) {
-	int p = 0;
-	for (auto c : s) {
-		int &q = trie[p][c - 'a'];
-		if (!q) q = newNode();
-		p = q;
+void add(const string &s, int i = 0, int p = 0) {
+	if (i == s.size()) {
+		cnt[p]++;
+		return;
 	}
-	cnt[p] += 1;
+	int &q = trie[p][s[i] - 'a'];
+	if (!q) q = newNode();
+	add(s, i + 1, q);
 }
-int find(const string &s) {
-	int p = 0;
-	for (auto c : s) {
-		int q = trie[p][c - 'a'];
-		if (!q) return 0;
-		p = q;
-	}
-	return cnt[p];
+int find(const string &s, int i = 0, int p = 0) {
+	if (i == s.size()) return cnt[p];
+	int q = trie[p][s[i] - 'a'];
+	if (!q) return 0;
+	return find(s, i + 1, q);
 }

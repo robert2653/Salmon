@@ -1,14 +1,14 @@
 // 找到對於每個位置的迴文半徑
-vector<int> manacher(const string &s) {
-	string t = "#";
-	for (auto c : s) t = t + c + '#';
+template<class T> vector<int> manacher(const T &s) {
+	vector<int> t {-1};
+	for (auto c : s) t.push_back(c), t.push_back(-1);
 	int n = t.size();
 	vector<int> r(n);
 	for (int i = 0, j = 0; i < n; i++) { // i 是中心, j 是最長回文字串中心
 		if (2 * j - i >= 0 && j + r[j] > i)
 			r[i] = min(r[2 * j - i], j + r[j] - i);
 		while (i - r[i] >= 0 && i + r[i] < n && t[i - r[i]] == t[i + r[i]])
-			r[i] += 1;
+			r[i]++;
 		if (i + r[i] > j + r[j]) j = i;
 	}
 	return r;
