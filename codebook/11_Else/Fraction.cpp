@@ -1,5 +1,4 @@
-template<class T>
-struct Fraction {
+template<class T> struct Fraction {
 	T n, d;
 	void reduce() {
 		T g = gcd(abs(n), abs(d));
@@ -39,10 +38,7 @@ struct Fraction {
 		else os << f.n << "/" << f.d;
 		return os;
 	}
-	bool operator==(Fraction b) const
-	{ return n * b.d == b.n * d; }
-	bool operator!=(Fraction b) const
-	{ return n * b.d != b.n * d; }
-	bool operator<(Fraction b) const
-	{ return n * b.d < b.n * d; }
+	bool operator==(Fraction b) const { return n * b.d == b.n * d; }
+	bool operator!=(Fraction b) const { return n * b.d != b.n * d; }
+	bool operator<(Fraction b) const { return n * b.d < b.n * d; }
 };

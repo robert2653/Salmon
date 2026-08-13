@@ -1,5 +1,7 @@
+// find s[i] = c[0] * s[i - 1] + c[1] * s[i - 2] + ... + c[k - 1] * s[i - k] 
+// return : c(x) = 1 - c_0x - c_1x^2 - ... - c_{k-1}x^k
 template<int P = 998244353>
-Poly<P> berlekampMassey(const Poly<P> &s) {
+Poly<P> berlekampMassey(const Poly<P> &s) { // O(n^2)
 	Poly<P> c, oldC;
 	int f = -1;
 	for (int i = 0; i < s.size(); i++) {
