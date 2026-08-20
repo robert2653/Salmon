@@ -26,8 +26,7 @@ template<class T> struct Dinic {
 			int u = q.front(); q.pop();
 			for (int id : g[u]) {
 				auto [v, f, cap] = e[id];
-				if (f == cap) continue;
-				if (h[v] == -1) {
+				if (f != cap && h[v] == -1) {
 					h[v] = h[u] + 1;
 					if (v == t) return true;
 					q.push(v);
@@ -42,8 +41,7 @@ template<class T> struct Dinic {
 		for (int &i = cur[u]; i < g[u].size(); i++) {
 			int j = g[u][i];
 			auto [v, f, cap] = e[j];
-			if (h[u] + 1 != h[v]) continue;
-			if (f == cap) continue;
+			if (f == cap || h[u] + 1 != h[v]) continue;
 			T mn = dfs(v, min(flow, cap - f));
 			if (mn > 0) {
 				e[j].f += mn;
@@ -51,7 +49,7 @@ template<class T> struct Dinic {
 				return mn;
 			}
 		}
-		return 0;
+		return T{};
 	}
 	T work(int s_, int t_) {
 		s = s_; t = t_; T f = 0;

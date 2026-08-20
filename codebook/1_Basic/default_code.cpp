@@ -5,8 +5,8 @@ using ll = long long;
 
 namespace rgs = ranges;
 
-template<class T> void chmin(T &a, const T &b) { if (a > b) a = b; }
-template<class T> void chmax(T &a, const T &b) { if (a < b) a = b; }
+template<class T> bool chmin(T &a, const T &b) { return a > b && (a = b, true); }
+template<class T> bool chmax(T &a, const T &b) { return a < b && (a = b, true); }
 
 void solve() {
 	
