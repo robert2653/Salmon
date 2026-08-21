@@ -29,7 +29,7 @@ void fft(vector<cd> &a, bool inv = false) {
 // i + j = k, res[1] = a[1] * b[0] + a[0] * b[1]
 // reverse b for i - j = k, res[k + b.size() - 1]
 template<class T>
-vector<T> Multiple(const vector<T> &a, const vector<T> &b) {
+vector<T> conv(const vector<T> &a, const vector<T> &b) {
 	vector<cd> fa(a.begin(), a.end()), fb(b.begin(), b.end());
 	int n = 1, tot = a.size() + b.size() - 1;
 	while (n < tot) n *= 2;

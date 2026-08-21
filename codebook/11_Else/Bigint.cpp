@@ -8,12 +8,10 @@ private:
 		if (a.empty()) return {0};
 		for (int i = 0; i < a.size(); i++) {
 			U c = a[i];
-			a[i] = c % B;
-			c /= B;
-			if (c) {
+			a[i] %= B;
+			if (c /= B)
 				if (i == a.size() - 1) a.push_back(c);
 				else a[i + 1] += c;
-			}
 		}
 		while (a.size() > 1 && a.back() == 0) a.pop_back();
 		return {a.begin(), a.end()};
@@ -37,10 +35,7 @@ public:
 		if (s[0] == '-') s.erase(s.begin()), sgn = -1;
 		int add = 0, cnt = 0, b = 1;
 		while (s.size()) {
-			if (cnt == digit) {
-				x.push_back(add), add = cnt = 0;
-				b = 1;
-			}
+			if (cnt == digit) x.push_back(add), add = cnt = 0, b = 1;
 			add += toInt(s.back()) * b;
 			cnt++, b *= base;
 			s.pop_back();
@@ -90,22 +85,18 @@ public:
 	{ os << a.to_string(); return os; }
 	friend bool operator<(Bigint a, Bigint b) {
 		if (a.sgn != b.sgn) return a.sgn < b.sgn;
-		if (a.x.size() != b.x.size()) {
+		if (a.x.size() != b.x.size())
 			return a.x.size() < b.x.size();
-		} else {
-			for (int i = a.x.size() - 1; i >= 0; i--)
-				if (a.x[i] != b.x[i]) return a.x[i] < b.x[i];
-		}
+		else for (int i = a.x.size() - 1; i >= 0; i--)
+			if (a.x[i] != b.x[i]) return a.x[i] < b.x[i];
 		return 0;
 	}
 	friend bool operator>(Bigint a, Bigint b) {
 		if (a.sgn != b.sgn) return a.sgn > b.sgn;
-		if (a.x.size() != b.x.size()) {
+		if (a.x.size() != b.x.size())
 			return a.x.size() > b.x.size();
-		} else {
-			for (int i = a.x.size() - 1; i >= 0; i--)
-				if (a.x[i] != b.x[i]) return a.x[i] > b.x[i];
-		}
+		else for (int i = a.x.size() - 1; i >= 0; i--)
+			if (a.x[i] != b.x[i]) return a.x[i] > b.x[i];
 		return 0;
 	}
 	friend bool operator==(const Bigint &a, const Bigint &b)

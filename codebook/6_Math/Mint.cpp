@@ -24,7 +24,7 @@ template<int P> struct Mint {
 	Mint &operator+=(Mint a) { if ((x += a.x) >= p()) x -= p(); return *this; }
 	Mint &operator-=(Mint a) { if ((x -= a.x) < 0) x += p(); return *this; }
 	Mint &operator*=(Mint a) { x = 1LL * x * a.x % p(); return *this; }
-	Mint &operator/=(Mint a) { x = 1LL * x * a.inv().x % p(); return *this; }
+	Mint &operator/=(Mint a) { return *this *= a.inv(); }
 	
 	friend Mint operator+(Mint a, Mint b) { return a += b; }
 	friend Mint operator-(Mint a, Mint b) { return a -= b; }
