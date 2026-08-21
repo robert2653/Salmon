@@ -16,13 +16,17 @@ template<int P> struct Mint {
 	static int p() { return P > 0 ? P : Mod; }
 	static void setMod(int Mod_) { Mod = Mod_; }
 	int x;
-	Mint(ll v = 0) : x(v % p()) { if (x < 0) x += p(); }
+	void norm(int &x) {
+		if (x < 0) x += p();
+		if (x >= p()) x -= p();
+	}
+	Mint(ll v = 0) : x(v % p()) { norm(x); }
 	explicit operator int() const { return x; }
 	Mint operator-() const { return p() - x; }
 	Mint inv() const { return power(*this, p() - 2); }
-
-	Mint &operator+=(Mint a) { if ((x += a.x) >= p()) x -= p(); return *this; }
-	Mint &operator-=(Mint a) { if ((x -= a.x) < 0) x += p(); return *this; }
+	
+	Mint &operator+=(Mint a) { norm(x += a.x); return *this; }
+	Mint &operator-=(Mint a) { norm(x -= a.x); return *this; }
 	Mint &operator*=(Mint a) { x = 1LL * x * a.x % p(); return *this; }
 	Mint &operator/=(Mint a) { return *this *= a.inv(); }
 	
