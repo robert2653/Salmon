@@ -77,16 +77,11 @@ struct Poly : public vector<Mint<P>> {
 		for (int i = 0; i < int(a.size()); i++) a[i] /= x;
 		return a;
 	}
-	Poly &operator+=(Poly a)
-	{ return (*this) = (*this) + a; }
-	Poly &operator-=(Poly a)
-	{ return (*this) = (*this) - a; }
-	Poly &operator*=(Poly a)
-	{ return (*this) = (*this) * a; }
-	Poly &operator*=(Z a)
-	{ return (*this) = (*this) * a; }
-	Poly &operator/=(Z a)
-	{ return (*this) = (*this) / a; }
+	Poly &operator+=(Poly a) { return *this = *this + a; }
+	Poly &operator-=(Poly a) { return *this = *this - a; }
+	Poly &operator*=(Poly a) { return *this = *this * a; }
+	Poly &operator*=(Z a) { return *this = *this * a; }
+	Poly &operator/=(Z a) { return *this = *this / a; }
 	Poly shift(int k) const {
 		if (k >= 0) {
 			auto b = *this;

@@ -13,26 +13,24 @@ template<class T> constexpr T power(T a, ll b) {
 }
 template<int P> struct Mint {
 	static int Mod;
-	static int getMod() { return P > 0 ? P : Mod; }
+	static int p() { return P > 0 ? P : Mod; }
 	static void setMod(int Mod_) { Mod = Mod_; }
-	ll x;
-	Mint(ll v = 0) {
-		x = v % getMod();
-		if (x < 0) x += getMod();
-	}
-	explicit operator ll() const { return x; }
-	Mint operator-() const { return getMod() - x; }
-	Mint inv() const { return power(*this, getMod() - 2); }
-	Mint operator+(Mint a) const { return x + a.x; }
-	Mint operator-(Mint a) const { return x - a.x; }
-	Mint operator*(Mint a) const { return x * a.x; }
-	Mint operator/(Mint a) const { return *this * a.inv(); }
+	int x;
+	Mint(ll v = 0) : x(v % p()) { if (x < 0) x += p(); }
+	explicit operator int() const { return x; }
+	Mint operator-() const { return p() - x; }
+	Mint inv() const { return power(*this, p() - 2); }
+
+	Mint &operator+=(Mint a) { if ((x += a.x) >= p()) x -= p(); return *this; }
+	Mint &operator-=(Mint a) { if ((x -= a.x) < 0) x += p(); return *this; }
+	Mint &operator*=(Mint a) { x = 1LL * x * a.x % p(); return *this; }
+	Mint &operator/=(Mint a) { x = 1LL * x * a.inv().x % p(); return *this; }
 	
-	Mint &operator+=(Mint a) { return *this = *this + a; }
-	Mint &operator-=(Mint a) { return *this = *this - a; }
-	Mint &operator*=(Mint a) { return *this = *this * a; }
-	Mint &operator/=(Mint a) { return *this = *this / a; }
-	
+	friend Mint operator+(Mint a, Mint b) { return a += b; }
+	friend Mint operator-(Mint a, Mint b) { return a -= b; }
+	friend Mint operator*(Mint a, Mint b) { return a *= b; }
+	friend Mint operator/(Mint a, Mint b) { return a /= b; }
+
 	bool operator==(Mint y) const { return x == y.x; }
 	bool operator!=(Mint y) const { return x != y.x; }
 
