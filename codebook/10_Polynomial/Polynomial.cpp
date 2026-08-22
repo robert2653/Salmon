@@ -1,42 +1,6 @@
 template<int P = 998244353, int G = 3>
 struct Poly : public vector<Mint<P>> {
 	using Z = Mint<P>;
-	static vector<int> rev;
-	static vector<Z> w;
-	static void ntt(vector<Z> &a, bool inv = false) {
-		int n = a.size();
-		if (rev.size() != n) {
-			int k = __builtin_ctz(n) - 1;
-			rev.resize(n);
-			for (int i = 0; i < n; i++) rev[i] = rev[i >> 1] >> 1 | (i & 1) << k;
-		}
-		for (int i = 0; i < n; i++) if (rev[i] < i) swap(a[i], a[rev[i]]);
-		if (w.size() < n) {
-			int k = __builtin_ctz(w.size());
-			w.resize(n);
-			while ((1 << k) < n) {
-				Z u = power(Z(G), (P - 1) >> (k + 1));
-				for (int i = 1 << (k - 1); i < (1 << k); i++) {
-					w[i * 2] = w[i];
-					w[i * 2 + 1] = w[i] * u;
-				}
-				k++;
-			}
-		}
-		for (int k = 1; k < n; k *= 2) {
-			for (int i = 0; i < n; i += 2 * k) {
-				for (int j = 0; j < k; j++) {
-					Z u = a[i + j], v = a[i + j + k] * w[k + j];
-					a[i + j] = u + v; a[i + j + k] = u - v;
-				}
-			}
-		}
-		if (inv) {
-			reverse(a.begin() + 1, a.end());
-			Z inv_n = Z(n).inv();
-			for (auto &x : a) x *= inv_n;
-		}
-	}
 	explicit Poly(int n = 0) : vector<Z>(n) {}
 	Poly(const vector<Z> &a) : vector<Z>(a) {}
 	Poly(const initializer_list<Z> &a) : vector<Z>(a) {}
@@ -58,23 +22,14 @@ struct Poly : public vector<Mint<P>> {
 		return a;
 	}
 	friend Poly operator*(Poly a, Poly b) {
-		if (a.empty() || b.empty()) return Poly();
-		if (a.size() < b.size()) swap(a, b);
-		int n = 1, tot = a.size() + b.size() - 1;
-		while (n < tot) n *= 2;
-		a.resize(n), b.resize(n);
-		ntt(a), ntt(b);
-		for (int i = 0; i < n; i++) a[i] *= b[i];
-		ntt(a, true);
-		a.resize(tot);
-		return a;
+		return conv(a, b, G);
 	}
 	friend Poly operator*(Poly a, Z x) {
-		for (int i = 0; i < int(a.size()); i++) a[i] *= x;
+		for (int i = 0; i < a.size(); i++) a[i] *= x;
 		return a;
 	}
 	friend Poly operator/(Poly a, Z x) {
-		for (int i = 0; i < int(a.size()); i++) a[i] /= x;
+		for (int i = 0; i < a.size(); i++) a[i] /= x;
 		return a;
 	}
 	Poly &operator+=(Poly a) { return *this = *this + a; }
@@ -193,5 +148,3 @@ struct Poly : public vector<Mint<P>> {
 		return ans;
 	}
 };
-template<int P, int G> vector<int> Poly<P, G>::rev;
-template<int P, int G> vector<Mint<P>> Poly<P, G>::w = {0, 1};

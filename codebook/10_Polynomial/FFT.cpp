@@ -3,7 +3,7 @@ using cd = complex<double>;
 vector<int> rev;
 void fft(vector<cd> &a, bool inv = false) {
 	int n = a.size();
-	if (int(rev.size()) != n) {
+	if (rev.size() != n) {
 		int k = __builtin_ctz(n) - 1;
 		rev.resize(n);
 		for (int i = 0; i < n; i++)
@@ -28,18 +28,15 @@ void fft(vector<cd> &a, bool inv = false) {
 }
 // i + j = k, res[1] = a[1] * b[0] + a[0] * b[1]
 // reverse b for i - j = k, res[k + b.size() - 1]
-template<class T>
-vector<T> conv(const vector<T> &a, const vector<T> &b) {
+template<class T> vector<double> conv(vector<T> a, vector<T> b) {
 	vector<cd> fa(a.begin(), a.end()), fb(b.begin(), b.end());
 	int n = 1, tot = a.size() + b.size() - 1;
-	while (n < tot) n *= 2;
+	while (n < tot) n <<= 1;
 	fa.resize(n), fb.resize(n);
 	fft(fa), fft(fb);
-	for (int i = 0; i < n; i++)
-		fa[i] = fa[i] * fb[i];
+	for (int i = 0; i < n; i++) fa[i] = fa[i] * fb[i];
 	fft(fa, true);
-	vector<T> res(tot);
-	for (int i = 0; i < tot; i++)
-		res[i] = fa[i].real(); // use llround if need
-	return res; 
+	vector<double> res(tot);
+	for (int i = 0; i < tot; i++) res[i] = fa[i].real();
+	return res; // use round to int
 }
