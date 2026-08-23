@@ -38,5 +38,5 @@ template<class T> vector<double> conv(vector<T> a, vector<T> b) {
 	fft(fa, true);
 	vector<double> res(tot);
 	for (int i = 0; i < tot; i++) res[i] = fa[i].real();
-	return res; // use round to int
+	return res; // use lround to int
 }
