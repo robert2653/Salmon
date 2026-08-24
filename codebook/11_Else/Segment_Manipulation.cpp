@@ -1,4 +1,4 @@
-auto era = [&](set<pair<int, int>> &st, int L, int R) -> void {
+auto era = [&](set<pair<int, int>> &st, int L, int R) {
 	auto it = st.lower_bound({L, -1});
 	if (it != st.begin() && prev(it)->second >= L) --it;
 	while (it != st.end() && it->first <= R) {
@@ -8,7 +8,8 @@ auto era = [&](set<pair<int, int>> &st, int L, int R) -> void {
 		if (R < r) st.emplace(R + 1, r);
 	}
 };
-auto ins = [&](set<pair<int, int>> &st, int L, int R) -> void {
+// remove + 1 for strictly overlap
+auto ins = [&](set<pair<int, int>> &st, int L, int R) {
 	auto it = st.lower_bound({L, -1});
 	if (it != st.begin() && prev(it)->second + 1 >= L) --it;
 	while (it != st.end() && it->first <= R + 1) {
@@ -17,4 +18,12 @@ auto ins = [&](set<pair<int, int>> &st, int L, int R) -> void {
 		it = st.erase(it);
 	}
 	st.emplace(L, R);
+};
+auto find = [&](const set<pair<int, int>> &st, int i) {
+	auto it = st.lower_bound({i + 1, -1});
+	if (it != st.begin()) {
+		--it;
+		if (it->second >= i) return it;
+	}
+	return st.end();
 };
