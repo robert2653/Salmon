@@ -19,8 +19,3 @@ template<class T> struct ZKW {
 		return x + y;
 	}
 };
-struct Info {};
-Info operator+(const Info &a, const Info &b) {
-	Info c;
-	return c;
-}

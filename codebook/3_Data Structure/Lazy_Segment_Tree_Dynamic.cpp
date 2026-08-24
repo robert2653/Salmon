@@ -81,18 +81,3 @@ template<class Info, class Tag> struct LazySegmentTreeDynamic {
 		return findFirst(ql, qr, f, m, r, nd[p].rc);
 	}
 };
-struct Tag { // 有些 Tag 不用 push 例如 sweepLine
-	void apply(const Tag &t) & {}
-	Tag offset(int d) const { return *this; }
-};
-struct Info {
-	void apply(const Tag &t, int l, int r) & {} /*
-	Info &operator=(const Info &i) & {
-		// do something... 部分 assignment 使用
-		return *this;
-	} */
-};
-Info operator+(const Info &a, const Info &b) {
-	Info c;
-	return c;
-}
