@@ -4,6 +4,7 @@ using namespace std;
 using ll = long long;
 
 namespace rgs = ranges;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 template<class T> bool chmin(T &a, const T &b) { return a > b && (a = b, true); }
 template<class T> bool chmax(T &a, const T &b) { return a < b && (a = b, true); }
