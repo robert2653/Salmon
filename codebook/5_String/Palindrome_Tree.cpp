@@ -38,18 +38,16 @@ struct PAM {
 		return p = t[p].next[c];
 	}
 };
-void solve() {
-	string s; cin >> s;
-	int n = s.length();
-	vector<int> last(n + 1);
-	last[0] = 1;
-	PAM pam;
-	for (int i = 0; i < n; i++)
-		last[i + 1] = pam.extend(last[i], s[i] - 'a');
-	int sz = pam.t.size();
-	vector<int> cnt(sz);
-	for (int i = 1; i <= n; i++)
-		cnt[last[i]]++; // 去重 = 1
-	for (int i = sz - 1; i > 1; i--)
-		cnt[pam.t[i].fail] += cnt[i];
-}
+// 	string s; cin >> s;
+// 	int n = s.length();
+// 	vector<int> last(n + 1);
+// 	last[0] = 1;
+// 	PAM pam;
+// 	for (int i = 0; i < n; i++)
+// 		last[i + 1] = pam.extend(last[i], s[i] - 'a');
+// 	int sz = pam.t.size();
+// 	vector<int> cnt(sz);
+// 	for (int i = 1; i <= n; i++)
+// 		cnt[last[i]]++; // 去重 = 1
+// 	for (int i = sz - 1; i > 1; i--)
+// 		cnt[pam.t[i].fail] += cnt[i];

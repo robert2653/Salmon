@@ -29,7 +29,7 @@ struct SCC {
 		for (int i = 0; i < n; i++)
 			if (dfn[i] == -1) dfs(i);
 		return bel;
-	}
+	} // 1ebd5a
 	struct Graph {
 		int n;
 		vector<pair<int, int>> edges;

@@ -37,7 +37,7 @@ template<class T> tuple<T, int, vector<T>> gaussianElimination(vector<vector<T>>
 	vector<T> ans(n);
 	for (int i = 0; i < n; i++) ans[i] = a[i][m - 1];
 	return {det, 1, ans};
-}
+} // 0064b9
 template<class T> tuple<int, vector<T>, vector<vector<T>>> findBasis(vector<vector<T>> a) {
 	int n = a.size(), m = a[0].size(), rk = 0;
 	vector<int> pos(m - 1, -1);
@@ -80,5 +80,5 @@ template<class T> tuple<int, vector<T>, vector<vector<T>>> findBasis(vector<vect
 			basis.push_back(v);
 		}
 	return {rk, sol, basis};
-}
+} // 0e6dd7
 template<class T> using Matrix = vector<vector<T>>;

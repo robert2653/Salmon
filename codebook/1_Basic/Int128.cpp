@@ -8,7 +8,7 @@ istream &operator>>(istream &is, i128 &a) {
 	}
 	a *= sgn;
 	return is;
-}
+} // 7ea35c
 ostream &operator<<(ostream &os, i128 a) {
 	if (a == 0) return os << 0;
 	string res;
@@ -17,4 +17,4 @@ ostream &operator<<(ostream &os, i128 a) {
 	reverse(res.begin(), res.end());
 	os << res;
 	return os;
-}
+} // e5d7e9

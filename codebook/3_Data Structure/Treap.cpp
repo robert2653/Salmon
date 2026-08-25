@@ -52,15 +52,6 @@ struct Treap { // 0 -> initial root
 			return {t, b};
 		}
 	}
-	template<class F>   // 尋找區間內，第一個符合條件的
-	int findFirst(int t, F &&pred) {
-		if (!t) return 0;
-		push(t);
-		if (!pred(info[t])) return 0;
-		int idx = findFirst(ch[t][0], pred);
-		if (!idx) idx = 1 + siz[ch[t][0]] + findFirst(ch[t][1], pred);
-		return idx;
-	}
 	int getPos(int rt, int t) { // get t's index in array
 		int res = siz[t] + 1;
 		while (t != rt) {
@@ -76,30 +67,38 @@ struct Treap { // 0 -> initial root
 		getArray(ch[t][0], a);
 		a.push_back(info[t]);
 		getArray(ch[t][1], a);
-	}
+	} // 2b9619, fb9cfc (with tags)
+	template<class F> int findFirst(int t, F &&pred) {
+		if (!t) return 0;
+		push(t);
+		if (!pred(info[t])) return 0;
+		int idx = findFirst(ch[t][0], pred);
+		if (!idx) idx = 1 + siz[ch[t][0]] + findFirst(ch[t][1], pred);
+		return idx;
+	} // 16021b
 };
 struct Tag {
-	int setVal; ll add;
+	// int setVal; ll add;
 	void apply(const Tag &t) {
-		if (t.setVal) {
-			setVal = t.setVal;
-			add = t.add;
-		} else {
-			add += t.add;
-		}
+		// if (t.setVal) {
+		// 	setVal = t.setVal;
+		// 	add = t.add;
+		// } else {
+		// 	add += t.add;
+		// }
 	}
 };
 struct Info {
-	ll val, sum;
+	// ll val, sum;
 	void apply(int siz, const Tag &t) {
-		if (t.setVal) {
-			val = t.setVal;
-			sum = 1LL * siz * t.setVal;
-		}
-		val += t.add;
-		sum += 1LL * siz * t.add;
+		// if (t.setVal) {
+		// 	val = t.setVal;
+		// 	sum = 1LL * siz * t.setVal;
+		// }
+		// val += t.add;
+		// sum += 1LL * siz * t.add;
 	}
 	void pull(const Info &l, const Info &r) {
-		sum = val + l.sum + r.sum;
+		// sum = val + l.sum + r.sum;
 	}
 };

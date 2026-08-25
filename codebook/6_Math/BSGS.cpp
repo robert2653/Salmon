@@ -16,7 +16,7 @@ vector<int> BSGS(int a, int b, int m) { // gcd(a, m) = 1
 			res.push_back(A * sq - B);
 		}
 	return res;
-}
+} // 6fcbb6
 int exBSGS(int a, int b, int m) {
 	if (b == 1 || m == 1) return 0;
 	if (!a) return b ? -1 : 1;
@@ -33,4 +33,4 @@ int exBSGS(int a, int b, int m) {
 	Z b_ = Z(b) * Z(tmp).inv();
 	auto xs = BSGS(a, b_.x, m);
 	return xs.empty() ? -1 : *min_element(xs.begin(), xs.end()) + k;
-}
+} // 3ed312

@@ -2,11 +2,7 @@ struct HLD {
 	int n, cur = 0;
 	vector<int> siz, top, dep, par, in, out, seq;
 	vector<vector<int>> adj;
-	HLD(int n) : n(n) {
-		siz.resize(n); top.resize(n); dep.resize(n);
-		par.resize(n); in.resize(n); out.resize(n);
-		seq.resize(n); adj.assign(n, {});
-	}
+	HLD(int n) : n(n), siz(n), top(n), dep(n), par(n), in(n), out(n), seq(n), adj(n) {}
 	void addEdge(int u, int v) {
 		adj[u].push_back(v);
 		adj[v].push_back(u);
@@ -56,10 +52,10 @@ struct HLD {
 		int d = dep[u] - k;
 		while (dep[top[u]] > d) u = par[top[u]];
 		return seq[in[u] - dep[u] + d];
-	}
+	} // c26ac4
 	bool isAncester(int u, int v) {
 		return in[u] <= in[v] && in[v] < out[u];
-	}
+	} // 2ca857
 	int rootedParent(int rt, int v) {
 		if (rt == v) return rt;
 		if (!isAncester(v, rt)) return par[v];
@@ -68,13 +64,13 @@ struct HLD {
 				return in[x] < in[y];
 			}) - 1;
 		return *it;
-	}
+	} // c8db9f
 	int rootedSize(int rt, int v) {
 		if (rt == v) return n;
 		if (!isAncester(v, rt)) return siz[v];
 		return n - siz[rootedParent(rt, v)];
-	}
+	} // d7dea9
 	int rootedLca(int rt, int a, int b) {
 		return lca(rt, a) ^ lca(a, b) ^ lca(b, rt);
-	}
+	} // da7f79
 };

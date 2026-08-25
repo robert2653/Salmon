@@ -1,6 +1,5 @@
 void solve(int n, vector<P> &a) { // recursive solution
-	sort(a.begin(), a.end(), [](const P &a, const P &b)
-	{ return a.x == b.x ? a.y < b.y : a.x < b.x; });
+	sort(a.begin(), a.end());
 	vector<P> t(n);
 	cout << [&](this auto &&self, int l, int r) -> ll {
 		if (l == r) return 9E18;

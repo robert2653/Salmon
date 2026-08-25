@@ -1,22 +1,22 @@
 // 有用到 pathApply 才需要 apply 有關的
-const int Mod = 51061;
+// const int Mod = 51061;
 struct Tag {
-	ll add = 0, mul = 1;
+	// ll add = 0, mul = 1;
 	void apply(const Tag &t) {
-		mul = mul * t.mul % Mod;
-		add = (add * t.mul % Mod + t.add) % Mod;
+		// mul = mul * t.mul % Mod;
+		// add = (add * t.mul % Mod + t.add) % Mod;
 	}
 };
 struct Info {
-	int siz = 0; // 實鏈的長度
-	ll val = 0, sum = 0;
+	// int siz = 0; // 實鏈的長度
+	// ll val = 0, sum = 0;
 	void apply(const Tag &t) {
-		val = (val * t.mul % Mod + t.add) % Mod;
-		sum = (sum * t.mul % Mod + t.add * siz % Mod) % Mod;
+		// val = (val * t.mul % Mod + t.add) % Mod;
+		// sum = (sum * t.mul % Mod + t.add * siz % Mod) % Mod;
 	}
 	void pull(const Info &l, const Info &r) {
-		siz = 1 + l.siz + r.siz;
-		sum = (l.sum + r.sum + val) % Mod;
+		// siz = 1 + l.siz + r.siz;
+		// sum = (l.sum + r.sum + val) % Mod;
 	}
 };
 struct LinkCutTree { // 1-based

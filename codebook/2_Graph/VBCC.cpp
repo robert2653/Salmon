@@ -41,7 +41,7 @@ struct VBCC {
 					bcc.emplace_back(1, i);
 					cnt++;
 				} else dfs(i);
-	}
+	} // 674cc5
 	struct Graph {
 		int n;
 		vector<pair<int, int>> edges;

@@ -43,7 +43,7 @@ struct SAM {
 		}
 		return cur;
 	}
-};
+}; // 57198e
 void solve(int n, string s, ll k) { // Substring Order II
 	vector<int> last(n + 1);
 	SAM sam;

@@ -37,7 +37,7 @@ struct EBCC { // CF/contest/1986/pF
 		for (int i = 0; i < n; i++)
 			if (dfn[i] == -1) dfs(i, -1);
 		return bel;
-	}
+	} // e0899d
 	struct Graph {
 		int n;
 		vector<pair<int, int>> edges;

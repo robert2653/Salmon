@@ -37,6 +37,7 @@ struct Poly : public vector<Mint<P>> {
 	Poly &operator*=(Poly a) { return *this = *this * a; }
 	Poly &operator*=(Z a) { return *this = *this * a; }
 	Poly &operator/=(Z a) { return *this = *this / a; }
+	// a1e797
 	Poly shift(int k) const {
 		if (k >= 0) {
 			auto b = *this;
@@ -47,23 +48,23 @@ struct Poly : public vector<Mint<P>> {
 		} else {
 			return Poly(this->begin() + (-k), this->end());
 		}
-	}
+	} // e6ab95
 	Poly trunc(int k) const {
 		Poly f = *this; f.resize(k); return f;
-	}
+	} // 217dbc
 	Poly deriv() const {
 		if (this->empty()) return Poly();
 		Poly res(this->size() - 1);
 		for (int i = 0; i < this->size() - 1; i++)
 			res[i] = (*this)[i + 1] * (i + 1);
 		return res;
-	}
+	} // cceaf0
 	Poly integr() const {
 		Poly res(this->size() + 1);
 		for (int i = 0; i < this->size(); i++)
 			res[i + 1] = (*this)[i] / (i + 1);
 		return res;
-	}
+	} // f86ffe
 	Poly inv(int m) const {
 		Poly x{(*this)[0].inv()};
 		int k = 1;
@@ -72,10 +73,10 @@ struct Poly : public vector<Mint<P>> {
 			x = (x * (Poly{2} - trunc(k) * x)).trunc(k);
 		}
 		return x.trunc(m);
-	}
+	} // 8287e6
 	Poly log(int m) const {
 		return (deriv() * inv(m)).integr().trunc(m);
-	}
+	} // bfd979
 	Poly pow(ll k, int m) const {
 		if (k == 0) { Poly res(m); res[0] = 1; return res; }
 		int i = 0;
@@ -84,7 +85,7 @@ struct Poly : public vector<Mint<P>> {
 		Z v = (*this)[i];
 		auto f = shift(-i) * v.inv();
 		return (f.log(m - i * k) * Z(k)).exp(m - i * k).shift(i * k) * power(v, k);
-	}
+	} // 91b23e
 	Poly sqrt(int m) const { // need quadraticResidue
 		int k = 0;
 		while (k < this->size() && (*this)[k] == 0) k++; // 找前導零
@@ -102,7 +103,7 @@ struct Poly : public vector<Mint<P>> {
 		g.resize(r);
 		g = (g * Z(s)).shift(oft).trunc(m);
 		return g;
-	}
+	} // a00ad1
 	Poly exp(int m) const {
 		Poly x{1};
 		int k = 1;
@@ -111,13 +112,13 @@ struct Poly : public vector<Mint<P>> {
 			x = (x * (Poly{1} - x.log(k) + trunc(k))).trunc(k);
 		}
 		return x.trunc(m);
-	}
+	} // 78baba
 	Poly mulT(Poly b) const {
 		if (b.empty()) return Poly();
 		int n = b.size();
 		reverse(b.begin(), b.end());
 		return ((*this) * b).shift(-(n - 1));
-	}
+	} // f7c257
 	vector<Z> eval(vector<Z> x) const {
 		if (this->size() == 0) return vector<Z>(x.size(), 0);
 		const int n = max(x.size(), this->size());
@@ -146,5 +147,5 @@ struct Poly : public vector<Mint<P>> {
 		};
 		work(1, 0, n, mulT(q[1].inv(n)));
 		return ans;
-	}
+	} // 9e7ea0
 };

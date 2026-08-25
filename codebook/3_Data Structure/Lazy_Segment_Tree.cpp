@@ -59,13 +59,12 @@ template<class Info, class Tag> struct LazySegmentTree {
 		rangeApply(ql, qr, t, l, m, 2 * p);
 		rangeApply(ql, qr, t, m, r, 2 * p + 1);
 		pull(p);
-	}
+	} // da4291 (without findFirst)
 	template<class F> int findFirst(int ql, int qr, F &&f) {
 		return findFirst(ql, qr, f, 0, n, 1);
 	} // 若要找 last，先右子樹遞迴即可
 	template<class F> int findFirst(int ql, int qr, F &&f, int l, int r, int p) {
-		if (qr <= l || ql >= r) return -1;
-		if (ql <= l && r <= qr && !f(info[p])) return -1;
+		if (qr <= l || ql >= r || !f(info[p])) return -1;
 		if (r - l == 1) return l;
 		int m = (l + r) / 2;
 		push(l, r, p);

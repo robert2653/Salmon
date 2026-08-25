@@ -18,7 +18,7 @@ pair<ll, ll> CRT(ll r1, ll m1, ll r2, ll m2) {
 	i128 lcm = i128(m1) * m2 * g;
 	i128 res = i128(p1) * (r2 - r1) * m1 + r1;
 	return {(res % lcm + lcm) % lcm, lcm};
-}
+} // 8ddc68
 pair<ll, ll> EXCRT(vector<pair<int, int>> a) {
 	ll R = 0, M = 1;
 	for (auto [r, m] : a) {
@@ -27,7 +27,7 @@ pair<ll, ll> EXCRT(vector<pair<int, int>> a) {
 		R = res, M = lcm;
 	}
 	return {R, M};
-}
+} // 3396d1
 // gcd(mod) = 1, support 3 1E9 Mod
 pair<i128, i128> CRT(vector<pair<int, int>> a) {
 	i128 s = 1, res = 0;
@@ -37,4 +37,4 @@ pair<i128, i128> CRT(vector<pair<int, int>> a) {
 		res = (res + r * t % s * exgcd(t, m).first % s) % s;
 	}
 	return {(res + s) % s, s};
-}
+} // 8ffc2d

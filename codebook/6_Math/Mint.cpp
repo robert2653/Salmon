@@ -1,10 +1,4 @@
-const int P = 1E9 + 7;
-ll mul(ll a, ll b, ll p) { // P 超過 int 再用，慢
-	ll res = a * b - ll(1.L * a * b / p) * p;
-	res %= p;
-	if (res < 0) res += p;
-	return res;
-}
+const int P = 1E9 + 7; // P * P > ll => mul in pollard rho
 template<class T> constexpr T power(T a, ll b) {
 	T res{1};
 	for (; b > 0; b >>= 1, a = a * a)
@@ -41,7 +35,7 @@ template<int P> struct Mint {
 };
 template<> int Mint<0>::Mod = 998244353;
 using Z = Mint<P>;
-
+// 86c578
 vector<Z> fac, invfac, inv;
 void init(int n) {
 	fac.resize(n + 1);
@@ -56,11 +50,11 @@ void init(int n) {
 		invfac[i - 1] = invfac[i] * i;
 		inv[i] = invfac[i] * fac[i - 1];
 	}
-}
+} // c5dd4f
 Z binom(int n, int m) {
 	if (n < m || m < 0) return 0;
 	return fac[n] * invfac[m] * invfac[n - m];
-}
+} // 9326d0
 Z lucas(ll n, ll m) { // O(p + T log(n)), p is prime
 	return m ? binom(n % P, m % P) * lucas(n / P, m / P) : 1;
-}
+} // de3d87
