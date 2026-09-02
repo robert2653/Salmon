@@ -1,7 +1,7 @@
 pair<double, P> minCircleCover(int n, vector<P> a) {
-    shuffle(a.begin(), a.end(), rng);
-    P c = a[0]; double r = 0;
-    for (int i = 1; i < n; i++) if (sign(abs(c - a[i]) - r) > 0) {
+	shuffle(a.begin(), a.end(), rng);
+	P c = a[0]; double r = 0;
+	for (int i = 1; i < n; i++) if (sign(abs(c - a[i]) - r) > 0) {
 		c = a[i], r = 0;
 		for (int j = 0; j < i; j++) if (sign(abs(c - a[j]) - r) > 0) {
 			c = (a[i] + a[j]) / 2.0;
@@ -15,5 +15,5 @@ pair<double, P> minCircleCover(int n, vector<P> a) {
 			}
 		}
 	}
-    return {r, c};
+	return {r, c};
 }

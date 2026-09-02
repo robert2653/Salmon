@@ -9,7 +9,7 @@ template<class T> struct Pt {
 	Pt operator-(Pt p) const { return Pt(x - p.x, y - p.y); }
 	Pt operator*(T k) const { return Pt(x * k, y * k); }
 	Pt operator/(T k) const { return Pt(x / k, y / k); }
-    bool operator<(Pt p) const { return sign(x - p.x) == 0 ? y < p.y : x < p.x; }
+	bool operator<(Pt p) const { return sign(x - p.x) == 0 ? y < p.y : x < p.x; }
 	bool operator==(Pt p) const { return x == p.x && y == p.y; }
 	bool operator!=(Pt p) const { return x != p.x || y != p.y; }
 	friend istream &operator>>(istream &is, Pt &p)

@@ -19,10 +19,8 @@ tuple<int, P, P> segmentIntersection(Line l1, Line l2) {
 		}
 	}
 	auto cp1 = dir(l2.b, l1), cp2 = dir(l2.a, l1), cp3 = dir(l1.b, l2), cp4 = dir(l1.a, l2);
-	if ((cp1 > 0 && cp2 > 0) ||
-		(cp1 < 0 && cp2 < 0) ||
-		(cp3 > 0 && cp4 > 0) ||
-		(cp3 < 0 && cp4 < 0)) return {0, {}, {}};
+	if ((cp1 > 0 && cp2 > 0) || (cp1 < 0 && cp2 < 0) ||
+		(cp3 > 0 && cp4 > 0) || (cp3 < 0 && cp4 < 0)) return {0, {}, {}};
 	P p = lineIntersection(l1, l2);
 	if (cp1 != 0 && cp2 != 0 && cp3 != 0 && cp4 != 0) return {1, p, p};
 	else return {3, p, p};
