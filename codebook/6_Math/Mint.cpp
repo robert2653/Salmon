@@ -1,17 +1,39 @@
-const int P = 1E9 + 7; // P * P > ll => mul in pollard rho
+// P * P > ll => mul in pollard rho
+// P * 2 > int => x int to ll
+const int P = 1E9 + 7;
 template<class T> constexpr T power(T a, ll b) {
 	T res{1};
-	for (; b > 0; b >>= 1, a = a * a)
-	if (b & 1) res = res * a;
+	for (; b > 0; b >>= 1, a *= a)
+		if (b & 1) res *= a;
 	return res;
-}
+} // b2c151
+struct Z { // simple
+	int x;
+	Z(ll v = 0) : x(v % P) { if (x < 0) x += P; }
+	Z operator-() const { return P - x; }
+	Z inv() const { return power(*this, P - 2); }
+
+	Z &operator+=(Z a) { if ((x += a.x) >= P) x -= P; return *this; }
+	Z &operator-=(Z a) { if ((x -= a.x) < 0) x += P; return *this; }
+	Z &operator*=(Z a) { x = 1LL * x * a.x % P; return *this; }
+	Z &operator/=(Z a) { return *this *= a.inv(); }
+	
+	friend Z operator+(Z a, Z b) { return a += b; }
+	friend Z operator-(Z a, Z b) { return a -= b; }
+	friend Z operator*(Z a, Z b) { return a *= b; }
+	friend Z operator/(Z a, Z b) { return a /= b; }
+
+	friend istream &operator>>(istream &is, Z &a)
+	{ ll v; is >> v; a = Z(v); return is; }
+	friend ostream &operator<<(ostream &os, Z a)
+	{ return os << a.x; }
+}; // 902589
 template<int P> struct Mint {
 	static int Mod;
 	static int p() { return P > 0 ? P : Mod; }
 	static void setMod(int Mod_) { Mod = Mod_; }
 	int x;
 	Mint(ll v = 0) : x(v % p()) { if (x < 0) x += p(); }
-	explicit operator int() const { return x; }
 	Mint operator-() const { return p() - x; }
 	Mint inv() const { return power(*this, p() - 2); }
 
@@ -35,7 +57,7 @@ template<int P> struct Mint {
 };
 template<> int Mint<0>::Mod = 998244353;
 using Z = Mint<P>;
-// 86c578
+// 260f7e
 vector<Z> fac, invfac, inv;
 void init(int n) {
 	fac.resize(n + 1);

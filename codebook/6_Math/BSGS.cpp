@@ -1,10 +1,11 @@
 // a^x = b (mod m)
 // x = A * sq - B (0 <= A, B <= sq)
-vector<int> BSGS(int a, int b, int m) { // gcd(a, m) = 1
+vector<ll> BSGS(int a, int b, int m) { // gcd(a, m) = 1
 	Z::setMod(m);
+	vector<ll> res; // O(sq)
 	unordered_map<int, int> mp;
 	ll sq = 1; while (sq * sq < m) sq++;
-	Z rhs = b; vector<int> res;
+	Z rhs = b;
 	for (int B = 0; B <= sq; B++) {
 		mp[rhs.x] = B;
 		rhs *= a;
@@ -16,7 +17,7 @@ vector<int> BSGS(int a, int b, int m) { // gcd(a, m) = 1
 			res.push_back(A * sq - B);
 		}
 	return res;
-} // 6fcbb6
+} // 468f7b
 int exBSGS(int a, int b, int m) {
 	if (b == 1 || m == 1) return 0;
 	if (!a) return b ? -1 : 1;
