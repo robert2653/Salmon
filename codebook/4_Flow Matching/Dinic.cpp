@@ -9,7 +9,7 @@ template<class T> struct Dinic {
 		T f, cap; // 流量跟容量
 	};
 	int n, m, s, t;
-	const T INF_FlOW = numeric_limits<T>::max() / 2;
+	const T INF_FLOW = numeric_limits<T>::max() / 2;
 	vector<vector<int>> g;
 	vector<Edge> e;
 	vector<int> h, cur;
@@ -58,13 +58,13 @@ template<class T> struct Dinic {
 		while (bfs()) {
 			fill(cur.begin(), cur.end(), 0);
 			while (true) {
-				T res = dfs(s, INF_FlOW);
+				T res = dfs(s, INF_FLOW);
 				if (res == 0) break;
 				f += res;
 			}
 		}
 		return f;
-	} // eb299d
+	} // d75533
 	void reuse(int n_) { // 走殘留網路，res += f
 		while (n < n_) {
 			g.emplace_back();

@@ -4,7 +4,7 @@ template<class T> struct ZKW {
 	ZKW(int n) : n(n), a(2 * n) {}
 	ZKW(const vector<T> &v) : n(v.size()), a(2 * n) {
 		for (int i = 0; i < n; i++) a[i + n] = v[i];
-		for (int i = n - 1; i > 0; i--) a[i] = a[2 * i] + a[2 * i + 1];
+		for (int i = n - 1; i; i--) a[i] = a[2 * i] + a[2 * i + 1];
 	}
 	void modify(int x, const T &i) {
 		a[x += n] = i;

@@ -25,16 +25,16 @@ template<class Info> struct PST {
 		rt.push_back(build(build, 0, n));
 	}
 	void pull(Node &p) { p.info = nd[p.lc].info + nd[p.rc].info; }
-	int copy(int p) { // copy 一個 node
+	int copy(int p) {
 		nd.push_back(nd[p]);
 		return nd.size() - 1;
 	}
-	int generate() { // 創立新的 node
+	int generate() {
 		nd.emplace_back();
 		return nd.size() - 1;
 	}
 	void modify(int x, const Info &i, int ver = 0) {
-		if (int(rt.size()) <= ver) rt.resize(ver + 1);
+		assert(rt.size() > ver);
 		rt[ver] = modify(x, i, 0, n, rt[ver]);
 	}
 	int modify(int x, const Info &i, int l, int r, int p) {
@@ -54,13 +54,17 @@ template<class Info> struct PST {
 		pull(nd[p]);
 		return p;
 	}
-	Info query(int ql, int qr, int ver = 0)
-	{ return query(ql, qr, 0, n, rt[ver]); }
+	Info query(int ql, int qr, int ver = 0) {
+		return query(ql, qr, 0, n, rt[ver]);
+	}
 	Info query(int ql, int qr, int l, int r, int p) {
 		if (l >= qr || r <= ql || p == 0) return Info();
 		if (ql <= l && r <= qr) return nd[p].info;
 		int m = (l + r) / 2;
 		return query(ql, qr, l, m, nd[p].lc) + query(ql, qr, m, r, nd[p].rc);
 	}
-	void createVersion(int ver) { rt.push_back(rt[ver]); }
+	int createVersion(int ver) {
+		rt.push_back(rt[ver]);
+		return rt.size() - 1;
+	}
 };
