@@ -22,12 +22,14 @@ struct Z { // simple
 	friend Z operator-(Z a, Z b) { return a -= b; }
 	friend Z operator*(Z a, Z b) { return a *= b; }
 	friend Z operator/(Z a, Z b) { return a /= b; }
-
-	friend istream &operator>>(istream &is, Z &a)
-	{ ll v; is >> v; a = Z(v); return is; }
-	friend ostream &operator<<(ostream &os, Z a)
-	{ return os << a.x; }
-}; // 902589
+/*	friend istream &operator>>(istream &is, Z &a) {
+		ll v; is >> v;
+		a = v; return is;
+	} // 4a6a72
+	friend ostream &operator<<(ostream &os, Z a) {
+		return os << a.x;
+	} // 81cfbc */
+}; // f00eb5
 template<int P> struct Mint {
 	static int Mod;
 	static int p() { return P > 0 ? P : Mod; }
@@ -46,18 +48,17 @@ template<int P> struct Mint {
 	friend Mint operator-(Mint a, Mint b) { return a -= b; }
 	friend Mint operator*(Mint a, Mint b) { return a *= b; }
 	friend Mint operator/(Mint a, Mint b) { return a /= b; }
-
-	bool operator==(Mint y) const { return x == y.x; }
-	bool operator!=(Mint y) const { return x != y.x; }
-
-	friend istream &operator>>(istream &is, Mint &a)
-	{ ll v; is >> v; a = Mint(v); return is; }
-	friend ostream &operator<<(ostream &os, Mint a)
-	{ return os << a.x; }
+/*	friend istream &operator>>(istream &is, Mint &a) {
+		ll v; is >> v;
+		a = v; return is;
+	} // f964a7
+	friend ostream &operator<<(ostream &os, Mint a) {
+		return os << a.x;
+	} // d01053 */
 };
 template<> int Mint<0>::Mod = 998244353;
-using Z = Mint<P>;
-// 260f7e
+using Z = Mint<P>; // b50708
+
 vector<Z> fac, invfac, inv;
 void init(int n) {
 	fac.resize(n + 1);

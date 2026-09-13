@@ -12,12 +12,12 @@ template<class T> struct Pt {
 	bool operator<(Pt p) const { return sign(x - p.x) == 0 ? y < p.y : x < p.x; }
 	bool operator==(Pt p) const { return x == p.x && y == p.y; }
 	bool operator!=(Pt p) const { return x != p.x || y != p.y; }
-	friend istream &operator>>(istream &is, Pt &p)
-	{ return is >> p.x >> p.y; }
-	friend ostream &operator<<(ostream &os, const Pt &p)
-	{ return os << "(" << p.x << ", " << p.y << ")"; }
 };
-using P = Pt<double>; // 085f5a
+using P = Pt<double>; // 4cc20f
+istream &operator>>(istream &is, P &p) { return is >> p.x >> p.y; }
+ostream &operator<<(ostream &os, const P &p) {
+	return os << "(" << p.x << ", " << p.y << ")";
+} // 716e78
 
 struct Line { P a, b; };
 template<class T> T dot(Pt<T> a, Pt<T> b) { return a.x * b.x + a.y * b.y; }

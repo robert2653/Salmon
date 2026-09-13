@@ -8,7 +8,7 @@ Poly<P> berlekampMassey(const Poly<P> &s) { // O(n^2)
 		auto delta = s[i];
 		for (int j = 1; j <= c.size(); j++)
 			delta -= c[j - 1] * s[i - j];
-		if (delta == 0) continue;
+		if (delta.x == 0) continue;
 		if (f == -1) {
 			c.resize(i + 1);
 			f = i;
@@ -19,7 +19,7 @@ Poly<P> berlekampMassey(const Poly<P> &s) { // O(n^2)
 			Mint<P> df1 = 0;
 			for (int j = 1; j <= d.size(); j++)
 				df1 += d[j - 1] * s[f + 1 - j];
-			assert(df1 != 0);
+			assert(df1.x != 0);
 			auto coef = delta / df1;
 			d *= coef;
 			Poly<P> zeros(i - f - 1);

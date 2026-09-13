@@ -80,15 +80,15 @@ struct Poly : public vector<Mint<P>> {
 	Poly pow(ll k, int m) const {
 		if (k == 0) { Poly res(m); res[0] = 1; return res; }
 		int i = 0;
-		while (i < this->size() && (*this)[i] == 0) i++;
+		while (i < this->size() && (*this)[i].x == 0) i++;
 		if (i == this->size() || i > 0 && k > (m - 1) / i) return Poly(m);
 		Z v = (*this)[i];
 		auto f = shift(-i) * v.inv();
 		return (f.log(m - i * k) * Z(k)).exp(m - i * k).shift(i * k) * power(v, k);
-	} // 91b23e
+	} // 23cb76
 	Poly sqrt(int m) const { // need quadraticResidue
 		int k = 0;
-		while (k < this->size() && (*this)[k] == 0) k++; // 找前導零
+		while (k < this->size() && (*this)[k].x == 0) k++; // 找前導零
 		if (k == this->size()) return Poly(m); // 全零多項式
 		if (k % 2 != 0) return Poly(); // 無解: 最低次項為奇數
 		int s = quadraticResidue((*this)[k]);
@@ -103,7 +103,7 @@ struct Poly : public vector<Mint<P>> {
 		g.resize(r);
 		g = (g * Z(s)).shift(oft).trunc(m);
 		return g;
-	} // a00ad1
+	} // 1a3aea
 	Poly exp(int m) const {
 		Poly x{1};
 		int k = 1;
