@@ -56,7 +56,7 @@ template<class Tf, class Tc> struct MCMF {
 		}
 		return dis[t] != INF_COST;
 	}
-	pair<Tf, Tc> work(int s_, int t_, Tf need = INF_FLOW) {
+	pair<Tf, Tc> work(int s_, int t_, Tf need) {
 		s = s_, t = t_; pot.assign(n, 0);
 		Tf flow{}; Tc cost{}; int fr = 0;
 		while (fr++ ? dijkstra() : spfa()) {
@@ -74,4 +74,4 @@ template<class Tf, class Tc> struct MCMF {
 		}
 		return {flow, cost};
 	}
-}; // a89679 (without pot and dijkstra)
+}; // a224e5 (without pot and dijkstra)
