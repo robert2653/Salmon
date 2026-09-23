@@ -3,7 +3,7 @@ const int Lg = __lg(N); // __lg(max(N, Qi)), [0, Lg]
 int up[N][Lg + 1];
 vector<int> dep, dfn;
 void build(int n, vector<vector<int>> &g, int rt = 0) {
-	dep.assign(n, 0); dfn.assign(n, 0);
+	dep.assign(n, 0), dfn.assign(n, 0);
 	int cur = 0;
 	[&](this auto &&self, int x, int p) -> void {
 		dfn[x] = cur++;

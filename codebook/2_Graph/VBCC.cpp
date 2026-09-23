@@ -60,17 +60,20 @@ struct VBCC {
 				g.cnte.push_back(0);
 			}
 		}
-		vector<bool> in_bcc(n);
+		vector<bool> in(n);
 		for (int i = 0; i < cnt; i++) {
-			for (int u : bcc[i]) in_bcc[u] = true;
-			int edges = 0;
+			for (int u : bcc[i]) in[u] = true;
+			int cnte = 0;
 			for (int u : bcc[i]) {
-				if (ap[u]) g.edges.emplace_back(g.bel[u], i); 
-				else g.bel[u] = i, g.siz[i]++;
-				for (int v : adj[u]) if (in_bcc[v]) edges++;
+				if (ap[u]) {
+					g.edges.emplace_back(g.bel[u], i); 
+				} else {
+					g.bel[u] = i, g.siz[i]++;
+				}
+				for (int v : adj[u]) if (in[v]) cnte++;
 			}
-			g.cnte[i] = edges / 2;
-			for (int u : bcc[i]) in_bcc[u] = false;
+			g.cnte[i] = cnte / 2;
+			for (int u : bcc[i]) in[u] = false;
 		}
 		return g;
 	}

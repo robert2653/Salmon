@@ -9,7 +9,7 @@ template<class Info> struct PST {
 	PST(int n) : n(n), nd(1), rt(1) {}
 	PST(const vector<Info> &v) : n(v.size()), nd(1) {
 		auto build = [&](auto &&self, int l, int r) -> int {
-			int p = generate();
+			int p = copy(0);
 			if (r - l == 1) {
 				nd[p].info = v[l];
 				return p;
@@ -29,39 +29,30 @@ template<class Info> struct PST {
 		nd.push_back(nd[p]);
 		return nd.size() - 1;
 	}
-	int generate() {
-		nd.emplace_back();
-		return nd.size() - 1;
-	}
 	void modify(int x, const Info &i, int ver = 0) {
 		assert(rt.size() > ver);
-		rt[ver] = modify(x, i, 0, n, rt[ver]);
+		rt[ver] = modify(rt[ver], 0, n, x, i);
 	}
-	int modify(int x, const Info &i, int l, int r, int p) {
-		p = p ? copy(p) : generate();
+	int modify(int p, int l, int r, int x, const Info &i) {
+		p = copy(p);
 		if (r - l == 1) {
 			nd[p].info = i;
 			return p;
 		}
 		int m = (l + r) / 2;
-		if (x < m) {
-			int y = modify(x, i, l, m, nd[p].lc);
-			nd[p].lc = y;
-		} else {
-			int y = modify(x, i, m, r, nd[p].rc);
-			nd[p].rc = y;
-		}
+		if (x < m) nd[p].lc = modify(nd[p].lc, l, m, x, i);
+		else nd[p].rc = modify(nd[p].rc, m, r, x, i);
 		pull(nd[p]);
 		return p;
 	}
 	Info query(int ql, int qr, int ver = 0) {
-		return query(ql, qr, 0, n, rt[ver]);
+		return query(rt[ver], 0, n, ql, qr);
 	}
-	Info query(int ql, int qr, int l, int r, int p) {
+	Info query(int p, int l, int r, int ql, int qr) {
 		if (l >= qr || r <= ql || p == 0) return Info();
 		if (ql <= l && r <= qr) return nd[p].info;
 		int m = (l + r) / 2;
-		return query(ql, qr, l, m, nd[p].lc) + query(ql, qr, m, r, nd[p].rc);
+		return query(nd[p].lc, l, m, ql, qr) + query(nd[p].rc, m, r, ql, qr);
 	}
 	int createVersion(int ver) {
 		rt.push_back(rt[ver]);
