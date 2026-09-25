@@ -1,4 +1,3 @@
-template<int P = 998244353, int G = 3>
 struct Poly : public vector<Mint<P>> {
 	using Z = Mint<P>;
 	explicit Poly(int n = 0) : vector<Z>(n) {}
@@ -141,8 +140,8 @@ struct Poly : public vector<Mint<P>> {
 				if (l < int(ans.size())) ans[l] = num[0];
 			} else {
 				int m = (l + r) / 2;
-				work(2 * p, l, m, num.mulT(q[2 * p + 1]).resize(m - l));
-				work(2 * p + 1, m, r, num.mulT(q[2 * p]).resize(r - m));
+				work(2 * p, l, m, num.mulT(q[2 * p + 1]).trunc(m - l));
+				work(2 * p + 1, m, r, num.mulT(q[2 * p]).trunc(r - m));
 			}
 		};
 		work(1, 0, n, mulT(q[1].inv(n)));

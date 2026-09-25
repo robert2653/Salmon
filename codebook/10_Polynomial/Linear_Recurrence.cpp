@@ -2,8 +2,7 @@
 // q(x) = 1 - c[0] * x - c[1] * x^2 - ... - c[k - 1] * x^k
 // p(x) = (a * q).trunc(c.size())
 // return : a_n
-template<int P = 998244353> // O(m log m log n)
-Mint<P> linearRecurrence(Poly<P> p, Poly<P> q, ll n) {
+Z linearRecurrence(Poly p, Poly q, ll n) { // O(m log m log n)
 	int m = q.size() - 1;
 	while (n > 0) {
 		auto nq = q;

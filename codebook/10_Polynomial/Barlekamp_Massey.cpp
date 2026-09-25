@@ -1,8 +1,7 @@
 // find s[i] = c[0] * s[i - 1] + c[1] * s[i - 2] + ... + c[k - 1] * s[i - k] 
 // return : c(x) = 1 - c_0x - c_1x^2 - ... - c_{k-1}x^k
-template<int P = 998244353>
-Poly<P> berlekampMassey(const Poly<P> &s) { // O(n^2)
-	Poly<P> c, oldC;
+Poly berlekampMassey(const Poly &s) { // O(n^2)
+	Poly c, oldC;
 	int f = -1;
 	for (int i = 0; i < s.size(); i++) {
 		auto delta = s[i];
@@ -16,13 +15,13 @@ Poly<P> berlekampMassey(const Poly<P> &s) { // O(n^2)
 			auto d = oldC;
 			d *= -1;
 			d.insert(d.begin(), 1);
-			Mint<P> df1 = 0;
+			Z df1 = 0;
 			for (int j = 1; j <= d.size(); j++)
 				df1 += d[j - 1] * s[f + 1 - j];
 			assert(df1.x != 0);
 			auto coef = delta / df1;
 			d *= coef;
-			Poly<P> zeros(i - f - 1);
+			Poly zeros(i - f - 1);
 			zeros.insert(zeros.end(), d.begin(), d.end());
 			d = zeros;
 			auto temp = c;

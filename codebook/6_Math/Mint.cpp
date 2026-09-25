@@ -31,7 +31,7 @@ struct Z { // simple
 	} // 81cfbc */
 }; // f00eb5
 template<int P> struct Mint {
-	static int Mod;
+	static inline int Mod = 998244353;
 	static int p() { return P > 0 ? P : Mod; }
 	static void setMod(int Mod_) { Mod = Mod_; }
 	int x;
@@ -56,8 +56,7 @@ template<int P> struct Mint {
 		return os << a.x;
 	} // d01053 */
 };
-template<> int Mint<0>::Mod = 998244353;
-using Z = Mint<P>; // b50708
+using Z = Mint<P>; // 426039
 
 vector<Z> fac, invfac, inv;
 void init(int n) {
