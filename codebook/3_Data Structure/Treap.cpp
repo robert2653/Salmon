@@ -6,27 +6,27 @@ struct Treap { // 0 -> initial root
 	vector<array<int, 2>> ch;
 	Treap(int n) : info(n + 1), siz(n + 1), par(n + 1), rev(n + 1), pri(n + 1), ch(n + 1) {
 		// tag.resize(n + 1);
-		for (int i = 1; i <= n; i++)
-			siz[i] = 1, pri[i] = gen();
+		for (int i = 1; i <= n; i++) siz[i] = 1, pri[i] = rng();
+	} /*
+	void apply(int p, const Tag &t) {
+		info[p].apply(siz[p], t);
+		tag[p].apply(t);
+	} */
+	void push(int p) {
+		if (rev[p]) {
+			swap(ch[p][0], ch[p][1]);
+			if (ch[p][0]) rev[ch[p][0]] ^= 1;
+			if (ch[p][1]) rev[ch[p][1]] ^= 1;
+			rev[p] = 0;
+		} /*
+		apply(ch[p][0], tag[p]);
+		apply(ch[p][1], tag[p]);
+		tag[p] = Tag(); */
 	}
-	// void apply(int t, const Tag &v) {
-	//     info[t].apply(siz[t], v);
-	//     tag[t].apply(v);
-	// }
-	void push(int t) {
-		if (rev[t]) {
-			swap(ch[t][0], ch[t][1]);
-			if (ch[t][0]) rev[ch[t][0]] ^= 1;
-			if (ch[t][1]) rev[ch[t][1]] ^= 1;
-			rev[t] = 0;
-		}
-		// apply(ch[t][0], tag[t]);
-		// apply(ch[t][1], tag[t]);
-		// tag[t] = Tag();
-	}
-	void pull(int t) {
-		siz[t] = 1 + siz[ch[t][0]] + siz[ch[t][1]];
-		info[t].pull(info[ch[t][0]], info[ch[t][1]]);
+	void pull(int p) {
+		siz[p] = 1 + siz[ch[p][0]] + siz[ch[p][1]];
+		par[ch[p][0]] = par[ch[p][1]] = p;
+		info[p].pull(info[ch[p][0]], info[ch[p][1]]);
 	}
 	int merge(int a, int b) {
 		if (!a || !b) return a ? a : b;
@@ -39,65 +39,64 @@ struct Treap { // 0 -> initial root
 			pull(b); return b;
 		}
 	}
-	pair<int, int> split(int t, int k) {
-		if (!t) return {0, 0};
-		push(t);
-		if (siz[ch[t][0]] >= k) {
-			auto [a, b] = split(ch[t][0], k);
-			ch[t][0] = b, pull(t);
-			return {a, t};
+	pair<int, int> split(int p, int k) {
+		if (!p) return {0, 0};
+		push(p);
+		if (siz[ch[p][0]] >= k) {
+			auto [a, b] = split(ch[p][0], k);
+			ch[p][0] = b, pull(p);
+			return {a, p};
 		} else {
-			auto [a, b] = split(ch[t][1], k - siz[ch[t][0]] - 1);
-			ch[t][1] = a, pull(t);
-			return {t, b};
+			auto [a, b] = split(ch[p][1], k - siz[ch[p][0]] - 1);
+			ch[p][1] = a, pull(p);
+			return {p, b};
 		}
 	}
-	int getPos(int rt, int t) { // get t's index in array
-		int res = siz[t] + 1;
-		while (t != rt) {
-			int p = par[t];
-			if (ch[p][1] == t) res += siz[ch[p][0]] + 1;
-			t = p;
+	void getArray(int p, vector<Info> &a) {
+		if (!p) return;
+		push(p);
+		getArray(ch[p][0], a);
+		a.push_back(info[p]);
+		getArray(ch[p][1], a);
+	} /*
+	int getPos(int rt, int p) { // get p's index in array
+		int k = siz[ch[p][0]] + 1;
+		for (; ; p = par[p]) {
+			if (rev[p]) k = siz[p] + 1 - k;
+			if (p == rt) return k;
+			if (ch[par[p]][1] == p) k += siz[ch[par[p]][0]] + 1;
 		}
-		return res;
 	}
-	void getArray(int t, vector<Info> &a) {
-		if (!t) return;
-		push(t);
-		getArray(ch[t][0], a);
-		a.push_back(info[t]);
-		getArray(ch[t][1], a);
-	} // 2b9619, fb9cfc (with tags)
-	template<class F> int findFirst(int t, F &&pred) {
-		if (!t) return 0;
-		push(t);
-		if (!pred(info[t])) return 0;
-		int idx = findFirst(ch[t][0], pred);
-		if (!idx) idx = 1 + siz[ch[t][0]] + findFirst(ch[t][1], pred);
+	template<class F> int findFirst(int p, F &&pred) {
+		if (!p) return 0;
+		push(p);
+		if (!pred(info[p])) return 0;
+		int idx = findFirst(ch[p][0], pred);
+		if (!idx) idx = 1 + siz[ch[p][0]] + findFirst(ch[p][1], pred);
 		return idx;
-	} // 16021b
-};
+	} */
+}; /*
 struct Tag {
-	// int setVal; ll add;
+	int setv; ll add;
 	void apply(const Tag &t) {
-		// if (t.setVal) {
-		// 	setVal = t.setVal;
-		// 	add = t.add;
-		// } else {
-		// 	add += t.add;
-		// }
+		if (t.setv) {
+			setv = t.setv;
+			add = t.add;
+		} else {
+			add += t.add;
+		}
 	}
-};
-struct Info {
-	// ll val, sum;
+}; */
+struct Info { /*
+	ll val, sum;
 	void apply(int siz, const Tag &t) {
-		// if (t.setVal) {
-		// 	val = t.setVal;
-		// 	sum = 1LL * siz * t.setVal;
-		// }
-		// val += t.add;
-		// sum += 1LL * siz * t.add;
-	}
+		if (t.setv) {
+			val = t.setv;
+			sum = 1LL * siz * t.setv;
+		}
+		val += t.add;
+		sum += 1LL * siz * t.add;
+	} */
 	void pull(const Info &l, const Info &r) {
 		// sum = val + l.sum + r.sum;
 	}
