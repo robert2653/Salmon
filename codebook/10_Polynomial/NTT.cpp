@@ -48,37 +48,38 @@ vector<Z> conv(vector<Z> a, vector<Z> b, const int G = 3) {
 	return a;
 } // 53376c
 const int G = 3;
-const int NP0 = 167772161, NP1 = 104857601, NP2 = 998244353;
-using Z0 = Mint<167772161>;
-using Z1 = Mint<104857601>;
-using Z2 = Mint<998244353>;
+const int P1 = 167772161, P2 = 104857601, P3 = 998244353;
+using Z1 = Mint<P1>;
+using Z2 = Mint<P2>;
+using Z3 = Mint<P3>;
+const int I12 = Z2(P1).inv().x;
+const int I123 = Z3(1LL * P1 * P2).inv().x;
+template<class T> T garner(int r1, int r2, int r3) {
+	Z2 t1 = Z2(r2 - r1) * I12;
+	Z3 t2 = Z3(r3 - r1 - 1LL * P1 * t1.x) * I123;
+	return T(r1) + T(P1) * t1.x + T(P1) * P2 * t2.x;
+} // 6def25
 template<class Z>
 vector<Z> convArb(vector<Z> a, vector<Z> b) {
-	vector<Z0> a0(a.size()), b0(b.size());
 	vector<Z1> a1(a.size()), b1(b.size());
 	vector<Z2> a2(a.size()), b2(b.size());
+	vector<Z3> a3(a.size()), b3(b.size());
 	for (int i = 0; i < a.size(); i++) {
-		a0[i] = a[i].x;
 		a1[i] = a[i].x;
 		a2[i] = a[i].x;
+		a3[i] = a[i].x;
 	}
 	for (int i = 0; i < b.size(); i++) {
-		b0[i] = b[i].x;
 		b1[i] = b[i].x;
 		b2[i] = b[i].x;
+		b3[i] = b[i].x;
 	}
-	auto c0 = conv(a0, b0);
 	auto c1 = conv(a1, b1);
 	auto c2 = conv(a2, b2);
-	int inv01 = Z1(NP0).inv().x;
-	int inv012 = Z2(1LL * NP0 * NP1).inv().x;
+	auto c3 = conv(a3, b3);
 	int tot = a.size() + b.size() - 1;
 	vector<Z> res(tot);
-	for (int i = 0; i < tot; i++) {
-		int r0 = c0[i].x, r1 = c1[i].x, r2 = c2[i].x;
-		Z1 t1 = Z1(r1 - r0) * inv01;
-		Z2 t2 = Z2(r2 - r0 - 1LL * NP0 * t1.x) * inv012;
-		res[i] = Z(r0) + Z(NP0) * t1.x + Z(NP0) * NP1 * t2.x;
-	}
+	for (int i = 0; i < tot; i++)
+		res[i] = garner<Z>(c1[i].x, c2[i].x, c3[i].x);
 	return res;
-} // f5a0db
+} // 7e3465
