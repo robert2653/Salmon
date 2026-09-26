@@ -1,5 +1,5 @@
 template<class Z>
-void ntt(vector<Z> &a, const int G = 3, bool inv = false) {
+void ntt(vector<Z> &a, bool inv = false, const int G = 3) {
 	static vector<Z> w {0, 1};
 	int n = a.size();
 	if (w.size() < n) {
@@ -34,19 +34,19 @@ void ntt(vector<Z> &a, const int G = 3, bool inv = false) {
 	reverse(a.begin() + 1, a.end());
 	Z invn = Z(n).inv();
 	for (auto &x : a) x *= invn;
-} // 49b183
+} // bab34b
 template<class Z>
 vector<Z> conv(vector<Z> a, vector<Z> b, const int G = 3) {
 	if (a.empty() || b.empty()) return {};
 	int n = 1, tot = a.size() + b.size() - 1;
 	while (n < tot) n <<= 1;
 	a.resize(n), b.resize(n);
-	ntt(a, G), ntt(b, G);
+	ntt(a, false, G), ntt(b, false, G);
 	for (int i = 0; i < n; i++) a[i] = a[i] * b[i];
-	ntt(a, G, true);
+	ntt(a, true, G);
 	a.resize(tot);
 	return a;
-} // 53376c
+} // 7866d6
 const int G = 3;
 const int P1 = 167772161, P2 = 104857601, P3 = 998244353;
 using Z1 = Mint<P1>;
