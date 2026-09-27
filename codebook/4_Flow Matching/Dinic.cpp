@@ -66,11 +66,10 @@ template<class T> struct Dinic {
 		return f;
 	} /*
 	void reuse(int n_) { // 走殘留網路，res += f
-		while (n < n_) {
+		for (; n < n_; n++) {
 			g.emplace_back();
 			h.emplace_back();
 			cur.emplace_back();
-			n += 1;
 		}
-	} */ // 885d65
-}; // d75533
+	} */ // a909c5
+};

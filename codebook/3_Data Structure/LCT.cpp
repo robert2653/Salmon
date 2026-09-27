@@ -1,30 +1,12 @@
-// 有用到 pathApply 才需要 apply 有關的
-// const int Mod = 51061;
-struct Tag {
-	// ll add = 0, mul = 1;
-	void apply(const Tag &t) {
-		// mul = mul * t.mul % Mod;
-		// add = (add * t.mul % Mod + t.add) % Mod;
-	}
-};
-struct Info {
-	// int siz = 0; // 實鏈的長度
-	// ll val = 0, sum = 0;
-	void apply(const Tag &t) {
-		// val = (val * t.mul % Mod + t.add) % Mod;
-		// sum = (sum * t.mul % Mod + t.add * siz % Mod) % Mod;
-	}
-	void pull(const Info &l, const Info &r) {
-		// siz = 1 + l.siz + r.siz;
-		// sum = (l.sum + r.sum + val) % Mod;
-	}
-};
+template<class Info, class Tag = void>
 struct LinkCutTree { // 1-based
 	vector<Info> info;
-	vector<Tag> tag;
+	// vector<Tag> tag;
 	vector<array<int, 2>> ch;
 	vector<int> p, rev;
-	LinkCutTree(int n) : info(n + 1), tag(n + 1), ch(n + 1), p(n + 1), rev(n + 1) {}
+	LinkCutTree(int n) : info(n + 1), ch(n + 1), p(n + 1), rev(n + 1) {
+		// tag.resize(n + 1);
+	}
 	bool isrt(int x) {
 		return ch[p[x]][0] != x && ch[p[x]][1] != x;
 	}
@@ -35,43 +17,43 @@ struct LinkCutTree { // 1-based
 		if (!x) return;
 		swap(ch[x][0], ch[x][1]);
 		rev[x] ^= 1;
-	}
+	} /*
 	void apply(int x, const Tag &t) {
 		if (!x) return;
 		info[x].apply(t);
 		tag[x].apply(t);
-	}
+	} */
 	void push(int x) {
 		if (rev[x]) {
 			applyRev(ch[x][0]);
 			applyRev(ch[x][1]);
 			rev[x] = 0;
-		}
+		} /*
 		apply(ch[x][0], tag[x]);
 		apply(ch[x][1], tag[x]);
-		tag[x] = Tag();
+		tag[x] = Tag(); */
 	}
 	void pull(int x) {
-		if (!x) return;
 		info[x].pull(info[ch[x][0]], info[ch[x][1]]);
 	}
 	void pushAll(int x) {
 		if (!isrt(x)) pushAll(p[x]);
 		push(x);
 	}
-	void rotate(int x) { // x 與其 par 交換位置
+	void rotate(int x) { // x 與其 par 交換位置, 只 pull 原本的 par
 		int f = p[x], r = pos(x);
 		ch[f][r] = ch[x][!r];
 		if (ch[x][!r]) p[ch[x][!r]] = f;
 		p[x] = p[f];
 		if (!isrt(f)) ch[p[f]][pos(f)] = x;
 		ch[x][!r] = f, p[f] = x;
-		pull(f), pull(x);
+		pull(f);
 	}
 	void splay(int x) { // x 旋轉到當前的根
 		pushAll(x);
 		for (int f = p[x]; f = p[x], !isrt(x); rotate(x))
 			if (!isrt(f)) rotate(pos(x) == pos(f) ? f : x);
+		pull(x);
 	}
 	// access(x), access(y) 可以回傳 LCA
 	int access(int x) { // 根到 x 換成實鏈
@@ -88,17 +70,14 @@ struct LinkCutTree { // 1-based
 	}
 	int findRoot(int x) {
 		access(x), splay(x);
-		while (ch[x][0]) x = ch[x][0];
+		while (ch[x][0]) push(x), x = ch[x][0];
 		splay(x); return x;
 	}
 	void split(int rt, int x) { // 以 rt 為根, x 為子樹根
 		makeRoot(x), access(rt), splay(rt);
 	}
 	void link(int rt, int x) { // 以 rt 為根, x 為子樹根
-		makeRoot(rt);
-		access(x), splay(x);
-		p[rt] = x;
-		pull(x);
+		makeRoot(rt), p[rt] = x;
 	}
 	void cut(int rt, int x) { // 以 rt 為根, x 為子樹根
 		split(rt, x);
@@ -106,23 +85,41 @@ struct LinkCutTree { // 1-based
 		pull(rt);
 	}
 	bool connected(int x, int y) {
-		return findRoot(x) == findRoot(y);
+		makeRoot(x);
+		return findRoot(y) == x;
 	}
 	bool neighbor(int x, int y) {
-		if (!connected(x, y)) return false;
-		split(x, y);
-		return info[x].siz == 2; // psiz
+		return connected(x, y) && p[y] == x && !ch[y][0];
 	}
 	void modify(int x, const Info &i) {
 		access(x), splay(x);
 		info[x] = i, pull(x);
-	}
-	void pathApply(int x, int y, const Tag &t) {
-		assert(connected(x, y));
+	} /*
+	void pathApply(int x, int y, const Tag &t) { // x, y 要連通
 		split(x, y), apply(x, t);
+	} */
+	Info pathQuery(int x, int y) { // x, y 要連通
+		split(x, y);
+		return info[x];
 	}
-	Info pathQuery(int x, int y) {
-		assert(connected(x, y));
-		split(x, y); return info[x];
+}; // Tag: 0b3c49
+/* const int Mod = 51061;
+struct Tag {
+	ll add = 0, mul = 1;
+	void apply(const Tag &t) {
+		mul = mul * t.mul % Mod;
+		add = (add * t.mul % Mod + t.add) % Mod;
+	}
+}; */
+struct Info { /*
+	int siz = 0; // 實鏈的長度
+	ll val = 0, sum = 0;
+	void apply(const Tag &t) {
+		val = (val * t.mul % Mod + t.add) % Mod;
+		sum = (sum * t.mul % Mod + t.add * siz % Mod) % Mod;
+	} */
+	void pull(const Info &l, const Info &r) { /*
+		siz = 1 + l.siz + r.siz;
+		sum = (l.sum + r.sum + val) % Mod; */
 	}
 };

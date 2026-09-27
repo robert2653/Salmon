@@ -36,8 +36,10 @@ struct LinkCutTree { // 加在註解後面
 		if (ch[x][1]) info[x] += info[ch[x][1]]; // 原右子樹轉虛邊
 		if (c) info[x] -= info[c];               // 虛邊轉新右子樹
 	}
-	void link(int rt, int x) { // ...p[rt] = x;
-		info[x] += info[rt]; // rt 成為 x 的虛子樹
+	void link(int rt, int x) { // 整個換掉
+		makeRoot(rt), access(x), splay(x);
+		p[rt] = x, info[x] += info[rt]; // rt 成為 x 的虛子樹
+		pull(x);
 	}
 	Info subtreeQuery(int rt, int x) { // 以 rt 當 root, x 的 subtree
 		assert(connected(rt, x));

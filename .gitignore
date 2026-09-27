@@ -3,6 +3,7 @@
 .cph
 check_coding_style.py
 checker
+hash.cpp
 
 # library checker
 yosupo

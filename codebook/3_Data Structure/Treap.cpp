@@ -1,4 +1,4 @@
-template<class Info, class Tag = bool()>
+template<class Info, class Tag = void>
 struct Treap { // 0 -> initial root
 	vector<Info> info;
 	// vector<Tag> tag;
@@ -66,7 +66,7 @@ struct Treap { // 0 -> initial root
 			if (p == rt) return k;
 			if (ch[par[p]][1] == p) k += siz[ch[par[p]][0]] + 1;
 		}
-	}
+	} // 0a4356
 	template<class F> int findFirst(int p, F &&pred) {
 		if (!p) return 0;
 		push(p);
@@ -74,8 +74,8 @@ struct Treap { // 0 -> initial root
 		int idx = findFirst(ch[p][0], pred);
 		if (!idx) idx = 1 + siz[ch[p][0]] + findFirst(ch[p][1], pred);
 		return idx;
-	} */
-}; /*
+	} */ // 431a65
+}; /* // Tag: 7a5a33
 struct Tag {
 	int setv; ll add;
 	void apply(const Tag &t) {
