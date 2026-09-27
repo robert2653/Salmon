@@ -64,7 +64,7 @@ template<class T> struct Dinic {
 			}
 		}
 		return f;
-	} // d75533
+	} /*
 	void reuse(int n_) { // 走殘留網路，res += f
 		while (n < n_) {
 			g.emplace_back();
@@ -72,5 +72,5 @@ template<class T> struct Dinic {
 			cur.emplace_back();
 			n += 1;
 		}
-	}
-};
+	} */ // 885d65
+}; // d75533
