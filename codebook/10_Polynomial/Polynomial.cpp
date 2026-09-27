@@ -36,7 +36,7 @@ struct Poly : public vector<Mint<P>> {
 	Poly &operator*=(Poly a) { return *this = *this * a; }
 	Poly &operator*=(Z a) { return *this = *this * a; }
 	Poly &operator/=(Z a) { return *this = *this / a; }
-	// a1e797
+	// 7a07f6
 	Poly shift(int k) const {
 		if (k >= 0) {
 			auto b = *this;
@@ -146,5 +146,5 @@ struct Poly : public vector<Mint<P>> {
 		};
 		work(1, 0, n, mulT(q[1].inv(n)));
 		return ans;
-	} // 9e7ea0
+	} // 9698d5
 };

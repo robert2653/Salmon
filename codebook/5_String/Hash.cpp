@@ -1,6 +1,6 @@
 const int D = 59;
 vector<int> rollingHash(string &s) {
-	vector<int> a {0};
+	vector<int> a{0};
 	for (auto c : s)
 		a.push_back(mul(a.back(), D) + (c - 'A' + 1));
 	return a;

@@ -2,7 +2,7 @@
 const int N = 44;
 ll memo[N + 1][N + 1]; // memset -1, once
 ll solve(string s) {
-	vector<int> a {0};
+	vector<int> a{0};
 	while (!s.empty()) {
 		a.push_back(s.back() - '0');
 		s.pop_back();
@@ -33,8 +33,8 @@ ll solve(string s) {
 ll memo[N + 1][10]; // memset -1, once
 // 不貼上限、不前導零、枚舉 p 往後所有數字中，每個 digit x 出現的次數
 ll solve(int x, ll n) {
-	vector<int> a {0};
-	vector<ll> sum {0}; // 貼上限時，位數 p 以下有多少數字
+	vector<int> a{0};
+	vector<ll> sum{0}; // 貼上限時，位數 p 以下有多少數字
 	while (n) {
 		a.push_back(n % 10);
 		sum.push_back(sum.back() + (n % 10) * power(10, a.size() - 2));

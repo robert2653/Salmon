@@ -1,6 +1,6 @@
 // 找到對於每個位置的迴文半徑
 template<class T> vector<int> manacher(const T &s) {
-	vector<int> t {-1};
+	vector<int> t{-1};
 	for (auto c : s) t.push_back(c), t.push_back(-1);
 	int n = t.size();
 	vector<int> r(n);

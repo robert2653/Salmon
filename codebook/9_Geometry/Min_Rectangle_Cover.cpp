@@ -20,7 +20,7 @@ pair<double, vector<P>> minRectangleCover(vector<P> p) {
 		area *= w / abs2(p[i + 1] - p[i]);
 		if (area < ans) {
 			ps.clear(), ans = area;
-			Line l1 {p[i], p[i + 1]};
+			Line l1{p[i], p[i + 1]};
 			for (auto u : {p[r], p[j], p[l], p[i]}) {
 				if (u == l1.b) {
 					ps.push_back(u);

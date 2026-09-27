@@ -2,26 +2,25 @@ template<class T> struct Fenwick {
 	int n; vector<T> a;
 	Fenwick(int n) : n(n), a(n) {}
 	void add(int x, const T &v) {
-		for (int i = x + 1; i <= n; i += i & -i)
-			a[i - 1] = a[i - 1] + v;
+		for (x++; x <= n; x += x & -x) a[x - 1] = a[x - 1] + v;
 	}
 	T sum(int x) {
-		T ans{};
-		for (int i = x; i > 0; i -= i & -i)
-			ans = ans + a[i - 1];
-		return ans;
+		T v{};
+		for (; x > 0; x -= x & -x) v = v + a[x - 1];
+		return v;
 	}
-	T rangeSum(int l, int r) { return sum(r) - sum(l); }
+	T rangeSum(int l, int r) { return sum(r) - sum(l); } /*
 	int select(const T &k, int start = 0) {
 		// 找到最小的 x, 使得 sum(x + 1) - sum(start) > k
 		// prefix sum 要有單調性
-		int x = 0; T cur = -sum(start);
-		for (int i = 1 << __lg(n); i; i /= 2)
+		int x = 0;
+		T cur = -sum(start);
+		for (int i = 1 << __lg(n); i > 0; i /= 2)
 			if (x + i <= n && cur + a[x + i - 1] <= k)
 				x += i, cur = cur + a[x - 1];
 		return x;
-	}
-}; // 15b341, f34614 (without select)
+	} */ // 8e1de2
+}; // 9083e4
 template<class T> struct Fenwick2D {
 	int n, m;
 	vector<vector<T>> a;
@@ -32,15 +31,15 @@ template<class T> struct Fenwick2D {
 				a[i - 1][j - 1] = a[i - 1][j - 1] + v;
 	}
 	T sum(int x, int y) {
-		T ans{};
+		T v{};
 		for (int i = x; i > 0; i -= i & -i)
 			for (int j = y; j > 0; j -= j & -j)
-				ans = ans + a[i - 1][j - 1];
-		return ans;
+				v = v + a[i - 1][j - 1];
+		return v;
 	}
 	T rangeSum(int x1, int y1, int x2, int y2)
 	{ return sum(x2, y2) - sum(x1, y2) - sum(x2, y1) + sum(x1, y1); }
-}; // 949f78
+}; // a71e39
 template<class T> struct RangeFenwick {
 	int n;
 	vector<T> d, di;
@@ -52,15 +51,15 @@ template<class T> struct RangeFenwick {
 	}
 	void rangeAdd(int l, int r, const T &v) { add(l, v), add(r, -v); }
 	T sum(int x) {
-		T ans{};
+		T v{};
 		for (int i = x; i > 0; i -= i & -i)
-			ans = ans + T(x + 1) * d[i - 1] - di[i - 1];
-		return ans;
+			v = v + T(x + 1) * d[i - 1] - di[i - 1];
+		return v;
 	}
-	T rangeSum(int l, int r) { return sum(r) - sum(l); }
+	T rangeSum(int l, int r) { return sum(r) - sum(l); } /*
 	int select(const T &k, int start = 0) {
 		int x = 0;
-		T cur {}, curi {}, sub = sum(start);
+		T cur{}, curi{}, sub = sum(start);
 		for (int i = 1 << __lg(n); i; i /= 2) {
 			if (x + i <= n && T(x + i + 1) * (cur + d[x + i - 1]) - (curi + di[x + i - 1]) - sub <= k) {
 				x += i;
@@ -68,8 +67,8 @@ template<class T> struct RangeFenwick {
 			}
 		}
 		return x;
-	}
-}; // ba8b64, bbee8d (without select)
+	} */ // e93ec7
+}; // 03784e
 template<class T> struct RangeFenwick2D {
 	int n, m;
 	vector<vector<T>> d, di, dj, dij;
@@ -91,15 +90,15 @@ template<class T> struct RangeFenwick2D {
 		add(x1, y2, -v), add(x2, y1, -v);
 	}
 	T sum(int x, int y) {
-		T ans{};
+		T v{};
 		for (int i = x; i > 0; i -= i & -i)
 			for (int j = y; j > 0; j -= j & -j)
-				ans = ans + (x + 1) * (y + 1) * d[i - 1][j - 1]
+				v = v + (x + 1) * (y + 1) * d[i - 1][j - 1]
 				- (y + 1) * di[i - 1][j - 1]
 				- (x + 1) * dj[i - 1][j - 1]
 				+ dij[i - 1][j - 1];
-		return ans;
+		return v;
 	}
 	T rangeSum(int x1, int y1, int x2, int y2)
 	{ return sum(x2, y2) - sum(x1, y2) - sum(x2, y1) + sum(x1, y1); }
-}; // 86962f
+}; // 60ea46

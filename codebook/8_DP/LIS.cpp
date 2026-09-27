@@ -1,7 +1,7 @@
 vector<int> LIS(const vector<int> &a) { // strictly
 	int n = a.size(), L = 1;
 	vector<int> dp(n); dp[0] = 1;
-	vector<int> v {a[0]};
+	vector<int> v{a[0]};
 	for (int i = 1; i < n; i++) {
 		if (a[i] > v.back()) { // >=
 			v.push_back(a[i]);

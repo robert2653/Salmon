@@ -5,12 +5,12 @@ ll mul(ll a, ll b, ll p) {
 	return res;
 }
 ll power(ll a, ll b, ll p) {
-	ll res {1};
+	ll res{1};
 	for (; b; b /= 2, a = mul(a, a, p))
 		if (b & 1) res = mul(res, a, p);
 	return res;
 }
-vector<ll> chk {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
+vector<ll> chk{2, 325, 9375, 28178, 450775, 9780504, 1795265022};
 bool check(ll a, ll d, int s, ll n) {
 	a = power(a, d, n);
 	if (a <= 1) return 1;

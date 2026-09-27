@@ -15,7 +15,7 @@ template<class Info> struct SegmentTreeDynamic {
 	int modify(int p, int l, int r, int x, const Info &i) {
 		if (p == 0) p = generate();
 		if (r - l == 1) {
-			nd[p].info = i; // leaf modify/add
+			nd[p].info = i; // add use +=
 			return p;
 		}
 		int m = (l + r) / 2;
@@ -28,7 +28,7 @@ template<class Info> struct SegmentTreeDynamic {
 	int merge(int p, int q, int l, int r) {
 		if (p == 0 || q == 0) return p + q;
 		if (r - l == 1) {
-			nd[p].info = nd[p].info + nd[q].info; // leaf add
+			nd[p].info += nd[q].info; // leaf add
 			return p;
 		}
 		int m = (l + r) / 2;
@@ -43,7 +43,7 @@ template<class Info> struct SegmentTreeDynamic {
 		if (ql <= l && r <= qr) return nd[p].info;
 		int m = (l + r) / 2;
 		return query(nd[p].lc, l, m, ql, qr) + query(nd[p].rc, m, r, ql, qr);
-	}
+	} /*
 	template<class F> int findFirst(int ql, int qr, F &&f, int rt = 0) {
 		return findFirst(rt, 0, n, ql, qr, f);
 	}
@@ -54,5 +54,5 @@ template<class Info> struct SegmentTreeDynamic {
 		int res = findFirst(nd[p].lc, l, m, ql, qr, f);
 		if (res != -1) return res;
 		return findFirst(nd[p].rc, m, r, ql, qr, f);
-	}
+	} */
 };

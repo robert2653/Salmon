@@ -19,7 +19,7 @@ void bellmanFord() {
 	}
 	if (t == -1) { cout << "NO\n"; return; }
 	for (int i = 1; i < n; i++) t = par[t]; 
-	vector<int> ans {t};
+	vector<int> ans{t};
 	int i = t;
 	do {
 		i = par[i];

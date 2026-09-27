@@ -30,7 +30,7 @@ template<class Info, class Tag> struct LazySegmentTree {
 	void modify(int x, const Info &i) { modify(1, 0, n, x, i); }
 	void modify(int p, int l, int r, int x, const Info &i) {
 		if (r - l == 1) {
-			info[p] = i;
+			info[p] = i; // add use +=
 			return;
 		}
 		int m = (l + r) / 2;
@@ -59,7 +59,7 @@ template<class Info, class Tag> struct LazySegmentTree {
 		rangeApply(2 * p, l, m, ql, qr, t);
 		rangeApply(2 * p + 1, m, r, ql, qr, t);
 		pull(p);
-	} // da4291 (without findFirst)
+	} /*
 	template<class F> int findFirst(int ql, int qr, F &&f) {
 		return findFirst(1, 0, n, ql, qr, f);
 	} // 若要找 last，先右子樹遞迴即可
@@ -71,17 +71,19 @@ template<class Info, class Tag> struct LazySegmentTree {
 		int res = findFirst(2 * p, l, m, ql, qr, f);
 		if (res == -1) res = findFirst(2 * p + 1, m, r, ql, qr, f);
 		return res;
-	}
+	} */
 };
 struct Tag { // 有些 Tag 不用 push 例如 sweepLine
-	void apply(const Tag &t) & {}
+	void apply(const Tag &t) {}
 	Tag offset(int d) const { return *this; }
 };
 struct Info {
-	void apply(const Tag &t, int l, int r) & {} /*
-	Info &operator=(const Info &i) & {
-		// do something... 部分 assignment 使用
+	void apply(const Tag &t, int l, int r) {} /*
+	Info &operator=(const Info &i) { // partial assignment
 		return *this;
+	}
+	Info &operator+=(const Info &i) { // leaf add
+		return *this = *this + i;
 	} */
 };
 Info operator+(const Info &a, const Info &b) {

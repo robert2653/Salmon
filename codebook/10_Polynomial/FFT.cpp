@@ -1,7 +1,7 @@
 const double PI = acos(-1.0);
 using cd = complex<double>;
 void fft(vector<cd> &a, bool inv = false) {
-	static vector<cd> w {0, 1};
+	static vector<cd> w{0, 1};
 	int n = a.size();
 	for (int k = w.size(); k < n; k *= 2) {
 		w.resize(2 * k);

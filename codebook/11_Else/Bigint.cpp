@@ -28,7 +28,7 @@ private:
 public:
 	int sgn = 1;
 	vector<int> x; // 反著存
-	Bigint() : x {0}, sgn(1) {}
+	Bigint() : x{0}, sgn(1) {}
 	Bigint(ll a) { *this = Bigint(std::to_string(a)); }
 	Bigint(string s) {
 		if (s.empty()) { *this = Bigint(); return; }

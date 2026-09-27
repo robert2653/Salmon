@@ -1,6 +1,6 @@
 template<class Z>
 void ntt(vector<Z> &a, bool inv = false, const int G = 3) {
-	static vector<Z> w {0, 1};
+	static vector<Z> w{0, 1};
 	int n = a.size();
 	if (w.size() < n) {
 		int k = __builtin_ctz(w.size());

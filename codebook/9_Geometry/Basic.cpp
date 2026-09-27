@@ -30,7 +30,7 @@ int dir(P p, Line l) // left -1, right 1, on 0
 bool btw(P p, Line l) // c on segment ab?
 { return dir(p, l) == 0 && sign(dot(p - l.a, p - l.b)) <= 0; }
 P norm(P p) { return p / abs(p); }
-P rot(P p) { return { -p.y, p.x }; } // 90 degree CCW
+P rot(P p) { return {-p.y, p.x}; } // 90 degree CCW
 P rot(P p, double d) { // CCW, d = degree * PI / 180
 	double c = cos(d), s = sin(d);
 	return P(p.x * c - p.y * s, p.x * s + p.y * c);

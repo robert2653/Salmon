@@ -1,7 +1,7 @@
 template<class T> struct CartesianTree {
     struct Node {
-        int idx = 0, par = 0, ch[2] {};
-        T val {};
+        int idx = 0, par = 0, ch[2]{};
+        T val{};
     };
     vector<Node> tr;
     int build(const vector<T> &a) {

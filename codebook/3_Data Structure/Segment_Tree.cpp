@@ -19,7 +19,7 @@ template<class Info> struct SegmentTree {
 	void modify(int x, const Info &i) { modify(1, 0, n, x, i); }
 	void modify(int p, int l, int r, int x, const Info &i) {
 		if (r - l == 1) {
-			info[p] = i;
+			info[p] = i; // add use +=
 			return;
 		}
 		int m = (l + r) / 2;
@@ -33,7 +33,7 @@ template<class Info> struct SegmentTree {
 		if (ql <= l && r <= qr) return info[p];
 		int m = (l + r) / 2;
 		return query(2 * p, l, m, ql, qr) + query(2 * p + 1, m, r, ql, qr);
-	}
+	} /*
 	template<class F> int findFirst(int ql, int qr, F &&f) {
 		return findFirst(1, 0, n, ql, qr, f);
 	} // 若要找 last，先右子樹遞迴即可
@@ -45,10 +45,5 @@ template<class Info> struct SegmentTree {
 		int res = findFirst(2 * p, l, m, ql, qr, f);
 		if (res == -1) res = findFirst(2 * p + 1, m, r, ql, qr, f);
 		return res;
-	}
+	} */
 };
-struct Info {};
-Info operator+(const Info &a, const Info &b) {
-	Info c;
-	return c;
-}

@@ -1,5 +1,5 @@
 // sort(ps.begin(), ps.end(), SweepCmp(l));
-// set<P, SweepCmp> s {SweepCmp(l)};
+// set<P, SweepCmp> s{SweepCmp(l)};
 struct SweepCmp { // 以 l 為掃描線, 點從最左邊排到最右邊 (dir: -1 -> 1)
 	P d; // 同一條掃描線上的點, 依 l 的方向由起點排到終點
 	SweepCmp(Line l) : d(l.b - l.a) {}

@@ -15,11 +15,11 @@ using pbds_multiset = tree<T, null_type, F, rb_tree_tag, tree_order_statistics_n
 auto cmp = [](int i, int j) { return i > j; };
 priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
 
-vector<int> a {1, 2, 5, 4, 3}; // 小心不要改到 a
+vector<int> a{1, 2, 5, 4, 3}; // 小心不要改到 a
 auto cmp = [&a](int i, int j) { return a[i] > a[j]; };
 priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
 
-vector<int> v {1, 2, 3, 4, 5};
+vector<int> v{1, 2, 3, 4, 5};
 upper_bound(v.begin(), v.end(), 2, [](int a, int b)
 { return a < b; }); // find first b that a < b, a is 2
 lower_bound(v.begin(), v.end(), 2, [](int a, int b)
