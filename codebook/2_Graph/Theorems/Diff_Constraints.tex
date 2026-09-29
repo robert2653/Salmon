@@ -1,0 +1,17 @@
+\begin{tabular}{|l|l|}
+    \hline
+    限制 & 邊 \\
+    \hline
+    $x_v - x_u \le c$ & $u \to v$，$c$ \\
+    $x_v - x_u \ge c$ & $v \to u$，$-c$ \\
+    $x_v - x_u = c$ & 上面兩條都建 \\
+    $x_v \le c$ & $Z \to v$，$c$（$Z$ 為參考點） \\
+    $x_v \ge c$ & $v \to Z$，$-c$ \\
+    \hline
+\end{tabular}
+\begin{itemize}
+    \item 用到參考點 $Z$ 時，答案取 $x_i = d_i - d_Z$
+    \item 初始化 $d_i = 0$（等同超級源點連 0 邊），有解 $\iff$ 無負環
+    \item $\max(x_t - x_s) = \mathrm{dist}_{\min}(s \to t)$；$t$ 不可達 $\Rightarrow$ 無界
+    \item 取 min $\Rightarrow$ 寫成 $\ge$ 形式跑最長路
+\end{itemize}

@@ -1,5 +1,6 @@
 template<class T> struct Fenwick {
-	int n; vector<T> a;
+	int n;
+	vector<T> a;
 	Fenwick(int n) : n(n), a(n) {}
 	void add(int x, const T &v) {
 		for (x++; x <= n; x += x & -x) a[x - 1] = a[x - 1] + v;
