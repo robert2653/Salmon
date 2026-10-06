@@ -1,10 +1,7 @@
 struct Poly : public vector<Mint<P>> {
 	using Z = Mint<P>;
-	explicit Poly(int n = 0) : vector<Z>(n) {}
+	using vector::vector;
 	Poly(const vector<Z> &a) : vector<Z>(a) {}
-	Poly(const initializer_list<Z> &a) : vector<Z>(a) {}
-	template<class InputIt, class = _RequireInputIter<InputIt>>
-	Poly(InputIt first, InputIt last) : vector<Z>(first, last) {}
 	Poly operator-() const {
 		vector<Z> res(this->size());
 		for (int i = 0; i < int(res.size()); i++) res[i] = -(*this)[i];
@@ -36,7 +33,7 @@ struct Poly : public vector<Mint<P>> {
 	Poly &operator*=(Poly a) { return *this = *this * a; }
 	Poly &operator*=(Z a) { return *this = *this * a; }
 	Poly &operator/=(Z a) { return *this = *this / a; }
-	// 7a07f6
+	// 53f01c
 	Poly shift(int k) const {
 		if (k >= 0) {
 			auto b = *this;
