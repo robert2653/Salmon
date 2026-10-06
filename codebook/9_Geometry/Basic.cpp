@@ -1,19 +1,18 @@
 const double eps = 1E-9;
-int sign(double x)
-{ return fabs(x) <= eps ? 0 : (x > 0 ? 1 : -1); }
+template<class T> int sign(T x)
+{ return x < -T(eps) ? -1 : x > T(eps); }
 template<class T> struct Pt {
-	T x, y;
-	Pt(T x = 0, T y = 0) : x(x), y(y) {}
-	Pt operator-() const { return Pt(-x, -y); }
-	Pt operator+(Pt p) const { return Pt(x + p.x, y + p.y); }
-	Pt operator-(Pt p) const { return Pt(x - p.x, y - p.y); }
-	Pt operator*(T k) const { return Pt(x * k, y * k); }
-	Pt operator/(T k) const { return Pt(x / k, y / k); }
-	bool operator<(Pt p) const { return sign(x - p.x) == 0 ? y < p.y : x < p.x; }
-	bool operator==(Pt p) const { return x == p.x && y == p.y; }
-	bool operator!=(Pt p) const { return x != p.x || y != p.y; }
+	T x, y; // C++ 20: P(...) -> P{...}
+	Pt operator-() const { return {-x, -y}; }
+	Pt operator+(Pt p) const { return {x + p.x, y + p.y}; }
+	Pt operator-(Pt p) const { return {x - p.x, y - p.y}; }
+	Pt operator*(T k) const { return {x * k, y * k}; }
+	Pt operator/(T k) const { return {x / k, y / k}; }
+	bool operator<(Pt p) const { return sign(x - p.x) ? x < p.x : sign(y - p.y) < 0; }
+	bool operator==(Pt p) const { return !sign(x - p.x) && !sign(y - p.y); }
+	bool operator!=(Pt p) const { return !(*this == p); }
 };
-using P = Pt<double>; // 4cc20f
+using P = Pt<double>; // 0184e8
 istream &operator>>(istream &is, P &p) { return is >> p.x >> p.y; }
 ostream &operator<<(ostream &os, const P &p) {
 	return os << "(" << p.x << ", " << p.y << ")";
@@ -33,8 +32,8 @@ P norm(P p) { return p / abs(p); }
 P rot(P p) { return {-p.y, p.x}; } // 90 degree CCW
 P rot(P p, double d) { // CCW, d = degree * PI / 180
 	double c = cos(d), s = sin(d);
-	return P(p.x * c - p.y * s, p.x * s + p.y * c);
-} // 48cbe0
+	return {p.x * c - p.y * s, p.x * s + p.y * c};
+} // f6f390
 
 bool parallel(Line l1, Line l2)
 { return sign(cross(l1.b - l1.a, l2.b - l2.a)) == 0; }
