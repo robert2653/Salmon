@@ -25,24 +25,23 @@ void hamiltonianPath() {
 void minClique() { // 移掉一些邊, 讓整張圖由最少團組成
 	int n, m;
 	cin >> n >> m;
-	vector<bitset<N>> g(n);
+	vector<int> g(n);
 	for (int i = 0; i < m; i++) {
-		int u, v; cin >> u >> v;
-		u--; v--; g[u][v] = g[v][u] = 1;
+		int u, v;
+		cin >> u >> v;
+		u--, v--;
+		g[u] |= 1 << v, g[v] |= 1 << u;
 	}
-	vector<int> dp(1 << n, inf);
-	dp[0] = 1;
-	for (int mask = 0; mask < 1 << n; mask++) { // 先正常 dp
+	vector<int> w(1 << n, 1E9), dp(1 << n, 1E9);
+	w[0] = 1, dp[0] = 0;
+	for (int mask = 0; mask < 1 << n; mask++) // 先正常 dp
 		for (int i = 0; i < n; i++) {
-			if (mask & (1 << i)) {
-				int pre = mask ^ (1 << i);
-				if (dp[pre] == 1 && (g[i] & bitset<N>(pre)) == pre)
-					dp[mask] = 1; // i 有連到所有 pre
-			}
+			int pre = mask ^ (1 << i);
+			if (w[pre] == 1 && (g[i] & pre) == pre)
+				w[mask] = 1; // i 有連到所有 pre
 		}
-	}
 	for (int mask = 0; mask < 1 << n; mask++) // 然後枚舉子集 dp
 		for (int sub = mask; sub; --sub &= mask)
-			dp[mask] = min(dp[mask], dp[sub] + dp[mask ^ sub]);
+			dp[mask] = min(dp[mask], dp[mask ^ sub] + w[sub]);
 	cout << dp[(1 << n) - 1] << "\n";
 }
