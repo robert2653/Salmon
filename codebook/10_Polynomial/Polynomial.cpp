@@ -34,7 +34,7 @@ struct Poly : public vector<Mint<P>> {
 	Poly &operator*=(Z a) { return *this = *this * a; }
 	Poly &operator/=(Z a) { return *this = *this / a; }
 	// 53f01c
-	Poly shift(int k) const {
+	Poly shift(int k) const { // 乘 x^k, k < 0 時捨去低次項
 		if (k >= 0) {
 			auto b = *this;
 			b.insert(b.begin(), k, 0);
@@ -61,7 +61,8 @@ struct Poly : public vector<Mint<P>> {
 			res[i + 1] = (*this)[i] / (i + 1);
 		return res;
 	} // f86ffe
-	Poly inv(int m) const {
+	// 以下帶 m 的都是 mod x^m, 結果只留前 m 項
+	Poly inv(int m) const { // 1 / f, need f[0] != 0
 		Poly x{(*this)[0].inv()};
 		int k = 1;
 		while (k < m) {
@@ -70,10 +71,10 @@ struct Poly : public vector<Mint<P>> {
 		}
 		return x.trunc(m);
 	} // 8287e6
-	Poly log(int m) const {
+	Poly log(int m) const { // need f[0] = 1
 		return (deriv() * inv(m)).integr().trunc(m);
 	} // bfd979
-	Poly pow(ll k, int m) const {
+	Poly pow(ll k, int m) const { // f^k, f[0] 可為 0
 		if (k == 0) { Poly res(m); res[0] = 1; return res; }
 		int i = 0;
 		while (i < this->size() && (*this)[i].x == 0) i++;
@@ -82,7 +83,7 @@ struct Poly : public vector<Mint<P>> {
 		auto f = shift(-i) * v.inv();
 		return (f.log(m - i * k) * Z(k)).exp(m - i * k).shift(i * k) * power(v, k);
 	} // 23cb76
-	Poly sqrt(int m) const { // need quadraticResidue
+	Poly sqrt(int m) const { // need quadraticResidue, 無解回傳空
 		int k = 0;
 		while (k < this->size() && (*this)[k].x == 0) k++; // 找前導零
 		if (k == this->size()) return Poly(m); // 全零多項式
@@ -100,7 +101,7 @@ struct Poly : public vector<Mint<P>> {
 		g = (g * Z(s)).shift(oft).trunc(m);
 		return g;
 	} // 1a3aea
-	Poly exp(int m) const {
+	Poly exp(int m) const { // need f[0] = 0
 		Poly x{1};
 		int k = 1;
 		while (k < m) {
@@ -109,12 +110,14 @@ struct Poly : public vector<Mint<P>> {
 		}
 		return x.trunc(m);
 	} // 78baba
+	// 轉置乘法, res[i] = sum_j f[i + j] * b[j], res.size() = f.size()
 	Poly mulT(Poly b) const {
 		if (b.empty()) return Poly();
 		int n = b.size();
 		reverse(b.begin(), b.end());
 		return ((*this) * b).shift(-(n - 1));
 	} // f7c257
+	// 多點求值, 回傳 f(x[0]), f(x[1]), ..., O(n log^2 n)
 	vector<Z> eval(vector<Z> x) const {
 		if (this->size() == 0) return vector<Z>(x.size(), 0);
 		const int n = max(x.size(), this->size());
