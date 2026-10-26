@@ -26,7 +26,7 @@ struct CHT { // 斜率單調
 		hull.push_back(l);
 	}
 	ll query(ll x) { // 查詢沒單調性需要二分搜
-		while (hull.size() > 0 && frontBad(hull[0], hull[1], x)) hull.pop_front();
+		while (hull.size() > 1 && frontBad(hull[0], hull[1], x)) hull.pop_front();
 		return hull[0].eval(x);
 	}
 };

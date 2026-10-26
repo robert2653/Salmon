@@ -1,6 +1,6 @@
 int jacobi(int x, int p) {
 	int s = 1;
-	for (; p > 1; ) {
+	while (p > 1) {
 		x %= p;
 		if (x == 0) return 0;
 		const int r = __builtin_ctz(x);

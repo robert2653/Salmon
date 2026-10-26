@@ -75,7 +75,7 @@ template<class Info, class Tag> struct LazySegmentTree {
 };
 struct Tag { // 有些 Tag 不用 push 例如 sweepLine
 	void apply(const Tag &t) {}
-	Tag offset(int d) const { return *this; }
+	Tag offset(int d) const { return *this; } // return copy
 };
 struct Info {
 	void apply(const Tag &t, int l, int r) {} /*
