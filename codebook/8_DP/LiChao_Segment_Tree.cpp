@@ -6,7 +6,7 @@ template<class T> struct Line {
 	T eval(ll x) const {
 		return m * pts[x] + b;
 	}
-};
+}; // ef38a8
 template<class T, class F = less<T>> struct LiChaoSeg {
 	F cmp = F();
 	static constexpr T inf = max(numeric_limits<T>::lowest() / 2, numeric_limits<T>::max() / 2, F());
@@ -54,5 +54,5 @@ private:
 		if (x < m) return min(nd[p].line.eval(x), query(x, nd[p].l, l, m), cmp);
 		else return min(nd[p].line.eval(x), query(x, nd[p].r, m, r), cmp);
 	}
-};
+}; // 723ffd
 auto &pts = Line<ld>::pts; // shorten
