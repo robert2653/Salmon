@@ -15,10 +15,7 @@ struct AC {
 	int insert(const string &s) {
 		int u = 0;
 		for (char c : s) {
-			if (!t[u].ch[c - 'a']) {
-				int v = newNode();
-				t[u].ch[c - 'a'] = v;
-			}
+			if (!t[u].ch[c - 'a']) t[u].ch[c - 'a'] = newNode();
 			u = t[u].ch[c - 'a'];
 		}
 		t[u].cnt++;

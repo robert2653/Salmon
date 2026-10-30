@@ -15,10 +15,8 @@ template<class Info> struct PST {
 				return p;
 			}
 			int m = (l + r) / 2;
-			int lc = self(self, l, m);
-			int rc = self(self, m, r);
-			nd[p].lc = lc;
-			nd[p].rc = rc;
+			nd[p].lc = self(self, l, m);
+			nd[p].rc = self(self, m, r);
 			pull(nd[p]);
 			return p;
 		};
