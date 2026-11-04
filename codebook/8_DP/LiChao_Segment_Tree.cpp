@@ -17,7 +17,7 @@ template<class T, class F = less<T>> struct LiChaoSeg {
 	ll lo, hi;
 	vector<Node> nd;
 	LiChaoSeg(ll lo, ll hi) : lo(lo), hi(hi) { newNode(); }
-	void addLine(Line<T> line) { update(0, lo, hi, line); }
+	void addLine(Line<T> line) { if (lo < hi) update(0, lo, hi, line); }
 	void rangeAddLine(Line<T> line, ll ql, ll qr) { rangeUpdate(0, lo, hi, ql, qr, line); }
 	T query(ll x) { return query(x, 0, lo, hi); }
 private:
@@ -54,5 +54,5 @@ private:
 		if (x < m) return min(nd[p].line.eval(x), query(x, nd[p].l, l, m), cmp);
 		else return min(nd[p].line.eval(x), query(x, nd[p].r, m, r), cmp);
 	}
-}; // ffe678
+}; // d51673
 auto &pts = Line<ll>::pts; // shorten
