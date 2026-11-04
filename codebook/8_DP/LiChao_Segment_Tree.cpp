@@ -14,19 +14,19 @@ template<class T, class F = less<T>> struct LiChaoSeg {
 		Line<T> line{0, inf};
 		int l = -1, r = -1;
 	};
-	ll n;
+	ll lo, hi;
 	vector<Node> nd;
-	LiChaoSeg(ll n) : n(n) { newNode(); }
-	void addLine(Line<T> line) { update(0, 0, n, line); }
-	void rangeAddLine(Line<T> line, ll ql, ll qr) { rangeUpdate(0, 0, n, ql, qr, line); }
-	T query(ll x) { return query(x, 0, 0, n); }
+	LiChaoSeg(ll lo, ll hi) : lo(lo), hi(hi) { newNode(); }
+	void addLine(Line<T> line) { update(0, lo, hi, line); }
+	void rangeAddLine(Line<T> line, ll ql, ll qr) { rangeUpdate(0, lo, hi, ql, qr, line); }
+	T query(ll x) { return query(x, 0, lo, hi); }
 private:
 	int newNode() {
 		nd.emplace_back();
 		return nd.size() - 1;
 	}
 	void update(int p, ll l, ll r, Line<T> line) {
-		ll m = (l + r) / 2;
+		ll m = (l + r) >> 1; // lo < 0 時 /2 會錯 (向 0 取整)
 		bool left = cmp(line.eval(l), nd[p].line.eval(l));
 		bool mid = cmp(line.eval(m), nd[p].line.eval(m));
 		if (mid) swap(nd[p].line, line);
@@ -44,15 +44,15 @@ private:
 		if (ql <= l && r <= qr) return update(p, l, r, line);
 		if (nd[p].l == -1) nd[p].l = newNode();
 		if (nd[p].r == -1) nd[p].r = newNode();
-		ll m = (l + r) / 2;
+		ll m = (l + r) >> 1;
 		rangeUpdate(nd[p].l, l, m, ql, qr, line);
 		rangeUpdate(nd[p].r, m, r, ql, qr, line);
 	}
 	T query(ll x, int p, ll l, ll r) {
 		if (p == -1) return inf;
-		ll m = (l + r) / 2;
+		ll m = (l + r) >> 1;
 		if (x < m) return min(nd[p].line.eval(x), query(x, nd[p].l, l, m), cmp);
 		else return min(nd[p].line.eval(x), query(x, nd[p].r, m, r), cmp);
 	}
-}; // 723ffd
-auto &pts = Line<ld>::pts; // shorten
+}; // ffe678
+auto &pts = Line<ll>::pts; // shorten
