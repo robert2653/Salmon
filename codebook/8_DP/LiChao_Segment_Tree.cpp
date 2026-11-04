@@ -15,7 +15,7 @@ template<class T, class F = less<T>> struct LiChaoSeg {
 		int l = -1, r = -1;
 	};
 	ll lo, hi;
-	vector<Node> nd;
+	vector<Node> nd; // OP * 2 * (log(hi-lo) - log(OP))
 	LiChaoSeg(ll lo, ll hi) : lo(lo), hi(hi) { newNode(); }
 	void addLine(Line<T> line) { if (lo < hi) update(0, lo, hi, line); }
 	void rangeAddLine(Line<T> line, ll ql, ll qr) { rangeUpdate(0, lo, hi, ql, qr, line); }
