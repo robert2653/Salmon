@@ -27,14 +27,15 @@ private:
 	}
 	void update(int p, ll l, ll r, Line<T> line) {
 		ll m = (l + r) >> 1; // lo < 0 時 /2 會錯 (向 0 取整)
-		bool left = cmp(line.eval(l), nd[p].line.eval(l));
-		bool mid = cmp(line.eval(m), nd[p].line.eval(m));
-		if (mid) swap(nd[p].line, line);
+		bool lp = cmp(line.eval(l), nd[p].line.eval(l));
+		bool mp = cmp(line.eval(m), nd[p].line.eval(m));
+		bool rp = cmp(line.eval(r - 1), nd[p].line.eval(r - 1));
+		if (mp) swap(nd[p].line, line);
 		if (r - l == 1) return;
-		if (left != mid) {
+		if (lp != mp) {
 			if (nd[p].l == -1) nd[p].l = newNode();
 			update(nd[p].l, l, m, line);
-		} else {
+		} else if (rp != mp) {
 			if (nd[p].r == -1) nd[p].r = newNode();
 			update(nd[p].r, m, r, line);
 		}
@@ -42,11 +43,15 @@ private:
 	void rangeUpdate(int p, ll l, ll r, ll ql, ll qr, Line<T> line) {
 		if (r <= ql || l >= qr) return;
 		if (ql <= l && r <= qr) return update(p, l, r, line);
-		if (nd[p].l == -1) nd[p].l = newNode();
-		if (nd[p].r == -1) nd[p].r = newNode();
 		ll m = (l + r) >> 1;
-		rangeUpdate(nd[p].l, l, m, ql, qr, line);
-		rangeUpdate(nd[p].r, m, r, ql, qr, line);
+		if (ql < m) {
+			if (nd[p].l == -1) nd[p].l = newNode();
+			rangeUpdate(nd[p].l, l, m, ql, qr, line);
+		}
+		if (qr > m) {
+			if (nd[p].r == -1) nd[p].r = newNode();
+			rangeUpdate(nd[p].r, m, r, ql, qr, line);
+		}
 	}
 	T query(ll x, int p, ll l, ll r) {
 		if (p == -1) return inf;
@@ -54,5 +59,5 @@ private:
 		if (x < m) return min(nd[p].line.eval(x), query(x, nd[p].l, l, m), cmp);
 		else return min(nd[p].line.eval(x), query(x, nd[p].r, m, r), cmp);
 	}
-}; // d51673
+}; // 49a00b
 auto &pts = Line<ll>::pts; // shorten
